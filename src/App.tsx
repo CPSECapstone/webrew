@@ -1,26 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
+import { AmplifySignOut, withAuthenticator } from "@aws-amplify/ui-react";
+import { ApolloProvider } from '@apollo/client';
+import apolloClient from './clients/apollo-client';
 import './App.css';
+import WelcomeUsers from './WelcomeUsers';
+
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ApolloProvider client={apolloClient}>
+      <div>
+        <h2>My first Apollo app 🚀</h2>
+        <WelcomeUsers></WelcomeUsers>
+      </div>
+      <AmplifySignOut />
+    </ApolloProvider>
   );
 }
 
-export default App;
+export default withAuthenticator(App);

@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "reactflipted0d2d99e3": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}
