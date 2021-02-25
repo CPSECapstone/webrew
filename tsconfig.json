@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-, "../ClassList.tsx"  ]
+, "src/ClassList.tsx"  ]
 }

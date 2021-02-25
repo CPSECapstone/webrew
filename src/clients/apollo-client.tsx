@@ -1,8 +1,9 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { environment } from './../environment';
 
 const apolloClient = new ApolloClient({
-   uri: 'https://n9ntt683mc.execute-api.us-east-1.amazonaws.com/prod/graphql',
-   cache: new InMemoryCache()
- });
+    uri: environment.uri,
+    cache: new InMemoryCache(),
+});
 
- export default apolloClient;
+export default apolloClient;
