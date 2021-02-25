@@ -6,6 +6,13 @@ This document will help you to configure the front and back ends of the Flipted 
 
 ### Before configuring the project...
 
+#### Platform and IDEs
+
++ While following the instructions below, be sure to install software of platform-specific version. (Windows/Linux/MacOS)
++ The following setup does not depend on any IDEs or code editors. However, it's suggested to have the `prettier` and `eslint` at hand. This will ensure uniform coding style and good code quality.
+
+#### AWS
+
 1. Download the AWS CLI version 2, follow the instructions in the docs for your specific operating system. [[Installing, updating, and uninstalling the AWS CLI version 2](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
 
 2. Configure your default profile to be used in the AWS CLI.
@@ -16,7 +23,10 @@ This document will help you to configure the front and back ends of the Flipted 
   d. Copy the text for your session into `~/.aws/credentials`.
   e. This will have to be updated with each session due to time limits with AWS Educate.
 
-3. Download Node Package Manager. [[Get npm!]](https://www.npmjs.com/get-npm)
+#### Nodejs
+
+1. Install `npmjs` and `npm`. [[npm | build amazing things]](https://www.npmjs.com/get-npm)
+2. Alternative - `nvm`. See more here. [[Node Version Manager]](https://github.com/nvm-sh/nvm)
 
 ### Front End
 
@@ -39,12 +49,12 @@ REACT_APP_URI="https://j68yellpbi.execute-api.us-east-1.amazonaws.com/dev/graphq
 
 #### Continuous Delivery/Continuous Integration
 
-Withint the front end repo, a workflow is setup with Github action. The workflow includes a series of actions, spining up a runtime environement, installing dependencies, linting coding, building the project and running test suites.
+Withint the front end repo, a workflow is setup with **Github Actions**. The workflow includes a series of actions, spining up a runtime environement, installing dependencies, linting coding, building the project and running test suites.
 
 **Q: How to trigger the workflow?**
 **A:** The workflow will be triggered automatically on two events,
-  1). any push to branches other than `main`.
-  2). any pull_request to `main` branch.
+  1). any `push` to branches other than `main`.
+  2). any `pull_request` to `main` branch.
 
 **Q: Where do I check the output of the workflow**
 **A:** Go to the home page of the repo, and click the `Actions`. You will set the real time workflow log and all history logs as well. If any of the workflow fails, it should not be merged back to `main` branch.
