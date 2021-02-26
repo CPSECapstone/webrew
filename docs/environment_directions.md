@@ -16,7 +16,8 @@ This document will help you to configure the front and back ends of the Flipted 
 1. Download the AWS CLI version 2, follow the instructions in the docs for your specific operating system. [[Installing, updating, and uninstalling the AWS CLI version 2](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
 
 2. Configure your default profile to be used in the AWS CLI (This will have to be updated with each session due to time limits with AWS Educate).<br/>
-  a. Navigate to the Vocareum homepage for AWS Educate.<br/>
+  a. Navigate to AWS Educate homepage and sign in.<br/>
+  b. Enter our classroom homepage.<br/>
   ![aws console](aws_console.png)<br/>
   b. Click `Account Details`.<br/>
   c. Click `AWS CLI`.<br/>
