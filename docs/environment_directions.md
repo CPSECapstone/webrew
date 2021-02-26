@@ -17,7 +17,7 @@ This document will help you to configure the front and back ends of the Flipted 
 
 2. Configure your default profile to be used in the AWS CLI (This will have to be updated with each session due to time limits with AWS Educate).
   a. Navigate to the Vocareum homepage for AWS Educate.<br/>
-  ![aws console](aws_console.png)
+  ![aws console](aws_console.png)<br/>
   b. Click `Account Details`.<br/>
   c. Click `AWS CLI`.<br/>
   d. Copy the text for your session into `~/.aws/credentials`, if you can'y access the folder, start at step f.<br/>
