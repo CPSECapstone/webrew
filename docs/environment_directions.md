@@ -15,13 +15,18 @@ This document will help you to configure the front and back ends of the Flipted 
 
 1. Download the AWS CLI version 2, follow the instructions in the docs for your specific operating system. [[Installing, updating, and uninstalling the AWS CLI version 2](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
 
-2. Configure your default profile to be used in the AWS CLI.
+2. Configure your default profile to be used in the AWS CLI (This will have to be updated with each session due to time limits with AWS Educate).
   a. Navigate to the Vocareum homepage for AWS Educate.
   ![aws console](aws_console.png)
   b. Click `Account Details`.
   c. Click `AWS CLI`.
-  d. Copy the text for your session into `~/.aws/credentials`.
-  e. This will have to be updated with each session due to time limits with AWS Educate.
+  d. Copy the text for your session into `~/.aws/credentials`, if you can'y access the folder, start at step f.
+  e. Execute the command `aws configure --profile default` and you are authenticated.
+  f. If you can't access the `.aws` folder, you can authenticate using the `aws configure` command.
+  g. Type in the corresponding "Access Key" and "Secret Access Key" that is in the `Account Details` information.
+  h. Type in `us-east-1` for default region.
+  i. Type in `json` for default output.
+  
 
 #### Nodejs
 
@@ -34,7 +39,7 @@ This document will help you to configure the front and back ends of the Flipted 
 2. Run the `npm install` command in the root of the project.
 3. Run the `npm install -g @aws-amplify/cli` command to acquire the AWS Amplify CLI.
 4. Run the `amplify configure` command and provide the same access keys as you did for the AWS CLI.
-5. Create two new files, one called `.env.development` and `.env.production`.
+5. Create two new files, one called `.env.development` and `.env.production` in the root of your project.
 ```
 # In development, add this line
 REACT_APP_URI="https://j68yellpbi.execute-api.us-east-1.amazonaws.com/dev/graphql"
