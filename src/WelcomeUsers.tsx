@@ -7,12 +7,12 @@ function WelcomeUsers() {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {error.message}</p>;
-  if (!data) return <p>Empty</p>
+  if (data === undefined || data.users.length === 0) return <p>Empty</p>
 
   return <div>{data.users.map((user) => (
     <div key={user.id}>
       <p>
-        Welcome, this is a live demo. {user.firstName} {user.lastName}!
+        Hello, {user.firstName} {user.lastName}!
        </p>
     </div>
   ))}</div>;
