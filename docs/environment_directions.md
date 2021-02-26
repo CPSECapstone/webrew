@@ -19,12 +19,12 @@ This document will help you to configure the front and back ends of the Flipted 
   a. Navigate to AWS Educate homepage and sign in.<br/>
   b. Enter our classroom homepage.<br/>
   ![aws console](aws_console.png)<br/>
-  b. Click `Account Details`.<br/>
-  c. Click `AWS CLI`.<br/>
+  c. Click `Account Details`.<br/>
+  d. Click `AWS CLI`.<br/>
   e. Execute the command `aws configure --profile <PROFILE NAME>` with a profile name, ('default' is normally fine).<br/>
-  g. Type in the corresponding "Access Key" and "Secret Access Key" that is in the `Account Details` information.<br/>
-  h. Type in `us-east-1` for default region.<br/>
-  i. Type in `json` for default output.<br/>
+  f. Type in the corresponding "Access Key" and "Secret Access Key" that is in the `Account Details` information.<br/>
+  g. Type in `us-east-1` for default region.<br/>
+  h. Type in `json` for default output.<br/>
   
 
 #### Nodejs
@@ -37,8 +37,7 @@ This document will help you to configure the front and back ends of the Flipted 
 1. Clone the webrew repo using this link for the front-end. [[webrew]](https://github.com/CPSECapstone/webrew.git)
 2. Run the `npm install` command in the root of the project.
 3. Run the `npm install -g @aws-amplify/cli` command to acquire the AWS Amplify CLI.
-4. Run the `amplify configure` command and provide the same access keys as you did for the AWS CLI.
-5. Create two new files, one called `.env.development` and `.env.production` in the root of your project.
+4. Create two new files, one called `.env.development` and `.env.production` in the root of your project.
 ```
 # In development, add this line
 REACT_APP_URI="https://j68yellpbi.execute-api.us-east-1.amazonaws.com/dev/graphql"
