@@ -2,11 +2,11 @@
 
 name: CI
 
-# Controls when the action will run. 
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ ci-setup ]
+    branches-ignore:
+      - main
   pull_request:
     branches: [ main ]
 
@@ -18,23 +18,30 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+        node_version:
+          - 12
+        architecture:
+          - x64
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - uses: actions/checkout@v2
+
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.1.5
         with:
-          node-version: 12.x
-          architecture: x86
-          
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+          node-version: ${{ matrix.node_version }}
+          architecture: ${{ matrix.architecture }}
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          echo Install, lint and test
           npm install
-          npm test-once
+          npm run-script lint
+          npm run-script test-ci

@@ -27,6 +27,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test-ci": "CI=true react-scripts test --watch==all",
     "eject": "react-scripts eject",
     "format": "prettier --write src/**/*.ts{,x}",
     "lint": "tsc --noEmit && eslint src/**/*.ts{,x}"
@@ -50,6 +51,9 @@
     ]
   },
   "devDependencies": {
+    "es-to-primitive": "^1.2.1",
+    "eslint": "^7.20.0",
+    "eslint-config-react-app": "^6.0.0",
     "react-scripts": "^4.0.2"
   }
 }
