@@ -16,16 +16,16 @@ This document will help you to configure the front and back ends of the Flipted 
 1. Download the AWS CLI version 2, follow the instructions in the docs for your specific operating system. [[Installing, updating, and uninstalling the AWS CLI version 2](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
 
 2. Configure your default profile to be used in the AWS CLI (This will have to be updated with each session due to time limits with AWS Educate).
-  a. Navigate to the Vocareum homepage for AWS Educate.
+  a. Navigate to the Vocareum homepage for AWS Educate.<br/>
   ![aws console](aws_console.png)
-  b. Click `Account Details`.
-  c. Click `AWS CLI`.
-  d. Copy the text for your session into `~/.aws/credentials`, if you can'y access the folder, start at step f.
-  e. Execute the command `aws configure --profile default` and you are authenticated.
-  f. If you can't access the `.aws` folder, you can authenticate using the `aws configure` command.
-  g. Type in the corresponding "Access Key" and "Secret Access Key" that is in the `Account Details` information.
-  h. Type in `us-east-1` for default region.
-  i. Type in `json` for default output.
+  b. Click `Account Details`.<br/>
+  c. Click `AWS CLI`.<br/>
+  d. Copy the text for your session into `~/.aws/credentials`, if you can'y access the folder, start at step f.<br/>
+  e. Execute the command `aws configure --profile default` and you are authenticated.<br/>
+  f. If you can't access the `.aws` folder, you can authenticate using the `aws configure` command.<br/>
+  g. Type in the corresponding "Access Key" and "Secret Access Key" that is in the `Account Details` information.<br/>
+  h. Type in `us-east-1` for default region.<br/>
+  i. Type in `json` for default output.<br/>
   
 
 #### Nodejs
