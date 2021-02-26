@@ -21,9 +21,7 @@ This document will help you to configure the front and back ends of the Flipted 
   ![aws console](aws_console.png)<br/>
   b. Click `Account Details`.<br/>
   c. Click `AWS CLI`.<br/>
-  d. Copy the text for your session into `~/.aws/credentials`, if you can'y access the folder, start at step f.<br/>
-  e. Execute the command `aws configure --profile default` and you are authenticated.<br/>
-  f. If you can't access the `.aws` folder, you can authenticate using the `aws configure` command.<br/>
+  e. Execute the command `aws configure --profile <PROFILE NAME>` with a profile name, ('default' is normally fine).<br/>
   g. Type in the corresponding "Access Key" and "Secret Access Key" that is in the `Account Details` information.<br/>
   h. Type in `us-east-1` for default region.<br/>
   i. Type in `json` for default output.<br/>
