@@ -8,7 +8,7 @@ on:
     branches-ignore:
       - main
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -38,10 +38,29 @@ jobs:
           node-version: ${{ matrix.node_version }}
           architecture: ${{ matrix.architecture }}
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: configure amplify
+        uses: ambientlight/amplify-cli-action@0.2.1
+        with:
+          amplify_command: configure
+          amplify_env: prod
+          env:
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_REGION: us-west-1
+
+      - name: install, build and test
         run: |
-          echo Install, lint and test
           npm install
           npm run-script lint
           npm run-script test-ci
+          npm run build
+
+      - name: deploy
+        uses: ambientlight/amplify-cli-action@0.2.1
+        with:
+          amplify_command: publish
+          amplify_env: prod
+          env:
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_REGION: us-west-1
