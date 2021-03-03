@@ -45,16 +45,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: configure amplify
-        uses: ambientlight/amplify-cli-action@0.2.1
-        with:
-          amplify_command: configure
-          amplify_env: prod
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: us-east-1
-
       - name: install, build and test
         run: |
           npm install
@@ -63,11 +53,5 @@ jobs:
           npm run build
 
       - name: deploy
-        uses: ambientlight/amplify-cli-action@0.2.1
-        with:
-          amplify_command: publish
-          amplify_env: prod
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: us-east-1
+        run: |
+          aws s3 sync build s3://flipted-frontend
