@@ -25,7 +25,7 @@ This document will help you to configure the front and back ends of the Flipted 
   f. Type in the corresponding "Access Key" and "Secret Access Key" that is in the `Account Details` information.<br/>
   g. Type in `us-east-1` for default region.<br/>
   h. Type in `json` for default output.<br/>
-  
+
 
 #### Nodejs
 
@@ -73,10 +73,24 @@ A: We use `eslint` as our linting tool. Right now we are using default setting f
 **Q: How does testing work?**
 A: We use `jest` as our test runner and `testing-library/react` to write ui test cases.
 
+#### Workflow
+
+1. Checkout latest version from the project repo.
+2. Make a new feature branch and name the branch of your own choice.
+3. Work on the feature branch and make changes
+4. Push it to the remote (Github) when the work id done. Inspect the Github Actions output and fix any error if necessary.
+5. Deploy the feature branch with Amplify.
+   + Go to awseducate console and search for AWS Amplify service,
+   + Click "Get Started" within "Deliver" section, connect with Github
+   + Select the right repo and the branch you are working on, follow the next button and to save and deploy
+   + After the provision, build, deploy, verify progress bar turn green, then you have a dedicated version of your branch deployed, follow the link it provides and see the new changes.
+
 ##### References
 
 Documentations
 
++ [Hosting](https://aws.amazon.com/amplify/hosting/)
++ [AWS Amplify Pricing](https://aws.amazon.com/amplify/pricing/?nc=sn&loc=3)
 + [Github Actions](https://docs.github.com/en/actions)
 + [actions/setup-node](https://github.com/actions/setup-node)
 + [actions/checkout](https://github.com/actions/checkout)
