@@ -8,7 +8,7 @@ on:
     branches-ignore:
       - main
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -38,10 +38,9 @@ jobs:
           node-version: ${{ matrix.node_version }}
           architecture: ${{ matrix.architecture }}
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: install, build and test
         run: |
-          echo Install, lint and test
           npm install
           npm run-script lint
           npm run-script test-ci
+          npm run build
