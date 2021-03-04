@@ -47,6 +47,11 @@ REACT_APP_URI="https://j68yellpbi.execute-api.us-east-1.amazonaws.com/dev/graphq
 
 6. Run `npm start` to start the project.
 
+### Coding Style with `eslint`
+
+Please following the link for instructions.
++ [eslint-config-airbnb-typescript](https://www.npmjs.com/package/eslint-config-airbnb-typescript)
+
 #### Continuous Delivery/Continuous Integration
 
 Withint the front end repo, a workflow is setup with **Github Actions**. The workflow includes a series of actions, spining up a runtime environement, installing dependencies, linting coding, building the project and running test suites.
