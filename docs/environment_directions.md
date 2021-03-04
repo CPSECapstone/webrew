@@ -8,24 +8,23 @@ This document will help you to configure the front and back ends of the Flipted 
 
 #### Platform and IDEs
 
-+ While following the instructions below, be sure to install software of platform-specific version. (Windows/Linux/MacOS)
-+ The following setup does not depend on any IDEs or code editors. However, it's suggested to have the `prettier` and `eslint` at hand. This will ensure uniform coding style and good code quality.
+-  While following the instructions below, be sure to install software of platform-specific version. (Windows/Linux/MacOS)
+-  The following setup does not depend on any IDEs or code editors. However, it's suggested to have the `prettier` and `eslint` at hand. This will ensure uniform coding style and good code quality.
 
 #### AWS
 
 1. Download the AWS CLI version 2, follow the instructions in the docs for your specific operating system. [[Installing, updating, and uninstalling the AWS CLI version 2](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
 
 2. Configure your default profile to be used in the AWS CLI (This will have to be updated with each session due to time limits with AWS Educate).<br/>
-  a. Navigate to AWS Educate homepage and sign in.<br/>
-  b. Enter our classroom homepage.<br/>
-  ![aws console](aws_console.png)<br/>
-  c. Click `Account Details`.<br/>
-  d. Click `AWS CLI`.<br/>
-  e. Execute the command `aws configure --profile <PROFILE NAME>` with a profile name, ('default' is normally fine).<br/>
-  f. Type in the corresponding "Access Key" and "Secret Access Key" that is in the `Account Details` information.<br/>
-  g. Type in `us-east-1` for default region.<br/>
-  h. Type in `json` for default output.<br/>
-  
+   a. Navigate to AWS Educate homepage and sign in.<br/>
+   b. Enter our classroom homepage.<br/>
+   ![aws console](aws_console.png)<br/>
+   c. Click `Account Details`.<br/>
+   d. Click `AWS CLI`.<br/>
+   e. Execute the command `aws configure --profile <PROFILE NAME>` with a profile name, ('default' is normally fine).<br/>
+   f. Type in the corresponding "Access Key" and "Secret Access Key" that is in the `Account Details` information.<br/>
+   g. Type in `us-east-1` for default region.<br/>
+   h. Type in `json` for default output.<br/>
 
 #### Nodejs
 
@@ -38,12 +37,13 @@ This document will help you to configure the front and back ends of the Flipted 
 2. Run the `npm install` command in the root of the project.
 3. Run the `npm install -g @aws-amplify/cli` command to acquire the AWS Amplify CLI.
 4. Create two new files, one called `.env.development` and `.env.production` in the root of your project.
+
 ```
 # In development, add this line
-REACT_APP_URI="https://j68yellpbi.execute-api.us-east-1.amazonaws.com/dev/graphql"
+REACT_APP_URI="https://soiw26vpn4.execute-api.us-east-1.amazonaws.com/dev/graphql"
 
 # In production, add this line
-REACT_APP_URI="https://j68yellpbi.execute-api.us-east-1.amazonaws.com/dev/graphql"
+REACT_APP_URI="https://51fsus75q4.execute-api.us-east-1.amazonaws.com/prod/graphql"
 
 # They are currently the same since production has not been deployed.
 ```
@@ -56,8 +56,8 @@ Withint the front end repo, a workflow is setup with **Github Actions**. The wor
 
 **Q: How to trigger the workflow?**
 **A:** The workflow will be triggered automatically on two events,
-  1). any `push` to branches other than `main`.
-  2). any `pull_request` to `main` branch.
+1). any `push` to branches other than `main`.
+2). any `pull_request` to `main` branch.
 
 **Q: Where do I check the output of the workflow**
 **A:** Go to the home page of the repo, and click the `Actions`. You will set the real time workflow log and all history logs as well. If any of the workflow fails, it should not be merged back to `main` branch.
@@ -72,15 +72,16 @@ A: We use `jest` as our test runner and `testing-library/react` to write ui test
 
 Documentations
 
-+ [Github Actions](https://docs.github.com/en/actions)
-+ [actions/setup-node](https://github.com/actions/setup-node)
-+ [actions/checkout](https://github.com/actions/checkout)
-+ [ESLint - Find and fix problems in your JavaScript Code](https://eslint.org/)
-+ [Running Test](https://create-react-app.dev/docs/running-tests/)
-+ [Jest](https://jestjs.io/)
+-  [Github Actions](https://docs.github.com/en/actions)
+-  [actions/setup-node](https://github.com/actions/setup-node)
+-  [actions/checkout](https://github.com/actions/checkout)
+-  [ESLint - Find and fix problems in your JavaScript Code](https://eslint.org/)
+-  [Running Test](https://create-react-app.dev/docs/running-tests/)
+-  [Jest](https://jestjs.io/)
 
 Others
-+ [Create-React-App with TypeScript, ESLint, Prettier, and Github Actions](https://brygrill.medium.com/create-react-app-with-typescript-eslint-prettier-and-github-actions-f3ce6a571c97])
+
+-  [Create-React-App with TypeScript, ESLint, Prettier, and Github Actions](https://brygrill.medium.com/create-react-app-with-typescript-eslint-prettier-and-github-actions-f3ce6a571c97])
 
 ### Back End
 
