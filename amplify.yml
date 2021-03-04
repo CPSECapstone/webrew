@@ -1,7 +1,7 @@
 version: 1
 env:
   variables:
-    REACT_APP_URI: https://j68yellpbi.execute-api.us-east-1.amazonaws.com/dev/graphql
+    REACT_APP_URI: $REACT_APP_URI
 frontend:
   phases:
     preBuild:
