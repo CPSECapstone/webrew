@@ -40,10 +40,10 @@ This document will help you to configure the front and back ends of the Flipted 
 
 ```
 # In development, add this line
-REACT_APP_URI="https://soiw26vpn4.execute-api.us-east-1.amazonaws.com/dev/graphql"
+REACT_APP_URI="https://yhsh20etn5.execute-api.us-east-1.amazonaws.com/dev/graphql"
 
 # In production, add this line
-REACT_APP_URI="https://51fsus75q4.execute-api.us-east-1.amazonaws.com/prod/graphql"
+REACT_APP_URI="https://ej6mrk55gd.execute-api.us-east-1.amazonaws.com/prod/graphql"
 
 # They are currently the same since production has not been deployed.
 ```
