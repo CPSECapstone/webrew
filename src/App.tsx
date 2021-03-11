@@ -6,20 +6,39 @@ import './App.css';
 import WelcomeUsers from './WelcomeUsers';
 import { Button } from '@material-ui/core';
 import FormDialog from './add-course-form/create-course-dialog';
-
-
+import Dashboard from './scenes/teacher/Dashboard';
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 
 function App() {
-  return (
-    <ApolloProvider client={apolloClient}>
-      <div>
-        <h2>My first Apollo app Robert🚀</h2>
-        <WelcomeUsers></WelcomeUsers>
-        <FormDialog></FormDialog>
-        {/* <Button variant="contained" onClick={() => { FormDialog() }}>Show Course Dialog</Button> */}
-      </div>
-    </ApolloProvider>
-  );
+   return (
+      <ApolloProvider client={apolloClient}>
+         <BrowserRouter>
+            <nav>
+               <ul>
+                  <li>
+                     <Link to="/">Dashboard</Link>
+                  </li>
+                  <li>
+                     <Link to="/create">New Course</Link>
+                  </li>
+               </ul>
+            </nav>
+            <Switch>
+               <Route path="/create">
+                  <div>
+                     <h2>My first Apollo app</h2>
+                     <WelcomeUsers></WelcomeUsers>
+                     <FormDialog></FormDialog>
+                     {/* <Button variant="contained" onClick={() => { FormDialog() }}>Show Course Dialog</Button> */}
+                  </div>
+               </Route>
+               <Route path="/">
+                  <Dashboard />
+               </Route>
+            </Switch>
+         </BrowserRouter>
+      </ApolloProvider>
+   );
 }
 
 //export default withAuthenticator(App);
