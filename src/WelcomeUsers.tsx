@@ -1,6 +1,7 @@
 import { Users } from './interfaces/User'
 import { GET_USERS } from './queries/user-queries';
 import { useQuery } from '@apollo/client';
+import React from 'react';
 
 function WelcomeUsers() {
   const { loading, error, data } = useQuery<Users>(GET_USERS);

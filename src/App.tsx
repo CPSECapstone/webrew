@@ -1,6 +1,6 @@
 import React from 'react';
 //import { AmplifySignOut, withAuthenticator } from "@aws-amplify/ui-react";
-import { ApolloProvider } from '@apollo/client';
+import { ApolloProvider, useMutation } from '@apollo/client';
 import apolloClient from './clients/apollo-client';
 import './App.css';
 import WelcomeUsers from './WelcomeUsers';
