@@ -41,6 +41,6 @@ jobs:
       - name: install, build and test
         run: |
           npm install
-          npm run-script lint -s --fix
+          npm run-script lint --fix
           npm run-script test-ci
           npm run build
