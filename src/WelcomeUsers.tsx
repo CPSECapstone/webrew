@@ -10,7 +10,6 @@ function WelcomeUsers() {
    if (data === undefined || data.users.length === 0) return <p>Empty</p>;
 
    return (
-      // eslint-disable-next-line react/react-in-jsx-scope
       <div>
          {data.users.map((user) => (
             <div key={user.id}>

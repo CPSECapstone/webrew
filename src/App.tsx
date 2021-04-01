@@ -5,7 +5,6 @@ import apolloClient from './clients/apollo-client';
 import './App.css';
 import WelcomeUsers from './WelcomeUsers';
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function App() {
    return (
       <ApolloProvider client={apolloClient}>
