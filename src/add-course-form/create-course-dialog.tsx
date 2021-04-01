@@ -14,8 +14,8 @@ const LargeTextField = styled(TextField)`
      
    }
 `;
- // margin-left: 24px;
-      // margin-right: 24px;
+// margin-left: 24px;
+// margin-right: 24px;
 export interface Task {
    id: string,
    name: string,
@@ -48,22 +48,22 @@ export interface Course {
 function CreateNewCourse() {
    // const data = useMutation<Course>(SAVE_COURSE);
    const [data, { loading, error }] = useMutation<
-    Course,
-    any
-  >(SAVE_COURSE);
+      Course,
+      any
+   >(SAVE_COURSE);
    // const { loading, error, data }
 
-  if (loading) 
-   console.log('loading');
+   if (loading)
+      console.log('loading');
    if (error)
-   console.log('error');
-  
-  if (data === undefined) {
-   console.log('nothing came back');
-  }
- 
-  console.log('data:', data);
-//   return <p>Stuff came back</p>
+      console.log('error');
+
+   if (data === undefined) {
+      console.log('nothing came back');
+   }
+
+   console.log('data:', data);
+   //   return <p>Stuff came back</p>
 }
 
 
@@ -71,7 +71,7 @@ function CreateNewCourse() {
 
 export default function FormDialog() {
    const [open, setOpen] = React.useState(false);
-   const [addCourse, {data}] = useMutation(SAVE_COURSE);
+   const [addCourse, { data }] = useMutation(SAVE_COURSE);
    // const [courseTitle, setCourseTitle] = useState("");
    // const [courseDescription, setCourseDescription] = useState("");
    // const [missions, setMissions] = useState("");
@@ -103,68 +103,72 @@ export default function FormDialog() {
          >
             <DialogTitle id="form-dialog-title">New Course</DialogTitle>
             <DialogContent>
-            <Formik
-               initialValues={{ courseTitle: '', courseDescription: '', instructor: 'currentUser'}}
-               //  validate={values => {
-               //    const errors = {};
-               //    if (!values.email) {
-               //      errors.email = 'Required';
-               //    } else if (
-               //      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-               //    ) {
-               //      errors.email = 'Invalid email address';
-               //    }
-               //    return errors;
-               //  }}
-               onSubmit={(values, { setSubmitting }) => {
-                  setTimeout(() => {
-                     // alert(JSON.stringify(values, null, 2));
-                     setSubmitting(false);
-                     handleClose();
-                     addCourse({variables: {course: {
-                        name: values.courseTitle,
-                        description: values.courseDescription,
-                        instructor: "Mr. Butcher",
-                        missions: []
-                     }}})
-                  }, 400);
-               }}
-            >
-               {({
-                  values,
-                  errors,
-                  touched,
-                  handleChange,
-                  handleBlur,
-                  handleSubmit,
-                  isSubmitting,
-               }) => (
-                  <form onSubmit={handleSubmit}>
-                     <LargeTextField
-                        id="courseTitle"
-                        label="Course Title"
-                        type="text"
-                        fullWidth
-                        variant="outlined"
-                        margin="dense"
-                        value={values.courseTitle}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                     />
+               <Formik
+                  initialValues={{ courseTitle: '', courseDescription: '', instructor: 'currentUser' }}
+                  //  validate={values => {
+                  //    const errors = {};
+                  //    if (!values.email) {
+                  //      errors.email = 'Required';
+                  //    } else if (
+                  //      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+                  //    ) {
+                  //      errors.email = 'Invalid email address';
+                  //    }
+                  //    return errors;
+                  //  }}
+                  onSubmit={(values, { setSubmitting }) => {
+                     setTimeout(() => {
+                        // alert(JSON.stringify(values, null, 2));
+                        setSubmitting(false);
+                        handleClose();
+                        addCourse({
+                           variables: {
+                              course: {
+                                 name: values.courseTitle,
+                                 description: values.courseDescription,
+                                 instructor: "Mr. Butcher",
+                                 missions: []
+                              }
+                           }
+                        })
+                     }, 400);
+                  }}
+               >
+                  {({
+                     values,
+                     errors,
+                     touched,
+                     handleChange,
+                     handleBlur,
+                     handleSubmit,
+                     isSubmitting,
+                  }) => (
+                     <form onSubmit={handleSubmit}>
+                        <LargeTextField
+                           id="courseTitle"
+                           label="Course Title"
+                           type="text"
+                           fullWidth
+                           variant="outlined"
+                           margin="dense"
+                           value={values.courseTitle}
+                           onChange={handleChange}
+                           onBlur={handleBlur}
+                        />
 
-                     <LargeTextField
-                        id="courseDescription"
-                        label="Description"
-                        type="text"
-                        fullWidth
-                        variant="outlined"
-                        margin="dense"
-                        value={values.courseDescription}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                     />
+                        <LargeTextField
+                           id="courseDescription"
+                           label="Description"
+                           type="text"
+                           fullWidth
+                           variant="outlined"
+                           margin="dense"
+                           value={values.courseDescription}
+                           onChange={handleChange}
+                           onBlur={handleBlur}
+                        />
 
-                  {/* <FormControl className={classes.formControl}>
+                        {/* <FormControl className={classes.formControl}>
                         <InputLabel id="demo-mutiple-chip-label">Chip</InputLabel>
                         <Select
                            labelId="demo-mutiple-chip-label"
@@ -190,18 +194,18 @@ export default function FormDialog() {
                         </Select>
                         </FormControl> */}
 
-                     <DialogActions>
-                        <Button onClick={handleClose} color="primary">
-                           Cancel
+                        <DialogActions>
+                           <Button onClick={handleClose} color="primary">
+                              Cancel
                         </Button>
-                        <Button type="submit" disabled={isSubmitting} color="primary">
-                           Create
+                           <Button type="submit" disabled={isSubmitting} color="primary">
+                              Create
                      </Button>
-                     </DialogActions>
+                        </DialogActions>
 
-                  </form>
-               )}
-            </Formik>
+                     </form>
+                  )}
+               </Formik>
             </DialogContent>
          </Dialog>
 
