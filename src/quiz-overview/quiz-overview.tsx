@@ -9,6 +9,9 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import { LIST_QUIZ_SUBMISSIONS } from '../queries/quiz-submission-queries';
+import { useQuery } from '@apollo/client';
+// import TableSortLabel from '@material-ui/core/TableSortLabel';
 
 const QuizDiv = styled.div`
    height: 300px;
@@ -38,31 +41,8 @@ const StyledTableRow = withStyles((theme: Theme) =>
          },
       },
    }),
-)(TableRow);
+) (TableRow);
 
-const rows = [
-   {
-      firstName: 'Timmy',
-      lastName: 'Smith'
-   },
-   {
-      firstName: 'Johnny',
-      lastName: 'Miller'
-   },
-   {
-      firstName: 'Morris',
-      lastName: 'Hough'
-   },
-   {
-      firstName: 'Karim',
-      lastName: 'Doyle'
-   },
-   {
-      firstName: 'Johnny',
-      lastName: 'Miller'
-   }
-
-];
 
 // const useStyles = makeStyles({
 //    table: {
@@ -70,6 +50,16 @@ const rows = [
 //       maxWidth: 700
 //    },
 // });
+
+export interface QuizSubmissions {
+   quizSubmissions: QuizSubmission[];
+}
+
+export interface QuizSubmission {
+   id: string;
+   student: string;
+   points: number;
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -91,7 +81,13 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function QuizOverview() {
    const classes = useStyles();
+   const {loading, error, data } = useQuery<QuizSubmissions>(LIST_QUIZ_SUBMISSIONS);
+
    // const [addCourse, { data }] = useMutation(SAVE_COURSE);
+   if (data === undefined) {
+      return <div></div>
+   }
+   console.log(data);
 
 
    return (
@@ -101,18 +97,18 @@ export default function QuizOverview() {
             <Table className={classes.table} aria-label="customized table">
                <TableHead>
                   <TableRow>
-                     <StyledTableCell>First Name</StyledTableCell>
-                     <StyledTableCell >Last Name</StyledTableCell>
+                     <StyledTableCell>Student Name</StyledTableCell>
+                     <StyledTableCell>Points</StyledTableCell>
                     
                   </TableRow>
                </TableHead>
                <TableBody>
-                  {rows.map((row) => (
-                     <StyledTableRow key={row.firstName}>
+                  {data.quizSubmissions.map((submission) => (
+                     <StyledTableRow key={submission.student}>
                         <StyledTableCell component="th" scope="row">
-                           {row.firstName}
+                           {submission.student}
                         </StyledTableCell>
-                        <StyledTableCell >{row.lastName}</StyledTableCell>
+                        <StyledTableCell >{submission.points}</StyledTableCell>
                       
                      </StyledTableRow>
                   ))}
