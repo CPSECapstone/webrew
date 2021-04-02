@@ -10,11 +10,23 @@ export const GET_QUESTIONS = gql`
         options {
             id
             description
-        }
-        answers
+            }
+            answers
         points
         }
     }
+`;
+
+export const GET_QUIZ = gql`
+   query GetQuizById {
+    quiz(quizId: "3f1e9fe5b43") {
+      id
+      course
+        name
+      instructions
+    }
+  }
+
 `;
 
 export const GET_ANSWERS = gql`

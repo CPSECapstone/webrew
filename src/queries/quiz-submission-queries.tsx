@@ -21,6 +21,35 @@ export const GET_QUIZ_SUBMISSION = gql`
    }
 `;
 
+export const GET_QUIZ_SUBMISSION_FULL = gql`
+   query GetQuizSubmissionById {
+      quizSubmission(submissionId: "9c7e0c2894e") {
+         submission {
+            id
+            student
+            points
+            studentAnswers {
+               choices
+               questionId
+               result
+             }
+         }
+         quiz {
+            name
+            instructions
+         }
+         questions {
+            id
+            description
+            options {
+               id
+               description
+            }
+         }
+      }
+   }
+`;
+
 export const SUBMIT_QUIZ = gql`
    mutation {
       submitQuiz(submission: {

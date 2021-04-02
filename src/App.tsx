@@ -50,7 +50,7 @@ function App() {
                </Route>
                <Route path="/quizOverview">
                   <div>
-                     <h2>Quiz Overview</h2>
+                     {/* <h2>Quiz Overview</h2> */}
                      <QuizOverview></QuizOverview>
                   </div>
                   
