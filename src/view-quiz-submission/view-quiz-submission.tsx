@@ -69,12 +69,7 @@ export interface Question {
    id: string;
    description: string;
    options: any;
-   // options: {
-   //    description: string;
-   // } [];
 }
-
-
 
 export interface SubmissionFull {
    quizSubmission: {
@@ -85,9 +80,6 @@ export interface SubmissionFull {
          instructions: string;
       }
    }
-
-
-
 }
 
 
