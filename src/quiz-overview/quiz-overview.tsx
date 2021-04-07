@@ -86,10 +86,10 @@ export default function QuizOverview() {
 
    return (
       <div style={{ marginLeft: '5px', fontSize: '40px' }}>
-         <div style={{ marginLeft: '5px' }}>{data2.quiz.name}</div>
+         <div style={{ marginLeft: '5px' }}>{data2.name}</div>
          <div className={classes.root}>
             <TableContainer style={{ marginLeft: '5px' }} component={Paper}>
-               <Table className={classes.table} aria-label='customized table'>
+               <Table className={classes.table} aria-label="customized table">
                   <TableHead>
                      <TableRow>
                         <StyledTableCell>Student Name</StyledTableCell>
@@ -104,7 +104,7 @@ export default function QuizOverview() {
                               history.push('/quizSubmission');
                            }}
                         >
-                           <StyledTableCell component='th' scope='row'>
+                           <StyledTableCell component="th" scope="row">
                               {submission.student}
                            </StyledTableCell>
                            <StyledTableCell>{`${submission.points}/4`}</StyledTableCell>

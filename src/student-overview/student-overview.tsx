@@ -84,7 +84,7 @@ export default function StudentOverview() {
          </div>
          <div className={classes.root}>
             <TableContainer style={{ marginLeft: '5px' }} component={Paper}>
-               <Table className={classes.table} aria-label='customized table'>
+               <Table className={classes.table} aria-label="customized table">
                   <TableHead>
                      <TableRow>
                         <StyledTableCell>Section</StyledTableCell>
@@ -99,7 +99,7 @@ export default function StudentOverview() {
                   <TableBody>
                      {data.users.map((user) => (
                         <StyledTableRow style={{ cursor: 'pointer' }}>
-                           <StyledTableCell component='th' scope='row'>
+                           <StyledTableCell component="th" scope="row">
                               {user.firstName}
                            </StyledTableCell>
                            {/* <StyledTableCell >{submission.points + '/4'}</StyledTableCell> */}
