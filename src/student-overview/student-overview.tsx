@@ -30,7 +30,7 @@ export default function StudentOverview() {
 
    return (
       <div style={{ marginLeft: '5px', fontSize: '40px'}}>
-         <div style={{ marginLeft: '5px' }} >{data2.quiz.name}</div>
+         <div style={{ marginLeft: '5px' }}>Student Overview</div>
          <div className={classes.root}>
             <TableContainer style={{ marginLeft: '5px' }} component={Paper}>
                <Table className={classes.table} aria-label="customized table">
@@ -42,7 +42,7 @@ export default function StudentOverview() {
                      </TableRow>
                   </TableHead>
                   <TableBody>
-                     {data.quizSubmissions.map((submission) => (
+                     {/* {data.quizSubmissions.map((submission) => (
 
                         <StyledTableRow style={{ cursor: 'pointer' }} onClick={() => {
                            history.push('/quizSubmission')
@@ -55,7 +55,7 @@ export default function StudentOverview() {
 
                         </StyledTableRow>
 
-                     ))}
+                     ))} */}
                   </TableBody>
                </Table>
             </TableContainer>
