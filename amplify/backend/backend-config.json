@@ -1,0 +1,11 @@
+{
+  "auth": {
+    "webrew2cd43e26": {
+      "service": "Cognito",
+      "serviceType": "imported",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}
