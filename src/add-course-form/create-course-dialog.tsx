@@ -1,42 +1,46 @@
-import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, FormControl, InputLabel, Chip, Input, MenuItem, Select } from '@material-ui/core';
-import React, { useState } from 'react';
-import { makeStyles } from "@material-ui/core/styles";
-import styled from 'styled-components'
+import {
+   Button,
+   Dialog,
+   DialogTitle,
+   DialogContent,
+   TextField,
+   DialogActions,
+} from '@material-ui/core';
+import React from 'react';
+import styled from 'styled-components';
 import { Formik } from 'formik';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { SAVE_COURSE } from '../queries/course-queries';
-import classes from '*.module.css';
 
 const LargeTextField = styled(TextField)`
    input {
       height: 50px;
       font-size: 20px;
-     
    }
 `;
 // margin-left: 24px;
 // margin-right: 24px;
 export interface Task {
-   id: string,
-   name: string,
-   description: string,
-   link: string
+   id: string;
+   name: string;
+   description: string;
+   link: string;
 }
 
 export interface Mission {
-   id: string,
-   name: string,
-   description: string,
-   tasks: Task[]
+   id: string;
+   name: string;
+   description: string;
+   tasks: Task[];
 }
 
-export interface Course {
-   id: string,
-   name: string,
-   description: string,
-   instructor: any,
-   missions: Mission[]
-}
+// export interface Course {
+//    id: string;
+//    name: string;
+//    description: string;
+//    instructor: any;
+//    missions: Mission[];
+// }
 
 // const form = {
 //    courseTitle
@@ -44,38 +48,12 @@ export interface Course {
 //    milestone: Milestone[]
 // }
 
-
-function CreateNewCourse() {
-   // const data = useMutation<Course>(SAVE_COURSE);
-   const [data, { loading, error }] = useMutation<
-      Course,
-      any
-   >(SAVE_COURSE);
-   // const { loading, error, data }
-
-   if (loading)
-      console.log('loading');
-   if (error)
-      console.log('error');
-
-   if (data === undefined) {
-      console.log('nothing came back');
-   }
-
-   console.log('data:', data);
-   //   return <p>Stuff came back</p>
-}
-
-
-
-
 export default function FormDialog() {
    const [open, setOpen] = React.useState(false);
-   const [addCourse, { data }] = useMutation(SAVE_COURSE);
+   const [addCourse] = useMutation(SAVE_COURSE);
    // const [courseTitle, setCourseTitle] = useState("");
    // const [courseDescription, setCourseDescription] = useState("");
    // const [missions, setMissions] = useState("");
-
 
    // TODO For when we have sessions
    // const instructor = getCurrentUser();
@@ -86,39 +64,30 @@ export default function FormDialog() {
 
    const handleClose = () => {
       setOpen(false);
-
    };
 
    return (
       <div>
          <Button variant="contained" color="primary" onClick={handleClickOpen}>
             Create New Course
-       </Button>
+         </Button>
          <Dialog
             open={open}
-            fullWidth={true}
+            fullWidth
             onClose={handleClose}
             aria-labelledby="form-dialog-title"
-            maxWidth={'sm'}
+            maxWidth="sm"
          >
             <DialogTitle id="form-dialog-title">New Course</DialogTitle>
             <DialogContent>
                <Formik
-                  initialValues={{ courseTitle: '', courseDescription: '', instructor: 'currentUser' }}
-                  //  validate={values => {
-                  //    const errors = {};
-                  //    if (!values.email) {
-                  //      errors.email = 'Required';
-                  //    } else if (
-                  //      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-                  //    ) {
-                  //      errors.email = 'Invalid email address';
-                  //    }
-                  //    return errors;
-                  //  }}
+                  initialValues={{
+                     courseTitle: '',
+                     courseDescription: '',
+                     instructor: 'currentUser',
+                  }}
                   onSubmit={(values, { setSubmitting }) => {
                      setTimeout(() => {
-                        // alert(JSON.stringify(values, null, 2));
                         setSubmitting(false);
                         handleClose();
                         addCourse({
@@ -126,23 +95,15 @@ export default function FormDialog() {
                               course: {
                                  name: values.courseTitle,
                                  description: values.courseDescription,
-                                 instructor: "Mr. Butcher",
-                                 missions: []
-                              }
-                           }
-                        })
+                                 instructor: 'Mr. Butcher',
+                                 missions: [],
+                              },
+                           },
+                        }).catch((error) => console.log(error));
                      }, 400);
                   }}
                >
-                  {({
-                     values,
-                     errors,
-                     touched,
-                     handleChange,
-                     handleBlur,
-                     handleSubmit,
-                     isSubmitting,
-                  }) => (
+                  {({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
                      <form onSubmit={handleSubmit}>
                         <LargeTextField
                            id="courseTitle"
@@ -197,19 +158,16 @@ export default function FormDialog() {
                         <DialogActions>
                            <Button onClick={handleClose} color="primary">
                               Cancel
-                        </Button>
+                           </Button>
                            <Button type="submit" disabled={isSubmitting} color="primary">
                               Create
-                     </Button>
+                           </Button>
                         </DialogActions>
-
                      </form>
                   )}
                </Formik>
             </DialogContent>
          </Dialog>
-
-
 
          {/* <Dialog
             open={open}

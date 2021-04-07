@@ -1,11 +1,20 @@
-import classes from '*.module.css';
-import { useMutation, useQuery } from '@apollo/client';
-import { withStyles, Theme, createStyles, TableCell, TableRow, TableContainer, Paper, Table, TableHead, TableBody, makeStyles } from '@material-ui/core';
+import { useQuery } from '@apollo/client';
+import {
+   withStyles,
+   Theme,
+   createStyles,
+   TableCell,
+   TableRow,
+   TableContainer,
+   Paper,
+   Table,
+   TableHead,
+   TableBody,
+   makeStyles,
+} from '@material-ui/core';
 import React from 'react';
-import MakeUser from '../add-user-form/make-fake-user';
-import { User, Users } from '../interfaces/User';
-import { ADD_USER, GET_USERS } from '../queries/user-queries';
-
+import { Users } from '../interfaces/User';
+import { GET_USERS } from '../queries/user-queries';
 
 const StyledTableCell = withStyles((theme: Theme) =>
    createStyles({
@@ -16,7 +25,7 @@ const StyledTableCell = withStyles((theme: Theme) =>
       body: {
          fontSize: 14,
       },
-   }),
+   })
 )(TableCell);
 
 const StyledTableRow = withStyles((theme: Theme) =>
@@ -26,8 +35,8 @@ const StyledTableRow = withStyles((theme: Theme) =>
             backgroundColor: theme.palette.action.hover,
          },
       },
-   }),
-) (TableRow);
+   })
+)(TableRow);
 
 const useStyles = makeStyles((theme: Theme) =>
    createStyles({
@@ -44,61 +53,62 @@ const useStyles = makeStyles((theme: Theme) =>
          minWidth: 700,
          // maxWidth: 700
       },
-   }),
+   })
 );
-
 
 export default function StudentOverview() {
    const classes = useStyles();
    const { data } = useQuery<Users>(GET_USERS);
-   const [addUser, { data: data2 }] = useMutation(ADD_USER);
-
+   // const [] = useMutation(ADD_USER);
 
    if (data === undefined) {
-      return <div></div>
+      return <div />;
    }
-   
+
    return (
-      <div style={{ marginLeft: '5px', fontSize: '40px'}}>
-         <div style={{ marginLeft: '5px' }} onClick={() => {
-                           addUser({variables: {user: {
-                              firstName: 'joe2x',
-                              lastName: 'smith' 
-                          }}})
-                        }}>Student Overview</div>
+      <div style={{ marginLeft: '5px', fontSize: '40px' }}>
+         <div
+            style={{ marginLeft: '5px' }}
+            // onClick={() => {
+            //    addUser({
+            //       variables: {
+            //          user: {
+            //             firstName: 'joe2x',
+            //             lastName: 'smith',
+            //          },
+            //       },
+            //    });
+            // }}
+         >
+            Student Overview
+         </div>
          <div className={classes.root}>
             <TableContainer style={{ marginLeft: '5px' }} component={Paper}>
-               <Table className={classes.table} aria-label="customized table">
+               <Table className={classes.table} aria-label='customized table'>
                   <TableHead>
                      <TableRow>
                         <StyledTableCell>Section</StyledTableCell>
                         <StyledTableCell>Student</StyledTableCell>
                         <StyledTableCell>Status</StyledTableCell>
-                        <StyledTableCell></StyledTableCell>
+                        <StyledTableCell />
 
                         <StyledTableCell>Task #1</StyledTableCell>
                         <StyledTableCell>Task #2</StyledTableCell>
-
                      </TableRow>
                   </TableHead>
                   <TableBody>
                      {data.users.map((user) => (
-
                         <StyledTableRow style={{ cursor: 'pointer' }}>
-
-                           <StyledTableCell component="th" scope="row">
+                           <StyledTableCell component='th' scope='row'>
                               {user.firstName}
                            </StyledTableCell>
-                            {/* <StyledTableCell >{submission.points + '/4'}</StyledTableCell> */}
-
+                           {/* <StyledTableCell >{submission.points + '/4'}</StyledTableCell> */}
                         </StyledTableRow>
-
                      ))}
                   </TableBody>
                </Table>
             </TableContainer>
-         </div >
+         </div>
       </div>
    );
-
 }
