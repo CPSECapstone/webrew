@@ -10,6 +10,7 @@ import Dashboard from './scenes/teacher/Dashboard';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import QuizSubmission from './view-quiz-submission/view-quiz-submission';
 import QuizOverview from './quiz-overview/quiz-overview';
+import StudentOverview from './student-overview/student-overview';
 
 function App() {
    return (
@@ -29,6 +30,9 @@ function App() {
                   <li>
                      <Link to="/quizOverview">Quiz Overview</Link>
                   </li>
+                  <li>
+                     <Link to="/studentOverview">Student Overview</Link>
+                  </li>
                </ul>
             </nav>
             <Switch>
@@ -46,15 +50,19 @@ function App() {
                      <h2>My first Apollo app quiz</h2>
                      <QuizSubmission></QuizSubmission>
                   </div>
-                  
                </Route>
                <Route path="/quizOverview">
                   <div>
                      {/* <h2>Quiz Overview</h2> */}
                      <QuizOverview></QuizOverview>
                   </div>
-                  
                </Route>
+               <Route path="/studentOverview">
+                  <div>
+                     <StudentOverview></StudentOverview>
+                  </div>
+               </Route>
+
 
 
                <Route path="/">
