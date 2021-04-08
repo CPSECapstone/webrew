@@ -1,7 +1,7 @@
 export interface User {
    id: string;
    firstName: string;
-   lastName: number;
+   lastName: string;
 }
 
 export interface Users {
