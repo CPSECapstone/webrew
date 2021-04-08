@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-//import { AmplifySignOut, withAuthenticator } from "@aws-amplify/ui-react";
+// import { AmplifySignOut, withAuthenticator } from "@aws-amplify/ui-react";
 // import apolloClient from './clients/apollo-client';
 import { Button } from '@material-ui/core';
 import { gql, useQuery } from '@apollo/client';
 
-//Copy-pasta'd from backend & omitted missions, TODO replace with import
+// Copy-pasta'd from backend & omitted missions, TODO replace with import
 type Course = {
    id: string;
    name: string;

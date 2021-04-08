@@ -1,7 +1,21 @@
-import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, FormControl, InputLabel, Chip, Input, MenuItem, Select } from '@material-ui/core';
+import {
+   Button,
+   Dialog,
+   DialogTitle,
+   DialogContent,
+   DialogContentText,
+   TextField,
+   DialogActions,
+   FormControl,
+   InputLabel,
+   Chip,
+   Input,
+   MenuItem,
+   Select,
+} from '@material-ui/core';
 import React, { useState } from 'react';
-import { makeStyles } from "@material-ui/core/styles";
-import styled from 'styled-components'
+import { makeStyles } from '@material-ui/core/styles';
+import styled from 'styled-components';
 import { Formik } from 'formik';
 import { useMutation, useQuery } from '@apollo/client';
 import { SAVE_COURSE } from '../queries/course-queries';
@@ -11,31 +25,30 @@ const LargeTextField = styled(TextField)`
    input {
       height: 50px;
       font-size: 20px;
-     
    }
 `;
 // margin-left: 24px;
 // margin-right: 24px;
 export interface Task {
-   id: string,
-   name: string,
-   description: string,
-   link: string
+   id: string;
+   name: string;
+   description: string;
+   link: string;
 }
 
 export interface Mission {
-   id: string,
-   name: string,
-   description: string,
-   tasks: Task[]
+   id: string;
+   name: string;
+   description: string;
+   tasks: Task[];
 }
 
 export interface Course {
-   id: string,
-   name: string,
-   description: string,
-   instructor: any,
-   missions: Mission[]
+   id: string;
+   name: string;
+   description: string;
+   instructor: any;
+   missions: Mission[];
 }
 
 // const form = {
@@ -44,19 +57,13 @@ export interface Course {
 //    milestone: Milestone[]
 // }
 
-
 function CreateNewCourse() {
    // const data = useMutation<Course>(SAVE_COURSE);
-   const [data, { loading, error }] = useMutation<
-      Course,
-      any
-   >(SAVE_COURSE);
+   const [data, { loading, error }] = useMutation<Course, any>(SAVE_COURSE);
    // const { loading, error, data }
 
-   if (loading)
-      console.log('loading');
-   if (error)
-      console.log('error');
+   if (loading) console.log('loading');
+   if (error) console.log('error');
 
    if (data === undefined) {
       console.log('nothing came back');
@@ -66,16 +73,12 @@ function CreateNewCourse() {
    //   return <p>Stuff came back</p>
 }
 
-
-
-
 export default function FormDialog() {
    const [open, setOpen] = React.useState(false);
-   const [addCourse, { data }] = useMutation(SAVE_COURSE);
+   const [addCourse] = useMutation(SAVE_COURSE);
    // const [courseTitle, setCourseTitle] = useState("");
    // const [courseDescription, setCourseDescription] = useState("");
    // const [missions, setMissions] = useState("");
-
 
    // TODO For when we have sessions
    // const instructor = getCurrentUser();
@@ -86,25 +89,28 @@ export default function FormDialog() {
 
    const handleClose = () => {
       setOpen(false);
-
    };
 
    return (
       <div>
-         <Button variant="contained" color="primary" onClick={handleClickOpen}>
+         <Button variant='contained' color='primary' onClick={handleClickOpen}>
             Create New Course
-       </Button>
+         </Button>
          <Dialog
             open={open}
-            fullWidth={true}
+            fullWidth
             onClose={handleClose}
-            aria-labelledby="form-dialog-title"
-            maxWidth={'sm'}
+            aria-labelledby='form-dialog-title'
+            maxWidth='sm'
          >
-            <DialogTitle id="form-dialog-title">New Course</DialogTitle>
+            <DialogTitle id='form-dialog-title'>New Course</DialogTitle>
             <DialogContent>
                <Formik
-                  initialValues={{ courseTitle: '', courseDescription: '', instructor: 'currentUser' }}
+                  initialValues={{
+                     courseTitle: '',
+                     courseDescription: '',
+                     instructor: 'currentUser',
+                  }}
                   //  validate={values => {
                   //    const errors = {};
                   //    if (!values.email) {
@@ -126,11 +132,11 @@ export default function FormDialog() {
                               course: {
                                  name: values.courseTitle,
                                  description: values.courseDescription,
-                                 instructor: "Mr. Butcher",
-                                 missions: []
-                              }
-                           }
-                        })
+                                 instructor: 'Mr. Butcher',
+                                 missions: [],
+                              },
+                           },
+                        });
                      }, 400);
                   }}
                >
@@ -145,24 +151,24 @@ export default function FormDialog() {
                   }) => (
                      <form onSubmit={handleSubmit}>
                         <LargeTextField
-                           id="courseTitle"
-                           label="Course Title"
-                           type="text"
+                           id='courseTitle'
+                           label='Course Title'
+                           type='text'
                            fullWidth
-                           variant="outlined"
-                           margin="dense"
+                           variant='outlined'
+                           margin='dense'
                            value={values.courseTitle}
                            onChange={handleChange}
                            onBlur={handleBlur}
                         />
 
                         <LargeTextField
-                           id="courseDescription"
-                           label="Description"
-                           type="text"
+                           id='courseDescription'
+                           label='Description'
+                           type='text'
                            fullWidth
-                           variant="outlined"
-                           margin="dense"
+                           variant='outlined'
+                           margin='dense'
                            value={values.courseDescription}
                            onChange={handleChange}
                            onBlur={handleBlur}
@@ -195,21 +201,18 @@ export default function FormDialog() {
                         </FormControl> */}
 
                         <DialogActions>
-                           <Button onClick={handleClose} color="primary">
+                           <Button onClick={handleClose} color='primary'>
                               Cancel
-                        </Button>
-                           <Button type="submit" disabled={isSubmitting} color="primary">
+                           </Button>
+                           <Button type='submit' disabled={isSubmitting} color='primary'>
                               Create
-                     </Button>
+                           </Button>
                         </DialogActions>
-
                      </form>
                   )}
                </Formik>
             </DialogContent>
          </Dialog>
-
-
 
          {/* <Dialog
             open={open}

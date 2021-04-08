@@ -1,6 +1,5 @@
 import { gql } from '@apollo/client';
 
-
 export const SAVE_COURSE = gql`
    mutation AddCourse($course: CourseInput!) {
       addCourse(course: $course) {
@@ -10,10 +9,9 @@ export const SAVE_COURSE = gql`
    }
 `;
 
-
 // export const SAVE_COURSE = gql`
 //    query addCourse {
-      
+
 //          "name" : "test
 //          "instructor": "test inst"
 //          "description": "test desc"
@@ -22,10 +20,9 @@ export const SAVE_COURSE = gql`
 //             "description": "test desc mission"
 //             "tasks": []
 //          }
-      
+
 //    }
 // `;
-
 
 // $course: {
 //    name: String!
@@ -34,4 +31,4 @@ export const SAVE_COURSE = gql`
 //    missions: []
 // }) {
 //    id
-// }  
+// }

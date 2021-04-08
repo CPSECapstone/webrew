@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
 import styled from 'styled-components'
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 // import Radio from '@material-ui/core/Radio';
-import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, FormControl, InputLabel, Chip, Input, MenuItem, Select, Radio } from '@material-ui/core';
+import { Radio } from '@material-ui/core';
 import { useQuery } from '@apollo/client';
-import { GET_QUESTIONS, GET_ANSWERS } from '../queries/quiz-queries';
 import { GET_QUIZ_SUBMISSION_FULL } from '../queries/quiz-submission-queries';
-
 
 const QuizDiv = styled.div`
    height: 300px;
@@ -50,7 +47,6 @@ export interface Answer {
    choices: any;
 }
 
-
 export interface StudentAnswer {
    questionId: string;
    result: boolean;
@@ -64,17 +60,11 @@ export interface Submisison {
    studentAnswers: StudentAnswer[];
 }
 
-
 export interface Question {
    id: string;
    description: string;
    options: any;
-   // options: {
-   //    description: string;
-   // } [];
 }
-
-
 
 export interface SubmissionFull {
    quizSubmission: {
@@ -83,13 +73,9 @@ export interface SubmissionFull {
       quiz: {
          name: string;
          instructions: string;
-      }
-   }
-
-
-
+      };
+   };
 }
-
 
 // function populateAnswers(quiz: any, allAnswers: any) {
 //    for (const answer of quiz.answers) {
@@ -106,11 +92,10 @@ export default function QuizSubmission() {
    // const [value, setValue] = useState();
 
    if (!quiz) {
-      return <div></div>;
+      return <div />;
    }
 
-   console.log(quiz)
-  
+   console.log(quiz);
 
    // style={{ backgroundColor: studentsAnswers[parseInt(question.id) - 1].optionId === question.correctOptionId ? 'green' : 'red' }}
 
@@ -119,23 +104,37 @@ export default function QuizSubmission() {
          {quiz.quizSubmission.questions.map((question: Question) => (
             <QuizDiv>
                <QuestionDiv>
-                  {quiz.quizSubmission.submission.studentAnswers.findIndex(x => x.questionId === question.id && x.result) !== -1 ? question.description + ' Correct' : question.description + ' Incorrect'}
+                  {quiz.quizSubmission.submission.studentAnswers.findIndex(
+                     (x) => x.questionId === question.id && x.result
+                  ) !== -1
+                     ? `${question.description} Correct`
+                     : `${question.description} Incorrect`}
                </QuestionDiv>
                <RadioGroup>
+                  {/* eslint-disable-next-line @typescript-eslint/no-unsafe-call */}
                   {question.options.map((option: any) => (
-
                      <FormControlLabel
-                        value={option.description} disabled
-                        control={<Radio checked={quiz.quizSubmission.submission.studentAnswers.find(x => x.questionId === question.id)?.choices[0] === option.id ? true : false} />}
-                        label={option.description} />
+                        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                        value={option.description}
+                        disabled
+                        control={
+                           <Radio
+                              checked={
+                                 quiz.quizSubmission.submission.studentAnswers.find(
+                                    (x) => x.questionId === question.id
+                                    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                                 )?.choices[0] === option.id
+                              }
+                           />
+                        }
+                        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                        label={option.description}
+                     />
                   ))}
                </RadioGroup>
-
-
             </QuizDiv>
-
          ))}
-
       </CenterDiv>
 
       // {quiz.questions.map((question: Question) => (
@@ -149,11 +148,8 @@ export default function QuizSubmission() {
       //          ))}
       //       </RadioGroup>
 
-
       //    </QuizDiv>
 
       // ))}
-
-
    );
 }
