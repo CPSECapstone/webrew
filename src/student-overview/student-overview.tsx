@@ -1,4 +1,3 @@
-import { useQuery } from '@apollo/client';
 import {
    withStyles,
    Theme,
@@ -11,11 +10,10 @@ import {
    TableHead,
    TableBody,
    makeStyles,
-   Color,
 } from '@material-ui/core';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { Users } from '../interfaces/User';
-import { GET_USERS } from '../queries/user-queries';
 
 const StyledTableCell = withStyles((theme: Theme) =>
    createStyles({
@@ -107,6 +105,8 @@ const userProgressMap = new Map<string, Progress>();
 
 export default function StudentOverview() {
    const classes = useStyles();
+   const history = useHistory();
+
    userProgressMap.set('1', {
       curStatus: 'Task 1.1',
       statusColor: '#00b300', // Green
@@ -186,6 +186,12 @@ export default function StudentOverview() {
                            hover
                            style={{ cursor: 'pointer' }}
                            className={classes.tableRow}
+                           onClick={() => {
+                              history.push({
+                                 pathname: '/singleStudentOverview',
+                                 state: user,
+                              });
+                           }}
                         >
                            <StyledTableCell className={classes.borderedCell} scope="row">
                               1

@@ -7,10 +7,11 @@ import './App.css';
 import WelcomeUsers from './WelcomeUsers';
 import FormDialog from './add-course-form/create-course-dialog';
 import Dashboard from './scenes/teacher/Dashboard';
-
-import QuizSubmission from './view-quiz-submission/view-quiz-submission';
 import QuizOverview from './quiz-overview/quiz-overview';
 import StudentOverview from './student-overview/student-overview';
+import SingleStudentOverview from './single-student-overview/single-student-overview';
+// eslint-disable-next-line import/order
+import QuizSubmission from './view-quiz-submission/view-quiz-submission';
 
 function App() {
    return (
@@ -29,6 +30,9 @@ function App() {
                   </li>
                   <li>
                      <Link to="/quizOverview">Quiz Overview</Link>
+                  </li>
+                  <li>
+                     <Link to="/singleStudentOverview">Single Student Overview</Link>
                   </li>
                   <li>
                      <Link to="/studentOverview">Student Overview</Link>
@@ -63,6 +67,9 @@ function App() {
                   </div>
                </Route>
 
+               <Route path="/singleStudentOverview">
+                  <SingleStudentOverview />
+               </Route>
                <Route path="/">
                   <Dashboard />
                </Route>
