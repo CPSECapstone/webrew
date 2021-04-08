@@ -35,7 +35,7 @@ const CourseCard = styled.div`
 `;
 
 function Dashboard() {
-   const { loading, error, data } = useQuery<Course[]>(GET_COURSES);
+   const { loading, error, data } = useQuery(GET_COURSES);
    if (loading) return <div>Loading...</div>;
    if (error) return <div>`Error! ${error.message}`</div>;
 
@@ -45,7 +45,7 @@ function Dashboard() {
 
    return (
       <CourseList>
-         {data.map((course: Course) => (
+         {data.courses.map((course: Course) => (
             <CourseCard key={course.id}>
                <div>Course name: {course.name}</div>
                <div>Instructor: {course.instructor}</div>
