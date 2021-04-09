@@ -32,9 +32,6 @@ function App() {
                      <Link to="/quizOverview">Quiz Overview</Link>
                   </li>
                   <li>
-                     <Link to="/singleStudentOverview">Single Student Overview</Link>
-                  </li>
-                  <li>
                      <Link to="/studentOverview">Student Overview</Link>
                   </li>
                </ul>

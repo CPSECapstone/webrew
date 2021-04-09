@@ -108,8 +108,8 @@ export default function SingleStudentOverview() {
    const test: any = history.location.state;
    const inputUser: User = {
       id: test?.id,
-      firstName: test.firstName,
-      lastName: test.lastName,
+      firstName: test?.firstName,
+      lastName: test?.lastName,
    };
 
    return (
