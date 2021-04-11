@@ -1,16 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-// import { AmplifySignOut, withAuthenticator } from "@aws-amplify/ui-react";
-// import apolloClient from './clients/apollo-client';
 import { gql, useQuery } from '@apollo/client';
-
-// Copy-pasta'd from backend & omitted missions, TODO replace with import
-export interface Course {
-   id: string;
-   name: string;
-   instructor: string;
-   description: string;
-}
+import { Course } from '../../interfaces/Course';
+import { Courses } from '../../interfaces/Courses';
 
 const GET_COURSES = gql`
    query GetCourses {
@@ -35,17 +27,17 @@ const CourseCard = styled.div`
 `;
 
 function Dashboard() {
-   const { loading, error, data } = useQuery(GET_COURSES);
+   const { loading, error, data: courses } = useQuery<Courses>(GET_COURSES);
    if (loading) return <div>Loading...</div>;
    if (error) return <div>`Error! ${error.message}`</div>;
 
-   if (data === undefined) {
-      return <div />;
+   if (courses === undefined) {
+      return <div>Courses Undefined</div>;
    }
 
    return (
       <CourseList>
-         {data.courses.map((course: Course) => (
+         {courses.courses.map((course: Course) => (
             <CourseCard key={course.id}>
                <div>Course name: {course.name}</div>
                <div>Instructor: {course.instructor}</div>

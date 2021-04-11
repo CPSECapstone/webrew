@@ -13,7 +13,8 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Users } from '../interfaces/User';
+import { Progress } from '../interfaces/Progress';
+import { Users } from '../interfaces/Users';
 
 const StyledTableCell = withStyles((theme: Theme) =>
    createStyles({
@@ -95,12 +96,6 @@ const users: Users = {
    ],
 };
 
-export interface Progress {
-   curStatus: string;
-   statusColor: string;
-   time: string;
-}
-
 const userProgressMap = new Map<string, Progress>();
 
 export default function StudentOverview() {
@@ -131,30 +126,9 @@ export default function StudentOverview() {
       time: '6:15',
    });
 
-   // const { data } = useQuery<Users>(GET_USERS);
-   // const [] = useMutation(ADD_USER);
-
-   // if (data === undefined) {
-   //    return <div />;
-   // }
-
    return (
       <div style={{ marginLeft: '5px', fontSize: '40px' }}>
-         <div
-            style={{ marginLeft: '5px' }}
-            // onClick={() => {
-            //    addUser({
-            //       variables: {
-            //          user: {
-            //             firstName: 'joe2x',
-            //             lastName: 'smith',
-            //          },
-            //       },
-            //    });
-            // }}
-         >
-            Student Overview
-         </div>
+         <div style={{ marginLeft: '5px' }}>Student Overview</div>
          <div className={classes.root}>
             <TableContainer style={{ marginLeft: '5px' }} component={Paper}>
                <Table className={classes.table} aria-label="customized table">
@@ -207,7 +181,6 @@ export default function StudentOverview() {
                               {userProgressMap.get(user.id)?.time}
                            </StyledTableCell>
                            <StyledTableCell
-                              // className={classes.borderedCell}
                               style={{
                                  backgroundColor: userProgressMap.get(user.id)?.statusColor,
                                  borderBottom: '4px solid gray',
@@ -224,7 +197,6 @@ export default function StudentOverview() {
                               }}
                            />
                            <StyledTableCell className={classes.borderedCell} />
-                           {/* <StyledTableCell >{submission.points + '/4'}</StyledTableCell> */}
                         </StyledTableRow>
                      ))}
                   </TableBody>

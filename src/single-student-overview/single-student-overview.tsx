@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -8,11 +8,10 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import styled from 'styled-components';
-import LinearProgress, { LinearProgressProps } from '@material-ui/core/LinearProgress';
-import { Box, Typography } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import StudentPicture from '../fake-student-image/images-1.png';
+import StudentPicture from '../assets/images/images-1.png';
 import { User } from '../interfaces/User';
+import LinearProgressWithLabel from '../components/linear-progress-bar';
 
 const StudentNameDiv = styled.div`
    height: 50px;
@@ -56,54 +55,44 @@ const useStyles = makeStyles((theme: Theme) =>
    })
 );
 
-function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {
-   return (
-      <Box display="flex" alignItems="center">
-         <Box width="100%" mr={1}>
-            {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-            <LinearProgress variant="determinate" {...props} />
-         </Box>
-         <Box minWidth={35}>
-            <Typography variant="body2" color="textSecondary">{`${Math.round(
-               // eslint-disable-next-line react/destructuring-assignment
-               props.value
-            )}%`}</Typography>
-         </Box>
-      </Box>
-   );
+function handleClick(
+   openObjectBool: boolean,
+   openFunction: React.Dispatch<React.SetStateAction<boolean>>
+): void {
+   openFunction(!openObjectBool);
 }
 
 export default function SingleStudentOverview() {
    const classes = useStyles();
-   const [missionOpen, setOpen] = React.useState(false);
-   const [subMissionOpen, setOpen2] = React.useState(false);
-   const [compMissionOpen, setOpen3] = React.useState(false);
-   const [compSubMissionOpen, setOpen4] = React.useState(false);
+   const [missionOpen, setOpen] = useState(false);
+   const [subMissionOpen, setOpen2] = useState(false);
+   const [compMissionOpen, setOpen3] = useState(false);
+   const [compSubMissionOpen, setOpen4] = useState(false);
    const history = useHistory();
 
-   const handleClick = () => {
-      setOpen(!missionOpen);
-   };
+   // const handleClick = () => {
+   //    setOpen(!missionOpen);
+   // };
 
-   const handleClick2 = () => {
-      setOpen2(!subMissionOpen);
-   };
+   // const handleClick2 = () => {
+   //    setOpen2(!subMissionOpen);
+   // };
 
-   const handleClick3 = () => {
-      setOpen3(!compMissionOpen);
-   };
+   // const handleClick3 = () => {
+   //    setOpen3(!compMissionOpen);
+   // };
 
-   const handleClick4 = () => {
-      setOpen4(!compSubMissionOpen);
-   };
+   // const handleClick4 = () => {
+   //    setOpen4(!compSubMissionOpen);
+   // };
 
-   const taskPercent = 100;
-   const subMissionPercent = 50;
-   const missionPercent = 50;
+   const TASK_PERCENT = 100;
+   const MISSION_PERCENT = 50;
+   const SUB_MISSION_PERCENT = 50;
 
-   const compTaskPercent = 100;
-   const compSubMissionPercent = 100;
-   const compMissionPercent = 100;
+   const COMP_TASK_PERCENT = 100;
+   const COMP_SUB_MISSION_PERCENT = 100;
+   const COMP_MISSION_PERCENT = 100;
 
    const test: any = history.location.state;
    const inputUser: User = {
@@ -126,19 +115,18 @@ export default function SingleStudentOverview() {
                   aria-labelledby="nested-list-subheader"
                   className={classes.root}
                >
-                  <ListItem button onClick={handleClick}>
-                     <ListItemIcon>{/* <SendIcon /> */}</ListItemIcon>
+                  <ListItem button onClick={() => handleClick(missionOpen, setOpen)}>
+                     <ListItemIcon />
                      <ListItemText primary="Mission 1" />
                      <LinearProgressWithLabel
                         className={classes.progressBar}
-                        value={missionPercent}
+                        value={MISSION_PERCENT}
                      />
                      {missionOpen ? <ExpandLess /> : <ExpandMore />}
                   </ListItem>
                   <Collapse in={missionOpen} timeout="auto" unmountOnExit>
                      <List component="div" disablePadding>
-                        <ListItem button onClick={handleClick2}>
-                           {/* <ListItemIcon></ListItemIcon> */}
+                        <ListItem button onClick={() => handleClick(subMissionOpen, setOpen2)}>
                            <ListItemIcon>
                               <div />
                            </ListItemIcon>
@@ -148,7 +136,7 @@ export default function SingleStudentOverview() {
                            <ListItemText primary="Sub-Mission 1" />
                            <LinearProgressWithLabel
                               className={classes.progressBar}
-                              value={subMissionPercent}
+                              value={SUB_MISSION_PERCENT}
                            />
                            {subMissionOpen ? <ExpandLess /> : <ExpandMore />}
                         </ListItem>
@@ -165,7 +153,7 @@ export default function SingleStudentOverview() {
                                     <ListItemText primary="Task 1" />
                                     <LinearProgressWithLabel
                                        className={classes.progressBar}
-                                       value={taskPercent}
+                                       value={TASK_PERCENT}
                                     />
                                  </ListItem>
                               </div>
@@ -212,24 +200,24 @@ export default function SingleStudentOverview() {
                   aria-labelledby="nested-list-subheader"
                   className={classes.root}
                >
-                  <ListItem button onClick={handleClick3}>
-                     <ListItemIcon>{/* <SendIcon /> */}</ListItemIcon>
+                  <ListItem button onClick={() => handleClick(compMissionOpen, setOpen3)}>
+                     <ListItemIcon />
                      <ListItemText primary="Mission 0" />
                      <LinearProgressWithLabel
                         className={classes.progressBar}
-                        value={compMissionPercent}
+                        value={COMP_MISSION_PERCENT}
                      />
                      {compMissionOpen ? <ExpandLess /> : <ExpandMore />}
                   </ListItem>
                   <Collapse in={compMissionOpen} timeout="auto" unmountOnExit>
                      <List component="div" disablePadding>
-                        <ListItem button onClick={handleClick4}>
+                        <ListItem button onClick={() => handleClick(compSubMissionOpen, setOpen4)}>
                            <ListItemIcon />
                            <ListItemIcon />
                            <ListItemText primary="Sub-Mission 1" />
                            <LinearProgressWithLabel
                               className={classes.progressBar}
-                              value={compSubMissionPercent}
+                              value={COMP_SUB_MISSION_PERCENT}
                            />
                            {compSubMissionOpen ? <ExpandLess /> : <ExpandMore />}
                         </ListItem>
@@ -245,7 +233,7 @@ export default function SingleStudentOverview() {
                                  <ListItemText primary="Task 1" />
                                  <LinearProgressWithLabel
                                     className={classes.progressBar}
-                                    value={compTaskPercent}
+                                    value={COMP_TASK_PERCENT}
                                  />
                               </ListItem>
                            </List>
@@ -260,7 +248,7 @@ export default function SingleStudentOverview() {
                                  <ListItemText primary="Task 2" />
                                  <LinearProgressWithLabel
                                     className={classes.progressBar}
-                                    value={compTaskPercent}
+                                    value={COMP_TASK_PERCENT}
                                  />
                               </ListItem>
                            </List>
@@ -279,7 +267,7 @@ export default function SingleStudentOverview() {
                      <ListItemText primary="Goal 0" />
                      <LinearProgressWithLabel
                         className={classes.progressBar}
-                        value={compTaskPercent}
+                        value={COMP_TASK_PERCENT}
                      />
                   </ListItem>
                </List>

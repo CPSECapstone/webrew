@@ -11,6 +11,8 @@ import { useQuery } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
 import { LIST_QUIZ_SUBMISSIONS } from '../queries/quiz-submission-queries';
 import { GET_QUIZ } from '../queries/quiz-queries';
+import { QuizSubmissions } from '../interfaces/QuizSubmissions';
+import { Quiz } from '../interfaces/Quiz';
 
 const StyledTableCell = withStyles((theme: Theme) =>
    createStyles({
@@ -34,23 +36,6 @@ const StyledTableRow = withStyles((theme: Theme) =>
    })
 )(TableRow);
 
-export interface QuizSubmissions {
-   quizSubmissions: QuizSubmission[];
-}
-
-export interface QuizSubmission {
-   id: string;
-   student: string;
-   points: number;
-}
-
-export interface Quiz {
-   id: string;
-   course: string;
-   instructions: string;
-   name: string;
-}
-
 const useStyles = makeStyles((theme: Theme) =>
    createStyles({
       root: {
@@ -64,29 +49,23 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       table: {
          minWidth: 700,
-         // maxWidth: 700
       },
    })
 );
 
-export default function QuizOverview() {
+export default function TaskOverview() {
    const classes = useStyles();
-   const { data } = useQuery<QuizSubmissions>(LIST_QUIZ_SUBMISSIONS);
-   const { data: data2 } = useQuery<Quiz>(GET_QUIZ);
+   const { data: quizSubmissions } = useQuery<QuizSubmissions>(LIST_QUIZ_SUBMISSIONS);
+   const { data: quiz } = useQuery<Quiz>(GET_QUIZ);
 
-   // const [addCourse, { data }] = useMutation(SAVE_COURSE);
    const history = useHistory();
-   if (data === undefined) {
-      return <div />;
+   if (quizSubmissions === undefined || quiz === undefined) {
+      return <div>Quiz Submission(s) Undefined</div>;
    }
-   if (data2 === undefined) {
-      return <div />;
-   }
-   console.log(data);
 
    return (
       <div style={{ marginLeft: '5px', fontSize: '40px' }}>
-         <div style={{ marginLeft: '5px' }}>{data2.name}</div>
+         <div style={{ marginLeft: '5px' }}>{quiz.name}</div>
          <div className={classes.root}>
             <TableContainer style={{ marginLeft: '5px' }} component={Paper}>
                <Table className={classes.table} aria-label="customized table">
@@ -97,11 +76,11 @@ export default function QuizOverview() {
                      </TableRow>
                   </TableHead>
                   <TableBody>
-                     {data.quizSubmissions.map((submission) => (
+                     {quizSubmissions.quizSubmissions.map((submission) => (
                         <StyledTableRow
                            style={{ cursor: 'pointer' }}
                            onClick={() => {
-                              history.push('/quizSubmission');
+                              history.push('/taskSubmission');
                            }}
                         >
                            <StyledTableCell component="th" scope="row">
@@ -115,9 +94,5 @@ export default function QuizOverview() {
             </TableContainer>
          </div>
       </div>
-
-      // <CenterDiv>
-
-      // </CenterDiv>
    );
 }

@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { Users } from './interfaces/User';
+import { Users } from './interfaces/Users';
 import { GET_USERS } from './queries/user-queries';
 
 function WelcomeUsers() {
