@@ -8,6 +8,8 @@
     "@aws-amplify/interactions": "^3.3.29",
     "@aws-amplify/storage": "^3.3.29",
     "@aws-amplify/ui-react": "^1.0.6",
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^12.8.3",
@@ -19,9 +21,12 @@
     "aws-amplify": "^3.3.26",
     "aws-amplify-react": "^4.2.30",
     "eslint-plugin-react": "^7.23.1",
+    "formik": "^2.2.6",
     "graphql": "^15.5.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-router-dom": "^5.2.0",
+    "styled-components": "^5.2.3",
     "web-vitals": "^1.1.1"
   },
   "scripts": {
@@ -52,6 +57,8 @@
     ]
   },
   "devDependencies": {
+    "@types/react-router-dom": "^5.1.7",
+    "@types/styled-components": "^5.1.7",
     "es-to-primitive": "^1.2.1",
     "eslint": "^7.23.0",
     "eslint-config-airbnb-typescript": "^12.3.1",

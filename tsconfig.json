@@ -21,6 +21,7 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src"
-, "src/ClassList.tsx"  ]
+    "src",
+    "src/ClassList.tsx"
+  ]
 }
