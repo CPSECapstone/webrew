@@ -4,6 +4,6 @@ import App from './App';
 
 test('My first test case', () => {
    render(<App />);
-   const linkElement = screen.getByText(/My first Apollo app/i);
+   const linkElement = screen.getByText(/Dashboard/i);
    expect(linkElement).toBeInTheDocument();
 });

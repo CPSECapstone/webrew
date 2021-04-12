@@ -1,3 +1,5 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/jsx-props-no-spreading */
 import { Box, LinearProgress, LinearProgressProps, Typography } from '@material-ui/core';
 import React from 'react';
 
