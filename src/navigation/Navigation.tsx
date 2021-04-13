@@ -3,7 +3,7 @@ import { Navbar, Nav, Container } from 'react-bootstrap';
 
 export default function Navigation() {
    return (
-      <Navbar collapseOnSelect fixed="top" expand="sm" bg="dark" variant="dark">
+      <Navbar collapseOnSelect expand="sm" bg="dark" variant="dark">
          <Container>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
@@ -13,6 +13,7 @@ export default function Navigation() {
                   <Nav.Link href="/addTaskSubmission">Submit Task</Nav.Link>
                   <Nav.Link href="/taskOverview">Tasks</Nav.Link>
                   <Nav.Link href="/studentOverview">Student Overview</Nav.Link>
+                  <Nav.Link href="/singleStudentOverview">Single Student Overview</Nav.Link>
                </Nav>
             </Navbar.Collapse>
          </Container>
