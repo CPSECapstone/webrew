@@ -1,8 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { ApolloProvider } from '@apollo/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import apolloClient from './clients/apollo-client';
+
 // import Amplify, { Auth } from 'aws-amplify';
 // import awsconfig from './aws-exports';
 
@@ -10,7 +14,17 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
    <React.StrictMode>
-      <App />
+      <link
+         rel="stylesheet"
+         href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+         integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+         crossOrigin="anonymous"
+      />
+      <ApolloProvider client={apolloClient}>
+         <Router>
+            <App />
+         </Router>
+      </ApolloProvider>
    </React.StrictMode>,
    document.getElementById('root')
 );
