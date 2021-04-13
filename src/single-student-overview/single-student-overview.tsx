@@ -70,22 +70,6 @@ export default function SingleStudentOverview() {
    const [compSubMissionOpen, setOpen4] = useState(false);
    const history = useHistory();
 
-   // const handleClick = () => {
-   //    setOpen(!missionOpen);
-   // };
-
-   // const handleClick2 = () => {
-   //    setOpen2(!subMissionOpen);
-   // };
-
-   // const handleClick3 = () => {
-   //    setOpen3(!compMissionOpen);
-   // };
-
-   // const handleClick4 = () => {
-   //    setOpen4(!compSubMissionOpen);
-   // };
-
    const TASK_PERCENT = 100;
    const MISSION_PERCENT = 50;
    const SUB_MISSION_PERCENT = 50;
