@@ -15,46 +15,46 @@ export default function NavigationRouter() {
          <nav>
             <ul>
                <li>
-                  <Link to='/'>Dashboard</Link>
+                  <Link to="/">Dashboard</Link>
                </li>
                <li>
-                  <Link to='/create'>New Course</Link>
+                  <Link to="/create">New Course</Link>
                </li>
                <li>
-                  <Link to='/taskSubmission'>Task Submission</Link>
+                  <Link to="/taskSubmission">Task Submission</Link>
                </li>
                <li>
-                  <Link to='/taskOverview'>Task Overview</Link>
+                  <Link to="/taskOverview">Task Overview</Link>
                </li>
                <li>
-                  <Link to='/studentOverview'>Student Overview</Link>
+                  <Link to="/studentOverview">Student Overview</Link>
                </li>
                <li>
-                  <Link to='/studentMasteryOverview'>Student Mastery Overview</Link>
+                  <Link to="/studentMasteryOverview">Student Mastery Overview</Link>
                </li>
             </ul>
          </nav>
          <Switch>
-            <Route path='/create'>
+            <Route path="/create">
                <WelcomeUsers />
                <CreateCourseDialog />
             </Route>
-            <Route path='/taskSubmission'>
+            <Route path="/taskSubmission">
                <TaskSubmission />
             </Route>
-            <Route path='/taskOverview'>
+            <Route path="/taskOverview">
                <TaskOverview />
             </Route>
-            <Route path='/studentOverview'>
+            <Route path="/studentOverview">
                <StudentOverview />
             </Route>
-            <Route path='/singleStudentOverview'>
+            <Route path="/singleStudentOverview">
                <SingleStudentOverview />
             </Route>
-            <Route path='/studentMasteryOverview'>
+            <Route path="/studentMasteryOverview">
                <SingleStudentMasteryOverview />
             </Route>
-            <Route path='/'>
+            <Route path="/">
                <Dashboard />
             </Route>
          </Switch>
