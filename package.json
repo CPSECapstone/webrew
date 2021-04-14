@@ -79,6 +79,7 @@
     "@types/react-router-dom": "^5.1.7",
     "@types/react-table": "^7.0.29",
     "@types/styled-components": "^5.1.7",
+    "cypress": "^7.1.0",
     "es-to-primitive": "^1.2.1",
     "eslint": "^7.23.0",
     "eslint-config-airbnb-typescript": "^12.3.1",
