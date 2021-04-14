@@ -23,7 +23,7 @@ const StudentNameDiv = styled.div`
 
 const FieldTitleDiv = styled.div`
    height: 30px;
-   width: 400px;
+   width: 100%;
    background-color: #99d6ff;
    align-items: center;
    display: flex;
@@ -31,7 +31,7 @@ const FieldTitleDiv = styled.div`
 `;
 
 const RowDiv = styled.div`
-   width: 50%;
+   width: 100%;
    display: flex;
 `;
 
