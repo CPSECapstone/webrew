@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -10,12 +9,17 @@ import { SubmissionFull } from '../interfaces/SubmissionFull';
 import { Option } from '../interfaces/Option';
 import { GET_LEARNING_OBJECTIVE } from '../queries/LearningObjectiveQueries';
 import { LearningObjective } from '../interfaces/LearningObjective';
+import { LearningObjectives } from '../interfaces/LearningObjectives';
 
 const QuizDiv = styled.div`
    height: 300px;
    width: 600px;
    //background-color: grey;
    margin-top: 10px;
+`;
+const ObjectiveDiv = styled.div`
+   font-size: 25px;
+   font-style: italic;
 `;
 const FeedbackDiv = styled.div`
    font-size: 15px;
@@ -33,17 +37,20 @@ const QuestionDiv = styled.div`
 
 export default function TaskSubmission() {
    const { data: quiz } = useQuery<SubmissionFull>(GET_QUIZ_SUBMISSION_FULL);
-   const { data: learningObjective } = useQuery<LearningObjective>(GET_LEARNING_OBJECTIVE);
-
+   const { data: learningObjective } = useQuery<LearningObjectives>(GET_LEARNING_OBJECTIVE);
    if (!quiz) {
-      return <div>Quiz Is Undefined</div>;
+      return <>Quiz Undefined</>;
    }
    if (!learningObjective) {
-      return <div>Learning Objective Is Undefined</div>;
+      return <>Learning Objective Undefined</>;
    }
-   <div>{learningObjective.description}</div>;
    return (
       <CenterDiv>
+         {learningObjective.learningObjectives.map((learningobjective: LearningObjective) => (
+            <ObjectiveDiv>
+               <>Learning Objective: {learningobjective.description[0]}</>
+            </ObjectiveDiv>
+         ))}
          {quiz.quizSubmission.questions.map((question: Question) => (
             <QuizDiv>
                <QuestionDiv>

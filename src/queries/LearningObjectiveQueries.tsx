@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 
 export const GET_LEARNING_OBJECTIVE = gql`
    query {
-      learningObjectives(course: "Biology") {
+      learningObjectives(course: "Math") {
          id
          course
          name

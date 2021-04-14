@@ -13,8 +13,12 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
 import { Progress } from '../interfaces/Progress';
 import { Users } from '../interfaces/Users';
+import { GET_LEARNING_OBJECTIVE } from '../queries/LearningObjectiveQueries';
+import { LearningObjectives } from '../interfaces/LearningObjectives';
+import { LearningObjective } from '../interfaces/LearningObjective';
 
 const StyledTableCell = withStyles((theme: Theme) =>
    createStyles({
@@ -101,29 +105,43 @@ const userProgressMap = new Map<string, Progress>();
 export default function StudentOverview() {
    const classes = useStyles();
    const history = useHistory();
+   const { data: learningObjective } = useQuery<LearningObjectives>(GET_LEARNING_OBJECTIVE);
+   if (!learningObjective) {
+      return <>Learning Objective Undefined</>;
+   }
+
+   const objs = learningObjective.learningObjectives.map((learningobjective: LearningObjective) => (
+      <>
+         <>{learningobjective.name}</>
+      </>
+   ));
 
    userProgressMap.set('1', {
       curStatus: 'Task 1.1',
       statusColor: '#00b300', // Green
       time: '2:10',
+      objective: objs[0],
    });
 
    userProgressMap.set('2', {
       curStatus: 'Task 1.2',
       statusColor: '#00b300', // Green
       time: '1:30',
+      objective: objs[1],
    });
 
    userProgressMap.set('3', {
       curStatus: 'Task 2.1',
       statusColor: '#a6a6a6', // Gray
       time: '1:15',
+      objective: objs[2],
    });
 
    userProgressMap.set('4', {
       curStatus: 'Task 1.1',
       statusColor: '#ff6666', // Red
       time: '6:15',
+      objective: objs[0],
    });
 
    return (
@@ -147,10 +165,10 @@ export default function StudentOverview() {
                         <StyledTableCell style={{ width: 1, backgroundColor: 'black' }} />
 
                         <StyledTableCell className={classes.borderedHeaderCell}>
-                           Task #1
+                           Objective #1
                         </StyledTableCell>
                         <StyledTableCell className={classes.borderedHeaderCell}>
-                           Task #2
+                           Objective #2
                         </StyledTableCell>
                      </TableRow>
                   </TableHead>
@@ -191,6 +209,13 @@ export default function StudentOverview() {
                               {userProgressMap.get(user.id)?.curStatus}
                            </StyledTableCell>
                            <StyledTableCell style={{ backgroundColor: 'black' }} />
+                           <StyledTableCell
+                              className={classes.borderedCell}
+                              scope="row"
+                              align="center"
+                           >
+                              {userProgressMap.get(user.id)?.objective}
+                           </StyledTableCell>
                            <StyledTableCell
                               style={{
                                  borderBottom: '4px solid gray',
