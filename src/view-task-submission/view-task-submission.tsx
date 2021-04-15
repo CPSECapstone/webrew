@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import styled from 'styled-components';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -35,6 +36,17 @@ const QuestionDiv = styled.div`
    font-size: 20px;
 `;
 
+export function Objective({ course }) {
+   const { loading, error, data } = useQuery(GET_LEARNING_OBJECTIVE, { variables: { course } });
+   if (loading) return <p>Loading...</p>;
+   if (error) return <p>Error!</p>;
+
+   return (
+      <p>
+         {data.learningObjectives.id} is {data.learningObjectives.name}
+      </p>
+   );
+}
 export default function TaskSubmission() {
    const { data: quiz } = useQuery<SubmissionFull>(GET_QUIZ_SUBMISSION_FULL);
    const { data: learningObjective } = useQuery<LearningObjectives>(GET_LEARNING_OBJECTIVE);
