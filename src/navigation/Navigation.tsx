@@ -14,6 +14,9 @@ export default function Navigation() {
                   <Nav.Link href="/taskOverview">Tasks</Nav.Link>
                   <Nav.Link href="/studentOverview">Student Overview</Nav.Link>
                   <Nav.Link href="/singleStudentOverview">Single Student Overview</Nav.Link>
+                  <Nav.Link href="/singleStudentMasteryOverview">
+                     Single Student Mastery Overview
+                  </Nav.Link>
                </Nav>
             </Navbar.Collapse>
          </Container>
