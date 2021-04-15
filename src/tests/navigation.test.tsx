@@ -13,4 +13,9 @@ test('displays modal', async () => {
 
    // Assert
    expect(screen.getByTestId('nav-link-first')).toBeVisible();
+   expect(screen.getByTestId('nav-link-second')).toBeVisible();
+   expect(screen.getByTestId('nav-link-third')).toBeVisible();
+   expect(screen.getByTestId('nav-link-fourth')).toBeVisible();
+   expect(screen.getByTestId('nav-link-fifth')).toBeVisible();
+   expect(screen.getByTestId('nav-link-sixth')).toBeVisible();
 });
