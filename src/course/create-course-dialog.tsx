@@ -6,7 +6,7 @@ import {
    TextField,
    DialogActions,
 } from '@material-ui/core';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { Formik } from 'formik';
 import { useMutation } from '@apollo/client';
@@ -22,9 +22,6 @@ const LargeTextField = styled(TextField)`
 export default function CreateCourseDialog() {
    const [open, setOpen] = useState(false);
    const [addCourse] = useMutation(SAVE_COURSE);
-
-   // TODO For when we have sessions
-   // const instructor = getCurrentUser();
 
    const handleClickOpen = () => {
       setOpen(true);
