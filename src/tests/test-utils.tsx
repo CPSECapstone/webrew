@@ -1,8 +1,8 @@
-import React, { FC } from 'react';
-import { render } from '@testing-library/react';
-import { MockedProvider } from '@apollo/client/testing';
+import React, { FC, ReactElement } from 'react';
+import { render, RenderOptions } from '@testing-library/react';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 
-const mocks = []; //TODO fill these in with mock apollo responses
+const mocks: readonly MockedResponse<Record<string, any>>[] | undefined = []; // TODO fill these in with mock apollo responses
 
 const Providers: FC = ({ children }) => {
    return <MockedProvider mocks={mocks}>{children}</MockedProvider>;

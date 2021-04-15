@@ -5,14 +5,14 @@ import '@testing-library/jest-dom/extend-expect';
 import CreateCourseDialog from '../course/create-course-dialog';
 
 test('displays modal', async () => {
-   //Arrange
+   // Arrange
    render(<CreateCourseDialog />);
 
-   //Act
+   // Act
    fireEvent.click(screen.getByTestId('create-btn'));
 
    await waitFor(() => screen.getByTestId('create-dialog'));
 
-   //Assert
+   // Assert
    expect(screen.getByTestId('create-dialog')).toBeVisible();
 });

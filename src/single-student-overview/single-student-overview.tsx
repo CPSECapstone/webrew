@@ -62,13 +62,15 @@ function handleClick(
    openFunction(!openObjectBool);
 }
 
-export default function SingleStudentOverview(user: User) {
+// export default function SingleStudentOverview(user: User) {
+export default function SingleStudentOverview() {
    const classes = useStyles();
    const [missionOpen, setOpen] = useState(false);
    const [subMissionOpen, setOpen2] = useState(false);
    const [compMissionOpen, setOpen3] = useState(false);
    const [compSubMissionOpen, setOpen4] = useState(false);
-   const { id, firstName, lastName } = user;
+   const history = useHistory();
+   // const { id, firstName, lastName } = user;
 
    const TASK_PERCENT = 100;
    const MISSION_PERCENT = 50;
@@ -78,17 +80,17 @@ export default function SingleStudentOverview(user: User) {
    const COMP_SUB_MISSION_PERCENT = 100;
    const COMP_MISSION_PERCENT = 100;
 
-   // const test: any = history.location.state;
-   // const inputUser: User = {
-   //    id: test?.id,
-   //    firstName: test?.firstName,
-   //    lastName: test?.lastName,
-   // };
+   const test: any = history.location.state;
+   const inputUser: User = {
+      id: test?.id,
+      firstName: test?.firstName,
+      lastName: test?.lastName,
+   };
 
    return (
-      <div style={{ marginLeft: '5px' }}>
-         <StudentNameDiv>
-            {firstName} {lastName}
+      <div data-testid="singleStudentOverview" style={{ marginLeft: '5px' }}>
+         <StudentNameDiv data-testid={inputUser.firstName}>
+            {inputUser.firstName} {inputUser.lastName}
          </StudentNameDiv>
          <img src={StudentPicture} alt="" style={{ width: 200, height: 200 }} />
          <RowDiv>

@@ -161,16 +161,17 @@ export default function StudentOverview() {
                            hover
                            style={{ cursor: 'pointer' }}
                            className={classes.tableRow}
+                           data-testid="tablerow"
                            onClick={() => {
-                              <SingleStudentOverview
-                                 id={user.id}
-                                 firstName={user.firstName}
-                                 lastName={user.lastName}
-                              />;
-                              // history.push({
-                              //    pathname: '/singleStudentOverview',
-                              //    state: user,
-                              // });
+                              // <SingleStudentOverview
+                              //    id={user.id}
+                              //    firstName={user.firstName}
+                              //    lastName={user.lastName}
+                              // />;
+                              history.push({
+                                 pathname: '/singleStudentOverview',
+                                 state: user,
+                              });
                            }}
                         >
                            <StyledTableCell className={classes.borderedCell} scope="row">
