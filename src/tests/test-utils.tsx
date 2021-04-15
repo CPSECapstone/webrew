@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { FC, ReactElement } from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';

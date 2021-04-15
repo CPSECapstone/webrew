@@ -47,6 +47,7 @@ export default function CreateCourseDialog() {
             onClose={handleClose}
             aria-labelledby="form-dialog-title"
             maxWidth="sm"
+            data-testid="create-dialog"
          >
             <DialogTitle id="form-dialog-title">New Course</DialogTitle>
             <DialogContent>
