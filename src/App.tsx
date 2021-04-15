@@ -1,4 +1,4 @@
-import { Route, Switch } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import './App.css';
 import CreateCourseDialog from './course/create-course-dialog';
 import Dashboard from './scenes/teacher/Dashboard';
