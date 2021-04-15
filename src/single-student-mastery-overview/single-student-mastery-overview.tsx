@@ -181,8 +181,8 @@ export default function SingleStudentMasteryOveriew() {
    const COMP_TASK_PERCENT = 100;
 
    return (
-      <div style={{ marginLeft: '5px' }}>
-         <StudentNameDiv>
+      <div style={{ marginLeft: '5px' }} data-testid="mastery-overview">
+         <StudentNameDiv aria-label="username">
             {/* {inputUser.firstName} {inputUser.lastName} */} Bob Jones
          </StudentNameDiv>
          <img src={StudentPicture} alt="" style={{ width: 200, height: 200 }} />

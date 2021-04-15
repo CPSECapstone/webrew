@@ -20,7 +20,11 @@ function App() {
             <Route path="/taskOverview" component={TaskOverview} />
             <Route path="/studentOverview" component={StudentOverview} />
             <Route path="/singleStudentOverview" component={SingleStudentOverview} />
-            <Route path="/singleStudentMasteryOverview" component={SingleStudentMasteryOverview} />
+            <Route
+               path="/singleStudentMasteryOverview"
+               component={SingleStudentMasteryOverview}
+               data-testid="nav-link"
+            />
             <Route path="/" component={Dashboard} />
          </Switch>
       </div>

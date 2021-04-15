@@ -51,7 +51,12 @@ export default function TargetDropDown({ name, learningObjectives }: TargetDropD
    const TARGET_PERCENT = 50;
 
    return (
-      <List component="nav" aria-labelledby="nested-list-subheader" className={classes.root}>
+      <List
+         component="nav"
+         aria-labelledby="nested-list-subheader"
+         className={classes.root}
+         aria-label="all-objectives"
+      >
          <PaddedDiv>
             <ListItem button onClick={() => handleClick(open, setOpen)}>
                <ListItemText primary={name} />
