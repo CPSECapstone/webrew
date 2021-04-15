@@ -20,6 +20,39 @@ export const GET_QUIZ_SUBMISSION = gql`
    }
 `;
 
+export const GET_QUIZ_TASK_SUBMISSION = gql`
+   query {
+      quizSubmission(submissionId: "085f2b83902") {
+         submission {
+            id
+            student
+            points
+         }
+         quiz {
+            name
+            instructions
+         }
+         questions {
+            id
+            description
+            options {
+               description
+            }
+         }
+      }
+   }
+`;
+
+export const LIST_TEST = gql`
+   query {
+      quizSubmissions(quizId: "3f1e9fe5b43") {
+         id
+         student
+         points
+      }
+   }
+`;
+
 export const GET_QUIZ_SUBMISSION_FULL = gql`
    query GetQuizSubmissionById {
       quizSubmission(submissionId: "9c7e0c2894e") {

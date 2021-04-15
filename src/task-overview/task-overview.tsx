@@ -9,8 +9,12 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { useQuery } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
-import { LIST_QUIZ_SUBMISSIONS } from '../queries/quiz-submission-queries';
-import { GET_QUIZ } from '../queries/quiz-queries';
+import {
+   GET_QUIZ_TASK_SUBMISSION,
+   LIST_QUIZ_SUBMISSIONS,
+   LIST_TEST,
+} from '../queries/task-submission-queries';
+import { GET_QUIZ } from '../queries/task-queries';
 import { QuizSubmissions } from '../interfaces/QuizSubmissions';
 import { Quiz } from '../interfaces/Quiz';
 
@@ -58,7 +62,16 @@ export default function TaskOverview() {
    const { data: quizSubmissions } = useQuery<QuizSubmissions>(LIST_QUIZ_SUBMISSIONS);
    const { data: quiz } = useQuery<Quiz>(GET_QUIZ);
 
+   // const { data: quizTaskSubmissions } = useQuery<any>(GET_QUIZ_TASK_SUBMISSION);
+   // const { data: listTest } = useQuery<any>(LIST_TEST);
+
    const history = useHistory();
+
+   // if (quizTaskSubmissions === undefined) {
+   //    return <div />;
+   // }
+   // console.log(quizTaskSubmissions);
+
    if (quizSubmissions === undefined || quiz === undefined) {
       return <div>Quiz Submission(s) Undefined</div>;
    }

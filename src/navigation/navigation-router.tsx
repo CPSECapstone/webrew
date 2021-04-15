@@ -44,9 +44,9 @@ export default function NavigationRouter() {
             <Route path="/studentOverview">
                <StudentOverview />
             </Route>
-            <Route path="/singleStudentOverview">
-               <SingleStudentOverview />
-            </Route>
+            {/* <Route path="/singleStudentOverview">
+                  <SingleStudentOverview />
+               </Route> */}
             <Route path="/">
                <Dashboard />
             </Route>

@@ -4,7 +4,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { Radio } from '@material-ui/core';
 import { useQuery } from '@apollo/client';
-import { GET_QUIZ_SUBMISSION_FULL } from '../queries/quiz-submission-queries';
+import { GET_QUIZ_SUBMISSION_FULL } from '../queries/task-submission-queries';
 import { Question } from '../interfaces/Question';
 import { SubmissionFull } from '../interfaces/SubmissionFull';
 import { Option } from '../interfaces/Option';

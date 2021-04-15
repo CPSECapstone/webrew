@@ -15,6 +15,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Progress } from '../interfaces/Progress';
 import { Users } from '../interfaces/Users';
+import SingleStudentOverview from '../single-student-overview/single-student-overview';
 
 const StyledTableCell = withStyles((theme: Theme) =>
    createStyles({
@@ -161,10 +162,15 @@ export default function StudentOverview() {
                            style={{ cursor: 'pointer' }}
                            className={classes.tableRow}
                            onClick={() => {
-                              history.push({
-                                 pathname: '/singleStudentOverview',
-                                 state: user,
-                              });
+                              <SingleStudentOverview
+                                 id={user.id}
+                                 firstName={user.firstName}
+                                 lastName={user.lastName}
+                              />;
+                              // history.push({
+                              //    pathname: '/singleStudentOverview',
+                              //    state: user,
+                              // });
                            }}
                         >
                            <StyledTableCell className={classes.borderedCell} scope="row">
