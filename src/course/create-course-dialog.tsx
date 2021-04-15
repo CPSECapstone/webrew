@@ -33,7 +33,12 @@ export default function CreateCourseDialog() {
 
    return (
       <div>
-         <Button variant="contained" color="primary" onClick={handleClickOpen}>
+         <Button
+            variant="contained"
+            color="primary"
+            onClick={handleClickOpen}
+            data-testid="create-btn"
+         >
             Create New Course
          </Button>
          <Dialog
