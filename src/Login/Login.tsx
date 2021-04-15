@@ -1,5 +1,4 @@
-import { Auth, Hub } from 'aws-amplify';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { ILoginProps } from '../interfaces/ReactProps';
 
@@ -8,19 +7,16 @@ export default function Login({ authClient }: ILoginProps) {
 
    const login = () => {
       authClient.authenticate(() => {
-         console.log('Signed in!');
          setRedirectSignIn(true);
       });
    };
 
    const signout = () => {
       authClient.signout(() => {
-         console.log('Signed out!');
          setRedirectSignIn(false);
       });
    };
 
-   console.log(redirectSignIn);
    if (redirectSignIn === true) {
       return <Redirect to="/" />;
    }
