@@ -13,5 +13,5 @@ test('displays student overview', async () => {
    await waitFor(() => screen.getByTestId('mastery-overview'));
 
    // Assert
-   expect(screen.getAllByLabelText('all-tasks')).toHaveLength(4);
+   expect(screen.getAllByLabelText('all-targets')).toHaveLength(4);
 });
