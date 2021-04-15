@@ -1,6 +1,7 @@
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
-import Amplify from 'aws-amplify';
+import Amplify, { Auth, Hub } from 'aws-amplify';
+import { useState, useEffect } from 'react';
 import CreateCourseDialog from './course/create-course-dialog';
 import Dashboard from './scenes/teacher/Dashboard';
 import StudentOverview from './student-overview/student-overview';
@@ -9,7 +10,6 @@ import TaskSubmission from './view-task-submission/view-task-submission';
 import Navigation from './navigation/Navigation';
 import SingleStudentOverview from './single-student-overview/single-student-overview';
 import Login from './Login/Login';
-import PrivateRoute from './PrivateRoute/PrivateRoute';
 import authClient from './clients/authClient';
 
 function App() {
@@ -29,6 +29,41 @@ function App() {
       },
    });
 
+   const [user, setUser] = useState(null);
+
+   function storeToken(): void {
+      Auth.currentSession()
+         .then((userSession) => {
+            const accessToken = userSession.getAccessToken();
+            const jwt = accessToken.getJwtToken();
+            localStorage.setItem('accessToken', JSON.stringify(accessToken));
+            localStorage.setItem('jwt', jwt);
+         })
+         .catch(() => console.log('Not signed in'));
+   }
+
+   useEffect(() => {
+      Hub.listen('auth', ({ payload: { event, data } }) => {
+         switch (event) {
+            case 'signIn':
+            case 'cognitoHostedUI':
+               storeToken();
+               break;
+            case 'signOut':
+               setUser(null);
+               break;
+            case 'signIn_failure':
+            case 'cognitoHostedUI_failure':
+               console.log('Sign in failure', data);
+               break;
+            default:
+               break;
+         }
+      });
+
+      storeToken();
+   }, []);
+
    return (
       <div className="App">
          <Navigation />
@@ -36,24 +71,24 @@ function App() {
             <Route path="/login">
                <Login authClient={authClient} />
             </Route>
-            <PrivateRoute authClient={authClient} path="/addNewCourse">
+            <Route path="/addNewCourse">
                <CreateCourseDialog />
-            </PrivateRoute>
-            <PrivateRoute authClient={authClient} path="/addTaskSubmission">
+            </Route>
+            <Route path="/addTaskSubmission">
                <TaskSubmission />
-            </PrivateRoute>
-            <PrivateRoute authClient={authClient} path="/taskOverview">
+            </Route>
+            <Route path="/taskOverview">
                <TaskOverview />
-            </PrivateRoute>
-            <PrivateRoute authClient={authClient} path="/studentOverview">
+            </Route>
+            <Route path="/studentOverview">
                <StudentOverview />
-            </PrivateRoute>
-            <PrivateRoute authClient={authClient} path="/singleStudentOverview">
+            </Route>
+            <Route path="/singleStudentOverview">
                <SingleStudentOverview />
-            </PrivateRoute>
-            <PrivateRoute authClient={authClient} path="/">
+            </Route>
+            <Route path="/">
                <Dashboard />
-            </PrivateRoute>
+            </Route>
          </Switch>
       </div>
    );

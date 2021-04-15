@@ -9,6 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { useQuery } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
+import { withAuthenticator } from '@aws-amplify/ui-react';
 import { LIST_QUIZ_SUBMISSIONS } from '../queries/quiz-submission-queries';
 import { GET_QUIZ } from '../queries/quiz-queries';
 import { QuizSubmissions } from '../interfaces/QuizSubmissions';
@@ -53,7 +54,7 @@ const useStyles = makeStyles((theme: Theme) =>
    })
 );
 
-export default function TaskOverview() {
+function TaskOverview() {
    const classes = useStyles();
    const { data: quizSubmissions } = useQuery<QuizSubmissions>(LIST_QUIZ_SUBMISSIONS);
    const { data: quiz } = useQuery<Quiz>(GET_QUIZ);
@@ -96,3 +97,5 @@ export default function TaskOverview() {
       </div>
    );
 }
+
+export default withAuthenticator(TaskOverview);

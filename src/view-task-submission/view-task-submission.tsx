@@ -4,6 +4,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { Radio } from '@material-ui/core';
 import { useQuery } from '@apollo/client';
+import { withAuthenticator } from '@aws-amplify/ui-react';
 import { GET_QUIZ_SUBMISSION_FULL } from '../queries/quiz-submission-queries';
 import { Question } from '../interfaces/Question';
 import { SubmissionFull } from '../interfaces/SubmissionFull';
@@ -27,7 +28,7 @@ const QuestionDiv = styled.div`
    font-size: 20px;
 `;
 
-export default function TaskSubmission() {
+function TaskSubmission() {
    const { data: quiz } = useQuery<SubmissionFull>(GET_QUIZ_SUBMISSION_FULL);
 
    if (!quiz) {
@@ -68,3 +69,5 @@ export default function TaskSubmission() {
       </CenterDiv>
    );
 }
+
+export default withAuthenticator(TaskSubmission);
