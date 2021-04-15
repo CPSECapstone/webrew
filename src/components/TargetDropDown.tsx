@@ -55,7 +55,7 @@ export default function TargetDropDown({ name, learningObjectives }: TargetDropD
          component="nav"
          aria-labelledby="nested-list-subheader"
          className={classes.root}
-         aria-label="all-objectives"
+         aria-label="all-tasks"
       >
          <PaddedDiv>
             <ListItem button onClick={() => handleClick(open, setOpen)}>
