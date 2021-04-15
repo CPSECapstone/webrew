@@ -68,7 +68,7 @@ export default function TaskOverview() {
          <div style={{ marginLeft: '5px' }}>{quiz.name}</div>
          <div className={classes.root}>
             <TableContainer style={{ marginLeft: '5px' }} component={Paper}>
-               <Table className={classes.table} aria-label='customized table'>
+               <Table className={classes.table} aria-label="customized table">
                   <TableHead>
                      <TableRow>
                         <StyledTableCell>Student Name</StyledTableCell>
@@ -83,7 +83,7 @@ export default function TaskOverview() {
                               history.push('/taskSubmission');
                            }}
                         >
-                           <StyledTableCell component='th' scope='row'>
+                           <StyledTableCell component="th" scope="row">
                               {submission.student}
                            </StyledTableCell>
                            <StyledTableCell>{`${submission.points}/4`}</StyledTableCell>

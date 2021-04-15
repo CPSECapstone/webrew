@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import styled from 'styled-components';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
-import StudentPicture from '../assets/images/images-1.png';
-import { User } from '../interfaces/User';
 import LinearProgressWithLabel from './linear-progress-bar';
 import ObjectiveDropDown from './ObjectiveDropDown';
+import { LearningObjective } from '../interfaces/LearningObjective';
 
 const useStyles = makeStyles((theme: Theme) =>
    createStyles({
@@ -30,11 +27,16 @@ const useStyles = makeStyles((theme: Theme) =>
    })
 );
 
+const PaddedDiv = styled.div`
+   padding-left: 10px;
+`;
+
 export interface TargetDropDownProps {
    name: string;
-   learningObjectives: any;
+   learningObjectives: LearningObjective[];
 }
 
+// Handles state to open or close dropdown
 function handleClick(
    openObjectBool: boolean,
    openFunction: React.Dispatch<React.SetStateAction<boolean>>
@@ -45,27 +47,20 @@ function handleClick(
 export default function TargetDropDown({ name, learningObjectives }: TargetDropDownProps) {
    const classes = useStyles();
    const [open, setOpen] = useState(false);
-   const history = useHistory();
 
    const TARGET_PERCENT = 50;
 
-   // const test: any = history.location.state;
-   // const inputUser: User = {
-   //    id: test?.id,
-   //    firstName: test?.firstName,
-   //    lastName: test?.lastName,
-   // };
-
    return (
       <List component="nav" aria-labelledby="nested-list-subheader" className={classes.root}>
-         <ListItem button onClick={() => handleClick(open, setOpen)}>
-            <ListItemIcon />
-            <ListItemText primary={name} />
-            <LinearProgressWithLabel className={classes.progressBar} value={TARGET_PERCENT} />
-            {open ? <ExpandLess /> : <ExpandMore />}
-         </ListItem>
+         <PaddedDiv>
+            <ListItem button onClick={() => handleClick(open, setOpen)}>
+               <ListItemText primary={name} />
+               <LinearProgressWithLabel className={classes.progressBar} value={TARGET_PERCENT} />
+               {open ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+         </PaddedDiv>
          <Collapse in={open} timeout="auto" unmountOnExit>
-            {learningObjectives.map((objective: any) => (
+            {learningObjectives.map((objective: LearningObjective) => (
                <ObjectiveDropDown name={objective.name} tasks={objective.tasks} />
             ))}
          </Collapse>

@@ -9,6 +9,7 @@ import Navigation from './navigation/Navigation';
 import SingleStudentOverview from './single-student-overview/single-student-overview';
 import SingleStudentMasteryOverview from './single-student-mastery-overview/single-student-mastery-overview';
 
+// Entry point of the Flitped App
 function App() {
    return (
       <div className="App">

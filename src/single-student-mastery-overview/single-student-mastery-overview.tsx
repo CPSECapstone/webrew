@@ -1,23 +1,17 @@
-import React, { useState } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Collapse from '@material-ui/core/Collapse';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
 import StudentPicture from '../assets/images/images-1.png';
-import { User } from '../interfaces/User';
 import LinearProgressWithLabel from '../components/linear-progress-bar';
 import TargetDropDown from '../components/TargetDropDown';
+import { LearningObjective } from '../interfaces/LearningObjective';
 
 const StudentNameDiv = styled.div`
    height: 50px;
    width: 100%;
-   // background-color: ;
    font-size: 24pt;
 `;
 
@@ -40,6 +34,10 @@ const ColumnDiv = styled.div`
    flex-direction: column;
 `;
 
+const PaddedDiv = styled.div`
+   padding-left: 5px;
+`;
+
 const useStyles = makeStyles((theme: Theme) =>
    createStyles({
       root: {
@@ -56,9 +54,13 @@ const useStyles = makeStyles((theme: Theme) =>
    })
 );
 
+export interface LearningTarget {
+   name: string;
+   learningObjectives: LearningObjective[];
+}
+
 export default function SingleStudentMasteryOveriew() {
    const classes = useStyles();
-   const history = useHistory();
 
    const learningTargets = [
       {
@@ -178,13 +180,6 @@ export default function SingleStudentMasteryOveriew() {
 
    const COMP_TASK_PERCENT = 100;
 
-   // const test: any = history.location.state;
-   // const inputUser: User = {
-   //    id: test?.id,
-   //    firstName: test?.firstName,
-   //    lastName: test?.lastName,
-   // };
-
    return (
       <div style={{ marginLeft: '5px' }}>
          <StudentNameDiv>
@@ -198,7 +193,7 @@ export default function SingleStudentMasteryOveriew() {
                {learningTargets.map((target) => (
                   <TargetDropDown
                      name={target.name}
-                     learningObjectives={target.learningObjectives}
+                     learningObjectives={target.learningObjectives as LearningObjective[]}
                   />
                ))}
             </ColumnDiv>
@@ -206,16 +201,15 @@ export default function SingleStudentMasteryOveriew() {
                <FieldTitleDiv>Current Goals</FieldTitleDiv>
                {goals.map((goal) => (
                   <List>
-                     <ListItem button className={classes.nested}>
-                        <ListItemIcon>
-                           <div />
-                        </ListItemIcon>
-                        <ListItemText primary={goal.name} />
-                        <LinearProgressWithLabel
-                           className={classes.progressBar}
-                           value={COMP_TASK_PERCENT}
-                        />
-                     </ListItem>
+                     <PaddedDiv>
+                        <ListItem button className={classes.nested}>
+                           <ListItemText primary={goal.name} />
+                           <LinearProgressWithLabel
+                              className={classes.progressBar}
+                              value={COMP_TASK_PERCENT}
+                           />
+                        </ListItem>
+                     </PaddedDiv>
                   </List>
                ))}
             </ColumnDiv>
@@ -226,7 +220,7 @@ export default function SingleStudentMasteryOveriew() {
                {compLearningTargets.map((compTarget) => (
                   <TargetDropDown
                      name={compTarget.name}
-                     learningObjectives={compTarget.compLearningObjectives}
+                     learningObjectives={compTarget.compLearningObjectives as LearningObjective[]}
                   />
                ))}
             </ColumnDiv>

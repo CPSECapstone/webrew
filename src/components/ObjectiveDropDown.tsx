@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import styled from 'styled-components';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
-import StudentPicture from '../assets/images/images-1.png';
-import { User } from '../interfaces/User';
 import LinearProgressWithLabel from './linear-progress-bar';
+import { Task } from '../interfaces/Task';
 
 const useStyles = makeStyles((theme: Theme) =>
    createStyles({
@@ -29,11 +26,20 @@ const useStyles = makeStyles((theme: Theme) =>
    })
 );
 
+const PaddedDiv = styled.div`
+   padding-left: 30px;
+`;
+
+const DoublePaddedDiv = styled.div`
+   padding-left: 40px;
+`;
+
 export interface ObjectiveDropDownProps {
    name: string;
-   tasks: any;
+   tasks: Task[];
 }
 
+// Handles state to open and close dropdown
 function handleClick(
    openObjectBool: boolean,
    openFunction: React.Dispatch<React.SetStateAction<boolean>>
@@ -44,48 +50,32 @@ function handleClick(
 export default function TargetDropDown({ name, tasks }: ObjectiveDropDownProps) {
    const classes = useStyles();
    const [open, setOpen] = useState(false);
-   const history = useHistory();
 
    const TASK_PERCENT = 100;
    const OBJECTIVE_PERCENT = 50;
 
-   // const test: any = history.location.state;
-   // const inputUser: User = {
-   //    id: test?.id,
-   //    firstName: test?.firstName,
-   //    lastName: test?.lastName,
-   // };
-
    return (
       <List component="div" disablePadding>
-         <ListItem button onClick={() => handleClick(open, setOpen)}>
-            <ListItemIcon>
-               <div />
-            </ListItemIcon>
-            <ListItemIcon>
-               <div />
-            </ListItemIcon>
-            <ListItemText primary={name} />
-            <LinearProgressWithLabel className={classes.progressBar} value={OBJECTIVE_PERCENT} />
-            {open ? <ExpandLess /> : <ExpandMore />}
-         </ListItem>
+         <PaddedDiv>
+            <ListItem button onClick={() => handleClick(open, setOpen)}>
+               <ListItemText primary={name} />
+               <LinearProgressWithLabel className={classes.progressBar} value={OBJECTIVE_PERCENT} />
+               {open ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+         </PaddedDiv>
          <Collapse in={open} timeout="auto" unmountOnExit>
-            {tasks.map((task: any) => (
+            {tasks.map((task: Task) => (
                <List component="div" disablePadding>
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
-                     <ListItem button className={classes.nested}>
-                        <ListItemIcon>
-                           <div />
-                        </ListItemIcon>
-                        <ListItemIcon>
-                           <div />
-                        </ListItemIcon>
-                        <ListItemText primary={task.name} />
-                        <LinearProgressWithLabel
-                           className={classes.progressBar}
-                           value={TASK_PERCENT}
-                        />
-                     </ListItem>
+                     <DoublePaddedDiv>
+                        <ListItem button className={classes.nested}>
+                           <ListItemText primary={task.name} />
+                           <LinearProgressWithLabel
+                              className={classes.progressBar}
+                              value={TASK_PERCENT}
+                           />
+                        </ListItem>
+                     </DoublePaddedDiv>
                   </div>
                </List>
             ))}
