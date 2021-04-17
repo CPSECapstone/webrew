@@ -1,5 +1,5 @@
-import React from 'react';
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Auth } from 'aws-amplify';
+import { Navbar, Nav, Container, Form, Button } from 'react-bootstrap';
 
 export default function Navigation() {
    return (
@@ -14,6 +14,14 @@ export default function Navigation() {
                   <Nav.Link href="/taskOverview">Tasks</Nav.Link>
                   <Nav.Link href="/studentOverview">Student Overview</Nav.Link>
                   <Nav.Link href="/singleStudentOverview">Single Student Overview</Nav.Link>
+                  <Nav.Link href="/singleStudentMasteryOverview">
+                     Single Student Mastery Overview
+                  </Nav.Link>
+                  <Form inline>
+                     <Button type="submit" onClick={() => Auth.signOut()}>
+                        Log Out
+                     </Button>
+                  </Form>
                </Nav>
             </Navbar.Collapse>
          </Container>
