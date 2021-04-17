@@ -1,4 +1,3 @@
-import { withAuthenticator } from '@aws-amplify/ui-react';
 import {
    withStyles,
    Theme,
@@ -14,8 +13,8 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Progress } from '../interfaces/Progress';
-import { Users } from '../interfaces/Users';
+import { Progress } from '../../interfaces/Progress';
+import { Users } from '../../interfaces/Users';
 
 const StyledTableCell = withStyles((theme: Theme) =>
    createStyles({
@@ -208,4 +207,4 @@ function StudentOverview() {
    );
 }
 
-export default withAuthenticator(StudentOverview);
+export default StudentOverview;

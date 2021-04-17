@@ -9,11 +9,10 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { useQuery } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
-import { withAuthenticator } from '@aws-amplify/ui-react';
-import { LIST_QUIZ_SUBMISSIONS } from '../queries/quiz-submission-queries';
-import { GET_QUIZ } from '../queries/quiz-queries';
-import { QuizSubmissions } from '../interfaces/QuizSubmissions';
-import { Quiz } from '../interfaces/Quiz';
+import { LIST_QUIZ_SUBMISSIONS } from '../../queries/quiz-submission-queries';
+import { GET_QUIZ } from '../../queries/quiz-queries';
+import { QuizSubmissions } from '../../interfaces/QuizSubmissions';
+import { Quiz } from '../../interfaces/Quiz';
 
 const StyledTableCell = withStyles((theme: Theme) =>
    createStyles({
@@ -98,4 +97,4 @@ function TaskOverview() {
    );
 }
 
-export default withAuthenticator(TaskOverview);
+export default TaskOverview;
