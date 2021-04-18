@@ -10,6 +10,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { Formik } from 'formik';
 import { useMutation } from '@apollo/client';
+import { withAuthenticator } from '@aws-amplify/ui-react';
 import { SAVE_COURSE } from '../queries/course-queries';
 
 const LargeTextField = styled(TextField)`
@@ -19,7 +20,7 @@ const LargeTextField = styled(TextField)`
    }
 `;
 
-export default function CreateCourseDialog() {
+function CreateCourseDialog() {
    const [open, setOpen] = useState(false);
    const [addCourse] = useMutation(SAVE_COURSE);
 
@@ -116,3 +117,5 @@ export default function CreateCourseDialog() {
       </div>
    );
 }
+
+export default withAuthenticator(CreateCourseDialog);

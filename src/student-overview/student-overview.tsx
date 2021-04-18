@@ -1,3 +1,4 @@
+import { withAuthenticator } from '@aws-amplify/ui-react';
 import {
    withStyles,
    Theme,
@@ -102,7 +103,7 @@ const users: Users = {
 
 const userProgressMap = new Map<string, Progress>();
 
-export default function StudentOverview() {
+function StudentOverview() {
    const classes = useStyles();
    const history = useHistory();
    const { data: learningObjective } = useQuery<LearningObjectives>(GET_LEARNING_OBJECTIVE);
@@ -231,3 +232,5 @@ export default function StudentOverview() {
       </div>
    );
 }
+
+export default withAuthenticator(StudentOverview);

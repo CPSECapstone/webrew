@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { gql, useQuery } from '@apollo/client';
+import { withAuthenticator } from 'aws-amplify-react';
 import { Course } from '../../interfaces/Course';
 import { Courses } from '../../interfaces/Courses';
 
@@ -48,4 +49,4 @@ function Dashboard() {
    );
 }
 
-export default Dashboard;
+export default withAuthenticator(Dashboard);

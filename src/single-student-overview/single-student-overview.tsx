@@ -12,6 +12,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
+import { withAuthenticator } from '@aws-amplify/ui-react';
 import StudentPicture from '../assets/images/images-1.png';
 import { User } from '../interfaces/User';
 import LinearProgressWithLabel from '../components/linear-progress-bar';
@@ -65,7 +66,7 @@ function handleClick(
    openFunction(!openObjectBool);
 }
 
-export default function SingleStudentOverview() {
+function SingleStudentOverview() {
    const classes = useStyles();
    const [missionOpen, setOpen] = useState(false);
    const [subMissionOpen, setOpen2] = useState(false);
@@ -263,3 +264,5 @@ export default function SingleStudentOverview() {
       </div>
    );
 }
+
+export default withAuthenticator(SingleStudentOverview);
