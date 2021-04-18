@@ -3,14 +3,13 @@ import './App.css';
 import { Auth, Hub } from 'aws-amplify';
 import { useState, useEffect } from 'react';
 import { withAuthenticator } from 'aws-amplify-react';
-import CreateCourseDialog from './course/create-course-dialog';
-import Dashboard from './scenes/teacher/Dashboard';
-import StudentOverview from './student-overview/student-overview';
-import TaskOverview from './task-overview/task-overview';
-import TaskSubmission from './view-task-submission/view-task-submission';
-import Navigation from './navigation/Navigation';
-import SingleStudentOverview from './single-student-overview/single-student-overview';
-import SingleStudentMasteryOverview from './single-student-mastery-overview/single-student-mastery-overview';
+import CreateCourseDialog from './Components/CreateCourseDialog/CreateCourseDialog';
+import Dashboard from './Screens/Dashboard/Dashboard';
+import StudentOverview from './Components/StudentOverview/StudentOverview';
+import TaskOverview from './Components/TaskOverview/TaskOverview';
+import TaskSubmission from './Components/ViewTaskSubmission/ViewTaskSubmission';
+import Navigation from './Navigation/Navigation';
+import SingleStudentOverview from './Components/SingleStudentOverview/SingleStudentOverview';
 
 // Entry point of the Flitped App
 function App() {

@@ -8,9 +8,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import LinearProgressWithLabel from './linear-progress-bar';
+import LinearProgressWithLabel from './LinearProgressWithLabel';
 import ObjectiveDropDown from './ObjectiveDropDown';
-import { LearningObjective } from '../interfaces/LearningObjective';
+import { LearningObjective } from '../../interfaces/LearningObjective';
 
 const useStyles = makeStyles((theme: Theme) =>
    createStyles({

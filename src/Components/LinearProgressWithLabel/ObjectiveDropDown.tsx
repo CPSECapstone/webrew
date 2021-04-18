@@ -7,8 +7,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import LinearProgressWithLabel from './linear-progress-bar';
-import { Task } from '../interfaces/Task';
+import LinearProgressWithLabel from './LinearProgressWithLabel';
+import { Task } from '../../interfaces/Task';
 
 const useStyles = makeStyles((theme: Theme) =>
    createStyles({

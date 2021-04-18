@@ -1,4 +1,3 @@
-import { withAuthenticator } from '@aws-amplify/ui-react';
 import {
    withStyles,
    Theme,
@@ -15,11 +14,11 @@ import {
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import { Progress } from '../interfaces/Progress';
-import { Users } from '../interfaces/Users';
-import { GET_LEARNING_OBJECTIVE } from '../queries/LearningObjectiveQueries';
-import { LearningObjectives } from '../interfaces/LearningObjectives';
-import { LearningObjective } from '../interfaces/LearningObjective';
+import { Progress } from '../../interfaces/Progress';
+import { Users } from '../../interfaces/Users';
+import { GET_LEARNING_OBJECTIVE } from '../../queries/LearningObjectiveQueries';
+import { LearningObjectives } from '../../interfaces/LearningObjectives';
+import { LearningObjective } from '../../interfaces/LearningObjective';
 
 const StyledTableCell = withStyles((theme: Theme) =>
    createStyles({
@@ -233,4 +232,4 @@ function StudentOverview() {
    );
 }
 
-export default withAuthenticator(StudentOverview);
+export default StudentOverview;

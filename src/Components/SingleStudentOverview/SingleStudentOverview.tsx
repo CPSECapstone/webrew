@@ -12,10 +12,9 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import { withAuthenticator } from '@aws-amplify/ui-react';
-import StudentPicture from '../assets/images/images-1.png';
-import { User } from '../interfaces/User';
-import LinearProgressWithLabel from '../components/linear-progress-bar';
+import StudentPicture from '../../assets/images/images-1.png';
+import { User } from '../../interfaces/User';
+import LinearProgressWithLabel from '../LinearProgressWithLabel/LinearProgressWithLabel';
 
 const StudentNameDiv = styled.div`
    height: 50px;
@@ -265,4 +264,4 @@ function SingleStudentOverview() {
    );
 }
 
-export default withAuthenticator(SingleStudentOverview);
+export default SingleStudentOverview;

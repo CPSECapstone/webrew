@@ -4,10 +4,10 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import styled from 'styled-components';
-import StudentPicture from '../assets/images/images-1.png';
-import LinearProgressWithLabel from '../components/linear-progress-bar';
-import TargetDropDown from '../components/TargetDropDown';
-import { LearningObjective } from '../interfaces/LearningObjective';
+import StudentPicture from '../../assets/images/images-1.png';
+import LinearProgressWithLabel from '../LinearProgressWithLabel/LinearProgressWithLabel';
+import TargetDropDown from '../LinearProgressWithLabel/TargetDropDown';
+import { LearningObjective } from '../../interfaces/LearningObjective';
 
 const StudentNameDiv = styled.div`
    height: 50px;
