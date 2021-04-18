@@ -1,4 +1,4 @@
-import { Route, Switch } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import './App.css';
 import { Auth, Hub } from 'aws-amplify';
 import { useState, useEffect } from 'react';
@@ -11,6 +11,7 @@ import TaskSubmission from './Components/ViewTaskSubmission/ViewTaskSubmission';
 import Navigation from './Navigation/Navigation';
 import SingleStudentOverview from './Components/SingleStudentOverview/SingleStudentOverview';
 
+// Entry point of the Flitped App
 function App() {
    const [user, setUser] = useState(null);
 

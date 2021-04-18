@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import { Box, LinearProgress, LinearProgressProps, Typography } from '@material-ui/core';
 
 function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {

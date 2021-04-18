@@ -34,7 +34,12 @@ function CreateCourseDialog() {
 
    return (
       <div>
-         <Button variant="contained" color="primary" onClick={handleClickOpen}>
+         <Button
+            variant="contained"
+            color="primary"
+            onClick={handleClickOpen}
+            data-testid="create-btn"
+         >
             Create New Course
          </Button>
          <Dialog
@@ -43,6 +48,7 @@ function CreateCourseDialog() {
             onClose={handleClose}
             aria-labelledby="form-dialog-title"
             maxWidth="sm"
+            data-testid="create-dialog"
          >
             <DialogTitle id="form-dialog-title">New Course</DialogTitle>
             <DialogContent>
