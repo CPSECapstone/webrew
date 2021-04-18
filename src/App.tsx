@@ -10,6 +10,7 @@ import TaskOverview from './Components/TaskOverview/TaskOverview';
 import TaskSubmission from './Components/ViewTaskSubmission/ViewTaskSubmission';
 import Navigation from './Navigation/Navigation';
 import SingleStudentOverview from './Components/SingleStudentOverview/SingleStudentOverview';
+import SingleStudentMasteryOverview from './Components/SingleStudentMasteryOverview/SingleStudentMasteryOverview';
 
 // Entry point of the Flitped App
 function App() {
@@ -71,6 +72,9 @@ function App() {
             </Route>
             <Route path="/singleStudentOverview">
                <SingleStudentOverview />
+            </Route>
+            <Route path="/singleStudentMasteryOverview">
+               <SingleStudentMasteryOverview />
             </Route>
             <Route path="/">
                <Dashboard />
