@@ -59,13 +59,6 @@ const useStyles = makeStyles((theme: Theme) =>
    })
 );
 
-// function handleClick(
-//    openObjectBool: boolean,
-//    openFunction: React.Dispatch<React.SetStateAction<boolean>>
-// ): void {
-//    openFunction(!openObjectBool);
-// }
-
 function SingleStudentOverview() {
    const classes = useStyles();
    const history = useHistory();
