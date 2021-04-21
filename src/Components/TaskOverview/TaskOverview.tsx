@@ -55,7 +55,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function TaskOverview() {
    const classes = useStyles();
-   console.log(useQuery<QuizSubmissions>(LIST_QUIZ_SUBMISSIONS));
    const { data: quizSubmissions } = useQuery<QuizSubmissions>(LIST_QUIZ_SUBMISSIONS);
    // const { data: quiz } = useQuery<Quiz>(GET_QUIZ);
 
