@@ -55,17 +55,18 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function TaskOverview() {
    const classes = useStyles();
+   console.log(useQuery<QuizSubmissions>(LIST_QUIZ_SUBMISSIONS));
    const { data: quizSubmissions } = useQuery<QuizSubmissions>(LIST_QUIZ_SUBMISSIONS);
-   const { data: quiz } = useQuery<Quiz>(GET_QUIZ);
+   // const { data: quiz } = useQuery<Quiz>(GET_QUIZ);
 
    const history = useHistory();
-   if (quizSubmissions === undefined || quiz === undefined) {
+   if (quizSubmissions === undefined) {
       return <div>Quiz Submission(s) Undefined</div>;
    }
 
    return (
       <div style={{ marginLeft: '5px', fontSize: '40px' }}>
-         <div style={{ marginLeft: '5px' }}>{quiz.name}</div>
+         {/* <div style={{ marginLeft: '5px' }}>{quiz.name}</div> */}
          <div className={classes.root}>
             <TableContainer style={{ marginLeft: '5px' }} component={Paper}>
                <Table className={classes.table} aria-label="customized table">
