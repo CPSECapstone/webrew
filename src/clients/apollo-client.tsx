@@ -1,4 +1,4 @@
-import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client';
+import { ApolloClient, ApolloLink, from, HttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { environment } from '../environment';
 
@@ -16,10 +16,12 @@ const authLink: ApolloLink = setContext((_, { headers }) => {
    return link;
 });
 
+const httpLink: HttpLink = new HttpLink({ uri: environment.uri });
+
 const apolloClient = new ApolloClient({
    uri: environment.uri,
    cache: new InMemoryCache(),
-   link: authLink,
+   link: from([authLink, httpLink]),
 });
 
 export default apolloClient;
