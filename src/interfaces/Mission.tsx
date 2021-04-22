@@ -1,8 +1,8 @@
-import { Task } from './Task';
+import { MissionSubMission } from './MissionSubMission';
 
 export interface Mission {
    id: string;
    name: string;
    description: string;
-   tasks: Task[];
+   subMissions: MissionSubMission[];
 }

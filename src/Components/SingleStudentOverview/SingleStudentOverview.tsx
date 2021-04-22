@@ -1,31 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { useState } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Collapse from '@material-ui/core/Collapse';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import StudentPicture from '../../assets/images/images-1.png';
 import { User } from '../../interfaces/User';
 import LinearProgressWithLabel from '../LinearProgressWithLabel/LinearProgressWithLabel';
+import MissionDropDown from '../LinearProgressWithLabel/MissionDropDown';
+import { MissionSubMission } from '../../interfaces/MissionSubMission';
 
 const StudentNameDiv = styled.div`
    height: 50px;
    width: 100%;
-   // background-color: ;
    font-size: 24pt;
 `;
 
 const FieldTitleDiv = styled.div`
    height: 30px;
-   width: 400px;
+   width: 100%;
    background-color: #99d6ff;
    align-items: center;
    display: flex;
@@ -33,13 +30,17 @@ const FieldTitleDiv = styled.div`
 `;
 
 const RowDiv = styled.div`
-   width: 50%;
+   width: 100%;
    display: flex;
 `;
 
 const ColumnDiv = styled.div`
    width: 100%;
    flex-direction: column;
+`;
+
+const PaddedDiv = styled.div`
+   padding-left: 5px;
 `;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -58,28 +59,11 @@ const useStyles = makeStyles((theme: Theme) =>
    })
 );
 
-function handleClick(
-   openObjectBool: boolean,
-   openFunction: React.Dispatch<React.SetStateAction<boolean>>
-): void {
-   openFunction(!openObjectBool);
-}
-
 function SingleStudentOverview() {
    const classes = useStyles();
-   const [missionOpen, setOpen] = useState(false);
-   const [subMissionOpen, setOpen2] = useState(false);
-   const [compMissionOpen, setOpen3] = useState(false);
-   const [compSubMissionOpen, setOpen4] = useState(false);
    const history = useHistory();
 
-   const TASK_PERCENT = 100;
-   const MISSION_PERCENT = 50;
-   const SUB_MISSION_PERCENT = 50;
-
    const COMP_TASK_PERCENT = 100;
-   const COMP_SUB_MISSION_PERCENT = 100;
-   const COMP_MISSION_PERCENT = 100;
 
    const test: any = history.location.state;
    const inputUser: User = {
@@ -88,176 +72,119 @@ function SingleStudentOverview() {
       lastName: test?.lastName,
    };
 
+   const missions = [
+      {
+         id: '123',
+         name: 'Mission 1',
+         description: 'mission1 for you',
+         subMissions: [
+            {
+               id: '345',
+               name: 'Sub-Mission 1',
+               description: 'SubMission1 description',
+               tasks: [
+                  {
+                     id: '345',
+                     name: 'Task 1',
+                     description: 'Task1 description',
+                     link: 'link1',
+                  },
+                  {
+                     id: '346',
+                     name: 'Task 2',
+                     description: 'Task2 description',
+                     link: 'link2',
+                  },
+               ],
+            },
+         ],
+      },
+   ];
+
+   const goals = [
+      {
+         name: 'Goal 1',
+      },
+      {
+         name: 'Goal 2',
+      },
+      {
+         name: 'Goal 3',
+      },
+   ];
+
+   const compGoals = [
+      {
+         name: 'Goal 0',
+      },
+      {
+         name: 'Goal 0.1',
+      },
+      {
+         name: 'Goal 0.2',
+      },
+   ];
+
    return (
       <div style={{ marginLeft: '5px' }}>
          <StudentNameDiv>
             {inputUser.firstName} {inputUser.lastName}
          </StudentNameDiv>
          <img src={StudentPicture} alt="" style={{ width: 200, height: 200 }} />
+
          <RowDiv>
             <ColumnDiv>
-               <FieldTitleDiv>Current Missions</FieldTitleDiv>
-               <List
-                  component="nav"
-                  aria-labelledby="nested-list-subheader"
-                  className={classes.root}
-               >
-                  <ListItem button onClick={() => handleClick(missionOpen, setOpen)}>
-                     <ListItemIcon />
-                     <ListItemText primary="Mission 1" />
-                     <LinearProgressWithLabel
-                        className={classes.progressBar}
-                        value={MISSION_PERCENT}
-                     />
-                     {missionOpen ? <ExpandLess /> : <ExpandMore />}
-                  </ListItem>
-                  <Collapse in={missionOpen} timeout="auto" unmountOnExit>
-                     <List component="div" disablePadding>
-                        <ListItem button onClick={() => handleClick(subMissionOpen, setOpen2)}>
-                           <ListItemIcon>
-                              <div />
-                           </ListItemIcon>
-                           <ListItemIcon>
-                              <div />
-                           </ListItemIcon>
-                           <ListItemText primary="Sub-Mission 1" />
-                           <LinearProgressWithLabel
-                              className={classes.progressBar}
-                              value={SUB_MISSION_PERCENT}
-                           />
-                           {subMissionOpen ? <ExpandLess /> : <ExpandMore />}
-                        </ListItem>
-                        <Collapse in={subMissionOpen} timeout="auto" unmountOnExit>
-                           <List component="div" disablePadding>
-                              <div style={{ display: 'flex', flexDirection: 'row' }}>
-                                 <ListItem button className={classes.nested}>
-                                    <ListItemIcon>
-                                       <div />
-                                    </ListItemIcon>
-                                    <ListItemIcon>
-                                       <div />
-                                    </ListItemIcon>
-                                    <ListItemText primary="Task 1" />
-                                    <LinearProgressWithLabel
-                                       className={classes.progressBar}
-                                       value={TASK_PERCENT}
-                                    />
-                                 </ListItem>
-                              </div>
-                           </List>
-                           <List component="div" disablePadding>
-                              <ListItem button className={classes.nested}>
-                                 <ListItemIcon>
-                                    <div />
-                                 </ListItemIcon>
-                                 <ListItemIcon>
-                                    <div />
-                                 </ListItemIcon>
-                                 <ListItemText primary="Task 2" />
-                                 <LinearProgressWithLabel
-                                    className={classes.progressBar}
-                                    value={0}
-                                 />
-                              </ListItem>
-                           </List>
-                        </Collapse>
-                     </List>
-                  </Collapse>
-               </List>
+               <FieldTitleDiv>Current Targets</FieldTitleDiv>
+               {missions.map((mission) => (
+                  <MissionDropDown
+                     name={mission.name}
+                     subMissions={mission.subMissions as MissionSubMission[]}
+                  />
+               ))}
             </ColumnDiv>
             <ColumnDiv>
                <FieldTitleDiv>Current Goals</FieldTitleDiv>
-               <List>
-                  <ListItem button className={classes.nested}>
-                     <ListItemIcon>
-                        <div />
-                     </ListItemIcon>
-
-                     <ListItemText primary="Goal 1" />
-                     <LinearProgressWithLabel className={classes.progressBar} value={75} />
-                  </ListItem>
-               </List>
+               {goals.map((goal) => (
+                  <List>
+                     <PaddedDiv>
+                        <ListItem button className={classes.nested}>
+                           <ListItemText primary={goal.name} />
+                           <LinearProgressWithLabel
+                              className={classes.progressBar}
+                              value={COMP_TASK_PERCENT}
+                           />
+                        </ListItem>
+                     </PaddedDiv>
+                  </List>
+               ))}
             </ColumnDiv>
          </RowDiv>
          <RowDiv>
             <ColumnDiv>
-               <FieldTitleDiv>Completed Missions</FieldTitleDiv>
-               <List
-                  component="nav"
-                  aria-labelledby="nested-list-subheader"
-                  className={classes.root}
-               >
-                  <ListItem button onClick={() => handleClick(compMissionOpen, setOpen3)}>
-                     <ListItemIcon />
-                     <ListItemText primary="Mission 0" />
-                     <LinearProgressWithLabel
-                        className={classes.progressBar}
-                        value={COMP_MISSION_PERCENT}
-                     />
-                     {compMissionOpen ? <ExpandLess /> : <ExpandMore />}
-                  </ListItem>
-                  <Collapse in={compMissionOpen} timeout="auto" unmountOnExit>
-                     <List component="div" disablePadding>
-                        <ListItem button onClick={() => handleClick(compSubMissionOpen, setOpen4)}>
-                           <ListItemIcon />
-                           <ListItemIcon />
-                           <ListItemText primary="Sub-Mission 1" />
-                           <LinearProgressWithLabel
-                              className={classes.progressBar}
-                              value={COMP_SUB_MISSION_PERCENT}
-                           />
-                           {compSubMissionOpen ? <ExpandLess /> : <ExpandMore />}
-                        </ListItem>
-                        <Collapse in={compSubMissionOpen} timeout="auto" unmountOnExit>
-                           <List component="div" disablePadding>
-                              <ListItem button className={classes.nested}>
-                                 <ListItemIcon>
-                                    <div />
-                                 </ListItemIcon>
-                                 <ListItemIcon>
-                                    <div />
-                                 </ListItemIcon>
-                                 <ListItemText primary="Task 1" />
-                                 <LinearProgressWithLabel
-                                    className={classes.progressBar}
-                                    value={COMP_TASK_PERCENT}
-                                 />
-                              </ListItem>
-                           </List>
-                           <List component="div" disablePadding>
-                              <ListItem button className={classes.nested}>
-                                 <ListItemIcon>
-                                    <div />
-                                 </ListItemIcon>
-                                 <ListItemIcon>
-                                    <div />
-                                 </ListItemIcon>
-                                 <ListItemText primary="Task 2" />
-                                 <LinearProgressWithLabel
-                                    className={classes.progressBar}
-                                    value={COMP_TASK_PERCENT}
-                                 />
-                              </ListItem>
-                           </List>
-                        </Collapse>
-                     </List>
-                  </Collapse>
-               </List>
+               <FieldTitleDiv>Completed Targets</FieldTitleDiv>
+               {missions.map((compMission) => (
+                  <MissionDropDown
+                     name={compMission.name}
+                     subMissions={compMission.subMissions as MissionSubMission[]}
+                  />
+               ))}
             </ColumnDiv>
             <ColumnDiv>
                <FieldTitleDiv>Completed Goals</FieldTitleDiv>
-               <List>
-                  <ListItem button className={classes.nested}>
-                     <ListItemIcon>
-                        <div />
-                     </ListItemIcon>
-                     <ListItemText primary="Goal 0" />
-                     <LinearProgressWithLabel
-                        className={classes.progressBar}
-                        value={COMP_TASK_PERCENT}
-                     />
-                  </ListItem>
-               </List>
+               {compGoals.map((compGoal) => (
+                  <List>
+                     <ListItem button className={classes.nested}>
+                        <ListItemIcon>
+                           <div />
+                        </ListItemIcon>
+                        <ListItemText primary={compGoal.name} />
+                        <LinearProgressWithLabel
+                           className={classes.progressBar}
+                           value={COMP_TASK_PERCENT}
+                        />
+                     </ListItem>
+                  </List>
+               ))}
             </ColumnDiv>
          </RowDiv>
       </div>
