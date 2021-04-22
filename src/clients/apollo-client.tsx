@@ -19,7 +19,6 @@ const authLink: ApolloLink = setContext((_, { headers }) => {
 const httpLink: HttpLink = new HttpLink({ uri: environment.uri });
 
 const apolloClient = new ApolloClient({
-   uri: environment.uri,
    cache: new InMemoryCache(),
    link: from([authLink, httpLink]),
 });
