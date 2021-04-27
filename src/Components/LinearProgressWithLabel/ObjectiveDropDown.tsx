@@ -55,9 +55,18 @@ export default function TargetDropDown({ name, tasks }: ObjectiveDropDownProps) 
    const OBJECTIVE_PERCENT = 50;
 
    return (
-      <List component="div" disablePadding>
+      <List component="div">
          <PaddedDiv>
-            <ListItem button onClick={() => handleClick(open, setOpen)}>
+            <ListItem
+               button
+               onClick={() => handleClick(open, setOpen)}
+               style={{
+                  border: '1px',
+                  borderColor: '#C2D2FC',
+                  borderStyle: 'solid',
+                  backgroundColor: '#E9EEFC',
+               }}
+            >
                <ListItemText primary={name} />
                <LinearProgressWithLabel className={classes.progressBar} value={OBJECTIVE_PERCENT} />
                {open ? <ExpandLess /> : <ExpandMore />}
@@ -65,10 +74,19 @@ export default function TargetDropDown({ name, tasks }: ObjectiveDropDownProps) 
          </PaddedDiv>
          <Collapse in={open} timeout="auto" unmountOnExit>
             {tasks.map((task: Task) => (
-               <List component="div" disablePadding>
+               <List component="div">
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
                      <DoublePaddedDiv>
-                        <ListItem button className={classes.nested}>
+                        <ListItem
+                           button
+                           className={classes.nested}
+                           style={{
+                              border: '1px',
+                              borderColor: '#C2D2FC',
+                              borderStyle: 'solid',
+                              backgroundColor: '#E9EEFC',
+                           }}
+                        >
                            <ListItemText primary={task.name} />
                            <LinearProgressWithLabel
                               className={classes.progressBar}

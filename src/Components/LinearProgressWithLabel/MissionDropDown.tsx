@@ -54,7 +54,16 @@ export default function MissionDropDown({ name, subMissions }: MissionDropDownPr
    return (
       <List component="nav" aria-labelledby="nested-list-subheader" className={classes.root}>
          <PaddedDiv>
-            <ListItem button onClick={() => handleClick(open, setOpen)}>
+            <ListItem
+               button
+               onClick={() => handleClick(open, setOpen)}
+               style={{
+                  border: '1px',
+                  borderColor: '#C2D2FC',
+                  borderStyle: 'solid',
+                  backgroundColor: '#E9EEFC',
+               }}
+            >
                <ListItemText primary={name} />
                <LinearProgressWithLabel className={classes.progressBar} value={TARGET_PERCENT} />
                {open ? <ExpandLess /> : <ExpandMore />}

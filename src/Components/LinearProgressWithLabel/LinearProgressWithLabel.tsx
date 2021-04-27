@@ -5,7 +5,7 @@ function LinearProgressWithLabel(props: LinearProgressProps & { value: number })
    const { value } = props;
    return (
       <Box display="flex" alignItems="center">
-         <Box width="100%" mr={1}>
+         <Box width="100%" mr={1} ml={1}>
             <LinearProgress variant="determinate" {...props} />
          </Box>
          <Box minWidth={35}>
