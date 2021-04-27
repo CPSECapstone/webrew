@@ -77,7 +77,7 @@ function TaskSubmissionOverview() {
             key={submission.student}
             style={{ cursor: 'pointer' }}
             onClick={() => {
-               history.push('/taskSubmission');
+               history.push('/viewTaskSubmission');
             }}
          >
             <StyledTableCell component="th" scope="row">

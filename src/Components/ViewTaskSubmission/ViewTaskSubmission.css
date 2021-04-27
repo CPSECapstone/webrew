@@ -11,17 +11,22 @@
 }
 
 /* quiz being a child  */
-.view-task-submission > .quiz {
+.view-task-submission > .quizblock {
    height: 300px;
    width: 600px;
    background-color: grey;
    margin-top: 10px;
 }
 
-.view-task-submission > .question-desc {
+.quizblock > .question {
+   border-top: solid 1px;
+   margin-top: 1em;
+}
+
+.question > .question-desc {
    font-size: 20px;
 }
 
-.view-task-submission > .feedback {
+.question > .feedback {
    font-size: 15px;
 }

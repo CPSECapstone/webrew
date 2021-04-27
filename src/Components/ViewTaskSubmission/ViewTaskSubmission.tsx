@@ -36,7 +36,9 @@ function ViewTaskSubmission() {
 
    function renderLearningObjectives(objectives: LearningObjectives) {
       return objectives.learningObjectives.map((objective) => (
-         <div className="objective">Learning Objective: {objective.description}</div>
+         <div className="objective" key={objective.id}>
+            Learning Objective: {objective.description}
+         </div>
       ));
    }
 
@@ -44,6 +46,7 @@ function ViewTaskSubmission() {
       return question.options.map((option: Option, index: number) => {
          return (
             <FormControlLabel
+               key={option.id}
                value={option.description}
                disabled
                control={<Radio checked={answer.choices[0] === index} />}
@@ -75,7 +78,7 @@ function ViewTaskSubmission() {
       return questions.map((question) => {
          const answer = answerMap.get(question.id) || defaulAnswer;
          return (
-            <div className="question">
+            <div className="question" key={question.id}>
                <div className="question-desc">{question.description}</div>
                <RadioGroup>{renderQuestionOptions(question, answer)}</RadioGroup>
                <div className="feedback">{renderFeedback(question, answer)}</div>
