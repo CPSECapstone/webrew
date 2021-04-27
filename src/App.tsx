@@ -14,7 +14,7 @@ import SingleStudentMasteryOverview from './Components/SingleStudentMasteryOverv
 
 // Entry point of the Flitped App
 function App() {
-   const [user, setUser] = useState(null);
+   const [, setUser] = useState(null);
 
    function storeToken(): void {
       Auth.currentSession()
