@@ -6,8 +6,8 @@ import { withAuthenticator } from 'aws-amplify-react';
 import CreateCourseDialog from './Components/CreateCourseDialog/CreateCourseDialog';
 import Dashboard from './Screens/Dashboard/Dashboard';
 import StudentOverview from './Components/StudentOverview/StudentOverview';
-import TaskOverview from './Components/TaskOverview/TaskOverview';
-import TaskSubmission from './Components/ViewTaskSubmission/ViewTaskSubmission';
+import TaskSubmissionOverview from './Components/TaskSubmissionOverview/TaskSubmissionOverview';
+import ViewTaskSubmission from './Components/ViewTaskSubmission/ViewTaskSubmission';
 import Navigation from './Navigation/Navigation';
 import SingleStudentOverview from './Components/SingleStudentOverview/SingleStudentOverview';
 import SingleStudentMasteryOverview from './Components/SingleStudentMasteryOverview/SingleStudentMasteryOverview';
@@ -61,11 +61,11 @@ function App() {
             <Route path="/addNewCourse">
                <CreateCourseDialog />
             </Route>
-            <Route path="/addTaskSubmission">
-               <TaskSubmission />
+            <Route path="/taskSubmissionOverview">
+               <TaskSubmissionOverview />
             </Route>
-            <Route path="/taskOverview">
-               <TaskOverview />
+            <Route path="/viewTaskSubmission">
+               <ViewTaskSubmission />
             </Route>
             <Route path="/studentOverview">
                <StudentOverview />

@@ -1,0 +1,27 @@
+.view-task-submission {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+}
+
+.view-task-submission > .objective {
+   font-size: 25px;
+   font-style: italic;
+}
+
+/* quiz being a child  */
+.view-task-submission > .quiz {
+   height: 300px;
+   width: 600px;
+   background-color: grey;
+   margin-top: 10px;
+}
+
+.view-task-submission > .question-desc {
+   font-size: 20px;
+}
+
+.view-task-submission > .feedback {
+   font-size: 15px;
+}

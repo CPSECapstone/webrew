@@ -15,6 +15,7 @@ module.exports = {
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       'react/jsx-props-no-spreading': 'off',
       'react/react-in-jsx-scope': 'off',
+      'prettier/prettier': 1,
       'prettier/prettier': [
          'error',
          {

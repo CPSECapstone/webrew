@@ -1,5 +1,5 @@
 import { Auth } from 'aws-amplify';
-import { Navbar, Nav, Container, Form, Button, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav, Form, Button, NavDropdown } from 'react-bootstrap';
 import './Navigation.css';
 
 export default function Navigation() {
@@ -13,7 +13,12 @@ export default function Navigation() {
                <NavDropdown title="Dev Screens" className="ml-auto" id="dev-dropdown">
                   <NavDropdown.Item href="/addNewCourse">Create Course</NavDropdown.Item>
                   <NavDropdown.Item href="/addTaskSubmission">Submit Task</NavDropdown.Item>
-                  <NavDropdown.Item href="/taskOverview">Tasks</NavDropdown.Item>
+                  <NavDropdown.Item href="/taskSubmissionOverview">
+                     Task Submission Overview
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/viewTaskSubmission">
+                     View Task Submission
+                  </NavDropdown.Item>
                   <NavDropdown.Item href="/studentOverview">Student Overview</NavDropdown.Item>
                   <NavDropdown.Item href="/singleStudentOverview">
                      Single Student Overview
