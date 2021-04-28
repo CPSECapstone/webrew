@@ -47,6 +47,7 @@ const FieldTitleDiv = styled.div`
    background-color: #99d6ff;
    align-items: center;
    display: flex;
+   padding: 5px;
 }
 `;
 
