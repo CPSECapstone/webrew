@@ -43,6 +43,7 @@ const quizblock: QuizBlock = {
          options: [
             { id: 0, description: 'Pollination' },
             { id: 1, description: 'Reduction' },
+            { id: 2, description: 'A combustion reaction' },
          ],
          feedback: 'feeback2',
          answers: [2],
@@ -89,7 +90,7 @@ const quizblockSubmission: QuizBlockSubmission = {
       {
          questionId: 'question2',
          result: true,
-         choices: [3],
+         choices: [2],
       },
    ],
 };

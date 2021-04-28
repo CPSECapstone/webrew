@@ -3,6 +3,7 @@
    justify-content: center;
    align-items: center;
    flex-direction: column;
+   text-align: left;
 }
 
 .view-task-submission > .objective {
@@ -19,8 +20,9 @@
 }
 
 .quizblock > .question {
-   border-top: solid 1px;
+   background-color: #f6f6ff;
    margin-top: 1em;
+   padding: 2em;
 }
 
 .question > .question-desc {
