@@ -1,6 +1,7 @@
-import { ApolloClient, ApolloLink, from, HttpLink, InMemoryCache } from '@apollo/client';
+import { ApolloClient, ApolloLink, from, HttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { environment } from '../environment';
+import { cache } from './cache';
 
 const authLink: ApolloLink = setContext((_, { headers }) => {
    // get the authentication token from local storage if it exists
@@ -19,7 +20,7 @@ const authLink: ApolloLink = setContext((_, { headers }) => {
 const httpLink: HttpLink = new HttpLink({ uri: environment.uri });
 
 const apolloClient = new ApolloClient({
-   cache: new InMemoryCache(),
+   cache,
    link: from([authLink, httpLink]),
 });
 
