@@ -57,17 +57,20 @@ function TaskSubmissionOverview() {
    const { quizblock } = useQuizBlock();
    const { loading, error, quizblockSubmissions } = useQuizBlockSubmissions();
 
+
    if (loading) {
       return <p>Loading...</p>;
    }
    if (error) {
       return <p>`Error! ${error.message}`</p>;
    }
+
    if (!quizblock || !quizblockSubmissions) {
       return <p>Undefined data</p>;
    }
 
    const rows: JSX.Element[] = quizblockSubmissions.map((submission) => {
+
       return (
          <StyledTableRow
             key={submission.student}
