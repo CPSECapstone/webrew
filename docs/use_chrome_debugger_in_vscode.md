@@ -32,7 +32,7 @@ webrew
 
 4. Run `npm start` to start development server.
 
-5. Launch the debugger by hitting `F5`, or the debug icon on the side menu section and client the green `run` icon.
+5. Launch the debugger by hitting `F5`, or the debug icon on the side menu section and click the green `run` icon.
 
 #### Extra
 
