@@ -12,14 +12,21 @@
 }
 
 /* quiz being a child  */
-.view-task-submission > .quizblock {
-   height: 300px;
+.quizblock > .quizblock-header {
    width: 600px;
-   background-color: grey;
+   background-color: ghostwhite;
    margin-top: 10px;
+   padding: 1em;
 }
 
-.quizblock > .question {
+.quizblock-header .student-name {
+   font-weight: 700;
+}
+.quizblock-header .student-points {
+   font-size: 2em;
+}
+
+.quizblock-body > .question {
    background-color: #f6f6ff;
    margin-top: 1em;
    padding: 2em;

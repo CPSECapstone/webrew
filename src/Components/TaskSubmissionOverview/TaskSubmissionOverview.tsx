@@ -9,6 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import { useHistory } from 'react-router-dom';
 import useQuizBlock from '../../hooks/useQuizBlock';
 import useQuizBlockSubmissions from '../../hooks/useQuizBlockSubmissions';
+import QuizBlockPie from './QuizBlockPie';
 import './TaskSubmissionOverview.css';
 
 const StyledTableCell = withStyles((theme: Theme) =>
@@ -85,6 +86,9 @@ function TaskSubmissionOverview() {
 
    return (
       <div className="task-overview-container">
+         <div className="chart">
+            <QuizBlockPie />
+         </div>
          <div style={{ marginLeft: '5px' }}>{quizblock.title}</div>
          <div className={classes.root}>
             <TableContainer style={{ marginLeft: '5px' }} component={Paper}>

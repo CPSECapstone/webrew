@@ -65,11 +65,24 @@ type Props = {
 function SubmissionDetail({ quizblock, quizblockSubmission }: Props) {
    return (
       <div className="quizblock">
-         <h2>Submission Details</h2>
-         <h3 className="quizblock-title">{quizblock.title}</h3>
-         <p className="quizblock-points">Total Points: {quizblock.points}</p>
-         <p>Required Score: {quizblock.requiredScore}</p>
-         {renderQuestions(quizblock.questions, quizblockSubmission)}
+         <div className="quizblock-header">
+            <h2>Submission Details</h2>
+            <h3 className="quizblock-title">{quizblock.title}</h3>
+            <p className="quizblock-points">Total Points: {quizblock.points}</p>
+            <p>Required Score: {quizblock.requiredScore}</p>
+            <p>
+               <span className="student-name">Student Name:</span>
+               {quizblockSubmission.student}
+            </p>
+            <p>
+               The student got
+               <span className="student-points">{quizblockSubmission.points}</span>
+               {` out of ${quizblock.points}.`}
+            </p>
+         </div>
+         <div className="quizblock-body">
+            {renderQuestions(quizblock.questions, quizblockSubmission)}
+         </div>
       </div>
    );
 }
