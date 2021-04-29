@@ -46,3 +46,11 @@
 .question > .feedback {
    font-size: 15px;
 }
+
+.question .question-index {
+   color: white;
+   display: inline-block;
+   margin-right: 1em;
+   padding: 5px 20px;
+   background-color: #383838;
+}

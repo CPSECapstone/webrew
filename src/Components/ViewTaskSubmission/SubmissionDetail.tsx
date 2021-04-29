@@ -39,14 +39,17 @@ function renderQuestions(questions: Question[], submission: QuizBlockSubmission)
       choices: [0],
    };
 
-   return questions.map((question) => {
+   return questions.map((question, index) => {
       const answer = answerMap.get(question.id) || defaultAnswer;
       const feedback = answer.result
          ? `That's right! ${question.feedback}`
          : `Not quite. ${question.feedback}`;
       return (
          <div className="question" key={question.id}>
-            <p className="question-desc">{question.description}</p>
+            <p className="question-desc">
+               <span className="question-index">{index + 1}</span>
+               {question.description}
+            </p>
             <RadioGroup>{renderQuestionOptions(question, answer)}</RadioGroup>
             <p className="feedback">{feedback}</p>
          </div>
