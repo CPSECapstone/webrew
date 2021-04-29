@@ -1,4 +1,4 @@
-export interface Task {
+export declare type Task = {
    id: string;
    name: string;
    instructions: string;
@@ -11,7 +11,7 @@ export interface Task {
    objectiveId: string;
    pages: Page[];
    requirements: RubricRequirement[];
-}
+};
 
 export interface Page {
    blocks: TaskBlock[];
