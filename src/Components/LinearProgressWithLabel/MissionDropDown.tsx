@@ -8,7 +8,8 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import LinearProgressWithLabel from './LinearProgressWithLabel';
-import { Task } from '../../interfaces/Task';
+import ObjectiveDropDown from './ObjectiveDropDown';
+import { MissionSubMission } from '../../interfaces/MissionSubMission';
 
 const useStyles = makeStyles((theme: Theme) =>
    createStyles({
@@ -27,19 +28,15 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const PaddedDiv = styled.div`
-   padding-left: 30px;
+   padding-left: 10px;
 `;
 
-const DoublePaddedDiv = styled.div`
-   padding-left: 40px;
-`;
-
-export interface ObjectiveDropDownProps {
+export interface MissionDropDownProps {
    name: string;
-   tasks: Task[];
+   subMissions: MissionSubMission[];
 }
 
-// Handles state to open and close dropdown
+// Handles state to open or close dropdown
 function handleClick(
    openObjectBool: boolean,
    openFunction: React.Dispatch<React.SetStateAction<boolean>>
@@ -47,15 +44,14 @@ function handleClick(
    openFunction(!openObjectBool);
 }
 
-export default function TargetDropDown({ name, tasks }: ObjectiveDropDownProps) {
+export default function MissionDropDown({ name, subMissions }: MissionDropDownProps) {
    const classes = useStyles();
    const [open, setOpen] = useState(false);
 
-   const TASK_PERCENT = 100;
-   const OBJECTIVE_PERCENT = 50;
+   const TARGET_PERCENT = 50;
 
    return (
-      <List component="div">
+      <List component="nav" aria-labelledby="nested-list-subheader" className={classes.root}>
          <PaddedDiv>
             <ListItem
                button
@@ -68,34 +64,13 @@ export default function TargetDropDown({ name, tasks }: ObjectiveDropDownProps) 
                }}
             >
                <ListItemText primary={name} />
-               <LinearProgressWithLabel className={classes.progressBar} value={OBJECTIVE_PERCENT} />
+               <LinearProgressWithLabel className={classes.progressBar} value={TARGET_PERCENT} />
                {open ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
          </PaddedDiv>
          <Collapse in={open} timeout="auto" unmountOnExit>
-            {tasks.map((task: Task) => (
-               <List component="div">
-                  <div style={{ display: 'flex', flexDirection: 'row' }}>
-                     <DoublePaddedDiv>
-                        <ListItem
-                           button
-                           className={classes.nested}
-                           style={{
-                              border: '1px',
-                              borderColor: '#C2D2FC',
-                              borderStyle: 'solid',
-                              backgroundColor: '#E9EEFC',
-                           }}
-                        >
-                           <ListItemText primary={task.name} />
-                           <LinearProgressWithLabel
-                              className={classes.progressBar}
-                              value={TASK_PERCENT}
-                           />
-                        </ListItem>
-                     </DoublePaddedDiv>
-                  </div>
-               </List>
+            {subMissions.map((subMission: MissionSubMission) => (
+               <ObjectiveDropDown name={subMission.name} tasks={subMission.tasks} />
             ))}
          </Collapse>
       </List>
