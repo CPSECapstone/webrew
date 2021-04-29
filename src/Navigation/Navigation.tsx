@@ -10,6 +10,7 @@ export default function Navigation() {
          <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="container-fluid">
                <Nav.Link href="/">Dashboard</Nav.Link>
+               <Nav.Link href="/viewTask">View Test Task</Nav.Link>
                <NavDropdown title="Dev Screens" className="ml-auto" id="dev-dropdown">
                   <NavDropdown.Item href="/addNewCourse">Create Course</NavDropdown.Item>
                   <NavDropdown.Item href="/addTaskSubmission">Submit Task</NavDropdown.Item>
