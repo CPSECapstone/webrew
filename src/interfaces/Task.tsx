@@ -1,8 +1,55 @@
 export interface Task {
    id: string;
    name: string;
+   instructions: string;
+   points: number;
+   parentMissionId: string;
+   parentMissionIndex: number;
+   startAt: Date;
+   endAt: Date;
+   dueDate: Date;
+   objectiveId: string;
+   pages: Page[];
+   requirements: RubricRequirement[];
+}
+
+export interface Page {
+   blocks: TaskBlock[];
+   skippable: boolean;
+}
+
+export interface TaskBlock {
+   title: string;
+}
+
+export interface TextBlock extends TaskBlock {
+   title: string;
+   contents: string;
+   fontSize: number;
+}
+
+export interface ImageBlock extends TaskBlock {
+   title: string;
+   imageUrl: string;
+}
+
+export interface VideoBlock extends TaskBlock {
+   title: string;
+   videoUrl: string;
+}
+
+export interface QuizBlock extends TaskBlock {
+   title: string;
+   blockId: string;
+   requiredScore: number;
+   points: number;
+   questions: Question[];
+}
+
+export interface RubricRequirement {
+   id: string;
    description: string;
-   link: string;
+   isComplete: boolean;
 }
 
 export interface TaskSubmissionResult {
