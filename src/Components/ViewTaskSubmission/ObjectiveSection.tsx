@@ -4,7 +4,7 @@ type ObjectiveSectionProps = {
    objectives: LearningObjectives;
 };
 
-const ObjectiveSection = ({ objectives }: ObjectiveSectionProps) => {
+function ObjectiveSection({ objectives }: ObjectiveSectionProps) {
    return (
       <div className="objectives">
          {objectives.learningObjectives.map((objective) => (
@@ -14,6 +14,6 @@ const ObjectiveSection = ({ objectives }: ObjectiveSectionProps) => {
          ))}
       </div>
    );
-};
+}
 
 export default ObjectiveSection;

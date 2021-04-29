@@ -13,6 +13,8 @@ import {
    QuizBlockSubmission,
    QuizBlockSubmissionsData,
 } from '../../interfaces/QuizBlockSubmission';
+import { QuizBlockData } from '../../interfaces/QuizBlock';
+import { GET_QUIZBLOCK } from '../../queries/quizblock';
 
 import './TaskSubmissionOverview.css';
 
@@ -58,6 +60,7 @@ const useStyles = makeStyles((theme: Theme) =>
 function TaskSubmissionOverview() {
    const classes = useStyles();
    const history = useHistory();
+   const { data: quizblockData } = useQuery<QuizBlockData>(GET_QUIZBLOCK);
    const { loading, error, data } = useQuery<QuizBlockSubmissionsData>(LIST_QUIZBLOCK_SUBMISSIONS);
 
    if (loading) {
@@ -66,11 +69,13 @@ function TaskSubmissionOverview() {
    if (error) {
       return <p>`Error! ${error.message}`</p>;
    }
-   if (data === undefined) {
+   if (data === undefined || !quizblockData) {
       return <p>Undefined data</p>;
    }
 
    const { quizblockSubmissions } = data;
+   const { quizblock } = quizblockData;
+
    const rows: JSX.Element[] = quizblockSubmissions.map((submission: QuizBlockSubmission) => {
       return (
          <StyledTableRow
@@ -83,14 +88,14 @@ function TaskSubmissionOverview() {
             <StyledTableCell component="th" scope="row">
                {submission.student}
             </StyledTableCell>
-            <StyledTableCell>{`${submission.points}/4`}</StyledTableCell>
+            <StyledTableCell>{`${submission.points}/${quizblock.points}`}</StyledTableCell>
          </StyledTableRow>
       );
    });
 
    return (
       <div className="task-overview-container">
-         <div style={{ marginLeft: '5px' }}>Quiz Name</div>
+         <div style={{ marginLeft: '5px' }}>{quizblock.title}</div>
          <div className={classes.root}>
             <TableContainer style={{ marginLeft: '5px' }} component={Paper}>
                <Table className={classes.table} aria-label="customized table">

@@ -4,14 +4,23 @@ import { Radio } from '@material-ui/core';
 import { Question, Option, QuizBlock } from '../../interfaces/QuizBlock';
 import { QuizBlockSubmission, StudentAnswer } from '../../interfaces/QuizBlockSubmission';
 
-function renderQuestionOptions(question: Question, answer: StudentAnswer) {
-   return question.options.map((option: Option, index: number) => {
+function renderQuestionOptions(question: Question, studentAnswer: StudentAnswer) {
+   const correctChoices = new Set<number>(question.answers);
+
+   return question.options.map((option: Option) => {
+      let studentChoices = new Set<number>(studentAnswer.choices);
+      let styleName = correctChoices.has(option.id) ? 'option-correct' : '';
+      if (studentChoices.has(option.id) && !correctChoices.has(option.id)) {
+         styleName = 'option-incorrect';
+      }
+
       return (
          <FormControlLabel
             key={option.id}
             value={option.description}
             disabled
-            control={<Radio checked={answer.choices[0] === index} />}
+            className={styleName}
+            control={<Radio checked={studentChoices.has(option.id)} />}
             label={option.description}
          />
       );
@@ -24,22 +33,22 @@ function renderQuestions(questions: Question[], submission: QuizBlockSubmission)
       answerMap.set(answer.questionId, answer);
    });
 
-   const defaulAnswer: StudentAnswer = {
+   const defaultAnswer: StudentAnswer = {
       questionId: 'question',
       result: false,
       choices: [0],
    };
 
    return questions.map((question) => {
-      const answer = answerMap.get(question.id) || defaulAnswer;
+      const answer = answerMap.get(question.id) || defaultAnswer;
       const feedback = answer.result
          ? `That's right! ${question.feedback}`
          : `Not quite. ${question.feedback}`;
       return (
          <div className="question" key={question.id}>
-            <div className="question-desc">{question.description}</div>
+            <p className="question-desc">{question.description}</p>
             <RadioGroup>{renderQuestionOptions(question, answer)}</RadioGroup>
-            <div className="feedback">{feedback}</div>
+            <p className="feedback">{feedback}</p>
          </div>
       );
    });
@@ -50,7 +59,7 @@ type SubmissionDetailProps = {
    quizblockSubmission: QuizBlockSubmission;
 };
 
-const SubmissionDetail = ({ quizblock, quizblockSubmission }: SubmissionDetailProps) => {
+function SubmissionDetail({ quizblock, quizblockSubmission }: SubmissionDetailProps) {
    return (
       <div className="quizblock">
          <h2>Submission Details</h2>
@@ -60,6 +69,6 @@ const SubmissionDetail = ({ quizblock, quizblockSubmission }: SubmissionDetailPr
          {renderQuestions(quizblock.questions, quizblockSubmission)}
       </div>
    );
-};
+}
 
 export default SubmissionDetail;

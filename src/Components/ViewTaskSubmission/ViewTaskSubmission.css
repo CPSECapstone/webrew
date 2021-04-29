@@ -25,6 +25,20 @@
    padding: 2em;
 }
 
+.question .option-correct {
+   border: solid 1px darkseagreen;
+   border-left: solid 10px darkseagreen;
+   border-top-left-radius: 5px;
+   border-bottom-left-radius: 5px;
+}
+
+.question .option-incorrect {
+   border: solid 1px lightcoral;
+   border-left: solid 10px lightcoral;
+   border-top-left-radius: 5px;
+   border-bottom-left-radius: 5px;
+}
+
 .question > .question-desc {
    font-size: 20px;
 }
