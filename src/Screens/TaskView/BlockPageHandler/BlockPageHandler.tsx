@@ -10,14 +10,17 @@ function BlockPageHandler({
    taskSubmissionResult: TaskSubmissionResult;
    page: number;
 }) {
-   const blocks = [];
-
-   taskInformation.pages[page].blocks.forEach((block: any) => {
-      blocks.push(block.title);
-   });
-
    return (
-      <IntroBlock taskName={taskInformation?.name} instructions={taskInformation?.instructions} />
+      <div className="container-fluid">
+         <div className="row">
+            <div className="col-10 mx-auto">
+               <IntroBlock
+                  taskName={taskInformation?.name}
+                  instructions={taskInformation?.instructions}
+               />
+            </div>
+         </div>
+      </div>
    );
 }
 
