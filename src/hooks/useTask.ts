@@ -1,6 +1,7 @@
-import { gql } from '@apollo/client';
+import { gql, useQuery } from '@apollo/client';
+import { Task } from '../interfaces/Task';
 
-export const GET_QUESTIONS = gql`
+const GET_TASK_BY_ID = gql`
    query GetTaskById {
       task(taskId: "90e0c730e56") {
          id
@@ -49,3 +50,18 @@ export const GET_QUESTIONS = gql`
       }
    }
 `;
+
+type TaskData = {
+   task: Task;
+};
+
+function useTask() {
+   const { loading, error, data } = useQuery<TaskData>(GET_TASK_BY_ID);
+   return {
+      loading,
+      error,
+      task: data?.task,
+   };
+}
+
+export default useTask;
