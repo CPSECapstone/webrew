@@ -4,7 +4,7 @@ type Props = {
    objectives: LearningObjective[];
 };
 
-const ObjectiveSection = ({ objectives }: Props) => {
+function ObjectiveSection({ objectives }: Props) {
    return (
       <div className="objectives">
          {objectives.map((objective) => (
@@ -14,6 +14,6 @@ const ObjectiveSection = ({ objectives }: Props) => {
          ))}
       </div>
    );
-};
+}
 
 export default ObjectiveSection;

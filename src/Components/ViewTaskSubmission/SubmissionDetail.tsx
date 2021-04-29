@@ -57,12 +57,12 @@ function renderQuestions(questions: Question[], submission: QuizBlockSubmission)
    });
 }
 
-type SubmissionDetailProps = {
+type Props = {
    quizblock: QuizBlock;
    quizblockSubmission: QuizBlockSubmission;
 };
 
-function SubmissionDetail({ quizblock, quizblockSubmission }: SubmissionDetailProps) {
+function SubmissionDetail({ quizblock, quizblockSubmission }: Props) {
    return (
       <div className="quizblock">
          <h2>Submission Details</h2>
