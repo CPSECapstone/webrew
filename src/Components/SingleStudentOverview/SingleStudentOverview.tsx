@@ -48,6 +48,9 @@ const FieldTitleDiv = styled.div`
    align-items: center;
    display: flex;
    padding: 5px;
+   border: 1px;
+   border-color: #1A8BDE;
+   border-style: solid;
 }
 `;
 
@@ -153,7 +156,7 @@ function SingleStudentOverview() {
    ];
 
    return (
-      <div style={{ marginLeft: '5px', marginRight: '5px', backgroundColor: '#EAE9E8' }}>
+      <div style={{ marginLeft: '5px', marginRight: '5px', backgroundColor: '#DAEFFE' }}>
          <StudentDiv>
             <StudentNameDiv>
                {inputUser.firstName} {inputUser.lastName}

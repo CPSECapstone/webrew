@@ -44,6 +44,9 @@ const FieldTitleDiv = styled.div`
    align-items: center;
    display: flex;
    padding: 5px;
+   border: 1px;
+   border-color: #1A8BDE;
+   border-style: solid;
 }
 `;
 
@@ -51,9 +54,6 @@ const RowDiv = styled.div`
    width: 100%;
    display: flex;
    background-color: white;
-   // border: 2px;
-   // border-color: #c2d2fc;
-   // border-style: solid;
 `;
 
 const ColumnDiv = styled.div`
@@ -209,7 +209,7 @@ export default function SingleStudentMasteryOveriew() {
    const COMP_TASK_PERCENT = 100;
 
    return (
-      <div style={{ marginLeft: '5px', marginRight: '5px', backgroundColor: '#EAE9E8' }}>
+      <div style={{ marginLeft: '5px', marginRight: '5px', backgroundColor: '#DAEFFE' }}>
          <StudentDiv>
             <StudentNameDiv>
                {/* {inputUser.firstName} {inputUser.lastName} */} Bob Jones
