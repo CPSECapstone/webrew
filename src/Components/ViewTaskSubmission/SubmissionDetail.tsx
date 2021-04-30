@@ -10,7 +10,7 @@ function renderQuestionOptions(question: Question, studentAnswer: StudentAnswer)
    return question.options.map((option: Option) => {
       const studentChoices = new Set<number>(studentAnswer.choices);
 
-      let styleName = correctChoices.has(option.id) ? 'option-correct' : '';
+     let styleName = correctChoices.has(option.id) ? 'option-correct' : '';
       if (studentChoices.has(option.id) && !correctChoices.has(option.id)) {
          styleName = 'option-incorrect';
       }
