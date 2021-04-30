@@ -10,11 +10,3 @@ export interface QuizBlockSubmission {
    points: number;
    studentAnswers: StudentAnswer[];
 }
-
-export interface QuizBlockSubmissionsData {
-   quizblockSubmissions: QuizBlockSubmission[];
-}
-
-export interface QuizBlockSubmissionData {
-   quizblockSubmission: QuizBlockSubmission;
-}

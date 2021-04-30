@@ -9,7 +9,8 @@ function renderQuestionOptions(question: Question, studentAnswer: StudentAnswer)
 
    return question.options.map((option: Option) => {
       const studentChoices = new Set<number>(studentAnswer.choices);
-      let styleName = correctChoices.has(option.id) ? 'option-correct' : '';
+
+     let styleName = correctChoices.has(option.id) ? 'option-correct' : '';
       if (studentChoices.has(option.id) && !correctChoices.has(option.id)) {
          styleName = 'option-incorrect';
       }
@@ -38,15 +39,18 @@ function renderQuestions(questions: Question[], submission: QuizBlockSubmission)
       result: false,
       choices: [0],
    };
-
-   return questions.map((question) => {
+  
+   return questions.map((question, index) => {
       const answer = answerMap.get(question.id) || defaultAnswer;
       const feedback = answer.result
          ? `That's right! ${question.feedback}`
          : `Not quite. ${question.feedback}`;
       return (
          <div className="question" key={question.id}>
-            <p className="question-desc">{question.description}</p>
+            <p className="question-desc">
+               <span className="question-index">{index + 1}</span>
+               {question.description}
+            </p>
             <RadioGroup>{renderQuestionOptions(question, answer)}</RadioGroup>
             <p className="feedback">{feedback}</p>
          </div>
@@ -54,19 +58,32 @@ function renderQuestions(questions: Question[], submission: QuizBlockSubmission)
    });
 }
 
-type SubmissionDetailProps = {
+type Props = {
    quizblock: QuizBlock;
    quizblockSubmission: QuizBlockSubmission;
 };
 
-function SubmissionDetail({ quizblock, quizblockSubmission }: SubmissionDetailProps) {
+function SubmissionDetail({ quizblock, quizblockSubmission }: Props) {
    return (
       <div className="quizblock">
-         <h2>Submission Details</h2>
-         <h3 className="quizblock-title">{quizblock.title}</h3>
-         <p className="quizblock-points">Total Points: {quizblock.points}</p>
-         <p>Required Score: {quizblock.requiredScore}</p>
-         {renderQuestions(quizblock.questions, quizblockSubmission)}
+         <div className="quizblock-header">
+            <h2>Submission Details</h2>
+            <h3 className="quizblock-title">{quizblock.title}</h3>
+            <p className="quizblock-points">Total Points: {quizblock.points}</p>
+            <p>Required Score: {quizblock.requiredScore}</p>
+            <p>
+               <span className="student-name">Student Name:</span>
+               {quizblockSubmission.student}
+            </p>
+            <p>
+               The student got
+               <span className="student-points">{quizblockSubmission.points}</span>
+               {` out of ${quizblock.points}.`}
+            </p>
+         </div>
+         <div className="quizblock-body">
+            {renderQuestions(quizblock.questions, quizblockSubmission)}
+         </div>
       </div>
    );
 }
