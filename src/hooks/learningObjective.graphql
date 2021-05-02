@@ -1,0 +1,8 @@
+query LearningObjectives($course: String!) {
+   learningObjectives(course: $course) {
+      id
+      course
+      name
+      description
+   }
+}

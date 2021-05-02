@@ -13,7 +13,6 @@
 
 /* quiz being a child  */
 .quizblock > .quizblock-header {
-   width: 600px;
    background-color: ghostwhite;
    margin-top: 10px;
    padding: 1em;
@@ -61,4 +60,3 @@
    padding: 5px 20px;
    background-color: #383838;
 }
-
