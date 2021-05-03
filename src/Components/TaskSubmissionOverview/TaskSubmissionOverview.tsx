@@ -1,4 +1,3 @@
-import React from 'react';
 import Table from '@material-ui/core/Table';
 import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import TableBody from '@material-ui/core/TableBody';
@@ -7,12 +6,11 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { useQuery } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
-import { LIST_QUIZ_SUBMISSIONS } from '../../queries/quiz-submission-queries';
-import { GET_QUIZ } from '../../queries/quiz-queries';
-import { QuizSubmissions } from '../../interfaces/QuizSubmissions';
-import { Quiz } from '../../interfaces/Quiz';
+import useQuizBlock from '../../hooks/useQuizBlock';
+import useQuizBlockSubmissions from '../../hooks/useQuizBlockSubmissions';
+import QuizBlockPie from './QuizBlockPie';
+import './TaskSubmissionOverview.css';
 
 const StyledTableCell = withStyles((theme: Theme) =>
    createStyles({
@@ -53,19 +51,46 @@ const useStyles = makeStyles((theme: Theme) =>
    })
 );
 
-function TaskOverview() {
+function TaskSubmissionOverview() {
    const classes = useStyles();
-   const { data: quizSubmissions } = useQuery<QuizSubmissions>(LIST_QUIZ_SUBMISSIONS);
-   // const { data: quiz } = useQuery<Quiz>(GET_QUIZ);
-
    const history = useHistory();
-   if (quizSubmissions === undefined) {
-      return <div>Quiz Submission(s) Undefined</div>;
+   const { quizblock } = useQuizBlock();
+   const { loading, error, quizblockSubmissions } = useQuizBlockSubmissions();
+
+   if (loading) {
+      return <p>Loading...</p>;
+   }
+   if (error) {
+      return <p>`Error! ${error.message}`</p>;
    }
 
+   if (!quizblock || !quizblockSubmissions) {
+      return <p>Undefined data</p>;
+   }
+
+   const rows: JSX.Element[] = quizblockSubmissions.map((submission) => {
+      return (
+         <StyledTableRow
+            key={submission.student}
+            style={{ cursor: 'pointer' }}
+            onClick={() => {
+               history.push('/viewTaskSubmission');
+            }}
+         >
+            <StyledTableCell component="th" scope="row">
+               {submission.student}
+            </StyledTableCell>
+            <StyledTableCell>{`${submission.points}/${quizblock.points}`}</StyledTableCell>
+         </StyledTableRow>
+      );
+   });
+
    return (
-      <div style={{ marginLeft: '5px', fontSize: '40px' }}>
-         {/* <div style={{ marginLeft: '5px' }}>{quiz.name}</div> */}
+      <div className="task-overview-container">
+         <div className="chart">
+            <QuizBlockPie />
+         </div>
+         <div style={{ marginLeft: '5px' }}>{quizblock.title}</div>
          <div className={classes.root}>
             <TableContainer style={{ marginLeft: '5px' }} component={Paper}>
                <Table className={classes.table} aria-label="customized table">
@@ -75,21 +100,7 @@ function TaskOverview() {
                         <StyledTableCell>Points</StyledTableCell>
                      </TableRow>
                   </TableHead>
-                  <TableBody>
-                     {quizSubmissions.quizSubmissions.map((submission) => (
-                        <StyledTableRow
-                           style={{ cursor: 'pointer' }}
-                           onClick={() => {
-                              history.push('/taskSubmission');
-                           }}
-                        >
-                           <StyledTableCell component="th" scope="row">
-                              {submission.student}
-                           </StyledTableCell>
-                           <StyledTableCell>{`${submission.points}/4`}</StyledTableCell>
-                        </StyledTableRow>
-                     ))}
-                  </TableBody>
+                  <TableBody>{rows}</TableBody>
                </Table>
             </TableContainer>
          </div>
@@ -97,4 +108,4 @@ function TaskOverview() {
    );
 }
 
-export default TaskOverview;
+export default TaskSubmissionOverview;

@@ -1,23 +1,44 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { useQuery } from '@apollo/client';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import StudentPicture from '../../assets/images/images-1.png';
 import { User } from '../../interfaces/User';
 import LinearProgressWithLabel from '../LinearProgressWithLabel/LinearProgressWithLabel';
 import MissionDropDown from '../LinearProgressWithLabel/MissionDropDown';
 import { MissionSubMission } from '../../interfaces/MissionSubMission';
+import { GET_USERS } from '../../queries/user-queries';
+
+const StudentDiv = styled.div`
+   height: 275px;
+   width: 100%;
+   font-size: 24pt;
+   display: flex;
+   justify-content: flex-start;
+   align-items: left;
+   flex-direction: column;
+`;
 
 const StudentNameDiv = styled.div`
    height: 50px;
    width: 100%;
    font-size: 24pt;
+`;
+
+const StudentImageDiv = styled.div`
+   height: 200px;
+   width: 100%;
+   font-size: 24pt;
+   display: flex;
+   justify-content: flex-start;
+   align-items: left;
 `;
 
 const FieldTitleDiv = styled.div`
@@ -26,17 +47,23 @@ const FieldTitleDiv = styled.div`
    background-color: #99d6ff;
    align-items: center;
    display: flex;
+   padding: 5px;
+   border: 1px;
+   border-color: #1A8BDE;
+   border-style: solid;
 }
 `;
 
 const RowDiv = styled.div`
    width: 100%;
    display: flex;
+   background-color: white;
 `;
 
 const ColumnDiv = styled.div`
    width: 100%;
    flex-direction: column;
+   padding: 5px;
 `;
 
 const PaddedDiv = styled.div`
@@ -60,8 +87,11 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function SingleStudentOverview() {
+   const { data: users } = useQuery<User>(GET_USERS);
+   // const { userId } = useParams();
    const classes = useStyles();
    const history = useHistory();
+   console.log(users);
 
    const COMP_TASK_PERCENT = 100;
 
@@ -84,16 +114,24 @@ function SingleStudentOverview() {
                description: 'SubMission1 description',
                tasks: [
                   {
-                     id: '345',
-                     name: 'Task 1',
-                     description: 'Task1 description',
-                     link: 'link1',
+                     id: 'string',
+                     name: 'string',
+                     instructions: 'string',
+                     points: 3,
+                     parentMissionId: 'string',
+                     parentMissionIndex: 4,
+                     pages: [],
+                     requirements: [],
                   },
                   {
-                     id: '346',
-                     name: 'Task 2',
-                     description: 'Task2 description',
-                     link: 'link2',
+                     id: 'string2',
+                     name: 'string2',
+                     instructions: 'string2',
+                     points: 3,
+                     parentMissionId: 'string2',
+                     parentMissionIndex: 4,
+                     pages: [],
+                     requirements: [],
                   },
                ],
             },
@@ -126,12 +164,15 @@ function SingleStudentOverview() {
    ];
 
    return (
-      <div style={{ marginLeft: '5px' }}>
-         <StudentNameDiv>
-            {inputUser.firstName} {inputUser.lastName}
-         </StudentNameDiv>
-         <img src={StudentPicture} alt="" style={{ width: 200, height: 200 }} />
-
+      <div style={{ marginLeft: '5px', marginRight: '5px', backgroundColor: '#DAEFFE' }}>
+         <StudentDiv>
+            <StudentNameDiv>
+               {inputUser.firstName} {inputUser.lastName}
+            </StudentNameDiv>
+            <StudentImageDiv>
+               <img src={StudentPicture} alt="" style={{ width: 200, height: 200 }} />
+            </StudentImageDiv>
+         </StudentDiv>
          <RowDiv>
             <ColumnDiv>
                <FieldTitleDiv>Current Targets</FieldTitleDiv>
@@ -147,7 +188,16 @@ function SingleStudentOverview() {
                {goals.map((goal) => (
                   <List>
                      <PaddedDiv>
-                        <ListItem button className={classes.nested}>
+                        <ListItem
+                           button
+                           className={classes.nested}
+                           style={{
+                              border: '1px',
+                              borderColor: '#C2D2FC',
+                              borderStyle: 'solid',
+                              backgroundColor: '#E9EEFC',
+                           }}
+                        >
                            <ListItemText primary={goal.name} />
                            <LinearProgressWithLabel
                               className={classes.progressBar}
@@ -173,16 +223,24 @@ function SingleStudentOverview() {
                <FieldTitleDiv>Completed Goals</FieldTitleDiv>
                {compGoals.map((compGoal) => (
                   <List>
-                     <ListItem button className={classes.nested}>
-                        <ListItemIcon>
-                           <div />
-                        </ListItemIcon>
-                        <ListItemText primary={compGoal.name} />
-                        <LinearProgressWithLabel
-                           className={classes.progressBar}
-                           value={COMP_TASK_PERCENT}
-                        />
-                     </ListItem>
+                     <PaddedDiv>
+                        <ListItem
+                           button
+                           className={classes.nested}
+                           style={{
+                              border: '1px',
+                              borderColor: '#C2D2FC',
+                              borderStyle: 'solid',
+                              backgroundColor: '#E9EEFC',
+                           }}
+                        >
+                           <ListItemText primary={compGoal.name} />
+                           <LinearProgressWithLabel
+                              className={classes.progressBar}
+                              value={COMP_TASK_PERCENT}
+                           />
+                        </ListItem>
+                     </PaddedDiv>
                   </List>
                ))}
             </ColumnDiv>
