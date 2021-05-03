@@ -1,0 +1,11 @@
+.inner-tab {
+   background: 'linear-gradient(90deg, rgb(242, 242, 242) 0%, rgb(166, 166, 166) 100%) white';
+   border: '3px solid black';
+   font-weight: 'bold';
+}
+
+.selected-inner-tab {
+   background: 'linear-gradient(90deg, rgb(255, 246, 219) 0%, rgb(250, 210, 92) 100%) white';
+   border: '3px solid black';
+   font-weight: 'bold';
+}
