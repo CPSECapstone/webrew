@@ -57,7 +57,6 @@ function TaskSubmissionOverview() {
    const { quizblock } = useQuizBlock();
    const { loading, error, quizblockSubmissions } = useQuizBlockSubmissions();
 
-
    if (loading) {
       return <p>Loading...</p>;
    }
@@ -70,7 +69,6 @@ function TaskSubmissionOverview() {
    }
 
    const rows: JSX.Element[] = quizblockSubmissions.map((submission) => {
-
       return (
          <StyledTableRow
             key={submission.student}

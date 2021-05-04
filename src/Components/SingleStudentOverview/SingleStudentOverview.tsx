@@ -115,7 +115,7 @@ function SingleStudentOverview() {
                tasks: [
                   {
                      id: 'string',
-                     name: 'string',
+                     name: 'Task 1',
                      instructions: 'string',
                      points: 3,
                      parentMissionId: 'string',
@@ -125,7 +125,7 @@ function SingleStudentOverview() {
                   },
                   {
                      id: 'string2',
-                     name: 'string2',
+                     name: 'Task 2',
                      instructions: 'string2',
                      points: 3,
                      parentMissionId: 'string2',
@@ -175,7 +175,7 @@ function SingleStudentOverview() {
          </StudentDiv>
          <RowDiv>
             <ColumnDiv>
-               <FieldTitleDiv>Current Targets</FieldTitleDiv>
+               <FieldTitleDiv>Current Missions</FieldTitleDiv>
                {missions.map((mission) => (
                   <MissionDropDown
                      name={mission.name}
@@ -211,7 +211,7 @@ function SingleStudentOverview() {
          </RowDiv>
          <RowDiv>
             <ColumnDiv>
-               <FieldTitleDiv>Completed Targets</FieldTitleDiv>
+               <FieldTitleDiv>Completed Missions</FieldTitleDiv>
                {missions.map((compMission) => (
                   <MissionDropDown
                      name={compMission.name}
