@@ -1,0 +1,70 @@
+query QuizBlock($taskId: String!, $blockId: String!) {
+   quizblock(taskId: $taskId, blockId: $blockId) {
+      blockId
+      title
+      blockIndex
+      pageIndex
+      requiredScore
+      points
+      questions {
+         ... on McQuestion {
+            ...McQuestionFields
+         }
+         ... on FrQuestion {
+            ...FrQuestionFields
+         }
+      }
+   }
+}
+
+fragment McQuestionFields on McQuestion {
+   id
+   description
+   feedback
+   points
+   options {
+      id
+      description
+   }
+   answers
+}
+
+fragment FrQuestionFields on FrQuestion {
+   id
+   description
+   feedback
+   points
+   answer
+}
+
+fragment AnswerFields on Answer {
+   pointsAwarded
+   questionId
+   answer
+}
+
+query TaskSubmissionResult($taskId: String) {
+   retrieveTaskSubmission(taskId: $taskId) {
+      graded
+      pointsAwarded
+      pointsPossible
+      questionAndAnswers {
+         ...QuestionAndAnswerFields
+      }
+      teacherComment
+   }
+}
+
+fragment QuestionAndAnswerFields on QuestionAndAnswer {
+   question {
+      ... on McQuestion {
+         ...McQuestionFields
+      }
+      ... on FrQuestion {
+         ...FrQuestionFields
+      }
+   }
+   answer {
+      ...AnswerFields
+   }
+}

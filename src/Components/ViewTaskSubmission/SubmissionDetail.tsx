@@ -1,23 +1,27 @@
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { Radio } from '@material-ui/core';
-import { Question, Option, QuizBlock } from '../../interfaces/QuizBlock';
 import { QuizBlockSubmission, StudentAnswer } from '../../interfaces/QuizBlockSubmission';
+import {
+   QuizBlockQuery,
+   QuestionOption,
+   McQuestionFieldsFragment,
+   FrQuestionFieldsFragment,
+} from '../../__generated__/types';
 
-function renderQuestionOptions(question: Question, studentAnswer: StudentAnswer) {
+function renderQuestionOptions(question: McQuestionFieldsFragment, studentAnswer: StudentAnswer) {
    const correctChoices = new Set<number>(question.answers);
 
-   return question.options.map((option: Option) => {
+   return question.options.map((option: QuestionOption) => {
       const studentChoices = new Set<number>(studentAnswer.choices);
 
-     let styleName = correctChoices.has(option.id) ? 'option-correct' : '';
+      let styleName = correctChoices.has(option.id) ? 'option-correct' : '';
       if (studentChoices.has(option.id) && !correctChoices.has(option.id)) {
          styleName = 'option-incorrect';
       }
 
       return (
          <FormControlLabel
-            key={option.id}
             value={option.description}
             disabled
             className={styleName}
@@ -28,7 +32,12 @@ function renderQuestionOptions(question: Question, studentAnswer: StudentAnswer)
    });
 }
 
-function renderQuestions(questions: Question[], submission: QuizBlockSubmission) {
+type QuestionFieldsFragment = McQuestionFieldsFragment | FrQuestionFieldsFragment;
+
+function renderQuestions(
+   questions: Array<QuestionFieldsFragment>,
+   submission: QuizBlockSubmission
+) {
    const answerMap = new Map<string, StudentAnswer>();
    submission.studentAnswers.forEach((answer) => {
       answerMap.set(answer.questionId, answer);
@@ -39,31 +48,37 @@ function renderQuestions(questions: Question[], submission: QuizBlockSubmission)
       result: false,
       choices: [0],
    };
-  
-   return questions.map((question, index) => {
-      const answer = answerMap.get(question.id) || defaultAnswer;
-      const feedback = answer.result
-         ? `That's right! ${question.feedback}`
-         : `Not quite. ${question.feedback}`;
-      return (
-         <div className="question" key={question.id}>
-            <p className="question-desc">
-               <span className="question-index">{index + 1}</span>
-               {question.description}
-            </p>
-            <RadioGroup>{renderQuestionOptions(question, answer)}</RadioGroup>
-            <p className="feedback">{feedback}</p>
-         </div>
-      );
+
+   return questions.map((question: QuestionFieldsFragment, index: number) => {
+      // #render multiple choice question
+      if (question.__typename === 'McQuestion') {
+         const answer = answerMap.get(question.id) || defaultAnswer;
+         const feedback = answer.result ? "That's right!" : 'Not quite.';
+
+         return (
+            <div className="question" key={question.id}>
+               <p className="question-desc">
+                  <span className="question-index">{index + 1}</span>
+                  {question.description}
+               </p>
+               <RadioGroup>{renderQuestionOptions(question, answer)}</RadioGroup>
+               <p className="feedback">{feedback}</p>
+            </div>
+         );
+      }
+
+      return <p>Unknown Question Type `${question.__typename}`</p>;
    });
 }
 
 type Props = {
-   quizblock: QuizBlock;
+   quizblockQuery: QuizBlockQuery;
    quizblockSubmission: QuizBlockSubmission;
 };
 
-function SubmissionDetail({ quizblock, quizblockSubmission }: Props) {
+function SubmissionDetail({ quizblockQuery, quizblockSubmission }: Props) {
+   const { quizblock } = quizblockQuery;
+
    return (
       <div className="quizblock">
          <div className="quizblock-header">

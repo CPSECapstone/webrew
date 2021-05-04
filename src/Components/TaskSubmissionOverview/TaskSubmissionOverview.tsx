@@ -7,10 +7,10 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { useHistory } from 'react-router-dom';
-import useQuizBlock from '../../hooks/useQuizBlock';
 import useQuizBlockSubmissions from '../../hooks/useQuizBlockSubmissions';
 import QuizBlockPie from './QuizBlockPie';
 import './TaskSubmissionOverview.css';
+import { useQuizBlockQuery } from '../../__generated__/types';
 
 const StyledTableCell = withStyles((theme: Theme) =>
    createStyles({
@@ -54,7 +54,14 @@ const useStyles = makeStyles((theme: Theme) =>
 function TaskSubmissionOverview() {
    const classes = useStyles();
    const history = useHistory();
-   const { quizblock } = useQuizBlock();
+   const { data: quizblockQuery } = useQuizBlockQuery({
+      variables: {
+         taskId: 'ac133970e04',
+         blockId: '0984b7bf5a0',
+      },
+   });
+
+   // const { quizblock } = useQuizBlock();
    const { loading, error, quizblockSubmissions } = useQuizBlockSubmissions();
 
    if (loading) {
@@ -64,9 +71,11 @@ function TaskSubmissionOverview() {
       return <p>`Error! ${error.message}`</p>;
    }
 
-   if (!quizblock || !quizblockSubmissions) {
+   if (!quizblockQuery?.quizblock || !quizblockSubmissions) {
       return <p>Undefined data</p>;
    }
+
+   const { quizblock } = quizblockQuery;
 
    const rows: JSX.Element[] = quizblockSubmissions.map((submission) => {
       return (
