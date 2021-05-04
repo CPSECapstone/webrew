@@ -2,7 +2,7 @@ import React from 'react';
 import { render, fireEvent, waitFor, screen } from './test-utils';
 import '@testing-library/jest-dom/extend-expect';
 
-import CreateCourseDialog from '../course/create-course-dialog';
+import CreateCourseDialog from '../Components/CreateCourseDialog/CreateCourseDialog';
 
 test('displays modal', async () => {
    // Arrange

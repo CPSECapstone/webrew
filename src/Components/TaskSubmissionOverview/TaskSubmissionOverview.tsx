@@ -6,16 +6,10 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { useQuery } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
-import { LIST_QUIZBLOCK_SUBMISSIONS } from '../../queries/quizblockSubmission';
-import {
-   QuizBlockSubmission,
-   QuizBlockSubmissionsData,
-} from '../../interfaces/QuizBlockSubmission';
-import { QuizBlockData } from '../../interfaces/QuizBlock';
-import { GET_QUIZBLOCK } from '../../queries/quizblock';
-
+import useQuizBlock from '../../hooks/useQuizBlock';
+import useQuizBlockSubmissions from '../../hooks/useQuizBlockSubmissions';
+import QuizBlockPie from './QuizBlockPie';
 import './TaskSubmissionOverview.css';
 
 const StyledTableCell = withStyles((theme: Theme) =>
@@ -60,8 +54,9 @@ const useStyles = makeStyles((theme: Theme) =>
 function TaskSubmissionOverview() {
    const classes = useStyles();
    const history = useHistory();
-   const { data: quizblockData } = useQuery<QuizBlockData>(GET_QUIZBLOCK);
-   const { loading, error, data } = useQuery<QuizBlockSubmissionsData>(LIST_QUIZBLOCK_SUBMISSIONS);
+   const { quizblock } = useQuizBlock();
+   const { loading, error, quizblockSubmissions } = useQuizBlockSubmissions();
+
 
    if (loading) {
       return <p>Loading...</p>;
@@ -69,14 +64,13 @@ function TaskSubmissionOverview() {
    if (error) {
       return <p>`Error! ${error.message}`</p>;
    }
-   if (data === undefined || !quizblockData) {
+
+   if (!quizblock || !quizblockSubmissions) {
       return <p>Undefined data</p>;
    }
 
-   const { quizblockSubmissions } = data;
-   const { quizblock } = quizblockData;
+   const rows: JSX.Element[] = quizblockSubmissions.map((submission) => {
 
-   const rows: JSX.Element[] = quizblockSubmissions.map((submission: QuizBlockSubmission) => {
       return (
          <StyledTableRow
             key={submission.student}
@@ -95,6 +89,9 @@ function TaskSubmissionOverview() {
 
    return (
       <div className="task-overview-container">
+         <div className="chart">
+            <QuizBlockPie />
+         </div>
          <div style={{ marginLeft: '5px' }}>{quizblock.title}</div>
          <div className={classes.root}>
             <TableContainer style={{ marginLeft: '5px' }} component={Paper}>

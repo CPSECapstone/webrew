@@ -1,13 +1,13 @@
-import { LearningObjectives } from '../../interfaces/LearningObjectives';
+import { LearningObjective } from '../../interfaces/LearningObjective';
 
-type ObjectiveSectionProps = {
-   objectives: LearningObjectives;
+type Props = {
+   objectives: LearningObjective[];
 };
 
-function ObjectiveSection({ objectives }: ObjectiveSectionProps) {
+function ObjectiveSection({ objectives }: Props) {
    return (
       <div className="objectives">
-         {objectives.learningObjectives.map((objective) => (
+         {objectives.map((objective) => (
             <div className="objective" key={objective.id}>
                Learning Objective: {objective.description}
             </div>
