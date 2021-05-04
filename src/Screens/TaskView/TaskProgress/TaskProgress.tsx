@@ -2,7 +2,7 @@ import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { ProgressBar, Button } from 'react-bootstrap';
-import { Task } from '../../../interfaces/Task';
+import { Task } from '../../../__generated__/types';
 import './TaskProgress.css';
 
 function blockComplete(

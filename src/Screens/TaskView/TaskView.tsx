@@ -1,22 +1,23 @@
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { useState } from 'react';
 import { Alert } from 'react-bootstrap';
-import { Task, TaskSubmissionResult } from '../../interfaces/Task';
+import { Task, TaskSubmissionResult } from '../../__generated__/types';
 import TaskNavbar from './TaskNavbar/TaskNavbar';
 import TaskProgress from './TaskProgress/TaskProgress';
 import BlockPageHandler from './BlockPageHandler/BlockPageHandler';
 import { GET_TASK_INFORMATION, GET_TASK_SUBMISSION_RESULT } from '../../queries/task-queries';
 
 function TaskView({ taskId }: { taskId: string }) {
-   const { data: taskInformation } = useQuery<Task>(GET_TASK_INFORMATION);
+   const { data: taskInformation } = useQuery<Task>(GET_TASK_INFORMATION, {
+      variables: { taskId },
+   });
+   console.log(taskInformation);
    const { data: taskSubmissionResult } = useQuery<TaskSubmissionResult>(
       GET_TASK_SUBMISSION_RESULT,
       {
          variables: { taskId },
       }
    );
-
-   const [progress, setProgress] = useState(0);
    const [page, setPage] = useState(0);
 
    const maxPage: number =

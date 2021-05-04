@@ -25,7 +25,7 @@ export const GET_TASK_SUBMISSION_RESULT = gql`
 
 export const GET_TASK_INFORMATION = gql`
    query GetTaskById($taskId: String!) {
-      task(taskId: $taskId) {
+      task(taskId: $taskId) @client {
          id
          requirements {
             id
@@ -51,12 +51,12 @@ export const GET_TASK_INFORMATION = gql`
                   requiredScore
                   questions {
                      __typename
-                     ... on FRQuestion {
+                     ... on FrQuestion {
                         id
                         description
                         answer
                      }
-                     ... on MCQuestion {
+                     ... on McQuestion {
                         id
                         description
                         options {

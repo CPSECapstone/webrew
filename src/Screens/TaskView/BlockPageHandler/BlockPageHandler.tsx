@@ -1,4 +1,4 @@
-import { Task, TaskBlock, TaskSubmissionResult } from '../../../interfaces/Task';
+import { Task, TaskBlock, TaskSubmissionResult } from '../../../__generated__/types';
 import IntroBlock from '../TaskBlocks/IntroBlock/IntroBlock';
 
 function BlockPageHandler({
