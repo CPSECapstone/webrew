@@ -1,0 +1,13 @@
+query Objectives($course: String!) {
+   objectives(course: $course) {
+      ...ObjectiveFields
+   }
+}
+fragment ObjectiveFields on Objective {
+   objectiveId
+   objectiveName
+   description
+   targetId
+   targetName
+   course
+}

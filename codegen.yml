@@ -1,8 +1,7 @@
 overwrite: true
 schema: "https://knyio2nl7d.execute-api.us-east-1.amazonaws.com/dev/graphql"
 documents:
-  - src/hooks/quizblock.graphql
-  - src/hooks/learningObjective.graphql
+  - src/hooks/*.graphql
 generates:
   src/__generated__/types.ts:
     plugins:
