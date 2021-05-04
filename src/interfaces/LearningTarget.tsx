@@ -1,4 +1,4 @@
-import { LearningObjective } from './LearningObjective';
+import { LearningObjective } from '../__generated__/types';
 
 export interface LearningTarget {
    id: string;

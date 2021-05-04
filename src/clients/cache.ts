@@ -6,11 +6,6 @@ export const cache: InMemoryCache = new InMemoryCache({
    typePolicies: {
       Query: {
          fields: {
-            quizblock: {
-               read() {
-                  return mock.quizblockVar();
-               },
-            },
             quizblockSubmission: {
                read() {
                   return mock.quizblockSubmissionVar();

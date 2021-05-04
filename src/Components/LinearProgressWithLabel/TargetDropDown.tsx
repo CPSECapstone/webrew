@@ -10,7 +10,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import LinearProgressWithLabel from './LinearProgressWithLabel';
 import ObjectiveDropDown from './ObjectiveDropDown';
-import { LearningObjective } from '../../interfaces/LearningObjective';
+import { LearningObjective } from '../../__generated__/types';
 
 const useStyles = makeStyles((theme: Theme) =>
    createStyles({
