@@ -11,14 +11,9 @@ import {
    TableBody,
    makeStyles,
 } from '@material-ui/core';
-import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { Link } from 'react-router-dom';
 import { Progress } from '../../interfaces/Progress';
 import { Users } from '../../interfaces/Users';
-import { GET_LEARNING_OBJECTIVE } from '../../queries/LearningObjectiveQueries';
-import { LearningObjectives } from '../../interfaces/LearningObjectives';
-import { LearningObjective } from '../../interfaces/LearningObjective';
 
 const StyledTableCell = withStyles((theme: Theme) =>
    createStyles({
@@ -104,7 +99,6 @@ const userProgressMap = new Map<string, Progress>();
 
 function StudentOverview() {
    const classes = useStyles();
-   const history = useHistory();
 
    return (
       <div style={{ marginLeft: '5px', fontSize: '40px' }}>

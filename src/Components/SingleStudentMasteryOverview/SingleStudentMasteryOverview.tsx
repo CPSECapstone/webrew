@@ -1,13 +1,12 @@
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import styled from 'styled-components';
 import StudentPicture from '../../assets/images/images-1.png';
 import LinearProgressWithLabel from '../LinearProgressWithLabel/LinearProgressWithLabel';
 import TargetDropDown from '../LinearProgressWithLabel/TargetDropDown';
-import { LearningObjective } from '../../interfaces/LearningObjective';
+import { LearningObjective } from '../../__generated__/types';
 
 const StudentDiv = styled.div`
    height: 275px;

@@ -1,1 +1,2 @@
 *.json
+src/__generated__/*
