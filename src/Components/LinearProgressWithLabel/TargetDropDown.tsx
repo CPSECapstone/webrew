@@ -10,7 +10,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import LinearProgressWithLabel from './LinearProgressWithLabel';
 import ObjectiveDropDown from './ObjectiveDropDown';
-import { LearningObjective } from '../../__generated__/types';
+import { Objective } from '../../__generated__/types';
 
 const useStyles = makeStyles((theme: Theme) =>
    createStyles({
@@ -34,7 +34,7 @@ const PaddedDiv = styled.div`
 
 export interface TargetDropDownProps {
    name: string;
-   learningObjectives: LearningObjective[];
+   learningObjectives: Objective[];
 }
 
 // Handles state to open or close dropdown
@@ -70,8 +70,8 @@ export default function TargetDropDown({ name, learningObjectives }: TargetDropD
             </ListItem>
          </PaddedDiv>
          <Collapse in={open} timeout="auto" unmountOnExit>
-            {learningObjectives.map((objective: LearningObjective) => (
-               <ObjectiveDropDown name={objective.name} tasks={objective.tasks} />
+            {learningObjectives.map((objective: Objective) => (
+               <ObjectiveDropDown name={objective.objectiveName} tasks={objective.tasks} />
             ))}
          </Collapse>
       </List>

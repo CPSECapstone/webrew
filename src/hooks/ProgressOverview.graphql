@@ -32,7 +32,7 @@ fragment CourseInfoFields on CourseInfo {
 fragment TargetFields on Target {
   targetName
   objectives {
-    ...ObjectiveFields
+    ...ProgressObjectiveFields
   }
 }
 fragment MissionFields on Mission {
@@ -51,7 +51,7 @@ fragment MissionContentFields on MissionContent {
     name
   }
 }
-fragment ObjectiveFields on Objective {
+fragment ProgressObjectiveFields on Objective {
   objectiveId
   objectiveName
   tasks {

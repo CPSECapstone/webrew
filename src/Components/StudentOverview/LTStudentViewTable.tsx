@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { Progress } from '../../interfaces/Progress';
 import { Users } from '../../interfaces/Users';
 import TableComponent from '../TableComponent/TableComponent';
+import { useProgressOverviewQuery } from '../../__generated__/types';
 
 const users: Users = {
    users: [
@@ -31,6 +32,16 @@ const users: Users = {
 const userProgressMap = new Map<string, Progress>();
 
 function LTStudentViewTable() {
+   const { data: progressData } = useProgressOverviewQuery({
+      variables: {
+         course: 'Integrated Science',
+      },
+   });
+
+   // if (!progressData) {
+   //    return <p>Undefined data</p>;
+   // }
+
    userProgressMap.set('1', {
       curStatus: 'Task 1.1',
       statusColor: '#00b300', // Green
