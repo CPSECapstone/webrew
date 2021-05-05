@@ -1,0 +1,65 @@
+query ProgressOverview($course: String!) {
+   progressOverview(course: $course) {
+      userProgress {
+         ...UserProgressFields
+      }
+      courseInfo {
+         ...CourseInfoFields
+      }
+      missions {
+         ...MissionFields
+      }
+      targets {
+         ...TargetFields
+      }
+   }
+}
+fragment UserProgressFields on UserProgress {
+   userName
+   progress {
+      ...ProgressFields
+   }
+}
+fragment ProgressFields on Progress {
+   taskId
+   status
+}
+fragment CourseInfoFields on CourseInfo {
+   courseId
+   course
+   instructor
+   description
+}
+fragment TargetFields on Target {
+   targetName
+   objectives {
+      ...ProgressObjectiveFields
+   }
+}
+fragment MissionFields on Mission {
+   id
+   name
+   missionContent {
+      ...MissionContentFields
+   }
+}
+fragment MissionContentFields on MissionContent {
+   ... on Task {
+      ...TaskFields
+   }
+   ... on SubMission {
+      id
+      name
+   }
+}
+fragment ProgressObjectiveFields on Objective {
+   objectiveId
+   objectiveName
+   tasks {
+      ...TaskFields
+   }
+}
+fragment TaskFields on Task {
+   id
+   name
+}

@@ -1,0 +1,71 @@
+query GetTaskById($taskId: String!) {
+   task(taskId: $taskId) {
+      id
+      requirements {
+         id
+         description
+      }
+      name
+      instructions
+      points
+      startAt
+      endAt
+      dueDate
+      missionId
+      missionIndex
+      subMissionId
+      objectiveId
+      targetId
+      pages {
+         ...PageFields
+      }
+   }
+}
+
+fragment PageFields on Page {
+   __typename
+   blocks {
+      __typename
+      ... on TextBlock {
+         ...TextBlockFields
+      }
+      ... on VideoBlock {
+         ...VideoBlockFields
+      }
+      ... on QuizBlock {
+         ...QuizBlockFields
+      }
+      ... on ImageBlock {
+         ...ImageBlockFields
+      }
+   }
+   skippable
+}
+
+fragment TextBlockFields on TextBlock {
+   title
+   contents
+   fontSize
+}
+
+fragment VideoBlockFields on VideoBlock {
+   title
+   videoUrl
+}
+
+fragment ImageBlockFields on ImageBlock {
+   imageUrl
+}
+
+fragment QuizBlockFields on QuizBlock {
+   title
+   requiredScore
+   questions {
+      ... on McQuestion {
+         ...McQuestionFields
+      }
+      ... on FrQuestion {
+         ...FrQuestionFields
+      }
+   }
+}
