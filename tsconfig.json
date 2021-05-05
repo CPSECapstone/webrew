@@ -20,6 +20,12 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
+  "files": [
+    "src/__generated__/types.ts"
+  ],
+  "exclude": [
+    "node_modules/"
+  ],
   "include": [
     "src/**/*"
   ]

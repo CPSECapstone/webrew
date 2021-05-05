@@ -1,64 +1,65 @@
 query ProgressOverview($course: String!) {
-   progressOverview(course: $course) {    
-    userProgress {
-    ...UserProgressFields
-    }
-    courseInfo {
-      ...CourseInfoFields
-    }
-    missions {
-      ...MissionFields
-    }
-    targets {
-      ...TargetFields
-    }
-  }
+   progressOverview(course: $course) {
+      userProgress {
+         ...UserProgressFields
+      }
+      courseInfo {
+         ...CourseInfoFields
+      }
+      missions {
+         ...MissionFields
+      }
+      targets {
+         ...TargetFields
+      }
+   }
 }
 fragment UserProgressFields on UserProgress {
-	userName
-  progress {
-    ...ProgressFields
-  }
+   userName
+   progress {
+      ...ProgressFields
+   }
 }
 fragment ProgressFields on Progress {
-  taskId
-  status
+   taskId
+   status
 }
 fragment CourseInfoFields on CourseInfo {
-  course
-  instructor
-  description
+   courseId
+   course
+   instructor
+   description
 }
 fragment TargetFields on Target {
-  targetName
-  objectives {
-    ...ProgressObjectiveFields
-  }
+   targetName
+   objectives {
+      ...ProgressObjectiveFields
+   }
 }
 fragment MissionFields on Mission {
-  id
-  name
-  missionContent {
-    ...MissionContentFields
-  }
+   id
+   name
+   missionContent {
+      ...MissionContentFields
+   }
 }
 fragment MissionContentFields on MissionContent {
-  ... on Task {
-    ...TaskFields
-  }
-  ... on SubMission {
-    id
-    name
-  }
+   ... on Task {
+      ...TaskFields
+   }
+   ... on SubMission {
+      id
+      name
+   }
 }
 fragment ProgressObjectiveFields on Objective {
-  objectiveId
-  objectiveName
-  tasks {
-    ...TaskFields
-  }
+   objectiveId
+   objectiveName
+   tasks {
+      ...TaskFields
+   }
 }
 fragment TaskFields on Task {
-  id
-  name
+   id
+   name
 }
