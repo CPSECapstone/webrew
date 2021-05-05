@@ -72,7 +72,7 @@ function TaskSubmissionOverview() {
    }
 
    if (!quizblockQuery?.quizblock || !quizblockSubmissions) {
-      return <p>Undefined data</p>;
+      return <></>;
    }
 
    const { quizblock } = quizblockQuery;

@@ -7,6 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import { Link } from 'react-router-dom';
 import LinearProgressWithLabel from './LinearProgressWithLabel';
 import { Task } from '../../__generated__/types';
 
@@ -74,28 +75,30 @@ export default function TargetDropDown({ name, tasks }: ObjectiveDropDownProps) 
          </PaddedDiv>
          <Collapse in={open} timeout="auto" unmountOnExit>
             {tasks.map((task: Task) => (
-               <List component="div">
-                  <div style={{ display: 'flex', flexDirection: 'row' }}>
-                     <DoublePaddedDiv>
-                        <ListItem
-                           button
-                           className={classes.nested}
-                           style={{
-                              border: '1px',
-                              borderColor: '#C2D2FC',
-                              borderStyle: 'solid',
-                              backgroundColor: '#E9EEFC',
-                           }}
-                        >
-                           <ListItemText primary={task.name} />
-                           <LinearProgressWithLabel
-                              className={classes.progressBar}
-                              value={TASK_PERCENT}
-                           />
-                        </ListItem>
-                     </DoublePaddedDiv>
-                  </div>
-               </List>
+               <Link to="/viewTask">
+                  <List component="div">
+                     <div style={{ display: 'flex', flexDirection: 'row' }}>
+                        <DoublePaddedDiv>
+                           <ListItem
+                              button
+                              className={classes.nested}
+                              style={{
+                                 border: '1px',
+                                 borderColor: '#C2D2FC',
+                                 borderStyle: 'solid',
+                                 backgroundColor: '#E9EEFC',
+                              }}
+                           >
+                              <ListItemText primary={task.name} />
+                              <LinearProgressWithLabel
+                                 className={classes.progressBar}
+                                 value={TASK_PERCENT}
+                              />
+                           </ListItem>
+                        </DoublePaddedDiv>
+                     </div>
+                  </List>
+               </Link>
             ))}
          </Collapse>
       </List>

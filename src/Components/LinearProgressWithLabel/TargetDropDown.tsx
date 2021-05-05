@@ -71,7 +71,7 @@ export default function TargetDropDown({ name, learningObjectives }: TargetDropD
          </PaddedDiv>
          <Collapse in={open} timeout="auto" unmountOnExit>
             {learningObjectives.map((objective: Objective) => (
-               <ObjectiveDropDown name={objective.objectiveName} tasks={objective.tasks} />
+               <ObjectiveDropDown name={objective.objectiveName} tasks={objective.tasks || []} />
             ))}
          </Collapse>
       </List>
