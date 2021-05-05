@@ -1,29 +1,33 @@
 import ObjectiveSection from './ObjectiveSection';
 import SubmissionDetail from './SubmissionDetail';
-import useQuizBlock from '../../hooks/useQuizBlock';
-import useLearningObjectives from '../../hooks/useLearningObjectives';
 import useQuizBlockSubmission from '../../hooks/useQuizBlockSubmission';
+import { useQuizBlockQuery } from '../../__generated__/types';
 import './ViewTaskSubmission.css';
 
 function ViewTaskSubmission() {
-   const { learningObjectives } = useLearningObjectives();
-   const { quizblock } = useQuizBlock();
+   const { data: quizBlockQuery } = useQuizBlockQuery({
+      variables: {
+         taskId: 'ac133970e04',
+         blockId: '0984b7bf5a0',
+      },
+   });
+
    const { quizblockSubmission } = useQuizBlockSubmission();
 
-   if (!learningObjectives) {
-      return <>Learning Objective Undefined</>;
-   }
-   if (!quizblock) {
-      return <p>quizblock undefined</p>;
-   }
    if (!quizblockSubmission) {
       return <p>quizblockSubmission undefined</p>;
+   }
+   if (!quizBlockQuery?.quizblock) {
+      return <p>quizblock undefined</p>;
    }
 
    return (
       <div className="view-task-submission">
-         <ObjectiveSection objectives={learningObjectives} />
-         <SubmissionDetail quizblock={quizblock} quizblockSubmission={quizblockSubmission} />
+         <ObjectiveSection />
+         <SubmissionDetail
+            quizblockQuery={quizBlockQuery}
+            quizblockSubmission={quizblockSubmission}
+         />
       </div>
    );
 }

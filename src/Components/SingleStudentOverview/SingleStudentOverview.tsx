@@ -30,6 +30,9 @@ const StudentNameDiv = styled.div`
    height: 50px;
    width: 100%;
    font-size: 24pt;
+   display: flex;
+   justify-content: flex-start;
+   align-items: left;
 `;
 
 const StudentImageDiv = styled.div`
@@ -177,10 +180,7 @@ function SingleStudentOverview() {
             <ColumnDiv>
                <FieldTitleDiv>Current Missions</FieldTitleDiv>
                {missions.map((mission) => (
-                  <MissionDropDown
-                     name={mission.name}
-                     subMissions={mission.subMissions as MissionSubMission[]}
-                  />
+                  <MissionDropDown name={mission.name} subMissions={mission.subMissions as any[]} />
                ))}
             </ColumnDiv>
             <ColumnDiv>
@@ -215,7 +215,7 @@ function SingleStudentOverview() {
                {missions.map((compMission) => (
                   <MissionDropDown
                      name={compMission.name}
-                     subMissions={compMission.subMissions as MissionSubMission[]}
+                     subMissions={compMission.subMissions as any[]}
                   />
                ))}
             </ColumnDiv>

@@ -1,13 +1,12 @@
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import styled from 'styled-components';
 import StudentPicture from '../../assets/images/images-1.png';
 import LinearProgressWithLabel from '../LinearProgressWithLabel/LinearProgressWithLabel';
 import TargetDropDown from '../LinearProgressWithLabel/TargetDropDown';
-import { LearningObjective } from '../../interfaces/LearningObjective';
+import { Objective } from '../../__generated__/types';
 
 const StudentDiv = styled.div`
    height: 275px;
@@ -84,7 +83,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export interface LearningTarget {
    name: string;
-   learningObjectives: LearningObjective[];
+   learningObjectives: Objective[];
 }
 
 export default function SingleStudentMasteryOveriew() {
@@ -95,7 +94,7 @@ export default function SingleStudentMasteryOveriew() {
          name: 'Target 1',
          learningObjectives: [
             {
-               name: 'Objective 1',
+               objectiveName: 'Objective 1',
                tasks: [
                   {
                      name: 'Task 1',
@@ -106,7 +105,7 @@ export default function SingleStudentMasteryOveriew() {
                ],
             },
             {
-               name: 'Objective 2',
+               objectiveName: 'Objective 2',
                tasks: [
                   {
                      name: 'Task 1',
@@ -122,7 +121,7 @@ export default function SingleStudentMasteryOveriew() {
          name: 'Target 2',
          learningObjectives: [
             {
-               name: 'Objective 1',
+               objectiveName: 'Objective 1',
                tasks: [
                   {
                      name: 'Task 1',
@@ -133,7 +132,7 @@ export default function SingleStudentMasteryOveriew() {
                ],
             },
             {
-               name: 'Objective 2',
+               objectiveName: 'Objective 2',
                tasks: [
                   {
                      name: 'Task 1',
@@ -224,7 +223,7 @@ export default function SingleStudentMasteryOveriew() {
                {learningTargets.map((target) => (
                   <TargetDropDown
                      name={target.name}
-                     learningObjectives={target.learningObjectives as LearningObjective[]}
+                     learningObjectives={target.learningObjectives as Objective[]}
                   />
                ))}
             </ColumnDiv>
@@ -260,7 +259,7 @@ export default function SingleStudentMasteryOveriew() {
                {compLearningTargets.map((compTarget) => (
                   <TargetDropDown
                      name={compTarget.name}
-                     learningObjectives={compTarget.compLearningObjectives as LearningObjective[]}
+                     learningObjectives={compTarget.compLearningObjectives as any[]}
                   />
                ))}
             </ColumnDiv>

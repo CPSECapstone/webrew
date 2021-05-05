@@ -3,11 +3,11 @@ module.exports = {
       'airbnb-typescript-prettier',
       'airbnb/hooks',
       'plugin:@typescript-eslint/recommended',
-      'plugin:@typescript-eslint/recommended-requiring-type-checking'
+      'plugin:@typescript-eslint/recommended-requiring-type-checking',
    ],
    parser: '@typescript-eslint/parser',
    parserOptions: {
-      project: './tsconfig.json'
+      project: './tsconfig.json',
    },
    plugins: ['prettier'],
    rules: {
@@ -15,13 +15,13 @@ module.exports = {
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       'react/jsx-props-no-spreading': 'off',
       'react/react-in-jsx-scope': 'off',
-      'prettier/prettier': 1,
       'prettier/prettier': [
          'error',
          {
-            endOfLine: 'auto'
-         }
+            endOfLine: 'auto',
+         },
       ],
-      'no-console': 'off'
-   }
+      'no-underscore-dangle': ['error', { allow: ['__typename'] }],
+      'no-console': 'off',
+   },
 };

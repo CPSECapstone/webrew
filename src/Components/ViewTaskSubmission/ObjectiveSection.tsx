@@ -1,14 +1,21 @@
-import { LearningObjective } from '../../interfaces/LearningObjective';
+import { useObjectivesQuery } from '../../__generated__/types';
 
-type Props = {
-   objectives: LearningObjective[];
-};
+function ObjectiveSection() {
+   const { data: objectivesQuery } = useObjectivesQuery({
+      variables: {
+         course: 'Biology',
+      },
+   });
+   if (!objectivesQuery?.objectives) {
+      return <>Learning Objectives Undefined</>;
+   }
 
-function ObjectiveSection({ objectives }: Props) {
+   const { objectives } = objectivesQuery;
+
    return (
       <div className="objectives">
          {objectives.map((objective) => (
-            <div className="objective" key={objective.id}>
+            <div className="objective" key={objective.objectiveId}>
                Learning Objective: {objective.description}
             </div>
          ))}
