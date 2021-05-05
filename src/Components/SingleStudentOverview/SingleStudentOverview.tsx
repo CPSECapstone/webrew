@@ -9,6 +9,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import styled from 'styled-components';
 import { Link, useHistory, useParams } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 import StudentPicture from '../../assets/images/images-1.png';
 import { User } from '../../interfaces/User';
 import LinearProgressWithLabel from '../LinearProgressWithLabel/LinearProgressWithLabel';
@@ -182,7 +183,9 @@ function SingleStudentOverview() {
                      pathname: '/singleStudentMasteryOverview',
                   }}
                >
-                  <button>Click to View Mastery Progress</button>
+                  <Button variant="info" size="lg">
+                     Click to View Mastery Progress
+                  </Button>
                </Link>
             </ColumnDiv>
          </StudentDiv>

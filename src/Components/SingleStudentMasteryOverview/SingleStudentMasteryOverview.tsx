@@ -4,6 +4,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 import StudentPicture from '../../assets/images/images-1.png';
 import LinearProgressWithLabel from '../LinearProgressWithLabel/LinearProgressWithLabel';
 import TargetDropDown from '../LinearProgressWithLabel/TargetDropDown';
@@ -184,7 +185,7 @@ export default function SingleStudentMasteryOveriew() {
          name: 'Target 0',
          compLearningObjectives: [
             {
-               name: 'Objective 1',
+               objectiveName: 'Objective 1',
                tasks: [
                   {
                      name: 'Task 1',
@@ -200,7 +201,7 @@ export default function SingleStudentMasteryOveriew() {
          name: 'Target 0.5',
          compLearningObjectives: [
             {
-               name: 'Objective 1',
+               objectiveName: 'Objective 1',
                tasks: [
                   {
                      name: 'Task 1',
@@ -221,7 +222,7 @@ export default function SingleStudentMasteryOveriew() {
          <StudentDiv>
             <ColumnDiv>
                <StudentNameDiv>
-                  {/* {inputUser.firstName} {inputUser.lastName} Bob Jones */}
+                  {/* {inputUser.firstName} {inputUser.lastName} */} Bob Jones
                </StudentNameDiv>
                <StudentImageDiv>
                   <img src={StudentPicture} alt="" style={{ width: 200, height: 200 }} />
@@ -229,7 +230,9 @@ export default function SingleStudentMasteryOveriew() {
             </ColumnDiv>
             <ColumnDiv>
                <Link to="singleStudentOverview">
-                  <button>Click to View Mission Progress</button>
+                  <Button variant="info" size="lg">
+                     Click for Mission Progress
+                  </Button>
                </Link>
             </ColumnDiv>
          </StudentDiv>

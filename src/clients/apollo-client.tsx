@@ -12,7 +12,7 @@ const authLink: ApolloLink = setContext((_, { headers }) => {
    const link: { headers: AuthorizedHeaders } = {
       headers: {
          ...headers,
-         authorization: token ? `Bearer ${token}` : '',
+         authorization: token ? `${token}` : '',
       } as AuthorizedHeaders,
    };
 

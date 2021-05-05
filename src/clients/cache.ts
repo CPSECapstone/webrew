@@ -16,6 +16,11 @@ export const cache: InMemoryCache = new InMemoryCache({
                   return mock.quizblockSubmissionsVar();
                },
             },
+            // task: {
+            //    read(_, { args }) {
+            //       return mock.mockTaskVar();
+            //    },
+            // },
          },
       },
    },

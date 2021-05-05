@@ -30,27 +30,27 @@ const menus: Props[] = [
    {
       text: 'DashBoard',
       icon: faChalkboardTeacher,
-      link: './dashboard',
+      link: '/dashboard',
    },
    {
       text: 'Student',
       icon: faUserFriends,
-      link: './studentOverview',
+      link: '/studentOverview/Biology',
    },
    {
       text: 'Task',
       icon: faTasks,
-      link: './taskSubmissionOverview',
+      link: '/taskSubmissionOverview',
    },
    {
       text: 'Mastery',
       icon: faChartLine,
-      link: './singleStudentMasteryOverview',
+      link: '/singleStudentMasteryOverview',
    },
    {
       text: 'Goals',
       icon: faMedal,
-      link: './singleStudentOverview',
+      link: '/singleStudentOverview',
    },
    {
       text: 'Message',

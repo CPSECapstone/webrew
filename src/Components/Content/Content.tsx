@@ -8,6 +8,7 @@ import SingleStudentOverview from '../SingleStudentOverview/SingleStudentOvervie
 import SingleStudentMasteryOverview from '../SingleStudentMasteryOverview/SingleStudentMasteryOverview';
 
 import './Content.css';
+import TaskView from '../../Screens/TaskView/TaskView';
 
 export default function Content() {
    return (
@@ -22,7 +23,7 @@ export default function Content() {
             <Route path="/viewTaskSubmission">
                <ViewTaskSubmission />
             </Route>
-            <Route path="/studentOverview">
+            <Route path="/studentOverview/:className">
                <StudentOverview />
             </Route>
             <Route path="/singleStudentOverview">
@@ -30,6 +31,9 @@ export default function Content() {
             </Route>
             <Route path="/singleStudentMasteryOverview">
                <SingleStudentMasteryOverview />
+            </Route>
+            <Route path="/viewTask">
+               <TaskView taskId="90e0c730e56" />
             </Route>
             <Route path="/">
                <Dashboard />

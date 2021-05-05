@@ -8,7 +8,7 @@ type Props = {
 
 export default function CourseCard({ courseInfo }: Props) {
    return (
-      <Link to="/studentOverview">
+      <Link to={`/studentOverview/${courseInfo.course}`}>
          <div className="course-card">
             <h3 className="title">
                <span>{courseInfo.course}</span>

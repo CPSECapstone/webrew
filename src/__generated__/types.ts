@@ -892,46 +892,69 @@ export type QuestionAndAnswerFieldsFragment = (
   )> }
 );
 
-export type GetTaskByIdQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetTaskByIdQueryVariables = Exact<{
+  taskId: Scalars['String'];
+}>;
 
 
 export type GetTaskByIdQuery = (
   { __typename: 'Query' }
   & { task: (
     { __typename: 'Task' }
-    & Pick<Task, 'id' | 'name'>
+    & Pick<Task, 'id' | 'name' | 'instructions' | 'points' | 'startAt' | 'endAt' | 'dueDate' | 'missionId' | 'missionIndex' | 'subMissionId' | 'objectiveId' | 'targetId'>
     & { requirements: Array<(
       { __typename: 'RubricRequirement' }
       & Pick<RubricRequirement, 'id' | 'description'>
     )>, pages: Array<(
       { __typename: 'Page' }
-      & Pick<Page, 'skippable'>
-      & { blocks: Array<(
-        { __typename: 'ImageBlock' }
-        & Pick<ImageBlock, 'imageUrl' | 'title'>
-      ) | (
-        { __typename: 'QuizBlock' }
-        & Pick<QuizBlock, 'requiredScore' | 'title'>
-        & { questions: Array<(
-          { __typename: 'FrQuestion' }
-          & Pick<FrQuestion, 'id' | 'description' | 'answer'>
-        ) | (
-          { __typename: 'McQuestion' }
-          & Pick<McQuestion, 'id' | 'description' | 'answers'>
-          & { options: Array<(
-            { __typename: 'QuestionOption' }
-            & Pick<QuestionOption, 'id' | 'description'>
-          )> }
-        )> }
-      ) | (
-        { __typename: 'TextBlock' }
-        & Pick<TextBlock, 'contents' | 'fontSize' | 'title'>
-      ) | (
-        { __typename: 'VideoBlock' }
-        & Pick<VideoBlock, 'videoUrl' | 'title'>
-      )> }
+      & PageFieldsFragment
     )> }
   ) }
+);
+
+export type PageFieldsFragment = (
+  { __typename: 'Page' }
+  & Pick<Page, 'skippable'>
+  & { blocks: Array<(
+    { __typename: 'ImageBlock' }
+    & ImageBlockFieldsFragment
+  ) | (
+    { __typename: 'QuizBlock' }
+    & QuizBlockFieldsFragment
+  ) | (
+    { __typename: 'TextBlock' }
+    & TextBlockFieldsFragment
+  ) | (
+    { __typename: 'VideoBlock' }
+    & VideoBlockFieldsFragment
+  )> }
+);
+
+export type TextBlockFieldsFragment = (
+  { __typename: 'TextBlock' }
+  & Pick<TextBlock, 'title' | 'contents' | 'fontSize'>
+);
+
+export type VideoBlockFieldsFragment = (
+  { __typename: 'VideoBlock' }
+  & Pick<VideoBlock, 'title' | 'videoUrl'>
+);
+
+export type ImageBlockFieldsFragment = (
+  { __typename: 'ImageBlock' }
+  & Pick<ImageBlock, 'imageUrl'>
+);
+
+export type QuizBlockFieldsFragment = (
+  { __typename: 'QuizBlock' }
+  & Pick<QuizBlock, 'title' | 'requiredScore'>
+  & { questions: Array<(
+    { __typename: 'FrQuestion' }
+    & FrQuestionFieldsFragment
+  ) | (
+    { __typename: 'McQuestion' }
+    & McQuestionFieldsFragment
+  )> }
 );
 
 export const ObjectiveFieldsFragmentDoc = gql`
@@ -1055,6 +1078,63 @@ export const QuestionAndAnswerFieldsFragmentDoc = gql`
     ${McQuestionFieldsFragmentDoc}
 ${FrQuestionFieldsFragmentDoc}
 ${AnswerFieldsFragmentDoc}`;
+export const TextBlockFieldsFragmentDoc = gql`
+    fragment TextBlockFields on TextBlock {
+  title
+  contents
+  fontSize
+}
+    `;
+export const VideoBlockFieldsFragmentDoc = gql`
+    fragment VideoBlockFields on VideoBlock {
+  title
+  videoUrl
+}
+    `;
+export const QuizBlockFieldsFragmentDoc = gql`
+    fragment QuizBlockFields on QuizBlock {
+  title
+  requiredScore
+  questions {
+    ... on McQuestion {
+      ...McQuestionFields
+    }
+    ... on FrQuestion {
+      ...FrQuestionFields
+    }
+  }
+}
+    ${McQuestionFieldsFragmentDoc}
+${FrQuestionFieldsFragmentDoc}`;
+export const ImageBlockFieldsFragmentDoc = gql`
+    fragment ImageBlockFields on ImageBlock {
+  imageUrl
+}
+    `;
+export const PageFieldsFragmentDoc = gql`
+    fragment PageFields on Page {
+  __typename
+  blocks {
+    __typename
+    ... on TextBlock {
+      ...TextBlockFields
+    }
+    ... on VideoBlock {
+      ...VideoBlockFields
+    }
+    ... on QuizBlock {
+      ...QuizBlockFields
+    }
+    ... on ImageBlock {
+      ...ImageBlockFields
+    }
+  }
+  skippable
+}
+    ${TextBlockFieldsFragmentDoc}
+${VideoBlockFieldsFragmentDoc}
+${QuizBlockFieldsFragmentDoc}
+${ImageBlockFieldsFragmentDoc}`;
 export const ObjectivesDocument = gql`
     query Objectives($course: String!) {
   objectives(course: $course) {
@@ -1266,54 +1346,30 @@ export type TaskSubmissionResultQueryHookResult = ReturnType<typeof useTaskSubmi
 export type TaskSubmissionResultLazyQueryHookResult = ReturnType<typeof useTaskSubmissionResultLazyQuery>;
 export type TaskSubmissionResultQueryResult = Apollo.QueryResult<TaskSubmissionResultQuery, TaskSubmissionResultQueryVariables>;
 export const GetTaskByIdDocument = gql`
-    query GetTaskById {
-  task(taskId: "90e0c730e56") {
+    query GetTaskById($taskId: String!) {
+  task(taskId: $taskId) {
     id
     requirements {
       id
       description
     }
     name
+    instructions
+    points
+    startAt
+    endAt
+    dueDate
+    missionId
+    missionIndex
+    subMissionId
+    objectiveId
+    targetId
     pages {
-      skippable
-      blocks {
-        title
-        __typename
-        ... on ImageBlock {
-          imageUrl
-        }
-        ... on TextBlock {
-          contents
-          fontSize
-        }
-        ... on VideoBlock {
-          videoUrl
-        }
-        ... on QuizBlock {
-          requiredScore
-          questions {
-            __typename
-            ... on FrQuestion {
-              id
-              description
-              answer
-            }
-            ... on McQuestion {
-              id
-              description
-              options {
-                id
-                description
-              }
-              answers
-            }
-          }
-        }
-      }
+      ...PageFields
     }
   }
 }
-    `;
+    ${PageFieldsFragmentDoc}`;
 
 /**
  * __useGetTaskByIdQuery__
@@ -1327,10 +1383,11 @@ export const GetTaskByIdDocument = gql`
  * @example
  * const { data, loading, error } = useGetTaskByIdQuery({
  *   variables: {
+ *      taskId: // value for 'taskId'
  *   },
  * });
  */
-export function useGetTaskByIdQuery(baseOptions?: Apollo.QueryHookOptions<GetTaskByIdQuery, GetTaskByIdQueryVariables>) {
+export function useGetTaskByIdQuery(baseOptions: Apollo.QueryHookOptions<GetTaskByIdQuery, GetTaskByIdQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetTaskByIdQuery, GetTaskByIdQueryVariables>(GetTaskByIdDocument, options);
       }
