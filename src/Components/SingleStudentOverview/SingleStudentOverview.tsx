@@ -8,7 +8,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import styled from 'styled-components';
-import { useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import StudentPicture from '../../assets/images/images-1.png';
 import { User } from '../../interfaces/User';
 import LinearProgressWithLabel from '../LinearProgressWithLabel/LinearProgressWithLabel';
@@ -23,7 +23,6 @@ const StudentDiv = styled.div`
    display: flex;
    justify-content: flex-start;
    align-items: left;
-   flex-direction: column;
 `;
 
 const StudentNameDiv = styled.div`
@@ -169,12 +168,23 @@ function SingleStudentOverview() {
    return (
       <div style={{ marginLeft: '5px', marginRight: '5px', backgroundColor: '#DAEFFE' }}>
          <StudentDiv>
-            <StudentNameDiv>
-               {inputUser.firstName} {inputUser.lastName}
-            </StudentNameDiv>
-            <StudentImageDiv>
-               <img src={StudentPicture} alt="" style={{ width: 200, height: 200 }} />
-            </StudentImageDiv>
+            <ColumnDiv>
+               <StudentNameDiv>
+                  {inputUser.firstName} {inputUser.lastName}
+               </StudentNameDiv>
+               <StudentImageDiv>
+                  <img src={StudentPicture} alt="" style={{ width: 200, height: 200 }} />
+               </StudentImageDiv>
+            </ColumnDiv>
+            <ColumnDiv>
+               <Link
+                  to={{
+                     pathname: '/singleStudentMasteryOverview',
+                  }}
+               >
+                  <button>Click to View Mastery Progress</button>
+               </Link>
+            </ColumnDiv>
          </StudentDiv>
          <RowDiv>
             <ColumnDiv>

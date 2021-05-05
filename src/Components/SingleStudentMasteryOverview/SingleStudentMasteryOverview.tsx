@@ -3,10 +3,12 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import styled from 'styled-components';
+import { Link, useHistory } from 'react-router-dom';
 import StudentPicture from '../../assets/images/images-1.png';
 import LinearProgressWithLabel from '../LinearProgressWithLabel/LinearProgressWithLabel';
 import TargetDropDown from '../LinearProgressWithLabel/TargetDropDown';
 import { Objective } from '../../__generated__/types';
+import { User } from '../../interfaces/User';
 
 const StudentDiv = styled.div`
    height: 275px;
@@ -15,7 +17,6 @@ const StudentDiv = styled.div`
    display: flex;
    justify-content: flex-start;
    align-items: left;
-   flex-direction: column;
 `;
 
 const StudentNameDiv = styled.div`
@@ -88,6 +89,14 @@ export interface LearningTarget {
 
 export default function SingleStudentMasteryOveriew() {
    const classes = useStyles();
+   const history = useHistory();
+   // const test: any = props.location.state;
+   // const inputUser: User = {
+   //    id: test?.id,
+   //    firstName: test?.firstName,
+   //    lastName: test?.lastName,
+   // };
+   // const inputUser = history.location.state;
 
    const learningTargets = [
       {
@@ -210,12 +219,19 @@ export default function SingleStudentMasteryOveriew() {
    return (
       <div style={{ marginLeft: '5px', marginRight: '5px', backgroundColor: '#DAEFFE' }}>
          <StudentDiv>
-            <StudentNameDiv>
-               {/* {inputUser.firstName} {inputUser.lastName} */} Bob Jones
-            </StudentNameDiv>
-            <StudentImageDiv>
-               <img src={StudentPicture} alt="" style={{ width: 200, height: 200 }} />
-            </StudentImageDiv>
+            <ColumnDiv>
+               <StudentNameDiv>
+                  {/* {inputUser.firstName} {inputUser.lastName} Bob Jones */}
+               </StudentNameDiv>
+               <StudentImageDiv>
+                  <img src={StudentPicture} alt="" style={{ width: 200, height: 200 }} />
+               </StudentImageDiv>
+            </ColumnDiv>
+            <ColumnDiv>
+               <Link to="singleStudentOverview">
+                  <button>Click to View Mission Progress</button>
+               </Link>
+            </ColumnDiv>
          </StudentDiv>
          <RowDiv>
             <ColumnDiv>
