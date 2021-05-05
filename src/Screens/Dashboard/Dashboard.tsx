@@ -1,18 +1,5 @@
 import styled from 'styled-components';
-import { gql, useQuery } from '@apollo/client';
-import { Course } from '../../interfaces/Course';
-import { Courses } from '../../interfaces/Courses';
-
-const GET_COURSES = gql`
-   query GetCourses {
-      courses {
-         id
-         name
-         instructor
-         description
-      }
-   }
-`;
+import { CourseFieldsFragment, useGetCoursesQuery } from '../../__generated__/types';
 
 const CourseList = styled.div`
    display: flex;
@@ -26,19 +13,24 @@ const CourseCard = styled.div`
 `;
 
 function Dashboard() {
-   const { loading, error, data: courses } = useQuery<Courses>(GET_COURSES);
+   const { loading, error, data } = useGetCoursesQuery({
+      variables: {
+         instructor: 'Mr. Butcher',
+      },
+   });
+
    if (loading) return <div>Loading...</div>;
    if (error) return <div>`Error! ${error.message}`</div>;
-
-   if (courses === undefined) {
-      return <div>Courses Undefined</div>;
+   if (!data) {
+      return <></>;
    }
+   const { courseInfos } = data;
 
    return (
       <CourseList>
-         {courses.courses.map((course: Course) => (
-            <CourseCard key={course.id}>
-               <div>Course name: {course.name}</div>
+         {courseInfos.map((course: CourseFieldsFragment) => (
+            <CourseCard key={course.courseId}>
+               <div>Course name: {course.course}</div>
                <div>Instructor: {course.instructor}</div>
                <div>Description: {course.description}</div>
             </CourseCard>
