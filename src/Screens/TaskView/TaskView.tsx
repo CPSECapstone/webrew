@@ -1,46 +1,34 @@
-import { useQuery } from '@apollo/client';
 import { useState } from 'react';
 import { Alert } from 'react-bootstrap';
-import { Task, TaskSubmissionResult } from '../../__generated__/types';
+import { useGetTaskByIdQuery } from '../../__generated__/types';
 import TaskNavbar from './TaskNavbar/TaskNavbar';
 import TaskProgress from './TaskProgress/TaskProgress';
 import BlockPageHandler from './BlockPageHandler/BlockPageHandler';
-import { GET_TASK_INFORMATION, GET_TASK_SUBMISSION_RESULT } from '../../queries/task-queries';
 
 function TaskView({ taskId }: { taskId: string }) {
-   const { data: taskInformation } = useQuery<Task>(GET_TASK_INFORMATION, {
+   const { data: taskByIdQuery } = useGetTaskByIdQuery({
       variables: { taskId },
    });
-   console.log(taskInformation);
-   const { data: taskSubmissionResult } = useQuery<TaskSubmissionResult>(
-      GET_TASK_SUBMISSION_RESULT,
-      {
-         variables: { taskId },
-      }
-   );
+
    const [page, setPage] = useState(0);
 
    const maxPage: number =
-      taskInformation === undefined || taskInformation.pages === undefined
+      taskByIdQuery === undefined || taskByIdQuery.task.pages === undefined
          ? 0
-         : taskInformation.pages.length - 1;
+         : taskByIdQuery.task.pages.length - 1;
 
    return (
       <div>
          <TaskNavbar />
-         {taskInformation && taskSubmissionResult ? (
+         {taskByIdQuery ? (
             <div>
                <TaskProgress
-                  taskInformation={taskInformation}
+                  taskInformation={taskByIdQuery}
                   setPage={setPage}
                   page={page}
                   maxPage={maxPage}
                />
-               <BlockPageHandler
-                  taskInformation={taskInformation}
-                  taskSubmissionResult={taskSubmissionResult}
-                  page={page}
-               />
+               <BlockPageHandler taskInformation={taskByIdQuery} page={page} />
             </div>
          ) : (
             <Alert variant="danger">

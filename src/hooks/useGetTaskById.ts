@@ -1,27 +1,5 @@
-import { gql } from '@apollo/client';
-
-export const GET_TASK_SUBMISSION_RESULT = gql`
-   query RetrieveTaskSubmission($taskId: String!) {
-      retrieveTaskSubmission(taskId: $taskId) {
-         graded
-         pointsAwarded
-         pointsPossible
-         teacherComment
-         questionAndAnswers {
-            answer {
-               answer
-               questionId
-               pointsAwarded
-            }
-            question {
-               id
-               points
-               description
-            }
-         }
-      }
-   }
-`;
+import { gql, useQuery } from '@apollo/client';
+import { Task } from '../__generated__/types';
 
 export const GET_TASK_INFORMATION = gql`
    query GetTaskById($taskId: String!) {
@@ -32,6 +10,17 @@ export const GET_TASK_INFORMATION = gql`
             description
          }
          name
+         course
+         instructions
+         points
+         startAt
+         endAt
+         dueDate
+         missionId
+         missionIndex
+         subMissionId
+         objectiveId
+         targetId
          pages {
             skippable
             blocks {
@@ -72,3 +61,20 @@ export const GET_TASK_INFORMATION = gql`
       }
    }
 `;
+
+type TaskData = {
+   task: Task;
+};
+
+function useGetTaskById(taskId: string) {
+   const { loading, error, data } = useQuery<TaskData>(GET_TASK_INFORMATION, {
+      variables: { taskId },
+   });
+   return {
+      loading,
+      error,
+      task: data?.task,
+   };
+}
+
+export default useGetTaskById;

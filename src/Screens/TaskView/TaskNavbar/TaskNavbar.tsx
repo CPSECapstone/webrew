@@ -10,7 +10,7 @@ function TaskNavbar() {
          <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="container-fluid">
                <Form inline>
-                  <Button className="rounded-circle btn-light" type="submit">
+                  <Button className="rounded-circle btn-light" type="submit" href="/">
                      <FontAwesomeIcon icon={faCaretLeft} />
                   </Button>
                </Form>

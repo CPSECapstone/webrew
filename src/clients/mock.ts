@@ -1,16 +1,19 @@
 import { makeVar } from '@apollo/client';
 import { QuizBlockSubmission } from '../interfaces/QuizBlockSubmission';
 import {
+   Answer,
    FrQuestion,
    ImageBlock,
    McQuestion,
    Page,
    Question,
+   QuestionAndAnswer,
    QuestionOption,
    QuizBlock,
    RubricRequirement,
    Task,
    TaskBlock,
+   TaskSubmissionResult,
    TextBlock,
    VideoBlock,
 } from '../__generated__/types';
@@ -161,15 +164,48 @@ const mockRequirement: RubricRequirement = {
 
 const mockReqList: RubricRequirement[] = [mockRequirement];
 
-const mockTask: Task = {
+export const mockTask: Task = {
    id: 'fd87f78s',
    name: 'Dinosaur Task',
    instructions: 'Complete the intro and quiz to complete the task.',
    points: 100,
-   parentMissionId: 'fakemissionid',
-   parentMissionIndex: 0,
+   missionId: 'fakemissionid',
+   missionIndex: 0,
+   course: 'Biology',
    pages: mockPageList,
    requirements: mockReqList,
+};
+
+const ansone: Answer = {
+   questionId: 'fakemcqid',
+   pointsAwarded: 50,
+   answer: 'All of us!',
+};
+
+const anstwo: Answer = {
+   questionId: 'fakefrqid',
+   pointsAwarded: 50,
+   answer: 'Dr. Janzen',
+};
+
+const qandaone: QuestionAndAnswer = {
+   question: mockQOne,
+   answer: ansone,
+};
+
+const qandatwo: QuestionAndAnswer = {
+   question: mockQTwo,
+   answer: anstwo,
+};
+
+const mockQandAList: QuestionAndAnswer[] = [qandaone, qandatwo];
+
+export const mockTaskSubmissionResult: TaskSubmissionResult = {
+   graded: true,
+   pointsAwarded: 100,
+   pointsPossible: 100,
+   questionAndAnswers: mockQandAList,
+   teacherComment: 'Great Job!!',
 };
 
 export const quizblockSubmissionVar = makeVar<QuizBlockSubmission>(quizblockSubmission);

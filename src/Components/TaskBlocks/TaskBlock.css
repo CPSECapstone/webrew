@@ -1,0 +1,26 @@
+.col-md-12 {
+   background-color: rgb(224, 224, 224);
+   border-radius: 5px;
+   border: 1px;
+   border-color: #007bff;
+}
+
+#img-container {
+   background-color: #fff;
+   border-radius: 5px;
+   border: 2px;
+   border-color: #000;
+}
+
+.question-desc {
+   font-size: 20px;
+   text-align: left;
+}
+
+.col-12 .question-index {
+   color: white;
+   display: inline-block;
+   margin-right: 1em;
+   padding: 5px 20px;
+   background-color: #383838;
+}
