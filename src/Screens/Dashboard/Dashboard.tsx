@@ -1,15 +1,9 @@
 import styled from 'styled-components';
-import { CourseFieldsFragment, useGetCoursesQuery } from '../../__generated__/types';
+import { CourseInfoFieldsFragment, useGetCoursesQuery } from '../../__generated__/types';
+import CourseCard from './CourseCard';
 
 const CourseList = styled.div`
    display: flex;
-`;
-
-const CourseCard = styled.div`
-   border: 1px solid gray;
-   margin: 12px;
-   border-radius: 8px;
-   padding: 12px;
 `;
 
 function Dashboard() {
@@ -28,12 +22,8 @@ function Dashboard() {
 
    return (
       <CourseList>
-         {courseInfos.map((course: CourseFieldsFragment) => (
-            <CourseCard key={course.courseId}>
-               <div>Course name: {course.course}</div>
-               <div>Instructor: {course.instructor}</div>
-               <div>Description: {course.description}</div>
-            </CourseCard>
+         {courseInfos.map((courseInfo: CourseInfoFieldsFragment) => (
+            <CourseCard key={courseInfo.courseId} courseInfo={courseInfo} />
          ))}
       </CourseList>
    );

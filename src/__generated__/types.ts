@@ -758,7 +758,7 @@ export type ProgressFieldsFragment = (
 
 export type CourseInfoFieldsFragment = (
   { __typename: 'CourseInfo' }
-  & Pick<CourseInfo, 'course' | 'instructor' | 'description'>
+  & Pick<CourseInfo, 'courseId' | 'course' | 'instructor' | 'description'>
 );
 
 export type TargetFieldsFragment = (
@@ -817,13 +817,8 @@ export type GetCoursesQuery = (
   { __typename: 'Query' }
   & { courseInfos: Array<(
     { __typename: 'CourseInfo' }
-    & CourseFieldsFragment
+    & CourseInfoFieldsFragment
   )> }
-);
-
-export type CourseFieldsFragment = (
-  { __typename: 'CourseInfo' }
-  & Pick<CourseInfo, 'courseId' | 'course' | 'instructor' | 'description'>
 );
 
 export type QuizBlockQueryVariables = Exact<{
@@ -965,6 +960,7 @@ export const UserProgressFieldsFragmentDoc = gql`
     ${ProgressFieldsFragmentDoc}`;
 export const CourseInfoFieldsFragmentDoc = gql`
     fragment CourseInfoFields on CourseInfo {
+  courseId
   course
   instructor
   description
@@ -1013,14 +1009,6 @@ export const MissionFieldsFragmentDoc = gql`
   }
 }
     ${MissionContentFieldsFragmentDoc}`;
-export const CourseFieldsFragmentDoc = gql`
-    fragment CourseFields on CourseInfo {
-  courseId
-  course
-  instructor
-  description
-}
-    `;
 export const McQuestionFieldsFragmentDoc = gql`
     fragment McQuestionFields on McQuestion {
   id
@@ -1154,10 +1142,10 @@ export type ProgressOverviewQueryResult = Apollo.QueryResult<ProgressOverviewQue
 export const GetCoursesDocument = gql`
     query GetCourses($instructor: String!) {
   courseInfos(instructor: $instructor) {
-    ...CourseFields
+    ...CourseInfoFields
   }
 }
-    ${CourseFieldsFragmentDoc}`;
+    ${CourseInfoFieldsFragmentDoc}`;
 
 /**
  * __useGetCoursesQuery__

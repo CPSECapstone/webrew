@@ -57,29 +57,31 @@ function App() {
    return (
       <div className="App">
          <Navigation />
-         <Switch>
-            <Route path="/addNewCourse">
-               <CreateCourseDialog />
-            </Route>
-            <Route path="/taskSubmissionOverview">
-               <TaskSubmissionOverview />
-            </Route>
-            <Route path="/viewTaskSubmission">
-               <ViewTaskSubmission />
-            </Route>
-            <Route path="/studentOverview">
-               <StudentOverview />
-            </Route>
-            <Route path="/singleStudentOverview">
-               <SingleStudentOverview />
-            </Route>
-            <Route path="/singleStudentMasteryOverview">
-               <SingleStudentMasteryOverview />
-            </Route>
-            <Route path="/">
-               <Dashboard />
-            </Route>
-         </Switch>
+         <div className="main">
+            <Switch>
+               <Route path="/addNewCourse">
+                  <CreateCourseDialog />
+               </Route>
+               <Route path="/taskSubmissionOverview">
+                  <TaskSubmissionOverview />
+               </Route>
+               <Route path="/viewTaskSubmission">
+                  <ViewTaskSubmission />
+               </Route>
+               <Route path="/studentOverview">
+                  <StudentOverview />
+               </Route>
+               <Route path="/singleStudentOverview">
+                  <SingleStudentOverview />
+               </Route>
+               <Route path="/singleStudentMasteryOverview">
+                  <SingleStudentMasteryOverview />
+               </Route>
+               <Route path="/">
+                  <Dashboard />
+               </Route>
+            </Switch>
+         </div>
       </div>
    );
 }

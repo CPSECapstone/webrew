@@ -1,12 +1,5 @@
 query GetCourses($instructor: String!) {
    courseInfos(instructor: $instructor) {
-      ...CourseFields
+      ...CourseInfoFields
    }
-}
-
-fragment CourseFields on CourseInfo {
-   courseId
-   course
-   instructor
-   description
 }
