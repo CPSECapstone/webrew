@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/webrew/static/css/main.d4663160.chunk.css",
-    "main.js": "/webrew/static/js/main.23befc0b.chunk.js",
-    "main.js.map": "/webrew/static/js/main.23befc0b.chunk.js.map",
+    "main.js": "/webrew/static/js/main.e4e40926.chunk.js",
+    "main.js.map": "/webrew/static/js/main.e4e40926.chunk.js.map",
     "polyfills-css-shim.js": "/webrew/static/js/polyfills-css-shim.940f3f81.chunk.js",
     "polyfills-css-shim.js.map": "/webrew/static/js/polyfills-css-shim.940f3f81.chunk.js.map",
     "runtime-main.js": "/webrew/static/js/runtime-main.08ec0732.js",
@@ -85,6 +85,6 @@
     "static/js/runtime-main.08ec0732.js",
     "static/js/3.703ea9d0.chunk.js",
     "static/css/main.d4663160.chunk.css",
-    "static/js/main.23befc0b.chunk.js"
+    "static/js/main.e4e40926.chunk.js"
   ]
 }
