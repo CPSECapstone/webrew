@@ -177,10 +177,7 @@ function SingleStudentOverview() {
             <ColumnDiv>
                <FieldTitleDiv>Current Targets</FieldTitleDiv>
                {missions.map((mission) => (
-                  <MissionDropDown
-                     name={mission.name}
-                     subMissions={mission.subMissions as MissionSubMission[]}
-                  />
+                  <MissionDropDown name={mission.name} subMissions={mission.subMissions as any[]} />
                ))}
             </ColumnDiv>
             <ColumnDiv>
@@ -215,7 +212,7 @@ function SingleStudentOverview() {
                {missions.map((compMission) => (
                   <MissionDropDown
                      name={compMission.name}
-                     subMissions={compMission.subMissions as MissionSubMission[]}
+                     subMissions={compMission.subMissions as any[]}
                   />
                ))}
             </ColumnDiv>

@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import StudentPicture from '../../assets/images/images-1.png';
 import LinearProgressWithLabel from '../LinearProgressWithLabel/LinearProgressWithLabel';
 import TargetDropDown from '../LinearProgressWithLabel/TargetDropDown';
-import { LearningObjective } from '../../__generated__/types';
+import { Objective } from '../../__generated__/types';
 
 const StudentDiv = styled.div`
    height: 275px;
@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export interface LearningTarget {
    name: string;
-   learningObjectives: LearningObjective[];
+   learningObjectives: Objective[];
 }
 
 export default function SingleStudentMasteryOveriew() {
@@ -223,7 +223,7 @@ export default function SingleStudentMasteryOveriew() {
                {learningTargets.map((target) => (
                   <TargetDropDown
                      name={target.name}
-                     learningObjectives={target.learningObjectives as LearningObjective[]}
+                     learningObjectives={target.learningObjectives as any[]}
                   />
                ))}
             </ColumnDiv>
@@ -259,7 +259,7 @@ export default function SingleStudentMasteryOveriew() {
                {compLearningTargets.map((compTarget) => (
                   <TargetDropDown
                      name={compTarget.name}
-                     learningObjectives={compTarget.compLearningObjectives as LearningObjective[]}
+                     learningObjectives={compTarget.compLearningObjectives as any[]}
                   />
                ))}
             </ColumnDiv>

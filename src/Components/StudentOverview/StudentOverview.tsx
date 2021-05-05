@@ -1,43 +1,14 @@
-import {
-   withStyles,
-   Theme,
-   createStyles,
-   TableCell,
-   TableRow,
-   TableContainer,
-   Paper,
-   Table,
-   TableHead,
-   TableBody,
-   makeStyles,
-} from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import { Progress } from '../../interfaces/Progress';
-import { Users } from '../../interfaces/Users';
+import { Theme, createStyles, Paper, makeStyles, Tab } from '@material-ui/core';
+import React, { useState } from 'react';
+import TabContext from '@material-ui/lab/TabContext';
+import TabPanel from '@material-ui/lab/TabPanel';
+import TabList from '@material-ui/lab/TabList';
 
-const StyledTableCell = withStyles((theme: Theme) =>
-   createStyles({
-      head: {
-         backgroundColor: '#8484e1',
-         color: theme.palette.common.black,
-         borderBottom: '0px solid',
-      },
-      body: {
-         fontSize: 14,
-         borderBottom: '0px solid',
-      },
-   })
-)(TableCell);
+import LearningTargetTab from './LearningTargetTab';
+import MissionsTab from './MissionsTab';
 
-const StyledTableRow = withStyles((theme: Theme) =>
-   createStyles({
-      root: {
-         '&:nth-of-type(odd)': {
-            backgroundColor: theme.palette.action.hover,
-         },
-      },
-   })
-)(TableRow);
+import '../TableComponent/TableComponent.css';
+import './StudentOverview.css';
 
 const useStyles = makeStyles((theme: Theme) =>
    createStyles({
@@ -45,140 +16,75 @@ const useStyles = makeStyles((theme: Theme) =>
          display: 'flex',
          flexWrap: 'wrap',
          '& > *': {
-            margin: theme.spacing(1),
+            margin: theme.spacing(0),
             width: theme.spacing(160),
             height: theme.spacing(60),
          },
       },
-      table: {
-         minWidth: 700,
-         // maxWidth: 700
+      tabContainer: {
+         flexGrow: 1,
+         backgroundColor: theme.palette.background.paper,
       },
-      borderedHeaderCell: {
-         borderRight: '4px solid gray',
+      selectedTab: {
+         backgroundColor: 'rgb(109, 158, 235)',
+         fontSize: '24px',
+         color: 'white',
+         fontWeight: 'bold',
       },
-      borderedCell: {
-         borderLeft: '4px solid gray',
-         borderRight: '4px solid gray',
-         borderBottom: '4px solid gray',
-      },
-      tableRow: {
-         '&:hover': {
-            backgroundColor: '#d9d9d9 !important',
-         },
+      defaultTab: {
+         backgroundColor: 'rgb(238, 238, 238)',
+         fontSize: '24px',
+         color: 'black',
+         fontWeight: 'bold',
       },
    })
 );
 
-const users: Users = {
-   users: [
-      {
-         id: '1',
-         firstName: 'Sansa',
-         lastName: 'Stark',
-      },
-      {
-         id: '2',
-         firstName: 'Robb',
-         lastName: 'Stark',
-      },
-      {
-         id: '3',
-         firstName: 'Arya',
-         lastName: 'Stark',
-      },
-      {
-         id: '4',
-         firstName: 'John',
-         lastName: 'Snow',
-      },
-   ],
-};
-
-const userProgressMap = new Map<string, Progress>();
-
 function StudentOverview() {
    const classes = useStyles();
 
-   return (
-      <div style={{ marginLeft: '5px', fontSize: '40px' }}>
-         <div style={{ marginLeft: '5px' }}>Student Overview</div>
-         <div className={classes.root}>
-            <TableContainer style={{ marginLeft: '5px' }} component={Paper}>
-               <Table className={classes.table} aria-label="customized table">
-                  <TableHead>
-                     <TableRow>
-                        <StyledTableCell className={classes.borderedHeaderCell}>
-                           Section
-                        </StyledTableCell>
-                        <StyledTableCell className={classes.borderedHeaderCell}>
-                           Student
-                        </StyledTableCell>
-                        <StyledTableCell className={classes.borderedHeaderCell} align="center">
-                           Time
-                        </StyledTableCell>
-                        <StyledTableCell align="center">Status</StyledTableCell>
-                        <StyledTableCell style={{ width: 1, backgroundColor: 'black' }} />
+   const [value, setValue] = useState('1');
 
-                        <StyledTableCell className={classes.borderedHeaderCell}>
-                           Objective #1
-                        </StyledTableCell>
-                        <StyledTableCell className={classes.borderedHeaderCell}>
-                           Objective #2
-                        </StyledTableCell>
-                     </TableRow>
-                  </TableHead>
-                  <TableBody>
-                     {users.users.map((user) => (
-                        <Link to={`/singleStudentOverview/${user.id}`}>
-                           <StyledTableRow
-                              hover
-                              style={{ cursor: 'pointer' }}
-                              className={classes.tableRow}
-                           >
-                              <StyledTableCell className={classes.borderedCell} scope="row">
-                                 1
-                              </StyledTableCell>
-                              <StyledTableCell className={classes.borderedCell} scope="row">
-                                 {user.firstName} {user.lastName}
-                              </StyledTableCell>
-                              <StyledTableCell
-                                 className={classes.borderedCell}
-                                 scope="row"
-                                 align="center"
-                              >
-                                 {userProgressMap.get(user.id)?.time}
-                              </StyledTableCell>
-                              <StyledTableCell
-                                 style={{
-                                    backgroundColor: userProgressMap.get(user.id)?.statusColor,
-                                    borderBottom: '4px solid gray',
-                                 }}
-                                 align="center"
-                                 scope="row"
-                              >
-                                 {userProgressMap.get(user.id)?.curStatus}
-                              </StyledTableCell>
-                              <StyledTableCell style={{ backgroundColor: 'black' }} />
-                              <StyledTableCell
-                                 className={classes.borderedCell}
-                                 scope="row"
-                                 align="center"
-                              >
-                                 {userProgressMap.get(user.id)?.objective}
-                              </StyledTableCell>
-                              <StyledTableCell
-                                 style={{
-                                    borderBottom: '4px solid gray',
-                                 }}
-                              />
-                              <StyledTableCell className={classes.borderedCell} />
-                           </StyledTableRow>
-                        </Link>
-                     ))}
-                  </TableBody>
-               </Table>
-            </TableContainer>
+   const handleChange = (event: React.ChangeEvent<Record<string, unknown>>, newValue: string) => {
+      setValue(newValue);
+   };
+
+   return (
+      <div style={{ marginLeft: '5px' }}>
+         <div
+            style={{
+               color: 'white',
+               fontSize: '50px',
+               fontWeight: 'bold',
+               background:
+                  'linear-gradient(90deg, rgb(49, 119, 238) 0%, rgb(17, 61, 138) 100%) white',
+            }}
+         >
+            Biology
+         </div>
+         <div className={classes.root}>
+            <Paper className={classes.tabContainer}>
+               <TabContext value={value}>
+                  <TabList onChange={handleChange} variant="fullWidth" centered>
+                     <Tab
+                        label="Learning Targets"
+                        value="1"
+                        className={value === '1' ? classes.selectedTab : classes.defaultTab}
+                     />
+                     <Tab
+                        label="Missions"
+                        value="2"
+                        className={value === '2' ? classes.selectedTab : classes.defaultTab}
+                     />
+                  </TabList>
+                  <TabPanel value="1">
+                     <LearningTargetTab />
+                  </TabPanel>
+                  <TabPanel value="2">
+                     <MissionsTab />
+                  </TabPanel>
+               </TabContext>
+            </Paper>
          </div>
       </div>
    );
