@@ -1,10 +1,6 @@
-import styled from 'styled-components';
 import { CourseInfoFieldsFragment, useGetCoursesQuery } from '../../__generated__/types';
 import CourseCard from './CourseCard';
-
-const CourseList = styled.div`
-   display: flex;
-`;
+import './DashBoard.css';
 
 function Dashboard() {
    const { loading, error, data } = useGetCoursesQuery({
@@ -21,11 +17,11 @@ function Dashboard() {
    const { courseInfos } = data;
 
    return (
-      <CourseList>
+      <div className="dashboard-container">
          {courseInfos.map((courseInfo: CourseInfoFieldsFragment) => (
             <CourseCard key={courseInfo.courseId} courseInfo={courseInfo} />
          ))}
-      </CourseList>
+      </div>
    );
 }
 

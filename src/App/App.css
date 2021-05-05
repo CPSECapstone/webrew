@@ -39,5 +39,14 @@
 }
 
 .main {
-   height: calc(100% - 56px);
+   height: 100vh;
+   background-color: #5884ab;
+}
+
+.sidebar-container {
+   height: 100vh;
+}
+
+.content-container {
+   height: 100vh;
 }
