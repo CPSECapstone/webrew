@@ -34,7 +34,7 @@ function TableComponent({ columns, data, rowClickFunction }: any) {
             ))}
          </thead>
          <tbody {...getTableBodyProps()}>
-            {rows.map((row, i) => {
+            {rows.map((row) => {
                prepareRow(row);
                return (
                   <tr
