@@ -8,7 +8,9 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import apolloClient from './clients/apollo-client';
 import '@aws-amplify/ui/dist/style.css';
+import { environment } from './environment';
 
+console.log(environment);
 Amplify.configure({
    Auth: {
       identityPoolId: 'us-east-1:07057d76-612a-4045-8522-f38a759cf216',
@@ -18,8 +20,8 @@ Amplify.configure({
       oauth: {
          domain: 'flipted-ios-test.auth.us-east-1.amazoncognito.com',
          scope: ['phone', 'email', 'profile', 'openid', 'aws.cognito.signin.user.admin'],
-         redirectSignIn: 'https://cpsecapstone.github.io/webrew/',
-         redirectSignOut: 'https://cpsecapstone.github.io/webrew/',
+         redirectSignIn: environment.redirectSignIn,
+         redirectSignOut: environment.redirectSignout,
          responseType: 'token',
       },
    },

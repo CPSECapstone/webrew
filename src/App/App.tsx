@@ -4,7 +4,7 @@ import { withAuthenticator } from 'aws-amplify-react';
 import Sidebar from '../Components/Sidebar';
 import Content from '../Components/Content';
 import Navigation from '../Navigation/Navigation';
-import './App.css';
+import './App.scss';
 
 // Entry point of the Flitped App
 function App() {
@@ -51,8 +51,8 @@ function App() {
    return (
       <div className="App">
          <Navigation />
-         <div className="main container-full">
-            <div className="row">
+         <div className="main container-fluid">
+            <div className="row h-100">
                <div className="sidebar-container col-md-2">
                   <Sidebar />
                </div>

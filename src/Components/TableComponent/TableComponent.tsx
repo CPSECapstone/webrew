@@ -32,7 +32,7 @@ function TableComponent({ columns, data }: any) {
             ))}
          </thead>
          <tbody {...getTableBodyProps()}>
-            {rows.map((row, i) => {
+            {rows.map((row) => {
                prepareRow(row);
                return (
                   <tr {...row.getRowProps()}>

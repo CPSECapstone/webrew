@@ -3,13 +3,12 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import styled from 'styled-components';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import StudentPicture from '../../assets/images/images-1.png';
 import LinearProgressWithLabel from '../LinearProgressWithLabel/LinearProgressWithLabel';
 import TargetDropDown from '../LinearProgressWithLabel/TargetDropDown';
 import { Objective } from '../../__generated__/types';
-import { User } from '../../interfaces/User';
 
 const StudentDiv = styled.div`
    height: 275px;
@@ -90,7 +89,7 @@ export interface LearningTarget {
 
 export default function SingleStudentMasteryOveriew() {
    const classes = useStyles();
-   const history = useHistory();
+   // const history = useHistory();
    // const test: any = props.location.state;
    // const inputUser: User = {
    //    id: test?.id,
