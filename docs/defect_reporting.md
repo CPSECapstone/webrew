@@ -7,4 +7,6 @@ First go to JIRA board homepage at [Here](http://platinum.cscaws.com:8080/secure
 1. Click the `Create` Button in the navigation bar.
 2. In the pop up window, select `Bug` for `Issue Type`.
 3. Click the `Create` at the right bottom corner of the pop up window to submit the bug when you are done inputing,
-   ![report issue](./report_issue.png)
+
+   ![report issue](.gitbook/assets/report_issue.png)
+

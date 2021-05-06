@@ -1,9 +1,10 @@
 # Features
 
-#### Instructor Dash Board
+## Instructor Dash Board
 
-#### Task Overview
+## Task Overview
 
-#### Student Overview
+## Student Overview
 
-#### Student Mastery Overview
+## Student Mastery Overview
+
