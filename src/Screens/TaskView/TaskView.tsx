@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Alert } from 'react-bootstrap';
 import { useGetTaskByIdQuery } from '../../__generated__/types';
 import TaskNavbar from './TaskNavbar/TaskNavbar';
 import TaskProgress from './TaskProgress/TaskProgress';
@@ -17,24 +16,22 @@ function TaskView({ taskId }: { taskId: string }) {
          ? 0
          : taskByIdQuery.task.pages.length - 1;
 
+   if (!taskByIdQuery) {
+      return <></>;
+   }
+
    return (
       <div>
          <TaskNavbar />
-         {taskByIdQuery ? (
-            <div>
-               <TaskProgress
-                  taskInformation={taskByIdQuery}
-                  setPage={setPage}
-                  page={page}
-                  maxPage={maxPage}
-               />
-               <BlockPageHandler taskInformation={taskByIdQuery} page={page} />
-            </div>
-         ) : (
-            <Alert variant="danger">
-               Unable to load specified task. Please try refreshing the page.
-            </Alert>
-         )}
+         <div>
+            <TaskProgress
+               taskInformation={taskByIdQuery}
+               setPage={setPage}
+               page={page}
+               maxPage={maxPage}
+            />
+            <BlockPageHandler taskInformation={taskByIdQuery} page={page} />
+         </div>
       </div>
    );
 }
