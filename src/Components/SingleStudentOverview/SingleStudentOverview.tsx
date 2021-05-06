@@ -8,7 +8,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import styled from 'styled-components';
-import { useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 import StudentPicture from '../../assets/images/images-1.png';
 import { User } from '../../interfaces/User';
 import LinearProgressWithLabel from '../LinearProgressWithLabel/LinearProgressWithLabel';
@@ -23,13 +24,15 @@ const StudentDiv = styled.div`
    display: flex;
    justify-content: flex-start;
    align-items: left;
-   flex-direction: column;
 `;
 
 const StudentNameDiv = styled.div`
    height: 50px;
    width: 100%;
    font-size: 24pt;
+   display: flex;
+   justify-content: flex-start;
+   align-items: left;
 `;
 
 const StudentImageDiv = styled.div`
@@ -115,7 +118,7 @@ function SingleStudentOverview() {
                tasks: [
                   {
                      id: 'string',
-                     name: 'string',
+                     name: 'Task 1',
                      instructions: 'string',
                      points: 3,
                      parentMissionId: 'string',
@@ -125,7 +128,7 @@ function SingleStudentOverview() {
                   },
                   {
                      id: 'string2',
-                     name: 'string2',
+                     name: 'Task 2',
                      instructions: 'string2',
                      points: 3,
                      parentMissionId: 'string2',
@@ -166,16 +169,29 @@ function SingleStudentOverview() {
    return (
       <div style={{ marginLeft: '5px', marginRight: '5px', backgroundColor: '#DAEFFE' }}>
          <StudentDiv>
-            <StudentNameDiv>
-               {inputUser.firstName} {inputUser.lastName}
-            </StudentNameDiv>
-            <StudentImageDiv>
-               <img src={StudentPicture} alt="" style={{ width: 200, height: 200 }} />
-            </StudentImageDiv>
+            <ColumnDiv>
+               <StudentNameDiv>
+                  {inputUser.firstName} {inputUser.lastName}
+               </StudentNameDiv>
+               <StudentImageDiv>
+                  <img src={StudentPicture} alt="" style={{ width: 200, height: 200 }} />
+               </StudentImageDiv>
+            </ColumnDiv>
+            <ColumnDiv>
+               <Link
+                  to={{
+                     pathname: '/singleStudentMasteryOverview',
+                  }}
+               >
+                  <Button variant="info" size="lg">
+                     Click to View Mastery Progress
+                  </Button>
+               </Link>
+            </ColumnDiv>
          </StudentDiv>
          <RowDiv>
             <ColumnDiv>
-               <FieldTitleDiv>Current Targets</FieldTitleDiv>
+               <FieldTitleDiv>Current Missions</FieldTitleDiv>
                {missions.map((mission) => (
                   <MissionDropDown name={mission.name} subMissions={mission.subMissions as any[]} />
                ))}
@@ -208,7 +224,7 @@ function SingleStudentOverview() {
          </RowDiv>
          <RowDiv>
             <ColumnDiv>
-               <FieldTitleDiv>Completed Targets</FieldTitleDiv>
+               <FieldTitleDiv>Completed Missions</FieldTitleDiv>
                {missions.map((compMission) => (
                   <MissionDropDown
                      name={compMission.name}

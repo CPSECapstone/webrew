@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import TabContext from '@material-ui/lab/TabContext';
 import TabPanel from '@material-ui/lab/TabPanel';
 import TabList from '@material-ui/lab/TabList';
-
+import { useParams } from 'react-router-dom';
 import LearningTargetTab from './LearningTargetTab';
 import MissionsTab from './MissionsTab';
 
@@ -42,7 +42,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function StudentOverview() {
    const classes = useStyles();
-
+   const { className } = useParams<Record<string, string | undefined>>();
+   // const className = params.className;
+   console.log(className);
    const [value, setValue] = useState('1');
 
    const handleChange = (event: React.ChangeEvent<Record<string, unknown>>, newValue: string) => {
@@ -60,7 +62,7 @@ function StudentOverview() {
                   'linear-gradient(90deg, rgb(49, 119, 238) 0%, rgb(17, 61, 138) 100%) white',
             }}
          >
-            Biology
+            {className}
          </div>
          <div className={classes.tabContainer}>
             {/* <Paper className={classes.tabContainer}> */}

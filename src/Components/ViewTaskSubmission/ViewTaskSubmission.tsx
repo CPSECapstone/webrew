@@ -14,11 +14,8 @@ function ViewTaskSubmission() {
 
    const { quizblockSubmission } = useQuizBlockSubmission();
 
-   if (!quizblockSubmission) {
-      return <p>quizblockSubmission undefined</p>;
-   }
-   if (!quizBlockQuery?.quizblock) {
-      return <p>quizblock undefined</p>;
+   if (!quizBlockQuery?.quizblock || !quizblockSubmission) {
+      return <></>;
    }
 
    return (
