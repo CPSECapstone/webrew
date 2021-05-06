@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
 function StudentOverview() {
    const classes = useStyles();
    const { className } = useParams<Record<string, string | undefined>>();
-  
+
    const [value, setValue] = useState('1');
 
    const handleChange = (event: React.ChangeEvent<Record<string, unknown>>, newValue: string) => {
@@ -55,7 +55,6 @@ function StudentOverview() {
             {className}
          </div>
          <div className={classes.tabContainer}>
-            {/* <Paper className={classes.tabContainer}> */}
             <TabContext value={value}>
                <TabList onChange={handleChange} variant="fullWidth" centered>
                   <Tab
@@ -76,7 +75,6 @@ function StudentOverview() {
                   <MissionsTab />
                </TabPanel>
             </TabContext>
-            {/* </Paper> */}
          </div>
       </div>
    );

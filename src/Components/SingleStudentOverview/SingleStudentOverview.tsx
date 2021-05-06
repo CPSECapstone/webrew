@@ -179,6 +179,11 @@ function SingleStudentOverview() {
                <Link
                   to={{
                      pathname: '/singleStudentMasteryOverview',
+                     state: {
+                        id: inputUser.id,
+                        firstName: inputUser.firstName,
+                        lastName: inputUser.lastName,
+                     },
                   }}
                >
                   <Button variant="info" size="lg">

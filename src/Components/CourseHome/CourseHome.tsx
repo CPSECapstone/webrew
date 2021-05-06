@@ -138,7 +138,7 @@ function CourseHome() {
                   'linear-gradient(90deg, rgb(49, 119, 238) 0%, rgb(17, 61, 138) 100%) white',
             }}
          >
-            {className}
+            {className} ({progressData ? progressData.progressOverview.missions[0].name : ''})
          </div>
          <div className={classes.tableContainer}>
             <div className="base-table">

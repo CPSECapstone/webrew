@@ -3,12 +3,13 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import StudentPicture from '../../assets/images/images-1.png';
 import LinearProgressWithLabel from '../LinearProgressWithLabel/LinearProgressWithLabel';
 import TargetDropDown from '../LinearProgressWithLabel/TargetDropDown';
 import { Objective } from '../../__generated__/types';
+import { User } from '../../interfaces/User';
 
 const StudentDiv = styled.div`
    height: 275px;
@@ -89,14 +90,19 @@ export interface LearningTarget {
 
 export default function SingleStudentMasteryOveriew() {
    const classes = useStyles();
-   // const history = useHistory();
-   // const test: any = props.location.state;
-   // const inputUser: User = {
-   //    id: test?.id,
-   //    firstName: test?.firstName,
-   //    lastName: test?.lastName,
-   // };
-   // const inputUser = history.location.state;
+   const history = useHistory();
+   const test: any = history.location.state;
+   const inputUser: User = {
+      id: test?.id,
+      firstName: test?.firstName,
+      lastName: test?.lastName,
+   };
+
+   // A hardcoded name to account for reaching the page via the side menu
+   if (!inputUser.firstName && !inputUser.lastName) {
+      inputUser.firstName = 'Bob';
+      inputUser.lastName = 'Jones';
+   }
 
    const learningTargets = [
       {
@@ -221,14 +227,23 @@ export default function SingleStudentMasteryOveriew() {
          <StudentDiv>
             <ColumnDiv>
                <StudentNameDiv>
-                  {/* {inputUser.firstName} {inputUser.lastName} */} Bob Jones
+                  {inputUser.firstName} {inputUser.lastName}
                </StudentNameDiv>
                <StudentImageDiv>
                   <img src={StudentPicture} alt="" style={{ width: 200, height: 200 }} />
                </StudentImageDiv>
             </ColumnDiv>
             <ColumnDiv>
-               <Link to="singleStudentOverview">
+               <Link
+                  to={{
+                     pathname: 'singleStudentOverview',
+                     state: {
+                        id: inputUser.id,
+                        firstName: inputUser.firstName,
+                        lastName: inputUser.lastName,
+                     },
+                  }}
+               >
                   <Button variant="info" size="lg">
                      Click for Mission Progress
                   </Button>
