@@ -7,6 +7,7 @@ import Amplify from 'aws-amplify';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import apolloClient from './clients/apollo-client';
+import '@aws-amplify/ui/dist/style.css';
 
 Amplify.configure({
    Auth: {
