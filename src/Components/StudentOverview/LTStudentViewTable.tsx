@@ -10,10 +10,6 @@ import {
    UserProgress,
 } from '../../__generated__/types';
 
-function rowClick(test: string) {
-   console.log('Row Clicked', test);
-}
-
 function LTStudentViewTable() {
    const { data: progressData } = useProgressOverviewQuery({
       variables: {
@@ -21,12 +17,16 @@ function LTStudentViewTable() {
       },
    });
 
+   const history = useHistory();
+
+   const rowClicked = (userName: string) => {
+      history.push({
+         pathname: '/singleStudentOverview',
+         state: { id: '', firstName: userName, lastName: ' ' },
+      });
+   };
+
    const data: any[] = [];
-
-   // if (progressData === undefined) {
-   //    return <div />;
-   // }
-
    progressData?.progressOverview.userProgress.map((userProgress: UserProgress) =>
       data.push({
          row: {
@@ -86,40 +86,6 @@ function LTStudentViewTable() {
       },
    ];
 
-   // const columns = useMemo(
-   //    () => [
-   //       {
-   //          Header: 'Section',
-   //          accessor: 'row.section',
-   //       },
-   //       {
-   //          Header: 'Student',
-   //          accessor: 'row.name',
-   //       },
-   //       // {
-   //       //    Header: 'Time',
-   //       //    accessor: 'row.time',
-   //       // },
-   //       // {
-   //       //    Header: 'Recent',
-   //       //    accessor: 'row.recent',
-   //       //    Cell: ({ value }: { value: any }) => {
-   //       //       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-   //       //       return <>{value.status} </>;
-   //       //    },
-   //       // },
-   //       {
-   //          Header: 'Average',
-   //          accessor: 'row.average',
-   //       },
-   //       {
-   //          Header: 'Progress',
-   //          accessor: 'row.progress',
-   //       },
-   //    ],
-   //    []
-   // );
-
    const learningTargetGroup: any = {
       Header: 'Learning Targets',
       columns: [],
@@ -128,7 +94,7 @@ function LTStudentViewTable() {
    if (progressData !== undefined) {
       for (const target of progressData?.progressOverview.targets) {
          data.map((row) => {
-            row.row[target.targetName] = target.targetName;
+            row.row[target.targetName] = '';
          });
          learningTargetGroup.columns.push({
             Header: target.targetName,
@@ -138,15 +104,9 @@ function LTStudentViewTable() {
       tableColumns.push(learningTargetGroup);
    }
 
-   // progressData?.progressOverview.targets.map((target: Target) =>
-
-   // );
-
-   console.log(tableColumns);
-
    return (
       <div className="base-table">
-         <TableComponent columns={tableColumns} data={data} rowClickFunction={rowClick} />
+         <TableComponent columns={tableColumns} data={data} rowClickFunction={rowClicked} />
       </div>
    );
 }
