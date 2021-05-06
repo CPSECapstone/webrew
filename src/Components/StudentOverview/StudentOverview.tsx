@@ -12,15 +12,6 @@ import './StudentOverview.css';
 
 const useStyles = makeStyles((theme: Theme) =>
    createStyles({
-      root: {
-         display: 'flex',
-         flexWrap: 'wrap',
-         '& > *': {
-            margin: theme.spacing(0),
-            width: theme.spacing(160),
-            height: theme.spacing(60),
-         },
-      },
       tabContainer: {
          flexGrow: 1,
          backgroundColor: theme.palette.background.paper,
@@ -43,8 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
 function StudentOverview() {
    const classes = useStyles();
    const { className } = useParams<Record<string, string | undefined>>();
-   // const className = params.className;
-   console.log(className);
+  
    const [value, setValue] = useState('1');
 
    const handleChange = (event: React.ChangeEvent<Record<string, unknown>>, newValue: string) => {

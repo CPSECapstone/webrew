@@ -1,14 +1,7 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Progress } from '../../interfaces/Progress';
-import { Users } from '../../interfaces/Users';
 import TableComponent from '../TableComponent/TableComponent';
-import {
-   ProgressOverview,
-   Target,
-   useProgressOverviewQuery,
-   UserProgress,
-} from '../../__generated__/types';
+import { useProgressOverviewQuery, UserProgress } from '../../__generated__/types';
 
 function LTStudentViewTable() {
    const { data: progressData } = useProgressOverviewQuery({
