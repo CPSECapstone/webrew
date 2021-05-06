@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable react/no-array-index-key */
 import {
    GetTaskByIdQuery,
    ImageBlockFieldsFragment,
@@ -32,15 +33,15 @@ function BlockPageHandler({
    const blockList = pageBlocks.map((block: TaskBlock, index: number) => {
       switch (block.__typename) {
          case 'ImageBlock': {
-            const iBlock = block as ImageBlockFieldsFragment;
+            const iBlock = block;
             return <ImageBlock title="PLACEHOLDER" contents={iBlock.imageUrl} key={index} />;
          }
          case 'TextBlock': {
-            const tBlock = block as TextBlockFieldsFragment;
+            const tBlock = block;
             return <TextBlock title={tBlock.title} contents={tBlock.contents} key={index} />;
          }
          case 'QuizBlock': {
-            const qBlock = block as QuizBlockFieldsFragment;
+            const qBlock = block;
             return (
                <QuizBlock
                   title={qBlock.title}
@@ -51,7 +52,7 @@ function BlockPageHandler({
             );
          }
          case 'VideoBlock': {
-            const vBlock = block as VideoBlockFieldsFragment;
+            const vBlock = block;
             return <VideoBlock title={vBlock.title} contents={vBlock.videoUrl} key={index} />;
          }
          default:

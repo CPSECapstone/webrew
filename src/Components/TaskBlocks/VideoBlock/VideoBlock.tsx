@@ -9,9 +9,9 @@ const opts = {
       autoplay: 1,
    },
 };
-
 function onReady(event: any) {
    // access to player in all event handlers via event.target
+   // eslint-disable-next-line
    event.target.pauseVideo();
 }
 
