@@ -11,7 +11,7 @@ type Props = {
 
 export default function CourseCard({ courseInfo }: Props) {
    return (
-      <Link to={`/studentOverview/${courseInfo.course}`}>
+      <Link to={`/courseHome/${courseInfo.course}`}>
          <div className="course-card">
             <div className="course-card-header" />
             <div className="course-card-body">

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -7,7 +8,9 @@ import React from 'react';
 import { useTable } from 'react-table';
 
 // Most of the table code came from here https://blog.logrocket.com/complete-guide-building-smart-data-table-react/
-function TableComponent({ columns, data }: any) {
+function TableComponent({ columns, data, rowClickFunction }: any) {
+   // Passing in undefined to rowClickFunction will remove hover/click effect from table
+
    const {
       getTableProps, // table props from react-table
       getTableBodyProps, // table body props from react-table
@@ -19,7 +22,6 @@ function TableComponent({ columns, data }: any) {
       data,
    });
 
-   console.log(rows);
    return (
       <table {...getTableProps()}>
          <thead>
@@ -35,7 +37,15 @@ function TableComponent({ columns, data }: any) {
             {rows.map((row) => {
                prepareRow(row);
                return (
-                  <tr {...row.getRowProps()}>
+                  <tr
+                     className={rowClickFunction !== undefined ? 'hoverRow' : ''}
+                     {...row.getRowProps()}
+                     onClick={() =>
+                        rowClickFunction !== undefined
+                           ? rowClickFunction(row.values['row.name'])
+                           : undefined
+                     }
+                  >
                      {row.cells.map((cell) => {
                         return (
                            <td

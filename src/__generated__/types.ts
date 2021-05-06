@@ -76,6 +76,34 @@ export type FreeResponseAnswerInput = {
   answer: Scalars['String'];
 };
 
+export type Goal = {
+  id: Scalars['String'];
+  title: Scalars['String'];
+  dueDate: Scalars['Date'];
+  completed: Scalars['Boolean'];
+  completedDate?: Maybe<Scalars['Date']>;
+  subGoals: Array<SubGoal>;
+  category: Scalars['String'];
+  favorited: Scalars['Boolean'];
+  owner: Scalars['String'];
+  assignee: Scalars['String'];
+  pointValue?: Maybe<Scalars['Int']>;
+};
+
+export type GoalInput = {
+  id?: Maybe<Scalars['String']>;
+  title: Scalars['String'];
+  dueDate: Scalars['Date'];
+  completed: Scalars['Boolean'];
+  completedDate?: Maybe<Scalars['Date']>;
+  subGoals: Array<SubGoalInput>;
+  category: Scalars['String'];
+  favorited: Scalars['Boolean'];
+  owner?: Maybe<Scalars['String']>;
+  assignee?: Maybe<Scalars['String']>;
+  pointValue?: Maybe<Scalars['Int']>;
+};
+
 export type ImageBlock = TaskBlock & {
   title: Scalars['String'];
   blockId: Scalars['String'];
@@ -169,6 +197,7 @@ export type Mutation = {
   addTarget: Scalars['String'];
   addObjective: Scalars['String'];
   addProgress: Scalars['String'];
+  editOrCreateGoal: Scalars['String'];
 };
 
 
@@ -261,6 +290,11 @@ export type MutationAddProgressArgs = {
   progress: ProgressInput;
 };
 
+
+export type MutationEditOrCreateGoalArgs = {
+  goal: GoalInput;
+};
+
 export type Objective = {
   objectiveId: Scalars['String'];
   objectiveName: Scalars['String'];
@@ -344,6 +378,9 @@ export type Query = {
   progressByCourse: Array<UserProgress>;
   userProgress: UserProgress;
   progressOverview: ProgressOverview;
+  getAllGoals: Array<Goal>;
+  /** Instructor only: get a user's goal given the user and the goal id */
+  getGoalById: Goal;
 };
 
 
@@ -458,6 +495,12 @@ export type QueryProgressOverviewArgs = {
   course: Scalars['String'];
 };
 
+
+export type QueryGetGoalByIdArgs = {
+  id: Scalars['String'];
+  user: Scalars['String'];
+};
+
 export interface Question {
   id: Scalars['String'];
   description: Scalars['String'];
@@ -518,6 +561,20 @@ export type RubricRequirement = {
 
 export type RubricRequirementInput = {
   description?: Maybe<Scalars['String']>;
+};
+
+export type SubGoal = {
+  title: Scalars['String'];
+  dueDate: Scalars['Date'];
+  completed: Scalars['Boolean'];
+  completedDate?: Maybe<Scalars['Date']>;
+};
+
+export type SubGoalInput = {
+  title: Scalars['String'];
+  dueDate: Scalars['Date'];
+  completed: Scalars['Boolean'];
+  completedDate?: Maybe<Scalars['Date']>;
 };
 
 export type SubMission = {
