@@ -2,16 +2,8 @@ import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { ProgressBar, Button } from 'react-bootstrap';
-import { GetTaskByIdQuery, Task } from '../../../__generated__/types';
+import { GetTaskByIdQuery } from '../../../__generated__/types';
 import './TaskProgress.css';
-
-function blockComplete(
-   progress: number,
-   block: number,
-   setProgress: (newProgress: number) => void
-) {
-   setProgress(progress + block);
-}
 
 function handlePageChange(
    page: number,

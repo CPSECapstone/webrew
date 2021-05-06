@@ -40,7 +40,7 @@ const menus: Props[] = [
    {
       text: 'Task',
       icon: faTasks,
-      link: '/taskSubmissionOverview',
+      link: '/viewTask',
    },
    {
       text: 'Mastery',
@@ -53,17 +53,17 @@ const menus: Props[] = [
       link: '/singleStudentOverview',
    },
    {
-      text: 'Message',
+      text: 'Submission',
       icon: faComments,
-      link: '',
+      link: './taskSubmissionOverview',
    },
 ];
 
 export default function Sidebar() {
    return (
-      <div className="sidebar">
+      <div className="sidebar position-fixed">
          {menus.map((menu) => (
-            <IconMenu text={menu.text} icon={menu.icon} link={menu.link} />
+            <IconMenu key={menu.text} text={menu.text} icon={menu.icon} link={menu.link} />
          ))}
       </div>
    );

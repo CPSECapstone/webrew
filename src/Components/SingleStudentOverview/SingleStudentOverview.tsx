@@ -5,16 +5,14 @@ import { useQuery } from '@apollo/client';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import styled from 'styled-components';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import StudentPicture from '../../assets/images/images-1.png';
 import { User } from '../../interfaces/User';
 import LinearProgressWithLabel from '../LinearProgressWithLabel/LinearProgressWithLabel';
 import MissionDropDown from '../LinearProgressWithLabel/MissionDropDown';
-import { MissionSubMission } from '../../interfaces/MissionSubMission';
 import { GET_USERS } from '../../queries/user-queries';
 
 const StudentDiv = styled.div`
@@ -181,6 +179,11 @@ function SingleStudentOverview() {
                <Link
                   to={{
                      pathname: '/singleStudentMasteryOverview',
+                     state: {
+                        id: inputUser.id,
+                        firstName: inputUser.firstName,
+                        lastName: inputUser.lastName,
+                     },
                   }}
                >
                   <Button variant="info" size="lg">

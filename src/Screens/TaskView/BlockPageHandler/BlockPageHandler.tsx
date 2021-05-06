@@ -4,7 +4,6 @@
 import {
    GetTaskByIdQuery,
    ImageBlockFieldsFragment,
-   PageFieldsFragment,
    QuizBlockFieldsFragment,
    TextBlockFieldsFragment,
    VideoBlockFieldsFragment,
