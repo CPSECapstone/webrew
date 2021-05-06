@@ -17,8 +17,8 @@ Amplify.configure({
       oauth: {
          domain: 'flipted-ios-test.auth.us-east-1.amazoncognito.com',
          scope: ['phone', 'email', 'profile', 'openid', 'aws.cognito.signin.user.admin'],
-         redirectSignIn: 'https://localhost:3000/',
-         redirectSignOut: 'https://localhost:3000/',
+         redirectSignIn: 'https://webrew.herokuapp.com/',
+         redirectSignOut: 'https://webrew.herokuapp.com/',
          responseType: 'token',
       },
    },
