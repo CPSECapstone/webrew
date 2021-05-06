@@ -13,6 +13,7 @@ export default function Navigation() {
                <Nav.Link href="/viewTask">View Test Task</Nav.Link>
                <Nav.Link href="/addNewCourse">Create Course</Nav.Link>
                <NavDropdown title="Dev Screens" className="ml-auto" id="dev-dropdown">
+                  <NavDropdown.Item href="/courseHome">Course Home</NavDropdown.Item>
                   <NavDropdown.Item href="/addNewCourse">Create Course</NavDropdown.Item>
                   <NavDropdown.Item href="/addTaskSubmission">Submit Task</NavDropdown.Item>
                   <NavDropdown.Item href="/taskSubmissionOverview">

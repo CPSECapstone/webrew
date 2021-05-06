@@ -1,0 +1,46 @@
+.course-card {
+   border: 1px solid gray;
+   margin: 12px;
+   box-sizing: border-box;
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+   border-radius: 4px;
+   overflow: hidden;
+   background: #fff;
+   width: 262px;
+   display: inline-block;
+   vertical-align: top;
+   margin: 36px 0 0 36px;
+}
+
+.course-card {
+   .course-title {
+      font-size: 1.2em;
+      color: teal;
+      text-overflow: ellipsis;
+      display: inline-block;
+   }
+
+   .course-card-header {
+      display: block;
+      height: 146px;
+      background-color: #1296af;
+   }
+
+   .course-card-body {
+      padding: 12px;
+
+      .course-instructor {
+         text-overflow: ellipsis;
+      }
+      .course-desc {
+         text-overflow: ellipsis;
+         white-space: nowrap;
+         overflow: hidden;
+      }
+   }
+}
+
+.course-icon {
+   margin-left: 10px;
+   margin-bottom: 10px;
+}

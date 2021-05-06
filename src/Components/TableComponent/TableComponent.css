@@ -35,6 +35,24 @@ table th.sort-desc::before {
    border-top: 5px solid #22543d;
 }
 
+/* tr:hover {
+   background-color: '#d9d9d9 !important';
+}
+
+tr:hover td {
+   background-color: '#d9d9d9 !important';
+} */
+
+tr:hover.hoverRow  {
+   /* color: #fff; */
+   background-color: #d9d9d9;
+   cursor: pointer;
+}
+
+/* tr:hover td {
+   background-color: transparent;
+} */
+
 .base-table {
    display: flex;
    flex-direction: column;
