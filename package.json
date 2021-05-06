@@ -7,6 +7,7 @@
     "@aws-amplify/auth": "^3.4.29",
     "@aws-amplify/interactions": "^3.3.29",
     "@aws-amplify/storage": "^3.3.29",
+    "@aws-amplify/ui": "^2.0.2",
     "@aws-amplify/ui-react": "^1.0.6",
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
@@ -84,9 +85,11 @@
     "eslint-config-airbnb-typescript-prettier": "^4.2.0",
     "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-prettier": "^3.3.1",
+    "node": "^16.0.0",
     "prettier": "^2.2.1",
     "prettier-eslint": "^12.0.0",
     "react-scripts": "^4.0.3",
+    "sass": "^1.32.12",
     "typescript": "^4.2.3"
   }
 }

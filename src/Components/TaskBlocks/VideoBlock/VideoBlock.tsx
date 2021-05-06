@@ -1,14 +1,14 @@
 import YouTube from 'react-youtube';
 import '../TaskBlock.css';
 
-const opts = {
-   height: '390',
-   width: '640',
-   playerVars: {
-      // https://developers.google.com/youtube/player_parameters
-      autoplay: 1,
-   },
-};
+// const opts = {
+//    height: '390',
+//    width: '640',
+//    playerVars: {
+//       // https://developers.google.com/youtube/player_parameters
+//       autoplay: 1,
+//    },
+// };
 
 function onReady(event: any) {
    // access to player in all event handlers via event.target

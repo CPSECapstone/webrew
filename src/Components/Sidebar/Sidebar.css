@@ -1,7 +1,7 @@
 .sidebar {
    display: flex;
    flex-direction: column;
-   justify-content: center;
+   align-items: center;
    padding: 20px;
 }
 
@@ -10,6 +10,7 @@
    margin-bottom: 10px;
    color: ghostwhite;
    text-align: center;
+   align-self: center;
 }
 
 .menu-container .menu-icon {
