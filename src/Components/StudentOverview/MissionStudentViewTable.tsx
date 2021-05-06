@@ -153,13 +153,13 @@ function MissionStudentViewTable() {
                      Current
                   </StyledTableCell>
                   <StyledTableCell className={classes.borderedHeaderCell} align="center">
-                     LT1
+                     Mission A
                   </StyledTableCell>
                   <StyledTableCell className={classes.borderedHeaderCell} align="center">
-                     LT2
+                     Mission B
                   </StyledTableCell>
                   <StyledTableCell className={classes.borderedHeaderCell} align="center">
-                     LT3
+                     Mission C
                   </StyledTableCell>
                </TableRow>
             </TableHead>

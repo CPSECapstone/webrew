@@ -50,7 +50,7 @@ function StudentOverview() {
    };
 
    return (
-      <div style={{ marginLeft: '5px' }}>
+      <div>
          <div
             style={{
                color: 'white',
@@ -62,29 +62,29 @@ function StudentOverview() {
          >
             Biology
          </div>
-         <div className={classes.root}>
-            <Paper className={classes.tabContainer}>
-               <TabContext value={value}>
-                  <TabList onChange={handleChange} variant="fullWidth" centered>
-                     <Tab
-                        label="Learning Targets"
-                        value="1"
-                        className={value === '1' ? classes.selectedTab : classes.defaultTab}
-                     />
-                     <Tab
-                        label="Missions"
-                        value="2"
-                        className={value === '2' ? classes.selectedTab : classes.defaultTab}
-                     />
-                  </TabList>
-                  <TabPanel value="1">
-                     <LearningTargetTab />
-                  </TabPanel>
-                  <TabPanel value="2">
-                     <MissionsTab />
-                  </TabPanel>
-               </TabContext>
-            </Paper>
+         <div className={classes.tabContainer}>
+            {/* <Paper className={classes.tabContainer}> */}
+            <TabContext value={value}>
+               <TabList onChange={handleChange} variant="fullWidth" centered>
+                  <Tab
+                     label="Learning Targets"
+                     value="1"
+                     className={value === '1' ? classes.selectedTab : classes.defaultTab}
+                  />
+                  <Tab
+                     label="Missions"
+                     value="2"
+                     className={value === '2' ? classes.selectedTab : classes.defaultTab}
+                  />
+               </TabList>
+               <TabPanel value="1">
+                  <LearningTargetTab />
+               </TabPanel>
+               <TabPanel value="2">
+                  <MissionsTab />
+               </TabPanel>
+            </TabContext>
+            {/* </Paper> */}
          </div>
       </div>
    );
