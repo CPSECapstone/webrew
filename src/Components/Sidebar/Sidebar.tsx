@@ -55,13 +55,13 @@ const menus: Props[] = [
    {
       text: 'Message',
       icon: faComments,
-      link: '',
+      link: './',
    },
 ];
 
 export default function Sidebar() {
    return (
-      <div className="sidebar">
+      <div className="sidebar position-fixed">
          {menus.map((menu) => (
             <IconMenu text={menu.text} icon={menu.icon} link={menu.link} />
          ))}

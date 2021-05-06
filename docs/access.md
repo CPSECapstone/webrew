@@ -1,6 +1,6 @@
 # Access
 
-Please the link to visit flipt\(ed\)
+Please use the link blew to visit `flipt(ed)-webrew`.
 
 ## Website
 
@@ -8,6 +8,7 @@ Link to site: [https://webrew.herokuapp.com/](https://webrew.herokuapp.com/)
 
 ## How to Use the Site
 
-1. Follow the `Sign in with AWS` button
-2. In redirected page, use instructor's google account to sign in.
+1. Click the `Sign in with AWS` button
+2. In redirected page, choose `Continue with Google` and use instructor's google account to sign in.
 
+![Continue With Google](./continue_with_google.png)
