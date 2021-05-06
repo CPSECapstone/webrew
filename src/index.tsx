@@ -18,8 +18,10 @@ Amplify.configure({
       oauth: {
          domain: 'flipted-ios-test.auth.us-east-1.amazoncognito.com',
          scope: ['phone', 'email', 'profile', 'openid', 'aws.cognito.signin.user.admin'],
-         redirectSignIn: 'https://cpsecapstone.github.io/webrew/',
-         redirectSignOut: 'https://cpsecapstone.github.io/webrew/',
+         redirectSignIn: 'http://localhost:3000/',
+         redirectSignOut: 'http://localhost:3000/',
+         // redirectSignIn: 'https://cpsecapstone.github.io/webrew/',
+         // redirectSignOut: 'https://cpsecapstone.github.io/webrew/',
          responseType: 'token',
       },
    },
