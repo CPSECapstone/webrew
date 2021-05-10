@@ -1,35 +1,15 @@
 import { Auth } from 'aws-amplify';
-import { Navbar, Nav, Form, Button, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav, Form, Button } from 'react-bootstrap';
 import './Navigation.css';
 
 export default function Navigation() {
    return (
-      <Navbar collapseOnSelect expand="sm" bg="dark" variant="dark">
-         <Navbar.Brand href="/">Flipt(Ed)</Navbar.Brand>
+      <Navbar collapseOnSelect expand="sm" bg="primary" variant="dark">
+         <Navbar.Brand href="/">flipt.ED</Navbar.Brand>
          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
          <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="container-fluid">
                <Nav.Link href="/">Dashboard</Nav.Link>
-               <Nav.Link href="/viewTask">View Test Task</Nav.Link>
-               <Nav.Link href="/addNewCourse">Create Course</Nav.Link>
-               <NavDropdown title="Dev Screens" className="ml-auto" id="dev-dropdown">
-                  <NavDropdown.Item href="/courseHome">Course Home</NavDropdown.Item>
-                  <NavDropdown.Item href="/addNewCourse">Create Course</NavDropdown.Item>
-                  <NavDropdown.Item href="/addTaskSubmission">Submit Task</NavDropdown.Item>
-                  <NavDropdown.Item href="/taskSubmissionOverview">
-                     Task Submission Overview
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="/viewTaskSubmission">
-                     View Task Submission
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="/studentOverview">Student Overview</NavDropdown.Item>
-                  <NavDropdown.Item href="/singleStudentOverview">
-                     Single Student Overview
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="/singleStudentMasteryOverview">
-                     Single Student Mastery Overview
-                  </NavDropdown.Item>
-               </NavDropdown>
                <Form inline>
                   <Button className="ml-auto" type="submit" onClick={() => Auth.signOut()}>
                      Log Out
