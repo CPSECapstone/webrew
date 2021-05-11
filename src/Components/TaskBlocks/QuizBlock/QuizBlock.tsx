@@ -8,19 +8,25 @@ import {
    FrQuestionFieldsFragment,
 } from '../../../__generated__/types';
 import '../TaskBlock.css';
+import { QuizBlockSubmission, StudentAnswer } from '../../../interfaces/QuizBlockSubmission';
 
-function renderQuestionOptions(question: McQuestionFieldsFragment) {
+function renderQuestionOptions(question: McQuestionFieldsFragment, studentAnswer: StudentAnswer) {
    const correctChoices = new Set<number>(question.answers);
 
    return question.options.map((option: QuestionOption) => {
-      const styleName = correctChoices.has(option.id) ? 'option-correct' : '';
+      const studentChoices = new Set<number>(studentAnswer.choices);
+
+      let styleName = correctChoices.has(option.id) ? 'option-correct' : '';
+      if (studentChoices.has(option.id) && !correctChoices.has(option.id)) {
+         styleName = 'option-incorrect';
+      }
 
       return (
          <FormControlLabel
             value={option.description}
             disabled
             className={styleName}
-            control={<Radio />}
+            control={<Radio checked={studentChoices.has(option.id)} />}
             label={option.description}
             key={option.id}
          />
@@ -30,7 +36,18 @@ function renderQuestionOptions(question: McQuestionFieldsFragment) {
 
 type QuestionFieldsFragment = McQuestionFieldsFragment | FrQuestionFieldsFragment;
 
-function renderQuestions(questions: Array<QuestionFieldsFragment>) {
+function renderQuestions(questions: Array<QuestionFieldsFragment>, submission: QuizBlockSubmission) {
+   const answerMap = new Map<string, StudentAnswer>();
+   submission.studentAnswers.forEach((answer) => {
+      answerMap.set(answer.questionId, answer);
+   });
+
+   const defaultAnswer: StudentAnswer = {
+      questionId: 'question',
+      result: false,
+      choices: [0],
+   };
+
    return questions.map((question: QuestionFieldsFragment, index: number) => {
       // #render multiple choice question
       switch (question.__typename) {
@@ -48,14 +65,17 @@ function renderQuestions(questions: Array<QuestionFieldsFragment>) {
             );
          }
          case 'McQuestion': {
+            const answer = answerMap.get(question.id) || defaultAnswer;
+            const feedback = answer.result ? "That's right!" : 'Not quite.';
             const mcQ = question;
             return (
-               <div className="col-12" key={mcQ.id}>
+               <div className="col-12 question" key={mcQ.id}>
                   <p className="question-desc">
                      <span className="question-index">{index + 1}</span>
                      {mcQ.description}
                   </p>
                   <RadioGroup>{renderQuestionOptions(mcQ)}</RadioGroup>
+                  <p className="feedback">{feedback}</p>
                </div>
             );
          }

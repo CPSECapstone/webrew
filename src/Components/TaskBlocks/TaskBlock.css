@@ -24,3 +24,17 @@
    padding: 5px 20px;
    background-color: #383838;
 }
+
+.question .option-correct {
+   border: solid 1px darkseagreen;
+   border-left: solid 10px darkseagreen;
+   border-top-left-radius: 5px;
+   border-bottom-left-radius: 5px;
+}
+
+.question .option-incorrect {
+   border: solid 1px lightcoral;
+   border-left: solid 10px lightcoral;
+   border-top-left-radius: 5px;
+   border-bottom-left-radius: 5px;
+}
