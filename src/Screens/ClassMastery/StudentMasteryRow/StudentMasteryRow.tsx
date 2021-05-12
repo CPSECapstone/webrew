@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { color } from '../../../Components/constants.json';
-/* import { useGetTaskByIdQuery } from '../../__generated__/types'; */
 
 type MasteryBarProps = { percentage: number };
 
@@ -76,21 +75,6 @@ const Content = styled.div`
 `;
 
 function StudentMasteryRow({ name, learningObjectives }: any) {
-   /* const { data: taskByIdQuery } = useGetTaskByIdQuery({ */
-   /*    variables: { taskId }, */
-   /* }); */
-
-   /* const [page, setPage] = useState(0); */
-
-   /* const maxPage: number = */
-   /*    taskByIdQuery === undefined || taskByIdQuery.task.pages === undefined */
-   /*       ? 0 */
-   /*       : taskByIdQuery.task.pages.length - 1; */
-
-   /* if (!taskByIdQuery) { */
-   /*    return <></>; */
-   /* } */
-
    return (
       <Container>
          <Header>

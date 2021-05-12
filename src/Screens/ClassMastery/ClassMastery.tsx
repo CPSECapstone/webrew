@@ -4,8 +4,6 @@ import { color } from '../../Components/constants.json';
 
 import StudentMasteryRow, { StudentMasteryHeader } from './StudentMasteryRow/StudentMasteryRow';
 
-/* import { useGetTaskByIdQuery } from '../../__generated__/types'; */
-
 const Page = styled.div`
    margin: 33px 90px;
 `;
@@ -63,21 +61,7 @@ const MOCK_DATA = [
 ];
 
 function ClassMastery() {
-   /* const { data: taskByIdQuery } = useGetTaskByIdQuery({ */
-   /*    variables: { taskId }, */
-   /* }); */
-
-   /* const [page, setPage] = useState(0); */
-
-   /* const maxPage: number = */
-   /*    taskByIdQuery === undefined || taskByIdQuery.task.pages === undefined */
-   /*       ? 0 */
-   /*       : taskByIdQuery.task.pages.length - 1; */
-
-   /* if (!taskByIdQuery) { */
-   /*    return <></>; */
-   /* } */
-
+   //TODO Get real data
    return (
       <Page>
          <Header>Class Mastery</Header>
