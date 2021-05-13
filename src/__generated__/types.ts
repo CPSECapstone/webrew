@@ -974,6 +974,43 @@ export type GetCoursesQuery = (
   )> }
 );
 
+export type GetTargetProgressQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetTargetProgressQuery = (
+  { __typename: 'Query' }
+  & { getAllTargetProgress: Array<(
+    { __typename: 'TargetProgress' }
+    & Pick<TargetProgress, 'student'>
+    & { target: (
+      { __typename: 'Target' }
+      & TargetProgressFieldsFragment
+    ), objectives: Array<(
+      { __typename: 'ObjectiveProgress' }
+      & ObjectiveProgressFieldsFragment
+    )> }
+  )> }
+);
+
+export type TargetProgressFieldsFragment = (
+  { __typename: 'Target' }
+  & Pick<Target, 'targetName'>
+);
+
+export type ObjectiveProgressFieldsFragment = (
+  { __typename: 'ObjectiveProgress' }
+  & Pick<ObjectiveProgress, 'objectiveId' | 'objectiveName'>
+  & { tasks: Array<(
+    { __typename: 'TaskObjectiveProgress' }
+    & TaskObjectiveProgressFieldsFragment
+  )> }
+);
+
+export type TaskObjectiveProgressFieldsFragment = (
+  { __typename: 'TaskObjectiveProgress' }
+  & Pick<TaskObjectiveProgress, 'taskId' | 'taskName' | 'mastery'>
+);
+
 export type QuizBlockQueryVariables = Exact<{
   taskId: Scalars['String'];
   blockId: Scalars['String'];
@@ -1185,6 +1222,27 @@ export const MissionFieldsFragmentDoc = gql`
   }
 }
     ${MissionContentFieldsFragmentDoc}`;
+export const TargetProgressFieldsFragmentDoc = gql`
+    fragment TargetProgressFields on Target {
+  targetName
+}
+    `;
+export const TaskObjectiveProgressFieldsFragmentDoc = gql`
+    fragment TaskObjectiveProgressFields on TaskObjectiveProgress {
+  taskId
+  taskName
+  mastery
+}
+    `;
+export const ObjectiveProgressFieldsFragmentDoc = gql`
+    fragment ObjectiveProgressFields on ObjectiveProgress {
+  objectiveId
+  objectiveName
+  tasks {
+    ...TaskObjectiveProgressFields
+  }
+}
+    ${TaskObjectiveProgressFieldsFragmentDoc}`;
 export const McQuestionFieldsFragmentDoc = gql`
     fragment McQuestionFields on McQuestion {
   id
@@ -1502,6 +1560,47 @@ export function useGetCoursesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type GetCoursesQueryHookResult = ReturnType<typeof useGetCoursesQuery>;
 export type GetCoursesLazyQueryHookResult = ReturnType<typeof useGetCoursesLazyQuery>;
 export type GetCoursesQueryResult = Apollo.QueryResult<GetCoursesQuery, GetCoursesQueryVariables>;
+export const GetTargetProgressDocument = gql`
+    query GetTargetProgress {
+  getAllTargetProgress(courseId: "sample") {
+    student
+    target {
+      ...TargetProgressFields
+    }
+    objectives {
+      ...ObjectiveProgressFields
+    }
+  }
+}
+    ${TargetProgressFieldsFragmentDoc}
+${ObjectiveProgressFieldsFragmentDoc}`;
+
+/**
+ * __useGetTargetProgressQuery__
+ *
+ * To run a query within a React component, call `useGetTargetProgressQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTargetProgressQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTargetProgressQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetTargetProgressQuery(baseOptions?: Apollo.QueryHookOptions<GetTargetProgressQuery, GetTargetProgressQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTargetProgressQuery, GetTargetProgressQueryVariables>(GetTargetProgressDocument, options);
+      }
+export function useGetTargetProgressLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTargetProgressQuery, GetTargetProgressQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTargetProgressQuery, GetTargetProgressQueryVariables>(GetTargetProgressDocument, options);
+        }
+export type GetTargetProgressQueryHookResult = ReturnType<typeof useGetTargetProgressQuery>;
+export type GetTargetProgressLazyQueryHookResult = ReturnType<typeof useGetTargetProgressLazyQuery>;
+export type GetTargetProgressQueryResult = Apollo.QueryResult<GetTargetProgressQuery, GetTargetProgressQueryVariables>;
 export const QuizBlockDocument = gql`
     query QuizBlock($taskId: String!, $blockId: String!) {
   quizblock(taskId: $taskId, blockId: $blockId) {
