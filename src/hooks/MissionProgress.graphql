@@ -1,0 +1,20 @@
+query GetMissionProgress {
+   getAllMissionProgress(courseId: "Potato") {
+      student
+      mission {
+         name
+         description
+         id
+         course
+      }
+      progress {
+         name
+         taskId
+         submission {
+            graded
+            pointsAwarded
+            pointsPossible
+         }
+      }
+   }
+}

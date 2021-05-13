@@ -7,6 +7,7 @@ import ViewTaskSubmission from '../ViewTaskSubmission';
 import SingleStudentOverview from '../SingleStudentOverview/SingleStudentOverview';
 import SingleStudentMasteryOverview from '../SingleStudentMasteryOverview/SingleStudentMasteryOverview';
 import CourseHome from '../CourseHome/CourseHome';
+import SingleTargetOverview from '../SingleTargetOverview/SingleTargetOverview';
 
 import './Content.css';
 import TaskView from '../../Screens/TaskView/TaskView';
@@ -35,6 +36,9 @@ export default function Content() {
             </Route>
             <Route path="/singleStudentMasteryOverview">
                <SingleStudentMasteryOverview />
+            </Route>
+            <Route path="/singleTargetOverview">
+               <SingleTargetOverview />
             </Route>
             <Route path="/viewTask">
                <TaskView taskId="90e0c730e56" />

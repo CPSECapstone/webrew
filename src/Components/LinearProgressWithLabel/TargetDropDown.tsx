@@ -10,7 +10,12 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import LinearProgressWithLabel from './LinearProgressWithLabel';
 import ObjectiveDropDown from './ObjectiveDropDown';
-import { Objective } from '../../__generated__/types';
+import {
+   Objective,
+   ObjectiveProgress,
+   TaskObjectiveProgress,
+   TaskProgress,
+} from '../../__generated__/types';
 
 const useStyles = makeStyles((theme: Theme) =>
    createStyles({
@@ -31,10 +36,15 @@ const useStyles = makeStyles((theme: Theme) =>
 const PaddedDiv = styled.div`
    padding-left: 10px;
 `;
+const ExtraPaddedDiv = styled.div`
+   width: 100%;
+   justify-content: left;
+   padding-left: 30px;
+`;
 
 export interface TargetDropDownProps {
    name: string;
-   learningObjectives: Objective[];
+   objectives: ObjectiveProgress[];
 }
 
 // Handles state to open or close dropdown
@@ -45,7 +55,7 @@ function handleClick(
    openFunction(!openObjectBool);
 }
 
-export default function TargetDropDown({ name, learningObjectives }: TargetDropDownProps) {
+export default function TargetDropDown({ name, objectives }: TargetDropDownProps) {
    const classes = useStyles();
    const [open, setOpen] = useState(false);
 
@@ -58,20 +68,25 @@ export default function TargetDropDown({ name, learningObjectives }: TargetDropD
                button
                onClick={() => handleClick(open, setOpen)}
                style={{
-                  border: '1px',
+                  borderTop: '1px',
+                  borderBottom: '1px',
                   borderColor: '#C2D2FC',
                   borderStyle: 'solid',
-                  backgroundColor: '#E9EEFC',
                }}
             >
+               {open ? <ExpandLess /> : <ExpandMore />}
                <ListItemText primary={name} />
                <LinearProgressWithLabel className={classes.progressBar} value={TARGET_PERCENT} />
-               {open ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
          </PaddedDiv>
          <Collapse in={open} timeout="auto" unmountOnExit>
-            {learningObjectives.map((objective: Objective) => (
-               <ObjectiveDropDown name={objective.objectiveName} tasks={objective.tasks || []} />
+            {objectives.map((objective: ObjectiveProgress) => (
+               <ExtraPaddedDiv>
+                  <ObjectiveDropDown
+                     name={objective.objectiveName}
+                     tasks={objective.tasks as TaskObjectiveProgress[]}
+                  />
+               </ExtraPaddedDiv>
             ))}
          </Collapse>
       </List>

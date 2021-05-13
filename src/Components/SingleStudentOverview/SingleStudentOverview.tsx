@@ -14,6 +14,7 @@ import { User } from '../../interfaces/User';
 import LinearProgressWithLabel from '../LinearProgressWithLabel/LinearProgressWithLabel';
 import MissionDropDown from '../LinearProgressWithLabel/MissionDropDown';
 import { GET_USERS } from '../../queries/user-queries';
+import { TaskStats, useGetMissionProgressQuery } from '../../__generated__/types';
 
 const StudentDiv = styled.div`
    height: 275px;
@@ -163,6 +164,11 @@ function SingleStudentOverview() {
          name: 'Goal 0.2',
       },
    ];
+   const { data } = useGetMissionProgressQuery({
+      variables: {},
+   });
+
+   const missionData = data?.getAllMissionProgress;
 
    return (
       <div style={{ marginLeft: '5px', marginRight: '5px', backgroundColor: '#DAEFFE' }}>
@@ -195,8 +201,11 @@ function SingleStudentOverview() {
          <RowDiv>
             <ColumnDiv>
                <FieldTitleDiv>Current Missions</FieldTitleDiv>
-               {missions.map((mission) => (
-                  <MissionDropDown name={mission.name} subMissions={mission.subMissions as any[]} />
+               {missionData?.map((mission) => (
+                  <MissionDropDown
+                     name={mission.mission.name}
+                     progress={mission.progress as TaskStats[]}
+                  />
                ))}
             </ColumnDiv>
             <ColumnDiv>
@@ -228,12 +237,12 @@ function SingleStudentOverview() {
          <RowDiv>
             <ColumnDiv>
                <FieldTitleDiv>Completed Missions</FieldTitleDiv>
-               {missions.map((compMission) => (
+               {/* {missions.map((compMission) => (
                   <MissionDropDown
                      name={compMission.name}
                      subMissions={compMission.subMissions as any[]}
                   />
-               ))}
+               ))} */}
             </ColumnDiv>
             <ColumnDiv>
                <FieldTitleDiv>Completed Goals</FieldTitleDiv>

@@ -8,7 +8,12 @@ import { Button } from 'react-bootstrap';
 import StudentPicture from '../../assets/images/images-1.png';
 import LinearProgressWithLabel from '../LinearProgressWithLabel/LinearProgressWithLabel';
 import TargetDropDown from '../LinearProgressWithLabel/TargetDropDown';
-import { Objective } from '../../__generated__/types';
+import {
+   Objective,
+   ObjectiveProgress,
+   TargetProgress,
+   useGetTargetProgressQuery,
+} from '../../__generated__/types';
 import { User } from '../../interfaces/User';
 
 const StudentDiv = styled.div`
@@ -104,62 +109,62 @@ export default function SingleStudentMasteryOveriew() {
       inputUser.lastName = 'Jones';
    }
 
-   const learningTargets = [
-      {
-         name: 'Target 1',
-         learningObjectives: [
-            {
-               objectiveName: 'Objective 1',
-               tasks: [
-                  {
-                     name: 'Task 1',
-                  },
-                  {
-                     name: 'Task 2',
-                  },
-               ],
-            },
-            {
-               objectiveName: 'Objective 2',
-               tasks: [
-                  {
-                     name: 'Task 1',
-                  },
-                  {
-                     name: 'Task 2',
-                  },
-               ],
-            },
-         ],
-      },
-      {
-         name: 'Target 2',
-         learningObjectives: [
-            {
-               objectiveName: 'Objective 1',
-               tasks: [
-                  {
-                     name: 'Task 1',
-                  },
-                  {
-                     name: 'Task 2',
-                  },
-               ],
-            },
-            {
-               objectiveName: 'Objective 2',
-               tasks: [
-                  {
-                     name: 'Task 1',
-                  },
-                  {
-                     name: 'Task 2',
-                  },
-               ],
-            },
-         ],
-      },
-   ];
+   // const learningTargets = [
+   //    {
+   //       name: 'Target 1',
+   //       learningObjectives: [
+   //          {
+   //             objectiveName: 'Objective 1',
+   //             tasks: [
+   //                {
+   //                   name: 'Task 1',
+   //                },
+   //                {
+   //                   name: 'Task 2',
+   //                },
+   //             ],
+   //          },
+   //          {
+   //             objectiveName: 'Objective 2',
+   //             tasks: [
+   //                {
+   //                   name: 'Task 1',
+   //                },
+   //                {
+   //                   name: 'Task 2',
+   //                },
+   //             ],
+   //          },
+   //       ],
+   //    },
+   //    {
+   //       name: 'Target 2',
+   //       learningObjectives: [
+   //          {
+   //             objectiveName: 'Objective 1',
+   //             tasks: [
+   //                {
+   //                   name: 'Task 1',
+   //                },
+   //                {
+   //                   name: 'Task 2',
+   //                },
+   //             ],
+   //          },
+   //          {
+   //             objectiveName: 'Objective 2',
+   //             tasks: [
+   //                {
+   //                   name: 'Task 1',
+   //                },
+   //                {
+   //                   name: 'Task 2',
+   //                },
+   //             ],
+   //          },
+   //       ],
+   //    },
+   // ];
 
    const goals = [
       {
@@ -219,6 +224,16 @@ export default function SingleStudentMasteryOveriew() {
          ],
       },
    ];
+   const { data } = useGetTargetProgressQuery({
+      variables: {},
+   });
+
+   if (!data) {
+      <div>Data Undefined</div>;
+   }
+
+   const targetData = data?.getAllTargetProgress;
+   // console.log(targetData?.target.targetName);
 
    const COMP_TASK_PERCENT = 100;
 
@@ -253,10 +268,10 @@ export default function SingleStudentMasteryOveriew() {
          <RowDiv>
             <ColumnDiv>
                <FieldTitleDiv>Current Targets</FieldTitleDiv>
-               {learningTargets.map((target) => (
+               {targetData?.map((targetProgress) => (
                   <TargetDropDown
-                     name={target.name}
-                     learningObjectives={target.learningObjectives as Objective[]}
+                     name={targetProgress.target.targetName}
+                     objectives={targetProgress.objectives as ObjectiveProgress[]}
                   />
                ))}
             </ColumnDiv>
@@ -289,12 +304,12 @@ export default function SingleStudentMasteryOveriew() {
          <RowDiv>
             <ColumnDiv>
                <FieldTitleDiv>Completed Targets</FieldTitleDiv>
-               {compLearningTargets.map((compTarget) => (
+               {/* {compLearningTargets.map((compTarget) => (
                   <TargetDropDown
                      name={compTarget.name}
                      learningObjectives={compTarget.compLearningObjectives as any[]}
                   />
-               ))}
+               ))} */}
             </ColumnDiv>
             <ColumnDiv>
                <FieldTitleDiv>Completed Goals</FieldTitleDiv>
