@@ -120,6 +120,13 @@ export type ImageBlockInput = {
   imageUrl: Scalars['String'];
 };
 
+export enum Mastery {
+  NotGraded = 'NOT_GRADED',
+  NotMastered = 'NOT_MASTERED',
+  NearlyMastered = 'NEARLY_MASTERED',
+  Mastered = 'MASTERED'
+}
+
 export type McQuestion = Question & {
   id: Scalars['String'];
   description: Scalars['String'];
@@ -150,6 +157,12 @@ export type MissionInput = {
   course: Scalars['String'];
   name: Scalars['String'];
   description: Scalars['String'];
+};
+
+export type MissionProgress = {
+  mission: Mission;
+  progress: Array<TaskStats>;
+  student: Scalars['String'];
 };
 
 /** Represents a students answer to a multiple choice question */
@@ -313,6 +326,12 @@ export type ObjectiveInput = {
   course: Scalars['String'];
 };
 
+export type ObjectiveProgress = {
+  objectiveId: Scalars['String'];
+  objectiveName: Scalars['String'];
+  tasks: Array<TaskObjectiveProgress>;
+};
+
 export type Page = {
   blocks: Array<TaskBlock>;
   skippable?: Maybe<Scalars['Boolean']>;
@@ -378,6 +397,8 @@ export type Query = {
   progressByCourse: Array<UserProgress>;
   userProgress: UserProgress;
   progressOverview: ProgressOverview;
+  getAllMissionProgress: Array<MissionProgress>;
+  getAllTargetProgress: Array<TargetProgress>;
   getAllGoals: Array<Goal>;
   /** Instructor only: get a user's goal given the user and the goal id */
   getGoalById: Goal;
@@ -493,6 +514,18 @@ export type QueryUserProgressArgs = {
 
 export type QueryProgressOverviewArgs = {
   course: Scalars['String'];
+};
+
+
+export type QueryGetAllMissionProgressArgs = {
+  courseId: Scalars['String'];
+  username?: Maybe<Scalars['String']>;
+};
+
+
+export type QueryGetAllTargetProgressArgs = {
+  courseId: Scalars['String'];
+  username?: Maybe<Scalars['String']>;
 };
 
 
@@ -616,6 +649,12 @@ export type TargetInput = {
   course: Scalars['String'];
 };
 
+export type TargetProgress = {
+  target: Target;
+  objectives: Array<ObjectiveProgress>;
+  student: Scalars['String'];
+};
+
 export type Task = {
   id: Scalars['String'];
   name: Scalars['String'];
@@ -658,6 +697,12 @@ export type TaskInput = {
   targetId?: Maybe<Scalars['String']>;
 };
 
+export type TaskObjectiveProgress = {
+  taskId: Scalars['String'];
+  taskName: Scalars['String'];
+  mastery: Mastery;
+};
+
 export type TaskProgress = {
   /** The id of the task the user submitted progress towards. */
   taskId: Scalars['String'];
@@ -674,6 +719,13 @@ export type TaskProgressInput = {
    * completed block
    */
   finishedRequirementIds: Array<Scalars['String']>;
+};
+
+export type TaskStats = {
+  taskId: Scalars['String'];
+  name: Scalars['String'];
+  /** Null indicates that this task does not yet have an associated submission */
+  submission?: Maybe<TaskSubmissionResult>;
 };
 
 /**
@@ -876,6 +928,43 @@ export type GetCoursesQuery = (
     { __typename: 'CourseInfo' }
     & CourseInfoFieldsFragment
   )> }
+);
+
+export type GetTargetProgressQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetTargetProgressQuery = (
+  { __typename: 'Query' }
+  & { getAllTargetProgress: Array<(
+    { __typename: 'TargetProgress' }
+    & Pick<TargetProgress, 'student'>
+    & { target: (
+      { __typename: 'Target' }
+      & TargetProgressFieldsFragment
+    ), objectives: Array<(
+      { __typename: 'ObjectiveProgress' }
+      & ObjectiveProgressFieldsFragment
+    )> }
+  )> }
+);
+
+export type TargetProgressFieldsFragment = (
+  { __typename: 'Target' }
+  & Pick<Target, 'targetName'>
+);
+
+export type ObjectiveProgressFieldsFragment = (
+  { __typename: 'ObjectiveProgress' }
+  & Pick<ObjectiveProgress, 'objectiveId' | 'objectiveName'>
+  & { tasks: Array<(
+    { __typename: 'TaskObjectiveProgress' }
+    & TaskObjectiveProgressFieldsFragment
+  )> }
+);
+
+export type TaskObjectiveProgressFieldsFragment = (
+  { __typename: 'TaskObjectiveProgress' }
+  & Pick<TaskObjectiveProgress, 'taskId' | 'taskName' | 'mastery'>
 );
 
 export type QuizBlockQueryVariables = Exact<{
@@ -1089,6 +1178,27 @@ export const MissionFieldsFragmentDoc = gql`
   }
 }
     ${MissionContentFieldsFragmentDoc}`;
+export const TargetProgressFieldsFragmentDoc = gql`
+    fragment TargetProgressFields on Target {
+  targetName
+}
+    `;
+export const TaskObjectiveProgressFieldsFragmentDoc = gql`
+    fragment TaskObjectiveProgressFields on TaskObjectiveProgress {
+  taskId
+  taskName
+  mastery
+}
+    `;
+export const ObjectiveProgressFieldsFragmentDoc = gql`
+    fragment ObjectiveProgressFields on ObjectiveProgress {
+  objectiveId
+  objectiveName
+  tasks {
+    ...TaskObjectiveProgressFields
+  }
+}
+    ${TaskObjectiveProgressFieldsFragmentDoc}`;
 export const McQuestionFieldsFragmentDoc = gql`
     fragment McQuestionFields on McQuestion {
   id
@@ -1311,6 +1421,47 @@ export function useGetCoursesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type GetCoursesQueryHookResult = ReturnType<typeof useGetCoursesQuery>;
 export type GetCoursesLazyQueryHookResult = ReturnType<typeof useGetCoursesLazyQuery>;
 export type GetCoursesQueryResult = Apollo.QueryResult<GetCoursesQuery, GetCoursesQueryVariables>;
+export const GetTargetProgressDocument = gql`
+    query GetTargetProgress {
+  getAllTargetProgress(courseId: "sample") {
+    student
+    target {
+      ...TargetProgressFields
+    }
+    objectives {
+      ...ObjectiveProgressFields
+    }
+  }
+}
+    ${TargetProgressFieldsFragmentDoc}
+${ObjectiveProgressFieldsFragmentDoc}`;
+
+/**
+ * __useGetTargetProgressQuery__
+ *
+ * To run a query within a React component, call `useGetTargetProgressQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTargetProgressQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTargetProgressQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetTargetProgressQuery(baseOptions?: Apollo.QueryHookOptions<GetTargetProgressQuery, GetTargetProgressQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTargetProgressQuery, GetTargetProgressQueryVariables>(GetTargetProgressDocument, options);
+      }
+export function useGetTargetProgressLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTargetProgressQuery, GetTargetProgressQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTargetProgressQuery, GetTargetProgressQueryVariables>(GetTargetProgressDocument, options);
+        }
+export type GetTargetProgressQueryHookResult = ReturnType<typeof useGetTargetProgressQuery>;
+export type GetTargetProgressLazyQueryHookResult = ReturnType<typeof useGetTargetProgressLazyQuery>;
+export type GetTargetProgressQueryResult = Apollo.QueryResult<GetTargetProgressQuery, GetTargetProgressQueryVariables>;
 export const QuizBlockDocument = gql`
     query QuizBlock($taskId: String!, $blockId: String!) {
   quizblock(taskId: $taskId, blockId: $blockId) {
