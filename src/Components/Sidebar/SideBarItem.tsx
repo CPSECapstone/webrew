@@ -10,7 +10,7 @@ import IconExpandLess from '@material-ui/icons/ExpandLess';
 import IconExpandMore from '@material-ui/icons/ExpandMore';
 import SideBarItemComponent from './SideBarItemComponent';
 
-const useStyles = makeStyles((theme) =>
+const useStyles = makeStyles(() =>
    createStyles({
       sideBarItem: {
          '&.active': {

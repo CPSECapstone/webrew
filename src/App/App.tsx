@@ -12,7 +12,6 @@ import './App.scss';
 // Entry point of the Flitped App
 function App() {
    const [, setUser] = useState(null);
-   const [username, setUsername] = useState('');
    const [fname, setFirstName] = useState('');
 
    function storeToken(): void {
@@ -27,7 +26,6 @@ function App() {
          })
          .then((authUser) => {
             setUser(authUser);
-            setUsername(authUser.username);
             setFirstName(authUser.attributes.given_name);
          })
          .catch(() => console.log('Not signed in'));
