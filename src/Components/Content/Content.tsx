@@ -8,7 +8,7 @@ import SingleStudentOverview from '../SingleStudentOverview/SingleStudentOvervie
 import SingleStudentMasteryOverview from '../SingleStudentMasteryOverview/SingleStudentMasteryOverview';
 import CourseHome from '../CourseHome/CourseHome';
 import TaskView from '../../Screens/TaskView/TaskView';
-import ClassMastery from '../../Screens/ClassMastery/ClassMastery';
+import { ClassMastery } from '../../Screens/ClassMastery';
 import './Content.css';
 
 export default function Content() {

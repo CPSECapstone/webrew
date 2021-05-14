@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { color } from '../../Components/constants.json';
 
-import StudentMasteryRow, { StudentMasteryHeader } from './StudentMasteryRow/StudentMasteryRow';
+import StudentMasteryRow, { StudentMasteryHeader } from './StudentMasteryRow';
 
 const Page = styled.div`
    margin: 33px 90px;
