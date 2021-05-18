@@ -103,72 +103,15 @@ function SingleStudentOverview() {
       firstName: test?.firstName,
       lastName: test?.lastName,
    };
-
-   const missions = [
-      {
-         id: '123',
-         name: 'Mission 1',
-         description: 'mission1 for you',
-         subMissions: [
-            {
-               id: '345',
-               name: 'Sub-Mission 1',
-               description: 'SubMission1 description',
-               tasks: [
-                  {
-                     id: 'string',
-                     name: 'Task 1',
-                     instructions: 'string',
-                     points: 3,
-                     parentMissionId: 'string',
-                     parentMissionIndex: 4,
-                     pages: [],
-                     requirements: [],
-                  },
-                  {
-                     id: 'string2',
-                     name: 'Task 2',
-                     instructions: 'string2',
-                     points: 3,
-                     parentMissionId: 'string2',
-                     parentMissionIndex: 4,
-                     pages: [],
-                     requirements: [],
-                  },
-               ],
-            },
-         ],
-      },
-   ];
-
-   const goals = [
-      {
-         name: 'Goal 1',
-      },
-      {
-         name: 'Goal 2',
-      },
-      {
-         name: 'Goal 3',
-      },
-   ];
-
-   const compGoals = [
-      {
-         name: 'Goal 0',
-      },
-      {
-         name: 'Goal 0.1',
-      },
-      {
-         name: 'Goal 0.2',
-      },
-   ];
+   console.log(inputUser.id);
    const { data } = useGetMissionProgressQuery({
-      variables: {},
+      variables: {
+         courseId: 'Integrated Science',
+         username: 'Google_113982570160032635204',
+      },
    });
-
    const missionData = data?.getAllMissionProgress;
+   console.log(missionData);
 
    return (
       <div style={{ marginLeft: '5px', marginRight: '5px', backgroundColor: '#DAEFFE' }}>
@@ -209,7 +152,7 @@ function SingleStudentOverview() {
                ))}
             </ColumnDiv>
             <ColumnDiv>
-               <FieldTitleDiv>Current Goals</FieldTitleDiv>
+               {/* <FieldTitleDiv>Current Goals</FieldTitleDiv>
                {goals.map((goal) => (
                   <List>
                      <PaddedDiv>
@@ -231,13 +174,13 @@ function SingleStudentOverview() {
                         </ListItem>
                      </PaddedDiv>
                   </List>
-               ))}
+               ))} */}
             </ColumnDiv>
          </RowDiv>
          <RowDiv>
             <ColumnDiv>
-               <FieldTitleDiv>Completed Missions</FieldTitleDiv>
-               {/* {missions.map((compMission) => (
+               {/* <FieldTitleDiv>Completed Missions</FieldTitleDiv>
+               {missions.map((compMission) => (
                   <MissionDropDown
                      name={compMission.name}
                      subMissions={compMission.subMissions as any[]}
@@ -245,7 +188,7 @@ function SingleStudentOverview() {
                ))} */}
             </ColumnDiv>
             <ColumnDiv>
-               <FieldTitleDiv>Completed Goals</FieldTitleDiv>
+               {/* <FieldTitleDiv>Completed Goals</FieldTitleDiv>
                {compGoals.map((compGoal) => (
                   <List>
                      <PaddedDiv>
@@ -267,7 +210,7 @@ function SingleStudentOverview() {
                         </ListItem>
                      </PaddedDiv>
                   </List>
-               ))}
+               ))} */}
             </ColumnDiv>
          </RowDiv>
       </div>

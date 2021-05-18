@@ -1,5 +1,5 @@
-query GetMissionProgress {
-   getAllMissionProgress(courseId: "Potato") {
+query GetMissionProgress($courseId: String!, $username: String!) {
+   getAllMissionProgress(courseId: $courseId, username: $username) {
       student
       mission {
          name
