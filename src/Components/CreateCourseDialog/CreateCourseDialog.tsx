@@ -19,6 +19,15 @@ const LargeTextField = styled(TextField)`
       font-size: 20px;
    }
 `;
+const SmallTextField = styled(TextField)`
+   input {
+      height: 30px;
+      font-size: 20px;
+   }
+`;
+function refreshPage() {
+   window.location.reload(false);
+}
 
 function CreateCourseDialog() {
    const [open, setOpen] = useState(false);
@@ -56,7 +65,7 @@ function CreateCourseDialog() {
                   initialValues={{
                      courseTitle: '',
                      courseDescription: '',
-                     instructor: 'currentUser',
+                     courseInstructor: '',
                   }}
                   onSubmit={(values, { setSubmitting }) => {
                      setTimeout(() => {
@@ -65,10 +74,10 @@ function CreateCourseDialog() {
                         addCourse({
                            variables: {
                               course: {
-                                 name: values.courseTitle,
+                                 course: values.courseTitle,
                                  description: values.courseDescription,
-                                 instructor: 'Mr. Butcher',
-                                 missions: [],
+                                 instructor: values.courseInstructor,
+                                 // missions: [],
                               },
                            },
                         }).catch((error) => console.log(error));
@@ -77,7 +86,7 @@ function CreateCourseDialog() {
                >
                   {({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
                      <form onSubmit={handleSubmit}>
-                        <LargeTextField
+                        <SmallTextField
                            id="courseTitle"
                            label="Course Title"
                            type="text"
@@ -100,12 +109,27 @@ function CreateCourseDialog() {
                            onChange={handleChange}
                            onBlur={handleBlur}
                         />
-
+                        <SmallTextField
+                           id="instructor"
+                           label="Instructor"
+                           type="text"
+                           fullWidth
+                           variant="outlined"
+                           margin="dense"
+                           value={values.courseInstructor}
+                           onChange={handleChange}
+                           onBlur={handleBlur}
+                        />
                         <DialogActions>
                            <Button onClick={handleClose} color="primary">
                               Cancel
                            </Button>
-                           <Button type="submit" disabled={isSubmitting} color="primary">
+                           <Button
+                              type="submit"
+                              onClick={refreshPage}
+                              disabled={isSubmitting}
+                              color="primary"
+                           >
                               Create
                            </Button>
                         </DialogActions>

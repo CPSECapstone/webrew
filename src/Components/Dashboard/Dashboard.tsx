@@ -1,5 +1,6 @@
 import { CourseInfoFieldsFragment, useGetCoursesQuery } from '../../__generated__/types';
 import CourseCard from './CourseCard';
+import CreateCourseDialog from '../CreateCourseDialog/CreateCourseDialog';
 import './DashBoard.css';
 
 function Dashboard() {
@@ -17,7 +18,8 @@ function Dashboard() {
    const { courseInfos } = data;
 
    return (
-      <div className="dashboard-container">
+      <div>
+         <CreateCourseDialog />
          {courseInfos.map((courseInfo: CourseInfoFieldsFragment) => (
             <CourseCard key={courseInfo.courseId} courseInfo={courseInfo} />
          ))}
