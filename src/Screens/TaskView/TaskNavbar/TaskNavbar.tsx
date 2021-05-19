@@ -14,29 +14,27 @@ function TaskNavbar({ rubric }: { rubric: RubricRequirement[] }) {
          <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="container-fluid">
                <Form className="mr-3" inline>
-                  <Button className="rounded-circle btn-light" type="submit" href="/">
+                  <Button
+                     className="rounded-circle btn-light"
+                     type="submit"
+                     href="/"
+                     data-testid="task-left"
+                  >
                      <FontAwesomeIcon icon={faCaretLeft} />
                   </Button>
                </Form>
                <Form inline className="ml-auto">
-                  <Button type="submit" className="rounded-circle btn-light">
+                  <Button
+                     type="submit"
+                     className="rounded-circle btn-light"
+                     data-testid="hand-task"
+                  >
                      <FontAwesomeIcon icon={faHandPaper} />
                   </Button>
                </Form>
                <div className="ml-1 mr-0">
                   <RubricMenu requirements={rubric} />
                </div>
-               {/* <NavDropdown drop="left" title="Task Rubric" id="rubric-dropdown" className="ml-2">
-                  <Form>
-                     {rubric.map((requirement: RubricRequirement) => (
-                        <Rubric requirement={requirement} />
-                     ))}
-                     <NavDropdown.Divider />
-                     <Button className="mx-auto" type="submit">
-                        Submit Task
-                     </Button>
-                  </Form>
-               </NavDropdown> */}
             </Nav>
          </Navbar.Collapse>
       </Navbar>
