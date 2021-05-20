@@ -7,9 +7,9 @@ import ViewTaskSubmission from '../ViewTaskSubmission';
 import SingleStudentOverview from '../SingleStudentOverview/SingleStudentOverview';
 import SingleStudentMasteryOverview from '../SingleStudentMasteryOverview/SingleStudentMasteryOverview';
 import CourseHome from '../CourseHome/CourseHome';
-
-import './Content.css';
 import TaskView from '../../Screens/TaskView/TaskView';
+import { ClassMastery } from '../../Screens/ClassMastery';
+import './Content.css';
 
 export default function Content() {
    return (
@@ -38,6 +38,9 @@ export default function Content() {
             </Route>
             <Route path="/viewTask">
                <TaskView taskId="90e0c730e56" />
+            </Route>
+            <Route path="/classMastery">
+               <ClassMastery />
             </Route>
             <Route path="/">
                <Dashboard />

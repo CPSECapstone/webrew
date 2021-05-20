@@ -88,7 +88,7 @@ export interface LearningTarget {
    learningObjectives: Objective[];
 }
 
-export default function SingleStudentMasteryOveriew() {
+export default function SingleStudentMasteryOverview() {
    const classes = useStyles();
    const history = useHistory();
    const test: any = history.location.state;
