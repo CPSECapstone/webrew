@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { Formik } from 'formik';
+import { Formik, Form } from 'formik';
 import { useMutation } from '@apollo/client';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import { SAVE_COURSE } from '../../queries/course-queries';
@@ -25,9 +25,11 @@ const SmallTextField = styled(TextField)`
       font-size: 20px;
    }
 `;
-function refreshPage() {
-   window.location.reload(false);
-}
+
+const Container = styled.div`
+   text-align: center;
+   fontfamily: 'Poppins', sans-serif;
+`;
 
 function CreateCourseDialog() {
    const [open, setOpen] = useState(false);
@@ -42,103 +44,111 @@ function CreateCourseDialog() {
    };
 
    return (
-      <div>
-         <Button
-            variant="contained"
-            color="primary"
-            onClick={handleClickOpen}
-            data-testid="create-btn"
-         >
-            Create New Course
-         </Button>
-         <Dialog
-            open={open}
-            fullWidth
-            onClose={handleClose}
-            aria-labelledby="form-dialog-title"
-            maxWidth="sm"
-            data-testid="create-dialog"
-         >
-            <DialogTitle id="form-dialog-title">New Course</DialogTitle>
-            <DialogContent>
-               <Formik
-                  initialValues={{
-                     courseTitle: '',
-                     courseDescription: '',
-                     courseInstructor: '',
-                  }}
-                  onSubmit={(values, { setSubmitting }) => {
-                     setTimeout(() => {
-                        setSubmitting(false);
-                        handleClose();
-                        addCourse({
-                           variables: {
-                              course: {
-                                 course: values.courseTitle,
-                                 description: values.courseDescription,
-                                 instructor: values.courseInstructor,
-                                 // missions: [],
-                              },
-                           },
-                        }).catch((error) => console.log(error));
-                     }, 400);
-                  }}
+      <Container>
+         <div>
+            <Button
+               style={{
+                  width: 200,
+                  marginTop: 20,
+                  backgroundColor: '#4274F3',
+                  color: 'white',
+               }}
+               onClick={handleClickOpen}
+               data-testid="create-btn"
+            >
+               Create New Course
+            </Button>
+            <Dialog
+               open={open}
+               fullWidth
+               onClose={handleClose}
+               aria-labelledby="form-dialog-title"
+               maxWidth="sm"
+               data-testid="create-dialog"
+            >
+               <DialogTitle
+                  style={{ backgroundColor: '#4274F3', color: 'white' }}
+                  id="form-dialog-title"
                >
-                  {({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
-                     <form onSubmit={handleSubmit}>
-                        <SmallTextField
-                           id="courseTitle"
-                           label="Course Title"
-                           type="text"
-                           fullWidth
-                           variant="outlined"
-                           margin="dense"
-                           value={values.courseTitle}
-                           onChange={handleChange}
-                           onBlur={handleBlur}
-                        />
+                  New Course
+               </DialogTitle>
+               <DialogContent>
+                  <Formik
+                     initialValues={{
+                        courseTitle: '',
+                        courseDescription: '',
+                        courseInstructor: 'Mr. Butcher', // stay hardcoded since dashboard uses this
+                     }}
+                     onSubmit={(values, { setSubmitting }) => {
+                        setTimeout(() => {
+                           setSubmitting(false);
+                           handleClose();
+                           addCourse({
+                              variables: {
+                                 course: {
+                                    course: values.courseTitle,
+                                    description: values.courseDescription,
+                                    instructor: values.courseInstructor,
+                                 },
+                              },
+                           }).catch((error) => console.log(error));
+                        }, 400);
+                     }}
+                  >
+                     {({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+                        <Form onSubmit={handleSubmit}>
+                           <LargeTextField
+                              required
+                              id="courseTitle"
+                              label="Course Title"
+                              type="text"
+                              fullWidth
+                              variant="outlined"
+                              margin="dense"
+                              value={values.courseTitle}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                           />
 
-                        <LargeTextField
-                           id="courseDescription"
-                           label="Description"
-                           type="text"
-                           fullWidth
-                           variant="outlined"
-                           margin="dense"
-                           value={values.courseDescription}
-                           onChange={handleChange}
-                           onBlur={handleBlur}
-                        />
-                        <SmallTextField
-                           id="instructor"
-                           label="Instructor"
-                           type="text"
-                           fullWidth
-                           variant="outlined"
-                           margin="dense"
-                           value={values.courseInstructor}
-                           onChange={handleChange}
-                           onBlur={handleBlur}
-                        />
-                        <DialogActions>
-                           <Button onClick={handleClose} color="primary">
-                              Cancel
-                           </Button>
-                           <Button
-                              type="submit"
-                              onClick={refreshPage}
-                              disabled={isSubmitting}
-                              color="primary"
-                           >
-                              Create
-                           </Button>
-                        </DialogActions>
-                     </form>
-                  )}
-               </Formik>
-            </DialogContent>
-         </Dialog>
-      </div>
+                           <LargeTextField
+                              required
+                              id="courseDescription"
+                              label="Description"
+                              type="text"
+                              fullWidth
+                              variant="outlined"
+                              margin="dense"
+                              value={values.courseDescription}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                           />
+                           <SmallTextField
+                              required
+                              id="courseInstructor"
+                              label="Instructor"
+                              type="text"
+                              fullWidth
+                              variant="outlined"
+                              margin="dense"
+                              value={values.courseInstructor}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                           />
+                           <DialogActions>
+                              <Button onClick={handleClose} color="primary">
+                                 Cancel
+                              </Button>
+                              <Button type="submit" disabled={isSubmitting} color="primary">
+                                 Create
+                              </Button>
+                           </DialogActions>
+                        </Form>
+                     )}
+                  </Formik>
+               </DialogContent>
+            </Dialog>
+         </div>
+      </Container>
    );
 }
 
