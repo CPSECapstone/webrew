@@ -15,7 +15,7 @@ import {
    TaskBlock,
    TaskSubmissionResult,
    TextBlock,
-   VideoBlock,
+   VideoBlock
 } from '../__generated__/types';
 
 const quizblockSubmissions: QuizBlockSubmission[] = [
@@ -201,6 +201,7 @@ const qandatwo: QuestionAndAnswer = {
 const mockQandAList: QuestionAndAnswer[] = [qandaone, qandatwo];
 
 export const mockTaskSubmissionResult: TaskSubmissionResult = {
+   taskId: 'testid',
    graded: true,
    pointsAwarded: 100,
    pointsPossible: 100,
