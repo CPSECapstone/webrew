@@ -201,7 +201,7 @@ const qandatwo: QuestionAndAnswer = {
 const mockQandAList: QuestionAndAnswer[] = [qandaone, qandatwo];
 
 export const mockTaskSubmissionResult: TaskSubmissionResult = {
-   taskId: 'wegnqbbpg43g',
+   taskId: 'testid',
    graded: true,
    pointsAwarded: 100,
    pointsPossible: 100,
@@ -214,3 +214,47 @@ export const quizblockSubmissionVar = makeVar<QuizBlockSubmission>(quizblockSubm
 export const quizblockSubmissionsVar = makeVar<QuizBlockSubmission[]>(quizblockSubmissions);
 
 export const mockTaskVar = makeVar<Task>(mockTask);
+
+export const MOCK_LOBJ_NAMES = ['Objective 1', 'Objective 2'];
+
+export const MOCK_LOBJ_MASTERY = [
+   {
+      name: 'Ryan Fay',
+      learningObjectives: [
+         {
+            objectiveName: 'Objective 1',
+            percentage: 1,
+         },
+         {
+            objectiveName: 'Objective 2',
+            percentage: 0.9,
+         },
+      ],
+   },
+   {
+      name: 'Robert Middleton',
+      learningObjectives: [
+         {
+            objectiveName: 'Objective 1',
+            percentage: 0.6,
+         },
+         {
+            objectiveName: 'Objective 2',
+            percentage: 0.7,
+         },
+      ],
+   },
+   {
+      name: 'Darian Nguyen',
+      learningObjectives: [
+         {
+            objectiveName: 'Objective 1',
+            percentage: 0.24,
+         },
+         {
+            objectiveName: 'Objective 2',
+            percentage: 0.14,
+         },
+      ],
+   },
+];

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { color } from '../../../Components/constants.json';
+import { color } from '../../Components/constants.json';
 
 type MasteryBarProps = { percentage: number };
 

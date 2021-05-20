@@ -972,6 +972,37 @@ export type VideoBlockInput = {
   videoUrl: Scalars['String'];
 };
 
+export type ClassMissionMasteryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ClassMissionMasteryQuery = (
+  { __typename: 'Query' }
+  & { classMissionMastery?: Maybe<(
+    { __typename: 'ClassMissionMastery' }
+    & { mission: (
+      { __typename: 'Mission' }
+      & CmMissionFieldsFragment
+    ), studentMissionMasteryList: Array<(
+      { __typename: 'StudentMissionMastery' }
+      & CmStudentFieldsFragment
+    )> }
+  )> }
+);
+
+export type CmMissionFieldsFragment = (
+  { __typename: 'Mission' }
+  & Pick<Mission, 'name' | 'description'>
+);
+
+export type CmStudentFieldsFragment = (
+  { __typename: 'StudentMissionMastery' }
+  & Pick<StudentMissionMastery, 'currentTaskId' | 'currentTaskName' | 'level' | 'progress'>
+  & { student: (
+    { __typename: 'Student' }
+    & Pick<Student, 'lastName' | 'firstName' | 'email' | 'team'>
+  ) }
+);
+
 export type GetMissionProgressQueryVariables = Exact<{
   courseId: Scalars['String'];
   username: Scalars['String'];
@@ -1315,6 +1346,26 @@ export type FrBlockFieldsFragment = (
   & Pick<FrBlock, 'title' | 'blockId' | 'blockIndex' | 'pageIndex' | 'points' | 'stem' | 'answer'>
 );
 
+export const CmMissionFieldsFragmentDoc = gql`
+    fragment CMMissionFields on Mission {
+  name
+  description
+}
+    `;
+export const CmStudentFieldsFragmentDoc = gql`
+    fragment CMStudentFields on StudentMissionMastery {
+  student {
+    lastName
+    firstName
+    email
+    team
+  }
+  currentTaskId
+  currentTaskName
+  level
+  progress
+}
+    `;
 export const ObjectiveFieldsFragmentDoc = gql`
     fragment ObjectiveFields on Objective {
   objectiveId
@@ -1546,6 +1597,46 @@ ${QuizBlockFieldsFragmentDoc}
 ${ImageBlockFieldsFragmentDoc}
 ${McBlockFieldsFragmentDoc}
 ${FrBlockFieldsFragmentDoc}`;
+export const ClassMissionMasteryDocument = gql`
+    query ClassMissionMastery {
+  classMissionMastery(missionId: "4df2cfa5710") {
+    mission {
+      ...CMMissionFields
+    }
+    studentMissionMasteryList {
+      ...CMStudentFields
+    }
+  }
+}
+    ${CmMissionFieldsFragmentDoc}
+${CmStudentFieldsFragmentDoc}`;
+
+/**
+ * __useClassMissionMasteryQuery__
+ *
+ * To run a query within a React component, call `useClassMissionMasteryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useClassMissionMasteryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useClassMissionMasteryQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useClassMissionMasteryQuery(baseOptions?: Apollo.QueryHookOptions<ClassMissionMasteryQuery, ClassMissionMasteryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ClassMissionMasteryQuery, ClassMissionMasteryQueryVariables>(ClassMissionMasteryDocument, options);
+      }
+export function useClassMissionMasteryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ClassMissionMasteryQuery, ClassMissionMasteryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ClassMissionMasteryQuery, ClassMissionMasteryQueryVariables>(ClassMissionMasteryDocument, options);
+        }
+export type ClassMissionMasteryQueryHookResult = ReturnType<typeof useClassMissionMasteryQuery>;
+export type ClassMissionMasteryLazyQueryHookResult = ReturnType<typeof useClassMissionMasteryLazyQuery>;
+export type ClassMissionMasteryQueryResult = Apollo.QueryResult<ClassMissionMasteryQuery, ClassMissionMasteryQueryVariables>;
 export const GetMissionProgressDocument = gql`
     query GetMissionProgress($courseId: String!, $username: String!) {
   getAllMissionProgress(courseId: $courseId, username: $username) {

@@ -11,7 +11,7 @@ import SingleTargetOverview from '../SingleTargetOverview/SingleTargetOverview';
 import SingleMissionOverview from '../SingleStudentOverview/SingleMissionOverview';
 
 import TaskView from '../../Screens/TaskView/TaskView';
-import ClassMastery from '../../Screens/ClassMastery/ClassMastery';
+import { ClassMastery } from '../../Screens/ClassMastery';
 import './Content.css';
 
 export default function Content() {
