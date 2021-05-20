@@ -1,3 +1,5 @@
+// TODO fix linting complaints
+
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-param-reassign */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
@@ -5,7 +7,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
 import {
    createStyles,
    FormControl,
@@ -28,6 +29,9 @@ const useStyles = makeStyles((theme: Theme) =>
          flexGrow: 1,
          backgroundColor: theme.palette.background.paper,
       },
+      menuItem: {
+         fontSize: '20px',
+      },
    })
 );
 
@@ -36,7 +40,6 @@ function CourseHome() {
    const [viewType, setViewType] = useState('List');
 
    const { data: missionMasteryData } = useClassMissionMasteryQuery();
-   console.log(missionMasteryData);
 
    const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
       setViewType(event.target.value as string);
@@ -88,16 +91,28 @@ function CourseHome() {
          <div className={classes.tableContainer}>
             <FormControl style={{ minWidth: '150px', marginLeft: '21px', marginTop: '6px' }}>
                <InputLabel>View As</InputLabel>
-               <Select value={viewType} onChange={handleChange}>
-                  <MenuItem value="Chart">Seating Chart</MenuItem>
-                  <MenuItem value="List">List</MenuItem>
+               <Select
+                  value={viewType}
+                  onChange={handleChange}
+                  classes={{ root: classes.menuItem }}
+               >
+                  <MenuItem value="List" classes={{ root: classes.menuItem }}>
+                     List
+                  </MenuItem>
+                  <MenuItem value="Chart" classes={{ root: classes.menuItem }}>
+                     Seating Chart
+                  </MenuItem>
                </Select>
             </FormControl>
 
-            <div className="base-table">
+            <div style={{ marginTop: '12px', borderTop: '1px', borderTopStyle: 'solid' }}>
                {missionMasteryData ? (
                   viewType === 'List' ? (
-                     <ListView classMissionMasterydata={missionMasteryData.classMissionMastery} />
+                     <div className="base-table">
+                        <ListView
+                           classMissionMasterydata={missionMasteryData.classMissionMastery}
+                        />
+                     </div>
                   ) : (
                      <SeatingChartView
                         classMissionMasterydata={missionMasteryData.classMissionMastery}

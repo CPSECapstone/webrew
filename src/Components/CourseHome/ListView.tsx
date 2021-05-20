@@ -1,3 +1,6 @@
+// TODO fix linting complaints
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable no-param-reassign */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
@@ -18,7 +21,6 @@ function ListView(classMissionMasterydata: any) {
       });
    };
 
-   console.log(classMissionMasterydata);
    const data: any[] = [];
    classMissionMasterydata.classMissionMasterydata.studentMissionMasteryList.map(
       (studentMissionMastery: any) =>
@@ -32,6 +34,7 @@ function ListView(classMissionMasterydata: any) {
          })
    );
 
+   // TODO remove when names are populated
    data.forEach((dataEntry) => {
       if (dataEntry.row.name.indexOf('null') !== -1) {
          dataEntry.row.name = 'Mary Lee';

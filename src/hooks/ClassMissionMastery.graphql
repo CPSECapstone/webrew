@@ -1,6 +1,5 @@
 query ClassMissionMastery {
   classMissionMastery(
-    courseId: "Integrated Science"
     missionId: "4df2cfa5710"
   ) {
     mission {

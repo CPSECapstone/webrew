@@ -36,7 +36,8 @@ export type ClassMissionMastery = {
 };
 
 export type ClassTargetMastery = {
-  studentTargetMasteryList: Array<StudentTargetMastery>;
+  target: Target;
+  studentObjectiveMasteryList: Array<StudentObjectiveMastery>;
 };
 
 export type CourseContent = {
@@ -402,6 +403,12 @@ export type ObjectiveInput = {
   taskIds: Array<Scalars['String']>;
 };
 
+export type ObjectiveMastery = {
+  objectiveId: Scalars['String'];
+  targetId: Scalars['String'];
+  mastery: Scalars['String'];
+};
+
 export type ObjectiveProgress = {
   objectiveId: Scalars['String'];
   objectiveName: Scalars['String'];
@@ -634,13 +641,12 @@ export type QueryStudentsArgs = {
 
 
 export type QueryClassMissionMasteryArgs = {
-  courseId: Scalars['String'];
   missionId: Scalars['String'];
 };
 
 
 export type QueryClassTargetMasteryArgs = {
-  courseId: Scalars['String'];
+  targetId: Scalars['String'];
 };
 
 export interface Question {
@@ -741,9 +747,16 @@ export type StudentMissionMasteryInput = {
   progress: Scalars['Float'];
 };
 
-export type StudentTargetMastery = {
+export type StudentObjectiveMastery = {
   student: Student;
-  targetMasteryList: Array<TargetMastery>;
+  objectiveMasteryList: Array<ObjectiveMastery>;
+};
+
+export type StudentObjectiveMasteryInput = {
+  studentId: Scalars['String'];
+  objectiveId: Scalars['String'];
+  targetId: Scalars['String'];
+  mastery: Scalars['String'];
 };
 
 export type SubGoal = {
@@ -797,12 +810,6 @@ export type TargetInput = {
   icon: Scalars['String'];
   standards: Scalars['String'];
   course: Scalars['String'];
-};
-
-export type TargetMastery = {
-  targetId: Scalars['String'];
-  targetName: Scalars['String'];
-  progress: Scalars['Float'];
 };
 
 export type TargetProgress = {
@@ -1480,7 +1487,7 @@ ${QuizBlockFieldsFragmentDoc}
 ${ImageBlockFieldsFragmentDoc}`;
 export const ClassMissionMasteryDocument = gql`
     query ClassMissionMastery {
-  classMissionMastery(courseId: "Integrated Science", missionId: "4df2cfa5710") {
+  classMissionMastery(missionId: "4df2cfa5710") {
     mission {
       ...CMMissionFields
     }
