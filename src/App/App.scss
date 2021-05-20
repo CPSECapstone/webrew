@@ -1,6 +1,6 @@
 .App {
    text-align: left;
-   height: 100vh;
+   height: 100%;
 }
 
 .App-logo {
@@ -39,14 +39,11 @@
 }
 
 .main {
-   height: 100vh;
-   background-color: #5884ab;
-}
-
-.sidebar-container {
-   height: 100vh;
-}
-
-.content-container {
-   height: 100vh;
+   height: calc(100vh - 56px);
+   .sidebar-container {
+      background-color: ghostwhite;
+   }
+   .content-container {
+      background-color: ghostwhite;
+   }
 }

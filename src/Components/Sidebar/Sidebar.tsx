@@ -1,70 +1,80 @@
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-   faChalkboardTeacher,
-   faUserFriends,
-   faComments,
-   faMedal,
-   faTasks,
-   faChartLine,
-} from '@fortawesome/free-solid-svg-icons';
+import List from '@material-ui/core/List';
+import IconDashboard from '@material-ui/icons/Dashboard';
+import IconShoppingCart from '@material-ui/icons/ShoppingCart';
+import IconPeople from '@material-ui/icons/People';
+import IconBarChart from '@material-ui/icons/BarChart';
+import IconLibraryBooks from '@material-ui/icons/LibraryBooks';
+import ForumIcon from '@material-ui/icons/Forum';
+import SettingsIcon from '@material-ui/icons/Settings';
+import SideBarItem from './SideBarItem';
 
-import { Link } from 'react-router-dom';
-
-import './Sidebar.css';
-
-type Props = { text: string; icon: IconDefinition; link: string };
-
-function IconMenu({ text, icon, link }: Props) {
-   return (
-      <Link to={link} className="menu-container">
-         <div className="menu-icon">
-            <FontAwesomeIcon icon={icon} size="2x" />
-         </div>
-         <p className="menu-text">{text}</p>
-      </Link>
-   );
-}
-
-const menus: Props[] = [
+const sideBarItems = [
    {
-      text: 'DashBoard',
-      icon: faChalkboardTeacher,
-      link: '/dashboard',
+      name: 'Classes',
+      Icon: IconDashboard,
+      items: [
+         // hardcoded for now
+         {
+            name: 'English',
+            items: [{ name: 'Student Progress', link: '/studentOverview/English' }],
+         },
+         {
+            name: 'Math',
+            link: '/courseHome/Math',
+         },
+         {
+            name: 'Biology',
+            link: '/courseHome/Biology',
+         },
+         {
+            name: 'Integrated Science',
+            link: '/courseHome/Integrated Science',
+         },
+      ],
    },
    {
-      text: 'Student',
-      icon: faUserFriends,
+      name: 'Dashboard',
+      link: '/',
+      Icon: IconLibraryBooks,
+   },
+   {
+      name: 'Task',
+      link: '/viewTask',
+      Icon: IconPeople,
+   },
+   {
+      name: 'Marketplace',
+      link: '/marketplace',
+      Icon: IconShoppingCart,
+   },
+   {
+      name: 'Students and Groups',
       link: '/studentOverview/Biology',
+      Icon: IconPeople,
    },
    {
-      text: 'Task',
-      icon: faTasks,
-      link: '/taskSubmissionOverview',
-   },
-   {
-      text: 'Mastery',
-      icon: faChartLine,
-      link: '/singleStudentMasteryOverview',
-   },
-   {
-      text: 'Goals',
-      icon: faMedal,
+      name: 'Goals',
       link: '/singleStudentOverview',
+      Icon: IconBarChart,
    },
    {
-      text: 'Message',
-      icon: faComments,
-      link: '',
+      name: 'Inbox',
+      link: '/inbox',
+      Icon: ForumIcon,
+   },
+   {
+      name: 'Settings',
+      link: '/settings',
+      Icon: SettingsIcon,
    },
 ];
-
-export default function Sidebar() {
+function Sidebar() {
    return (
-      <div className="sidebar">
-         {menus.map((menu) => (
-            <IconMenu text={menu.text} icon={menu.icon} link={menu.link} />
+      <List component="nav" disablePadding>
+         {sideBarItems.map((item, index) => (
+            <SideBarItem {...item} key={index} />
          ))}
-      </div>
+      </List>
    );
 }
+export default Sidebar;

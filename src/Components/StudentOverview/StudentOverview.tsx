@@ -12,15 +12,6 @@ import './StudentOverview.css';
 
 const useStyles = makeStyles((theme: Theme) =>
    createStyles({
-      root: {
-         display: 'flex',
-         flexWrap: 'wrap',
-         '& > *': {
-            margin: theme.spacing(0),
-            width: theme.spacing(160),
-            height: theme.spacing(60),
-         },
-      },
       tabContainer: {
          flexGrow: 1,
          backgroundColor: theme.palette.background.paper,
@@ -43,8 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
 function StudentOverview() {
    const classes = useStyles();
    const { className } = useParams<Record<string, string | undefined>>();
-   // const className = params.className;
-   console.log(className);
+
    const [value, setValue] = useState('1');
 
    const handleChange = (event: React.ChangeEvent<Record<string, unknown>>, newValue: string) => {
@@ -52,7 +42,7 @@ function StudentOverview() {
    };
 
    return (
-      <div style={{ marginLeft: '5px' }}>
+      <div>
          <div
             style={{
                color: 'white',
@@ -64,29 +54,27 @@ function StudentOverview() {
          >
             {className}
          </div>
-         <div className={classes.root}>
-            <Paper className={classes.tabContainer}>
-               <TabContext value={value}>
-                  <TabList onChange={handleChange} variant="fullWidth" centered>
-                     <Tab
-                        label="Learning Targets"
-                        value="1"
-                        className={value === '1' ? classes.selectedTab : classes.defaultTab}
-                     />
-                     <Tab
-                        label="Missions"
-                        value="2"
-                        className={value === '2' ? classes.selectedTab : classes.defaultTab}
-                     />
-                  </TabList>
-                  <TabPanel value="1">
-                     <LearningTargetTab />
-                  </TabPanel>
-                  <TabPanel value="2">
-                     <MissionsTab />
-                  </TabPanel>
-               </TabContext>
-            </Paper>
+         <div className={classes.tabContainer}>
+            <TabContext value={value}>
+               <TabList onChange={handleChange} variant="fullWidth" centered>
+                  <Tab
+                     label="Learning Targets"
+                     value="1"
+                     className={value === '1' ? classes.selectedTab : classes.defaultTab}
+                  />
+                  <Tab
+                     label="Missions"
+                     value="2"
+                     className={value === '2' ? classes.selectedTab : classes.defaultTab}
+                  />
+               </TabList>
+               <TabPanel value="1">
+                  <LearningTargetTab />
+               </TabPanel>
+               <TabPanel value="2">
+                  <MissionsTab />
+               </TabPanel>
+            </TabContext>
          </div>
       </div>
    );

@@ -1,14 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import YouTube from 'react-youtube';
+import getVideoId from 'get-video-id';
 import '../TaskBlock.css';
-
-const opts = {
-   height: '390',
-   width: '640',
-   playerVars: {
-      // https://developers.google.com/youtube/player_parameters
-      autoplay: 1,
-   },
-};
 
 function onReady(event: any) {
    // access to player in all event handlers via event.target
@@ -16,6 +10,7 @@ function onReady(event: any) {
 }
 
 function VideoBlock({ title, contents }: { title: string; contents: string }) {
+   const { id } = getVideoId(contents); // extract video id from yt url
    return (
       <div className="row">
          <div className="col-md-12 justifyCenter my-2 p-3">
@@ -23,7 +18,7 @@ function VideoBlock({ title, contents }: { title: string; contents: string }) {
                <b>{title}</b>
             </h2>
             <div className="container">
-               <YouTube videoId={contents} onReady={onReady} />
+               <YouTube videoId={id as never} onReady={onReady} />
             </div>
          </div>
       </div>
