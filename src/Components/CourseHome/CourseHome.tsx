@@ -92,6 +92,8 @@ function CourseHome() {
             <FormControl style={{ minWidth: '150px', marginLeft: '21px', marginTop: '6px' }}>
                <InputLabel>View As</InputLabel>
                <Select
+                  inputProps={{ 'data-testid': 'courseHomeViewSelector' }}
+                  // data-testid="courseHomeViewSelector"
                   value={viewType}
                   onChange={handleChange}
                   classes={{ root: classes.menuItem }}
@@ -105,7 +107,10 @@ function CourseHome() {
                </Select>
             </FormControl>
 
-            <div style={{ marginTop: '12px', borderTop: '1px', borderTopStyle: 'solid' }}>
+            <div
+               data-testid={viewType}
+               style={{ marginTop: '12px', borderTop: '1px', borderTopStyle: 'solid' }}
+            >
                {missionMasteryData ? (
                   viewType === 'List' ? (
                      <div className="base-table">
@@ -115,6 +120,7 @@ function CourseHome() {
                      </div>
                   ) : (
                      <SeatingChartView
+                        inputProps={{ 'data-testid': 'seatingChartView' }}
                         classMissionMasterydata={missionMasteryData.classMissionMastery}
                      />
                   )
