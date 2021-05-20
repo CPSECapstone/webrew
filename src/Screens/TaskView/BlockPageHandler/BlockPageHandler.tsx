@@ -2,8 +2,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable react/no-array-index-key */
 import {
+   FrBlockFieldsFragment,
    GetTaskByIdQuery,
    ImageBlockFieldsFragment,
+   McBlockFieldsFragment,
    QuizBlockFieldsFragment,
    TextBlockFieldsFragment,
    VideoBlockFieldsFragment,
@@ -24,6 +26,8 @@ function BlockPageHandler({
    const pageBlocks = taskInformation.task.pages[page].blocks;
 
    type TaskBlock =
+      | McBlockFieldsFragment
+      | FrBlockFieldsFragment
       | ImageBlockFieldsFragment
       | TextBlockFieldsFragment
       | QuizBlockFieldsFragment

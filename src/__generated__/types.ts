@@ -30,6 +30,16 @@ export enum CacheControlScope {
   Private = 'PRIVATE'
 }
 
+export type ClassMissionMastery = {
+  mission: Mission;
+  studentMissionMasteryList: Array<StudentMissionMastery>;
+};
+
+export type ClassTargetMastery = {
+  target: Target;
+  studentObjectiveMasteryList: Array<StudentObjectiveMastery>;
+};
+
 export type CourseContent = {
   courseInfo: CourseInfo;
   missions: Array<Mission>;
@@ -49,6 +59,26 @@ export type CourseInput = {
   description: Scalars['String'];
 };
 
+
+export type FrBlock = TaskBlock & {
+  title: Scalars['String'];
+  blockId: Scalars['String'];
+  blockIndex: Scalars['Int'];
+  pageIndex: Scalars['Int'];
+  points: Scalars['Int'];
+  stem: Scalars['String'];
+  answer?: Maybe<Scalars['String']>;
+};
+
+export type FrBlockInput = {
+  taskId: Scalars['String'];
+  title: Scalars['String'];
+  pageIndex: Scalars['Int'];
+  blockIndex: Scalars['Int'];
+  points: Scalars['Int'];
+  stem: Scalars['String'];
+  answer?: Maybe<Scalars['String']>;
+};
 
 export type FrQuestion = Question & {
   id: Scalars['String'];
@@ -126,6 +156,28 @@ export enum Mastery {
   NearlyMastered = 'NEARLY_MASTERED',
   Mastered = 'MASTERED'
 }
+
+export type McBlock = TaskBlock & {
+  title: Scalars['String'];
+  blockId: Scalars['String'];
+  blockIndex: Scalars['Int'];
+  pageIndex: Scalars['Int'];
+  points: Scalars['Int'];
+  stem: Scalars['String'];
+  options: Array<Scalars['String']>;
+  answers?: Maybe<Array<Scalars['Int']>>;
+};
+
+export type McBlockInput = {
+  taskId: Scalars['String'];
+  title: Scalars['String'];
+  pageIndex: Scalars['Int'];
+  blockIndex: Scalars['Int'];
+  points: Scalars['Int'];
+  stem: Scalars['String'];
+  options: Array<Scalars['String']>;
+  answers?: Maybe<Array<Scalars['Int']>>;
+};
 
 export type McQuestion = Question & {
   id: Scalars['String'];
@@ -207,10 +259,14 @@ export type Mutation = {
   addImageBlock: Scalars['String'];
   addVideoBlock: Scalars['String'];
   addQuizBlock: Scalars['String'];
+  addFrBlock: Scalars['String'];
+  addMcBlock: Scalars['String'];
   addTarget: Scalars['String'];
   addObjective: Scalars['String'];
   addProgress: Scalars['String'];
   editOrCreateGoal: Scalars['String'];
+  deleteGoal: Scalars['String'];
+  addStudent: Scalars['String'];
 };
 
 
@@ -289,6 +345,16 @@ export type MutationAddQuizBlockArgs = {
 };
 
 
+export type MutationAddFrBlockArgs = {
+  frBlock: FrBlockInput;
+};
+
+
+export type MutationAddMcBlockArgs = {
+  mcBlock: McBlockInput;
+};
+
+
 export type MutationAddTargetArgs = {
   target: TargetInput;
 };
@@ -308,6 +374,16 @@ export type MutationEditOrCreateGoalArgs = {
   goal: GoalInput;
 };
 
+
+export type MutationDeleteGoalArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationAddStudentArgs = {
+  student: StudentInput;
+};
+
 export type Objective = {
   objectiveId: Scalars['String'];
   objectiveName: Scalars['String'];
@@ -324,6 +400,13 @@ export type ObjectiveInput = {
   targetId: Scalars['String'];
   targetName: Scalars['String'];
   course: Scalars['String'];
+  taskIds: Array<Scalars['String']>;
+};
+
+export type ObjectiveMastery = {
+  objectiveId: Scalars['String'];
+  targetId: Scalars['String'];
+  mastery: Scalars['String'];
 };
 
 export type ObjectiveProgress = {
@@ -399,9 +482,14 @@ export type Query = {
   progressOverview: ProgressOverview;
   getAllMissionProgress: Array<MissionProgress>;
   getAllTargetProgress: Array<TargetProgress>;
+  getTaskObjectiveProgress: Array<TaskObjectiveProgress>;
   getAllGoals: Array<Goal>;
   /** Instructor only: get a user's goal given the user and the goal id */
   getGoalById: Goal;
+  student: Student;
+  students: Array<Student>;
+  classMissionMastery?: Maybe<ClassMissionMastery>;
+  classTargetMastery: ClassTargetMastery;
 };
 
 
@@ -529,9 +617,36 @@ export type QueryGetAllTargetProgressArgs = {
 };
 
 
+export type QueryGetTaskObjectiveProgressArgs = {
+  taskId: Scalars['String'];
+  username?: Maybe<Scalars['String']>;
+};
+
+
 export type QueryGetGoalByIdArgs = {
   id: Scalars['String'];
   user: Scalars['String'];
+};
+
+
+export type QueryStudentArgs = {
+  studentId: Scalars['String'];
+  course: Scalars['String'];
+};
+
+
+export type QueryStudentsArgs = {
+  course: Scalars['String'];
+};
+
+
+export type QueryClassMissionMasteryArgs = {
+  missionId: Scalars['String'];
+};
+
+
+export type QueryClassTargetMasteryArgs = {
+  targetId: Scalars['String'];
 };
 
 export interface Question {
@@ -594,6 +709,54 @@ export type RubricRequirement = {
 
 export type RubricRequirementInput = {
   description?: Maybe<Scalars['String']>;
+};
+
+export type Student = {
+  studentId: Scalars['String'];
+  email: Scalars['String'];
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  course: Scalars['String'];
+  section: Scalars['Int'];
+  team?: Maybe<Scalars['String']>;
+};
+
+export type StudentInput = {
+  studentId: Scalars['String'];
+  email: Scalars['String'];
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  course: Scalars['String'];
+  section: Scalars['Int'];
+  team?: Maybe<Scalars['String']>;
+};
+
+export type StudentMissionMastery = {
+  student: Student;
+  currentTaskId: Scalars['String'];
+  currentTaskName: Scalars['String'];
+  level: Scalars['Int'];
+  progress: Scalars['Float'];
+};
+
+export type StudentMissionMasteryInput = {
+  missionId: Scalars['String'];
+  studentId: Scalars['String'];
+  currentTaskId: Scalars['String'];
+  level: Scalars['Int'];
+  progress: Scalars['Float'];
+};
+
+export type StudentObjectiveMastery = {
+  student: Student;
+  objectiveMasteryList: Array<ObjectiveMastery>;
+};
+
+export type StudentObjectiveMasteryInput = {
+  studentId: Scalars['String'];
+  objectiveId: Scalars['String'];
+  targetId: Scalars['String'];
+  mastery: Scalars['String'];
 };
 
 export type SubGoal = {
@@ -698,8 +861,8 @@ export type TaskInput = {
 };
 
 export type TaskObjectiveProgress = {
-  taskId: Scalars['String'];
-  taskName: Scalars['String'];
+  task: Task;
+  objective: Objective;
   mastery: Mastery;
 };
 
@@ -748,6 +911,7 @@ export type TaskSubmissionResult = {
    */
   questionAndAnswers?: Maybe<Array<QuestionAndAnswer>>;
   teacherComment?: Maybe<Scalars['String']>;
+  taskId: Scalars['String'];
 };
 
 export type TextBlock = TaskBlock & {
@@ -992,7 +1156,11 @@ export type ObjectiveProgressFieldsFragment = (
 
 export type TaskObjectiveProgressFieldsFragment = (
   { __typename: 'TaskObjectiveProgress' }
-  & Pick<TaskObjectiveProgress, 'taskId' | 'taskName' | 'mastery'>
+  & Pick<TaskObjectiveProgress, 'mastery'>
+  & { task: (
+    { __typename: 'Task' }
+    & Pick<Task, 'name'>
+  ) }
 );
 
 export type QuizBlockQueryVariables = Exact<{
@@ -1090,8 +1258,14 @@ export type PageFieldsFragment = (
   { __typename: 'Page' }
   & Pick<Page, 'skippable'>
   & { blocks: Array<(
+    { __typename: 'FrBlock' }
+    & FrBlockFieldsFragment
+  ) | (
     { __typename: 'ImageBlock' }
     & ImageBlockFieldsFragment
+  ) | (
+    { __typename: 'McBlock' }
+    & McBlockFieldsFragment
   ) | (
     { __typename: 'QuizBlock' }
     & QuizBlockFieldsFragment
@@ -1129,6 +1303,16 @@ export type QuizBlockFieldsFragment = (
     { __typename: 'McQuestion' }
     & McQuestionFieldsFragment
   )> }
+);
+
+export type McBlockFieldsFragment = (
+  { __typename: 'McBlock' }
+  & Pick<McBlock, 'title' | 'blockId' | 'blockIndex' | 'pageIndex' | 'points' | 'stem' | 'options' | 'answers'>
+);
+
+export type FrBlockFieldsFragment = (
+  { __typename: 'FrBlock' }
+  & Pick<FrBlock, 'title' | 'blockId' | 'blockIndex' | 'pageIndex' | 'points' | 'stem' | 'answer'>
 );
 
 export const ObjectiveFieldsFragmentDoc = gql`
@@ -1213,8 +1397,9 @@ export const TargetProgressFieldsFragmentDoc = gql`
     `;
 export const TaskObjectiveProgressFieldsFragmentDoc = gql`
     fragment TaskObjectiveProgressFields on TaskObjectiveProgress {
-  taskId
-  taskName
+  task {
+    name
+  }
   mastery
 }
     `;
@@ -1306,6 +1491,29 @@ export const ImageBlockFieldsFragmentDoc = gql`
   imageUrl
 }
     `;
+export const McBlockFieldsFragmentDoc = gql`
+    fragment McBlockFields on McBlock {
+  title
+  blockId
+  blockIndex
+  pageIndex
+  points
+  stem
+  options
+  answers
+}
+    `;
+export const FrBlockFieldsFragmentDoc = gql`
+    fragment FrBlockFields on FrBlock {
+  title
+  blockId
+  blockIndex
+  pageIndex
+  points
+  stem
+  answer
+}
+    `;
 export const PageFieldsFragmentDoc = gql`
     fragment PageFields on Page {
   __typename
@@ -1323,13 +1531,21 @@ export const PageFieldsFragmentDoc = gql`
     ... on ImageBlock {
       ...ImageBlockFields
     }
+    ... on McBlock {
+      ...McBlockFields
+    }
+    ... on FrBlock {
+      ...FrBlockFields
+    }
   }
   skippable
 }
     ${TextBlockFieldsFragmentDoc}
 ${VideoBlockFieldsFragmentDoc}
 ${QuizBlockFieldsFragmentDoc}
-${ImageBlockFieldsFragmentDoc}`;
+${ImageBlockFieldsFragmentDoc}
+${McBlockFieldsFragmentDoc}
+${FrBlockFieldsFragmentDoc}`;
 export const GetMissionProgressDocument = gql`
     query GetMissionProgress($courseId: String!, $username: String!) {
   getAllMissionProgress(courseId: $courseId, username: $username) {

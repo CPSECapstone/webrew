@@ -191,7 +191,7 @@ function SingleStudentOverview() {
                <MasteryCard
                   name={mission.mission.name}
                   progress={mission.progress as TaskStats[]}
-                  status={calculateStatus(mission.progress)}
+                  status={calculateStatus(mission.progress as TaskStats[])}
                   user={inputUser}
                />
             ))}

@@ -362,14 +362,16 @@ import { GET_USERS } from '../../queries/user-queries';
 //    TaskStats,
 //    useGetMissionProgressQuery,
 // } from '../../__generated__/types';
-import TargetDropDown from '../LinearProgressWithLabel/TargetDropDown';
+// import TargetDropDown from '../LinearProgressWithLabel/TargetDropDown';
 import {
    Objective,
    ObjectiveFieldsFragmentDoc,
    ObjectiveProgress,
+   ObjectiveProgressFieldsFragment,
    TargetProgress,
    TaskFieldsFragmentDoc,
    TaskObjectiveProgress,
+   TaskObjectiveProgressFieldsFragment,
    useGetTargetProgressQuery,
 } from '../../__generated__/types';
 import CircularProgressWithLabel from '../LinearProgressWithLabel/CircularProgressWithLabel';
@@ -475,7 +477,7 @@ const useStyles = makeStyles((theme: Theme) =>
    })
 );
 
-function getTaskCount(tasks: TaskObjectiveProgress[]) {
+function getTaskCount(tasks: TaskObjectiveProgressFieldsFragment[]) {
    let count = 0;
    for (const task of tasks) {
       if (task.mastery !== 'NOT_GRADED') {
@@ -485,7 +487,7 @@ function getTaskCount(tasks: TaskObjectiveProgress[]) {
    return count;
 }
 
-function calculateStatus(objectives: ObjectiveProgress[]) {
+function calculateStatus(objectives: ObjectiveProgressFieldsFragment[]) {
    let count = 0;
    for (const objective of objectives) {
       count += getTaskCount(objective.tasks);
@@ -514,8 +516,6 @@ function SingleStudentMasteryOverview() {
    const classes = useStyles();
    const history = useHistory();
 
-   const COMP_TASK_PERCENT = 100;
-
    const test: any = history.location.state;
    const inputUser: User = {
       id: test?.id,
@@ -527,9 +527,11 @@ function SingleStudentMasteryOverview() {
    const { data } = useGetTargetProgressQuery({
       variables: {
          courseId: 'Integrated Science',
-         username: 'Google_114560337406279161954',
+         username: '74caa373-b13a-4a97-84d3-ba9e27236290',
       },
    });
+
+   console.log(data);
 
    if (!data) {
       <div>Data Undefined</div>;

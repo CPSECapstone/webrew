@@ -38,6 +38,12 @@ fragment PageFields on Page {
       ... on ImageBlock {
          ...ImageBlockFields
       }
+      ... on McBlock {
+         ...McBlockFields
+      }
+      ... on FrBlock {
+         ...FrBlockFields
+      }
    }
    skippable
 }
@@ -68,4 +74,45 @@ fragment QuizBlockFields on QuizBlock {
          ...FrQuestionFields
       }
    }
+}
+
+fragment McBlockFields on McBlock {
+   title
+   blockId
+   blockIndex
+   pageIndex
+   points
+   stem
+   options
+   answers
+}
+
+fragment FrBlockFields on FrBlock {
+   title
+   blockId
+   blockIndex
+   pageIndex
+   points
+   stem
+   answer
+}
+
+fragment McQuestionFields on McQuestion {
+   id
+   description
+   feedback
+   points
+   options {
+      id
+      description
+   }
+   answers
+}
+
+fragment FrQuestionFields on FrQuestion {
+   id
+   description
+   feedback
+   points
+   answer
 }
