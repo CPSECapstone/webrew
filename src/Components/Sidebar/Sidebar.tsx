@@ -70,11 +70,13 @@ const sideBarItems = [
 ];
 function Sidebar() {
    return (
-      <List component="nav" disablePadding>
-         {sideBarItems.map((item, index) => (
-            <SideBarItem {...item} key={index} />
-         ))}
-      </List>
+      <div data-testid="sb">
+         <List component="nav" disablePadding data-testid="item">
+            {sideBarItems.map((item, index) => (
+               <SideBarItem {...item} key={index} />
+            ))}
+         </List>
+      </div>
    );
 }
 export default Sidebar;
