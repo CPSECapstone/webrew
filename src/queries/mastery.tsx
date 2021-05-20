@@ -1,12 +1,21 @@
 import { gql } from '@apollo/client';
 
 export const GET_TARGETS = gql`
-   query GetTargetMastery {
-      users: getUsers {
-         id
-         firstName
-         lastName
+   query ClassTargetMastery {
+      classTargetMastery(targetId: "8ed63da3ff3") {
+         target {
+            targetName
+         }
+         studentObjectiveMasteryList {
+            student {
+               firstName
+               lastName
+            }
+            objectiveMasteryList {
+               objectiveId
+               mastery
+            }
+         }
       }
    }
 `;
-
