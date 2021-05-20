@@ -29,42 +29,42 @@ function BlockPageHandler({
       | QuizBlockFieldsFragment
       | VideoBlockFieldsFragment;
 
-   const blockList = pageBlocks.map((block: TaskBlock, index: number) => {
-      switch (block.__typename) {
-         case 'ImageBlock': {
-            const iBlock = block;
-            return <ImageBlock title="PLACEHOLDER" contents={iBlock.imageUrl} key={index} />;
-         }
-         case 'TextBlock': {
-            const tBlock = block;
-            return <TextBlock title={tBlock.title} contents={tBlock.contents} key={index} />;
-         }
-         case 'QuizBlock': {
-            const qBlock = block;
-            return (
-               <QuizBlock
-                  title={qBlock.title}
-                  questions={qBlock.questions}
-                  reqScore={qBlock.requiredScore}
-                  key={index}
-               />
-            );
-         }
-         case 'VideoBlock': {
-            const vBlock = block;
-            return <VideoBlock title={vBlock.title} contents={vBlock.videoUrl} key={index} />;
-         }
-         default:
-            return <></>;
-      }
-   });
+   // const blockList = pageBlocks.map((block: TaskBlock, index: number) => {
+   //    switch (block.__typename) {
+   //       case 'ImageBlock': {
+   //          const iBlock = block;
+   //          return <ImageBlock title="PLACEHOLDER" contents={iBlock.imageUrl} key={index} />;
+   //       }
+   //       case 'TextBlock': {
+   //          const tBlock = block;
+   //          return <TextBlock title={tBlock.title} contents={tBlock.contents} key={index} />;
+   //       }
+   //       case 'QuizBlock': {
+   //          const qBlock = block;
+   //          return (
+   //             <QuizBlock
+   //                title={qBlock.title}
+   //                questions={qBlock.questions}
+   //                reqScore={qBlock.requiredScore}
+   //                key={index}
+   //             />
+   //          );
+   //       }
+   //       case 'VideoBlock': {
+   //          const vBlock = block;
+   //          return <VideoBlock title={vBlock.title} contents={vBlock.videoUrl} key={index} />;
+   //       }
+   //       default:
+   //          return <></>;
+   //    }
+   // });
 
    return (
       <div className="container-fluid">
          <div className="row">
             <div className="col-10 mx-auto">
                <IntroBlock instructions={taskInformation.task.instructions} />
-               {blockList}
+               {/* {blockList} */}
             </div>
          </div>
       </div>

@@ -1,5 +1,11 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable no-param-reassign */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import React, { useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import {
    createStyles,
    FormControl,
@@ -10,15 +16,11 @@ import {
    Theme,
 } from '@material-ui/core';
 
-import {
-   Mission,
-   ProgressOverview,
-   useProgressOverviewQuery,
-   UserProgress,
-} from '../../__generated__/types';
-import TableComponent from '../TableComponent/TableComponent';
+import { useClassMissionMasteryQuery } from '../../__generated__/types';
 import '../TableComponent/TableComponent.css';
 import MissionIcon from '../../assets/images/missionmedical-logo.png';
+import ListView from './ListView';
+import SeatingChartView from './SeatingChartView';
 
 const useStyles = makeStyles((theme: Theme) =>
    createStyles({
@@ -30,98 +32,15 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function CourseHome() {
-   const { data: progressData } = useProgressOverviewQuery({
-      variables: {
-         course: 'Integrated Science',
-      },
-   });
-
-   // const { data: targetProgressData } = gett;
-
    const classes = useStyles();
-   const { className } = useParams<Record<string, string | undefined>>();
    const [viewType, setViewType] = useState('List');
+
+   const { data: missionMasteryData } = useClassMissionMasteryQuery();
+   console.log(missionMasteryData);
 
    const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
       setViewType(event.target.value as string);
    };
-
-   const history = useHistory();
-   const rowClicked = (userName: string) => {
-      history.push({
-         pathname: '/singleStudentOverview',
-         state: { id: '', firstName: userName, lastName: ' ' },
-      });
-   };
-
-   const data: any[] = [];
-   progressData?.progressOverview.userProgress.map((userProgress: UserProgress) =>
-      data.push({
-         row: {
-            name: userProgress.userName,
-            recent:
-               userProgress.progress.length !== 0
-                  ? userProgress.progress[userProgress.progress.length - 1].taskId
-                  : '',
-
-            masteryLevel: '19',
-            lastLogOn: 'Jan. 7, 2021',
-         },
-      })
-   );
-
-   const tableColumns = [
-      {
-         Header: 'Overview',
-         columns: [
-            {
-               Header: 'Name',
-               accessor: 'row.name',
-            },
-            {
-               Header: 'Current Task',
-               accessor: 'row.recent',
-            },
-            {
-               Header: 'Mastery Level',
-               accessor: 'row.masteryLevel',
-            },
-            {
-               Header: 'Last Log-On',
-               accessor: 'row.lastLogOn',
-            },
-         ],
-      },
-   ];
-
-   // const taskGroup: any = {
-   //    Header: 'Tasks',
-   //    columns: [],
-   // };
-
-   // let taskCounter = 1;
-   // if (progressData !== undefined) {
-   //    const currentMission: any = progressData?.progressOverview.missions[0];
-   //    // console.log(progressData?.progressOverview.missions);
-   //    // console.log(currentMission);
-   //    for (const missionContent of currentMission.missionContent) {
-   //       if (missionContent.__typename === 'Task') {
-   //          const taskName = `Task #${taskCounter}`;
-   //          data.map((row) => {
-   //             row.row[taskName] = '';
-   //          });
-   //          taskGroup.columns.push({
-   //             Header: taskName,
-   //             accessor: `row.${taskName}`,
-   //          });
-   //          taskCounter++;
-   //       }
-   //    }
-   //    tableColumns.push(taskGroup);
-   // }
-
-   console.log(data);
-   console.log(tableColumns);
 
    return (
       <div>
@@ -161,7 +80,7 @@ function CourseHome() {
                         'linear-gradient(90deg, rgb(49, 119, 238) 0%, rgb(17, 61, 138) 100%) white',
                   }}
                >
-                  {progressData ? progressData.progressOverview.missions[0].name : ''}
+                  {missionMasteryData ? missionMasteryData.classMissionMastery?.mission.name : ''}
                </div>
             </div>
          </div>
@@ -176,7 +95,17 @@ function CourseHome() {
             </FormControl>
 
             <div className="base-table">
-               <TableComponent columns={tableColumns} data={data} rowClickFunction={rowClicked} />
+               {missionMasteryData ? (
+                  viewType === 'List' ? (
+                     <ListView classMissionMasterydata={missionMasteryData.classMissionMastery} />
+                  ) : (
+                     <SeatingChartView
+                        classMissionMasterydata={missionMasteryData.classMissionMastery}
+                     />
+                  )
+               ) : (
+                  <div />
+               )}
             </div>
          </div>
       </div>

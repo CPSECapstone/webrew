@@ -1,0 +1,18 @@
+query GetTargetProgress {
+  getAllTargetProgress(courseId: "sample") {
+    student,
+    target {
+      targetName
+    }
+    objectives {
+      objectiveId
+      objectiveName
+      tasks {
+        task {
+           name
+        }
+        mastery
+      }
+    }
+  }
+}
