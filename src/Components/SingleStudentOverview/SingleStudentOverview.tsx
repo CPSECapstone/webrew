@@ -165,7 +165,7 @@ function SingleStudentOverview() {
    ];
 
    return (
-      <div style={{ marginLeft: '5px', marginRight: '5px', backgroundColor: '#DAEFFE' }}>
+      <div style={{ marginLeft: '5px', marginRight: '5px', backgroundColor: '#DAEFFE' }} data-testid="mission-container">
          <StudentDiv>
             <ColumnDiv>
                <StudentNameDiv>
@@ -185,6 +185,7 @@ function SingleStudentOverview() {
                         lastName: inputUser.lastName,
                      },
                   }}
+                  data-testid="view-mastery-btn"
                >
                   <Button variant="info" size="lg">
                      Click to View Mastery Progress
@@ -196,13 +197,13 @@ function SingleStudentOverview() {
             <ColumnDiv>
                <FieldTitleDiv>Current Missions</FieldTitleDiv>
                {missions.map((mission) => (
-                  <MissionDropDown name={mission.name} subMissions={mission.subMissions as any[]} />
+                  <MissionDropDown key={mission.name} name={mission.name} subMissions={mission.subMissions as any[]} />
                ))}
             </ColumnDiv>
             <ColumnDiv>
                <FieldTitleDiv>Current Goals</FieldTitleDiv>
                {goals.map((goal) => (
-                  <List>
+                  <List key={goal.name}>
                      <PaddedDiv>
                         <ListItem
                            button
@@ -230,6 +231,7 @@ function SingleStudentOverview() {
                <FieldTitleDiv>Completed Missions</FieldTitleDiv>
                {missions.map((compMission) => (
                   <MissionDropDown
+                     key={compMission.name}
                      name={compMission.name}
                      subMissions={compMission.subMissions as any[]}
                   />
@@ -238,7 +240,7 @@ function SingleStudentOverview() {
             <ColumnDiv>
                <FieldTitleDiv>Completed Goals</FieldTitleDiv>
                {compGoals.map((compGoal) => (
-                  <List>
+                  <List key={compGoal.name}>
                      <PaddedDiv>
                         <ListItem
                            button

@@ -223,7 +223,7 @@ export default function SingleStudentMasteryOverview() {
    const COMP_TASK_PERCENT = 100;
 
    return (
-      <div style={{ marginLeft: '5px', marginRight: '5px', backgroundColor: '#DAEFFE' }}>
+      <div style={{ marginLeft: '5px', marginRight: '5px', backgroundColor: '#DAEFFE' }} data-testid="mastery-container">
          <StudentDiv>
             <ColumnDiv>
                <StudentNameDiv>
@@ -255,6 +255,7 @@ export default function SingleStudentMasteryOverview() {
                <FieldTitleDiv>Current Targets</FieldTitleDiv>
                {learningTargets.map((target) => (
                   <TargetDropDown
+                     key={target.name}
                      name={target.name}
                      learningObjectives={target.learningObjectives as Objective[]}
                   />
@@ -263,7 +264,7 @@ export default function SingleStudentMasteryOverview() {
             <ColumnDiv>
                <FieldTitleDiv>Current Goals</FieldTitleDiv>
                {goals.map((goal) => (
-                  <List>
+                  <List key={goal.name}>
                      <PaddedDiv>
                         <ListItem
                            button
