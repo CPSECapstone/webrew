@@ -1,13 +1,13 @@
-query GetTargetProgress {
-  getAllTargetProgress(courseId: "sample") {
-   student
-   target {
-      ...TargetProgressFields
+query GetTargetProgress($courseId: String!, $username: String!) {
+   getAllTargetProgress(courseId: $courseId, username: $username) {
+      student
+      target {
+         ...TargetProgressFields
+      }
+      objectives {
+         ...ObjectiveProgressFields
+      }
    }
-   objectives {
-      ...ObjectiveProgressFields
-   }
-  }
 }
 fragment TargetProgressFields on Target {
    targetName
@@ -24,6 +24,3 @@ fragment TaskObjectiveProgressFields on TaskObjectiveProgress {
    taskName
    mastery
 }
-
-
-

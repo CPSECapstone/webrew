@@ -8,8 +8,8 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import { Link } from 'react-router-dom';
+import { Divider } from '@material-ui/core';
 import LinearProgressWithLabel from './LinearProgressWithLabel';
-import ObjectiveDropDown from './ObjectiveDropDown';
 import { MissionSubMission } from '../../interfaces/MissionSubMission';
 import { TaskStats } from '../../__generated__/types';
 
@@ -29,12 +29,8 @@ const useStyles = makeStyles((theme: Theme) =>
    })
 );
 
-const PaddedDiv = styled.div`
-   padding-left: 10px;
-`;
-
 const DoublePaddedDiv = styled.div`
-   padding-left: 30px;
+   padding-left: 40px;
    width: 100%;
    justify-content: left;
 `;
@@ -59,23 +55,14 @@ export default function MissionDropDown({ name, progress }: MissionDropDownProps
    const TARGET_PERCENT = 50;
 
    return (
-      <List component="nav" aria-labelledby="nested-list-subheader" className={classes.root}>
-         <PaddedDiv>
-            <ListItem
-               button
-               onClick={() => handleClick(open, setOpen)}
-               style={{
-                  borderTop: '1px',
-                  borderBottom: '1px',
-                  borderColor: '#C2D2FC',
-                  borderStyle: 'solid',
-               }}
-            >
-               {open ? <ExpandLess /> : <ExpandMore />}
-               <ListItemText primary={name} />
-               <LinearProgressWithLabel className={classes.progressBar} value={TARGET_PERCENT} />
-            </ListItem>
-         </PaddedDiv>
+      <List component="div" disablePadding>
+         <ListItem button onClick={() => handleClick(open, setOpen)}>
+            {open ? <ExpandLess /> : <ExpandMore />}
+            <ListItemText primary={name} />
+            <LinearProgressWithLabel className={classes.progressBar} value={TARGET_PERCENT} />
+         </ListItem>
+
+         <Divider orientation="horizontal" />
          <Collapse in={open} timeout="auto" unmountOnExit>
             {progress.map((task: TaskStats) => (
                <Link to="/viewTask">

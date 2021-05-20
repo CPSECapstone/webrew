@@ -54,7 +54,7 @@ export default function TargetDropDown({ name, tasks }: ObjectiveDropDownProps) 
    const OBJECTIVE_PERCENT = 50;
 
    return (
-      <List component="div" disablePadding>
+      <List component="div" disablePadding style={{ justifyContent: 'right', width: '100%' }}>
          <ListItem button onClick={() => handleClick(open, setOpen)} divider>
             {open ? <ExpandLess /> : <ExpandMore />}
             <ListItemText primary={name} />

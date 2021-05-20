@@ -1,6 +1,6 @@
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Divider, ListItemText, Typography } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -12,6 +12,7 @@ import {
    useGetTargetProgressQuery,
    TargetProgress,
    TaskObjectiveProgress,
+   TargetProgressFieldsFragment,
 } from '../../__generated__/types';
 import { User } from '../../interfaces/User';
 import ObjectiveDropDown from '../LinearProgressWithLabel/ObjectiveDropDown';
@@ -113,19 +114,42 @@ export interface LearningTarget {
    learningObjectives: Objective[];
 }
 
+function getTargetData(targetData1: TargetProgressFieldsFragment[], name: string) {
+   for (const target of targetData1) {
+      if (target.targetName === name) {
+         return target;
+      }
+   }
+}
+
 export default function SingleTargetOveriew() {
    const classes = useStyles();
    const history = useHistory();
+   const { name } = useParams<Record<string, string | undefined>>();
    const test: any = history.location.state;
    const inputUser: User = {
       id: test?.id,
       firstName: test?.firstName,
       lastName: test?.lastName,
    };
-   const { data } = useGetTargetProgressQuery({
-      variables: {},
+   const { data, loading, error } = useGetTargetProgressQuery({
+      variables: {
+         courseId: 'Integrated Science',
+         username: 'Google_113982570160032635204',
+      },
    });
+
+   if (loading) {
+      return <p>Loading...</p>;
+   }
+   if (error) {
+      return <p>`Error! ${error.message}`</p>;
+   }
+
+   const targetData1 = data?.getAllTargetProgress;
+   console.log(typeof targetData1);
    const targetData = data?.getAllTargetProgress[0];
+   // const targetData = getTargetData(targetData1 as TargetProgressFieldsFragment[], name as string);
 
    // A hardcoded name to account for reaching the page via the side menu
    if (!inputUser.firstName && !inputUser.lastName) {
@@ -182,25 +206,11 @@ export default function SingleTargetOveriew() {
          </HeaderDiv>
          <Divider orientation="horizontal" />
          <RowDiv className="row">
-            <TargetColumnDiv className="col-8">
+            <TargetColumnDiv className="col-12">
                {targetData?.objectives.map((objective) => (
-                  <ObjectiveDropDown
-                     name={objective.objectiveName}
-                     tasks={objective.tasks as TaskObjectiveProgress[]}
-                  />
+                  <ObjectiveDropDown name={objective.objectiveName} tasks={objective.tasks} />
                ))}
             </TargetColumnDiv>
-            <Divider orientation="vertical" flexItem />
-            <CircleColumnDiv className="col-3">
-               <List>
-                  <ListItem alignItems="center">
-                     <CircularProgressWithLabel value={100} name="First 1" />
-                  </ListItem>
-                  <ListItem alignItems="center">
-                     <CircularProgressWithLabel value={90} name="Second 2" />
-                  </ListItem>
-               </List>
-            </CircleColumnDiv>
          </RowDiv>
       </SingleTargetDiv>
    );

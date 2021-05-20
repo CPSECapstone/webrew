@@ -955,7 +955,10 @@ export type GetCoursesQuery = (
   )> }
 );
 
-export type GetTargetProgressQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetTargetProgressQueryVariables = Exact<{
+  courseId: Scalars['String'];
+  username: Scalars['String'];
+}>;
 
 
 export type GetTargetProgressQuery = (
@@ -1498,8 +1501,8 @@ export type GetCoursesQueryHookResult = ReturnType<typeof useGetCoursesQuery>;
 export type GetCoursesLazyQueryHookResult = ReturnType<typeof useGetCoursesLazyQuery>;
 export type GetCoursesQueryResult = Apollo.QueryResult<GetCoursesQuery, GetCoursesQueryVariables>;
 export const GetTargetProgressDocument = gql`
-    query GetTargetProgress {
-  getAllTargetProgress(courseId: "sample") {
+    query GetTargetProgress($courseId: String!, $username: String!) {
+  getAllTargetProgress(courseId: $courseId, username: $username) {
     student
     target {
       ...TargetProgressFields
@@ -1524,10 +1527,12 @@ ${ObjectiveProgressFieldsFragmentDoc}`;
  * @example
  * const { data, loading, error } = useGetTargetProgressQuery({
  *   variables: {
+ *      courseId: // value for 'courseId'
+ *      username: // value for 'username'
  *   },
  * });
  */
-export function useGetTargetProgressQuery(baseOptions?: Apollo.QueryHookOptions<GetTargetProgressQuery, GetTargetProgressQueryVariables>) {
+export function useGetTargetProgressQuery(baseOptions: Apollo.QueryHookOptions<GetTargetProgressQuery, GetTargetProgressQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetTargetProgressQuery, GetTargetProgressQueryVariables>(GetTargetProgressDocument, options);
       }
