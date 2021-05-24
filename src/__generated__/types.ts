@@ -1190,7 +1190,7 @@ export type TaskObjectiveProgressFieldsFragment = (
   & Pick<TaskObjectiveProgress, 'mastery'>
   & { task: (
     { __typename: 'Task' }
-    & Pick<Task, 'name'>
+    & Pick<Task, 'name' | 'id'>
   ) }
 );
 
@@ -1450,6 +1450,7 @@ export const TaskObjectiveProgressFieldsFragmentDoc = gql`
     fragment TaskObjectiveProgressFields on TaskObjectiveProgress {
   task {
     name
+    id
   }
   mastery
 }

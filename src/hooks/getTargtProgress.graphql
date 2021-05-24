@@ -22,6 +22,7 @@ fragment ObjectiveProgressFields on ObjectiveProgress {
 fragment TaskObjectiveProgressFields on TaskObjectiveProgress {
    task {
       name
+      id
    }
    mastery
 }
