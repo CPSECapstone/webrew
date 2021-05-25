@@ -83,15 +83,20 @@ function LTStudentViewTable() {
       columns: [],
    };
 
+   const learningTargetSet = new Set();
+
    if (progressData !== undefined) {
       for (const target of progressData?.progressOverview.targets) {
          data.map((row) => {
             row.row[target.targetName] = '';
          });
-         learningTargetGroup.columns.push({
-            Header: target.targetName,
-            accessor: `row.${target.targetName}`,
-         });
+         if (!learningTargetSet.has(target.targetName)) {
+            learningTargetSet.add(target.targetName);
+            learningTargetGroup.columns.push({
+               Header: target.targetName,
+               accessor: `row.${target.targetName}`,
+            });
+         }
       }
       tableColumns.push(learningTargetGroup);
    }

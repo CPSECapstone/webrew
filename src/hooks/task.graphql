@@ -4,6 +4,7 @@ query GetTaskById($taskId: String!) {
       requirements {
          id
          description
+         isComplete
       }
       name
       instructions

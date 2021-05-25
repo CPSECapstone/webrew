@@ -94,7 +94,7 @@ export default function TargetDropDown({ name, tasks }: ObjectiveDropDownProps) 
 
          <Collapse in={open} timeout="auto" unmountOnExit>
             {tasks.map((task: TaskObjectiveProgress) => (
-               <Link to="/viewTask">
+               <Link to={`/viewTask/${task.task.id}`}>
                   <List component="div" disablePadding>
                      <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <DoublePaddedDiv>
