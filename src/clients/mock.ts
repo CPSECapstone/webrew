@@ -201,6 +201,7 @@ const qandatwo: QuestionAndAnswer = {
 const mockQandAList: QuestionAndAnswer[] = [qandaone, qandatwo];
 
 export const mockTaskSubmissionResult: TaskSubmissionResult = {
+   taskId: 'wegnqbbpg43g',
    graded: true,
    pointsAwarded: 100,
    pointsPossible: 100,

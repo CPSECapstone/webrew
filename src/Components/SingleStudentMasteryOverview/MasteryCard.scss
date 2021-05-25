@@ -1,0 +1,35 @@
+.mission-card {
+   border: 1px solid gray;
+   margin: 12px;
+   box-sizing: border-box;
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+   border-radius: 4px;
+   overflow: hidden;
+   background: #fff;
+   width: 262px;
+   height: 120px;
+   display: inline-block;
+   vertical-align: top;
+   margin: 36px 0 0 36px;
+   // padding: 5px;
+}
+
+.mission-card {
+   .mission-title {
+      font-size: 1.2em;
+      color: black;
+      text-overflow: ellipsis;
+      display: inline-block;
+   }
+
+   .mission-card-header {
+      display: block;
+      height: 30px;
+      background-color: #2f80ed;
+   }
+
+   .mission-card-body {
+      padding: 12px;
+      text-align: center;
+   }
+}

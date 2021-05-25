@@ -1,0 +1,27 @@
+query GetTargetProgress($courseId: String!, $username: String!) {
+   getAllTargetProgress(courseId: $courseId, username: $username) {
+      student
+      target {
+         ...TargetProgressFields
+      }
+      objectives {
+         ...ObjectiveProgressFields
+      }
+   }
+}
+fragment TargetProgressFields on Target {
+   targetName
+}
+fragment ObjectiveProgressFields on ObjectiveProgress {
+   objectiveId
+   objectiveName
+   tasks {
+      ...TaskObjectiveProgressFields
+   }
+}
+fragment TaskObjectiveProgressFields on TaskObjectiveProgress {
+   task {
+      name
+   }
+   mastery
+}

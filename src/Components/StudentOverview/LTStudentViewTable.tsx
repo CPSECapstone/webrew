@@ -1,4 +1,3 @@
-import React from 'react';
 import { useHistory } from 'react-router-dom';
 import TableComponent from '../TableComponent/TableComponent';
 import { useProgressOverviewQuery, UserProgress } from '../../__generated__/types';
@@ -14,7 +13,7 @@ function LTStudentViewTable() {
 
    const rowClicked = (userName: string) => {
       history.push({
-         pathname: '/singleStudentOverview',
+         pathname: '/singleStudentMasteryOverview',
          state: { id: '', firstName: userName, lastName: ' ' },
       });
    };
