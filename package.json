@@ -2,7 +2,7 @@
   "name": "react-flipted",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://webrew.herokuapp.com/",
+  "homepage": "https://webrewdev.herokuapp.com/",
   "dependencies": {
     "@apollo/client": "^3.3.13",
     "@aws-amplify/auth": "^3.4.29",
