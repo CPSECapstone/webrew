@@ -23,6 +23,22 @@ export type Answer = {
   pointsAwarded?: Maybe<Scalars['Int']>;
   /** Either the id of the chosen answer id or the provided free response */
   answer?: Maybe<Scalars['String']>;
+  graded: Scalars['Boolean'];
+  teacherComment?: Maybe<Scalars['String']>;
+};
+
+export type AnswerGrade = {
+  student: Scalars['String'];
+  questionId: Scalars['String'];
+  pointsAwarded: Scalars['Int'];
+  teacherComment?: Maybe<Scalars['String']>;
+};
+
+export type AnswerGradeInput = {
+  student: Scalars['String'];
+  questionId: Scalars['String'];
+  pointsAwarded: Scalars['Int'];
+  teacherComment?: Maybe<Scalars['String']>;
 };
 
 export enum CacheControlScope {
@@ -267,6 +283,8 @@ export type Mutation = {
   editOrCreateGoal: Scalars['String'];
   deleteGoal: Scalars['String'];
   addStudent: Scalars['String'];
+  gradeTaskSubmission: TaskSubmissionGrade;
+  gradeAnswer: AnswerGrade;
 };
 
 
@@ -306,22 +324,22 @@ export type MutationAddMcQuestionArgs = {
 
 
 export type MutationSubmitTaskArgs = {
-  taskId?: Maybe<Scalars['String']>;
+  taskId: Scalars['String'];
 };
 
 
 export type MutationSubmitTaskProgressArgs = {
-  taskProgress?: Maybe<TaskProgressInput>;
+  taskProgress: TaskProgressInput;
 };
 
 
 export type MutationSaveMultipleChoiceProgressArgs = {
-  mcBlockInput?: Maybe<MultipleChoiceAnswerInput>;
+  mcBlockInput: MultipleChoiceAnswerInput;
 };
 
 
 export type MutationSaveFreeResponseProgressArgs = {
-  frBlockInput?: Maybe<FreeResponseAnswerInput>;
+  frBlockInput: FreeResponseAnswerInput;
 };
 
 
@@ -382,6 +400,16 @@ export type MutationDeleteGoalArgs = {
 
 export type MutationAddStudentArgs = {
   student: StudentInput;
+};
+
+
+export type MutationGradeTaskSubmissionArgs = {
+  grade: TaskSubmissionGradeInput;
+};
+
+
+export type MutationGradeAnswerArgs = {
+  grade: AnswerGradeInput;
 };
 
 export type Objective = {
@@ -549,17 +577,18 @@ export type QueryQuestionsArgs = {
 
 
 export type QueryRetrieveTaskSubmissionArgs = {
-  taskId?: Maybe<Scalars['String']>;
+  taskId: Scalars['String'];
+  username?: Maybe<Scalars['String']>;
 };
 
 
 export type QueryRetrieveTaskProgressArgs = {
-  taskId?: Maybe<Scalars['String']>;
+  taskId: Scalars['String'];
 };
 
 
 export type QueryRetrieveQuestionProgressArgs = {
-  taskId?: Maybe<Scalars['String']>;
+  taskId: Scalars['String'];
 };
 
 
@@ -889,6 +918,30 @@ export type TaskStats = {
   name: Scalars['String'];
   /** Null indicates that this task does not yet have an associated submission */
   submission?: Maybe<TaskSubmissionResult>;
+};
+
+export type TaskSubmissionGrade = {
+  taskId: Scalars['String'];
+  student: Scalars['String'];
+  teacherComment?: Maybe<Scalars['String']>;
+  /**
+   * This is only for the points that aren't directly associated to a question answer.
+   * If this exceeds the total point worth of the task minus the points accounted for by questions,
+   * it will give the student extra credit.
+   */
+  pointsAwarded: Scalars['Int'];
+};
+
+export type TaskSubmissionGradeInput = {
+  taskId: Scalars['String'];
+  student: Scalars['String'];
+  teacherComment?: Maybe<Scalars['String']>;
+  /**
+   * This is only for the points that aren't directly associated to a question answer.
+   * If this exceeds the total point worth of the task minus the points accounted for by questions,
+   * it will give the student extra credit.
+   */
+  pointsAwarded: Scalars['Int'];
 };
 
 /**
@@ -1235,7 +1288,8 @@ export type AnswerFieldsFragment = (
 );
 
 export type TaskSubmissionResultQueryVariables = Exact<{
-  taskId?: Maybe<Scalars['String']>;
+  taskId: Scalars['String'];
+  username?: Maybe<Scalars['String']>;
 }>;
 
 
@@ -1243,7 +1297,7 @@ export type TaskSubmissionResultQuery = (
   { __typename: 'Query' }
   & { retrieveTaskSubmission?: Maybe<(
     { __typename: 'TaskSubmissionResult' }
-    & Pick<TaskSubmissionResult, 'graded' | 'pointsAwarded' | 'pointsPossible' | 'teacherComment'>
+    & Pick<TaskSubmissionResult, 'graded' | 'pointsAwarded' | 'pointsPossible' | 'teacherComment' | 'taskId'>
     & { questionAndAnswers?: Maybe<Array<(
       { __typename: 'QuestionAndAnswer' }
       & QuestionAndAnswerFieldsFragment
@@ -1277,7 +1331,7 @@ export type GetTaskByIdQuery = (
     & Pick<Task, 'id' | 'name' | 'instructions' | 'points' | 'startAt' | 'endAt' | 'dueDate' | 'missionId' | 'missionIndex' | 'subMissionId' | 'objectiveId' | 'targetId'>
     & { requirements: Array<(
       { __typename: 'RubricRequirement' }
-      & Pick<RubricRequirement, 'id' | 'description'>
+      & Pick<RubricRequirement, 'id' | 'description' | 'isComplete'>
     )>, pages: Array<(
       { __typename: 'Page' }
       & PageFieldsFragment
@@ -1902,8 +1956,8 @@ export type QuizBlockQueryHookResult = ReturnType<typeof useQuizBlockQuery>;
 export type QuizBlockLazyQueryHookResult = ReturnType<typeof useQuizBlockLazyQuery>;
 export type QuizBlockQueryResult = Apollo.QueryResult<QuizBlockQuery, QuizBlockQueryVariables>;
 export const TaskSubmissionResultDocument = gql`
-    query TaskSubmissionResult($taskId: String) {
-  retrieveTaskSubmission(taskId: $taskId) {
+    query TaskSubmissionResult($taskId: String!, $username: String) {
+  retrieveTaskSubmission(taskId: $taskId, username: $username) {
     graded
     pointsAwarded
     pointsPossible
@@ -1911,6 +1965,7 @@ export const TaskSubmissionResultDocument = gql`
       ...QuestionAndAnswerFields
     }
     teacherComment
+    taskId
   }
 }
     ${QuestionAndAnswerFieldsFragmentDoc}`;
@@ -1928,10 +1983,11 @@ export const TaskSubmissionResultDocument = gql`
  * const { data, loading, error } = useTaskSubmissionResultQuery({
  *   variables: {
  *      taskId: // value for 'taskId'
+ *      username: // value for 'username'
  *   },
  * });
  */
-export function useTaskSubmissionResultQuery(baseOptions?: Apollo.QueryHookOptions<TaskSubmissionResultQuery, TaskSubmissionResultQueryVariables>) {
+export function useTaskSubmissionResultQuery(baseOptions: Apollo.QueryHookOptions<TaskSubmissionResultQuery, TaskSubmissionResultQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<TaskSubmissionResultQuery, TaskSubmissionResultQueryVariables>(TaskSubmissionResultDocument, options);
       }
@@ -1949,6 +2005,7 @@ export const GetTaskByIdDocument = gql`
     requirements {
       id
       description
+      isComplete
     }
     name
     instructions

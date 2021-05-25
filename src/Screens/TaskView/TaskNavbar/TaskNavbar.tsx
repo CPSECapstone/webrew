@@ -1,9 +1,14 @@
 import { faCaretLeft, faHandPaper } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Navbar, Nav, Form, Button, NavDropdown } from 'react-bootstrap';
+import { Dispatch, SetStateAction } from 'react';
+import { Navbar, Nav, Form, Button, NavDropdown, Dropdown } from 'react-bootstrap';
+import { RubricRequirement } from '../../../__generated__/types';
+import Rubric from '../Rubric/Rubric';
 import './TaskNavbar.css';
 
-function TaskNavbar() {
+function handleToggle() {}
+
+function TaskNavbar({ rubric }: { rubric: RubricRequirement[] }) {
    return (
       <Navbar collapseOnSelect expand="sm" bg="primary" variant="light">
          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -19,10 +24,16 @@ function TaskNavbar() {
                      <FontAwesomeIcon icon={faHandPaper} />
                   </Button>
                </Form>
-               <NavDropdown title="Task Rubric" id="rubric-dropdown" className="ml-2">
-                  <NavDropdown.Item href="">Task Rubric</NavDropdown.Item>
-                  <Form inline>
-                     <Button type="submit">Submit Task</Button>
+
+               <NavDropdown drop="left" title="Task Rubric" id="rubric-dropdown" className="ml-2">
+                  <Form>
+                     {rubric.map((requirement: RubricRequirement) => (
+                        <Rubric requirement={requirement} />
+                     ))}
+                     <NavDropdown.Divider />
+                     <Button className="mx-auto" type="submit">
+                        Submit Task
+                     </Button>
                   </Form>
                </NavDropdown>
             </Nav>

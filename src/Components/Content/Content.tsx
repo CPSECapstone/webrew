@@ -45,8 +45,11 @@ export default function Content() {
             <Route path="/singleMissionOverview/:name">
                <SingleMissionOverview />
             </Route>
-            <Route path="/viewTask">
+            {/* <Route path="/viewTask">
                <TaskView taskId="90e0c730e56" />
+            </Route> */}
+            <Route path="/viewTask/:taskId">
+               <TaskView />
             </Route>
             <Route path="/classMastery">
                <ClassMastery />

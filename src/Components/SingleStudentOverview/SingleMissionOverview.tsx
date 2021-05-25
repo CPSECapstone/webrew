@@ -180,7 +180,7 @@ function SingleMissionOverview() {
          <TaskRowDiv className="row">
             <LeftColumnDiv className="col-12" style={{ justifyContent: 'right' }}>
                {missionProgressData?.map((task: TaskStats) => (
-                  <Link to="/viewTask" data-testid="task-btn">
+                  <Link to={`/viewTask/${task.taskId}`} data-testid="task-btn">
                      <List
                         component="div"
                         disablePadding

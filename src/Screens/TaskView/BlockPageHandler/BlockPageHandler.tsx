@@ -23,6 +23,9 @@ function BlockPageHandler({
    taskInformation: GetTaskByIdQuery;
    page: number;
 }) {
+   if (taskInformation.task.pages[page] === undefined) {
+      return <>Quiz is Not Yet Defined</>;
+   }
    const pageBlocks = taskInformation.task.pages[page].blocks;
 
    type TaskBlock =
