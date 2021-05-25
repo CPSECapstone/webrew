@@ -6,14 +6,18 @@ import TaskSubmissionOverview from '../TaskSubmissionOverview';
 import ViewTaskSubmission from '../ViewTaskSubmission';
 import SingleStudentOverview from '../SingleStudentOverview/SingleStudentOverview';
 import SingleStudentMasteryOverview from '../SingleStudentMasteryOverview/SingleStudentMasteryOverview';
-
-import './Content.css';
+import CourseHome from '../CourseHome/CourseHome';
 import TaskView from '../../Screens/TaskView/TaskView';
+import { ClassMastery } from '../../Screens/ClassMastery';
+import './Content.css';
 
 export default function Content() {
    return (
       <div className="content">
          <Switch>
+            <Route path="/courseHome/:className">
+               <CourseHome />
+            </Route>
             <Route path="/addNewCourse">
                <CreateCourseDialog />
             </Route>
@@ -23,7 +27,7 @@ export default function Content() {
             <Route path="/viewTaskSubmission">
                <ViewTaskSubmission />
             </Route>
-            <Route path="/studentOverview/:className">
+            <Route path="/studentOverview">
                <StudentOverview />
             </Route>
             <Route path="/singleStudentOverview">
@@ -34,6 +38,9 @@ export default function Content() {
             </Route>
             <Route path="/viewTask">
                <TaskView taskId="90e0c730e56" />
+            </Route>
+            <Route path="/classMastery">
+               <ClassMastery />
             </Route>
             <Route path="/">
                <Dashboard />
