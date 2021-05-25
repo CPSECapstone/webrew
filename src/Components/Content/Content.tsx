@@ -8,6 +8,8 @@ import SingleStudentOverview from '../SingleStudentOverview/SingleStudentOvervie
 import SingleStudentMasteryOverview from '../SingleStudentMasteryOverview/SingleStudentMasteryOverview';
 import CourseHome from '../CourseHome/CourseHome';
 import TaskView from '../../Screens/TaskView/TaskView';
+import MissionsScreen from '../MissionOverview/MissionOverview';
+
 import { ClassMastery } from '../../Screens/ClassMastery';
 import './Content.css';
 
@@ -35,6 +37,9 @@ export default function Content() {
             </Route>
             <Route path="/singleStudentMasteryOverview">
                <SingleStudentMasteryOverview />
+            </Route>
+            <Route path="/missions">
+               <MissionsScreen />
             </Route>
             <Route path="/viewTask">
                <TaskView taskId="90e0c730e56" />

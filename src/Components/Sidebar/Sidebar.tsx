@@ -58,8 +58,8 @@ const sideBarItems = [
       Icon: IconBarChart,
    },
    {
-      name: 'Inbox',
-      link: '/inbox',
+      name: 'Missions',
+      link: '/missions',
       Icon: ForumIcon,
    },
    {
