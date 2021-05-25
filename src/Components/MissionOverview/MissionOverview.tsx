@@ -7,7 +7,7 @@ import { GET_MISSIONS, GET_ALL_MISSION_PROGRESS } from '../../queries/mission-qu
 import './MissionOverview.css';
 import ProgressBar from './ProgressBar';
 
-const MISSION_COMPONENT_PATH = '/mission';
+const MISSION_COMPONENT_PATH = '/courseHome/Integrated Science';
 
 // this component displays all of the Missions in a course
 export default function MissionsScreen() {
@@ -97,7 +97,6 @@ export function MissionsScreenDisplay(data, progressData, hist, focusedMission, 
                </div>
                <div className="start">
                   <button
-                     data-testid="redirectToMissionButton"
                      style={{ top: '0' }}
                      onClick={() => redirectToMission(hist, props.mission.id)}
                   >
