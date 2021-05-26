@@ -6,8 +6,6 @@ import { RubricRequirement } from '../../../__generated__/types';
 import Rubric from '../Rubric/Rubric';
 import './TaskNavbar.css';
 
-function handleToggle() {}
-
 function TaskNavbar({ rubric }: { rubric: RubricRequirement[] }) {
    return (
       <Navbar collapseOnSelect expand="sm" bg="primary" variant="light">

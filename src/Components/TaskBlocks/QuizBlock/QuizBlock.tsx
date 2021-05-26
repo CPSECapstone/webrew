@@ -35,14 +35,15 @@ function renderQuestions(questions: Array<QuestionFieldsFragment>) {
       // #render multiple choice question
       switch (question.__typename) {
          case 'FrQuestion': {
+            const answer = question.answer ? question.answer : 'Not answered.';
             return (
-               <div className="col-12" key={question.id}>
+               <div className="col-12 my-3" key={question.id}>
                   <p className="question-desc">
                      <span className="question-index">{index + 1}</span>
                      {question.description}
                   </p>
                   <InputGroup className="mb-3">
-                     <FormControl aria-label="Type your answer here." />
+                     <FormControl value={answer} disabled />
                   </InputGroup>
                </div>
             );
@@ -50,7 +51,7 @@ function renderQuestions(questions: Array<QuestionFieldsFragment>) {
          case 'McQuestion': {
             const mcQ = question;
             return (
-               <div className="col-12" key={mcQ.id}>
+               <div className="col-12 my-3" key={mcQ.id}>
                   <p className="question-desc">
                      <span className="question-index">{index + 1}</span>
                      {mcQ.description}
@@ -69,17 +70,17 @@ function QuizBlock({
    title,
    questions,
    reqScore,
+   cssKey,
 }: {
    title: string;
    questions: QuestionFieldsFragment[];
    reqScore: number;
+   cssKey: number;
 }) {
    return (
-      <div className="row">
-         <div className="col-md-12 py-3 my-2">
-            <h2 className="text-left">
-               <b>{title}</b>
-            </h2>
+      <div className={`${cssKey % 2 === 1 ? 'white ' : 'gray '}row`}>
+         <div className="col-md-6 text-center py-5 mx-auto">
+            <h3 className="text-left mb-3">{title}</h3>
             <p className="text-left">Required Score: {reqScore}</p>
             <div className="row">{renderQuestions(questions)}</div>
          </div>

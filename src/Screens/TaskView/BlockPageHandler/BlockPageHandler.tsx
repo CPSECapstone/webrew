@@ -40,11 +40,25 @@ function BlockPageHandler({
       switch (block.__typename) {
          case 'ImageBlock': {
             const iBlock = block;
-            return <ImageBlock title="PLACEHOLDER" contents={iBlock.imageUrl} key={index} />;
+            return (
+               <ImageBlock
+                  title={iBlock.title}
+                  contents={iBlock.imageUrl}
+                  key={index}
+                  cssKey={index}
+               />
+            );
          }
          case 'TextBlock': {
             const tBlock = block;
-            return <TextBlock title={tBlock.title} contents={tBlock.contents} key={index} />;
+            return (
+               <TextBlock
+                  title={tBlock.title}
+                  contents={tBlock.contents}
+                  key={index}
+                  cssKey={index}
+               />
+            );
          }
          case 'QuizBlock': {
             const qBlock = block;
@@ -54,12 +68,20 @@ function BlockPageHandler({
                   questions={qBlock.questions}
                   reqScore={qBlock.requiredScore}
                   key={index}
+                  cssKey={index}
                />
             );
          }
          case 'VideoBlock': {
             const vBlock = block;
-            return <VideoBlock title={vBlock.title} contents={vBlock.videoUrl} key={index} />;
+            return (
+               <VideoBlock
+                  title={vBlock.title}
+                  contents={vBlock.videoUrl}
+                  key={index}
+                  cssKey={index}
+               />
+            );
          }
          default:
             return <></>;
@@ -69,8 +91,8 @@ function BlockPageHandler({
    return (
       <div className="container-fluid">
          <div className="row">
-            <div className="col-10 mx-auto">
-               <IntroBlock instructions={taskInformation.task.instructions} />
+            <div className="col-12">
+               <IntroBlock instructions={taskInformation.task.instructions} cssKey={0} />
                {blockList}
             </div>
          </div>
