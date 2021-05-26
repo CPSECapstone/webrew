@@ -1,5 +1,12 @@
 overwrite: true
-schema: 'https://18wi8h43il.execute-api.us-east-1.amazonaws.com/dev-flipted/graphql'
+schema:
+   [
+      {
+         'https://18wi8h43il.execute-api.us-east-1.amazonaws.com/dev-flipted/graphql':
+            { headers: { Authorization: ${AUTH_TOKEN} } },
+      },
+   ]
+
 documents:
    - src/hooks/*.graphql
 generates:
