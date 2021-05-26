@@ -42,6 +42,7 @@ h3 {
 
 .question-container .option-correct {
    background-color: #4274f3;
+   color: #fff;
 }
 
 input[type='radio'] {
