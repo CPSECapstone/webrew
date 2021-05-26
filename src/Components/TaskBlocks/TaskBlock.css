@@ -29,3 +29,28 @@
 h3 {
    color: #4274f3;
 }
+
+.question-container {
+   border-radius: 7px;
+   background-color: #fff;
+}
+
+.option {
+   background-color: #f2f2f2;
+   border-radius: 25px;
+}
+
+.question-container .option-correct {
+   background-color: #4274f3;
+}
+
+input[type='radio'] {
+   visibility: hidden;
+}
+label {
+   cursor: pointer;
+   font-size: smaller;
+}
+input:checked + label {
+   color: #4274f3;
+}
