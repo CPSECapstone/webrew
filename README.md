@@ -13,4 +13,3 @@
 ### References
 
 [GraphQL Tooling and Code-gen](https://www.apollographql.com/developers/collection/graphql-tooling-and-code-gen)
-

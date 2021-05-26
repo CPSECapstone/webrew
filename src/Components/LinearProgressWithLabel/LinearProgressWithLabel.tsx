@@ -5,13 +5,15 @@ import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 const BorderLinearProgress = withStyles((theme: Theme) =>
    createStyles({
       root: {
-         height: 10,
+         height: 20,
          borderRadius: 5,
       },
-      colorPrimary: {},
+      colorPrimary: {
+         backgroundColor: '#E0E0E0',
+      },
       bar: {
          borderRadius: 5,
-         backgroundColor: '#082580',
+         backgroundColor: '#2F80ED',
       },
    })
 )(LinearProgress);
@@ -19,12 +21,12 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {
    const { value } = props;
    return (
-      <Box display="flex" alignItems="center">
+      <Box display="flex" alignItems="center" width="80%">
          <Box width="100%" mr={1} ml={1}>
             <BorderLinearProgress variant="determinate" {...props} />
          </Box>
-         <Box minWidth={35}>
-            <Typography variant="body2" color="textSecondary">{`${Math.round(value)}%`}</Typography>
+         <Box minWidth={20}>
+            <Typography variant="body2" color="textPrimary">{`${Math.round(value)}%`}</Typography>
          </Box>
       </Box>
    );

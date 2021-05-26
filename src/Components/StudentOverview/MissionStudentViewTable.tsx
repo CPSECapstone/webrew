@@ -15,6 +15,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Progress } from '../../interfaces/Progress';
 import { Users } from '../../interfaces/Users';
+import { User } from '../../interfaces/User';
 
 const StyledTableCell = withStyles((theme: Theme) =>
    createStyles({
@@ -164,7 +165,7 @@ function MissionStudentViewTable() {
                </TableRow>
             </TableHead>
             <TableBody>
-               {users.users.map((user) => (
+               {users.users.map((user: User) => (
                   <StyledTableRow
                      hover
                      style={{ cursor: 'pointer' }}

@@ -6,41 +6,42 @@ schema:
             { headers: { Authorization: ${AUTH_TOKEN} } },
       },
    ]
+
 documents:
-  - src/hooks/*.graphql
+   - src/hooks/*.graphql
 generates:
-  src/__generated__/types.ts:
-    plugins:
-      - "typescript"
-      - "typescript-operations"
-      - "typescript-react-apollo"
-    config:
-      declarationKind:
-        union: type
-        type: type
-        input: type
-        scalar: type
-        arguments: type
-        interface: interface
-        scalars:
-          Date: Date
-      constEnums: false
-      enumsAsTypes: false
-      numericEnums: false
-      futureProofEnums: false
-      enumsAsConst: false
-      onlyOperationTypes: false
-      immutableTypes: false
-      maybeValue: T | null | undefined
-      noExport: false
-      enumPrefix: true
-      fieldWrapperValue: T
-      wrapFieldDefinitions: false
-      typesPrefix: ""
-      skipTypename: true
-      nonOptionalTypename: true
-      useTypeImports: false
-      withHooks: true
-  ./graphql.schema.json:
-    plugins:
-      - "introspection"
+   src/__generated__/types.ts:
+      plugins:
+         - 'typescript'
+         - 'typescript-operations'
+         - 'typescript-react-apollo'
+      config:
+         declarationKind:
+            union: type
+            type: type
+            input: type
+            scalar: type
+            arguments: type
+            interface: interface
+            scalars:
+               Date: Date
+         constEnums: false
+         enumsAsTypes: false
+         numericEnums: false
+         futureProofEnums: false
+         enumsAsConst: false
+         onlyOperationTypes: false
+         immutableTypes: false
+         maybeValue: T | null | undefined
+         noExport: false
+         enumPrefix: true
+         fieldWrapperValue: T
+         wrapFieldDefinitions: false
+         typesPrefix: ''
+         skipTypename: true
+         nonOptionalTypename: true
+         useTypeImports: false
+         withHooks: true
+   ./graphql.schema.json:
+      plugins:
+         - 'introspection'

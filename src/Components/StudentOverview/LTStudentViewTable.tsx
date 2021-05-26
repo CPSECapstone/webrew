@@ -1,4 +1,3 @@
-import React from 'react';
 import { useHistory } from 'react-router-dom';
 import TableComponent from '../TableComponent/TableComponent';
 import { useProgressOverviewQuery, UserProgress } from '../../__generated__/types';
@@ -14,7 +13,7 @@ function LTStudentViewTable() {
 
    const rowClicked = (userName: string) => {
       history.push({
-         pathname: '/singleStudentOverview',
+         pathname: '/singleStudentMasteryOverview',
          state: { id: '', firstName: userName, lastName: ' ' },
       });
    };
@@ -84,15 +83,20 @@ function LTStudentViewTable() {
       columns: [],
    };
 
+   const learningTargetSet = new Set();
+
    if (progressData !== undefined) {
       for (const target of progressData?.progressOverview.targets) {
          data.map((row) => {
             row.row[target.targetName] = '';
          });
-         learningTargetGroup.columns.push({
-            Header: target.targetName,
-            accessor: `row.${target.targetName}`,
-         });
+         if (!learningTargetSet.has(target.targetName)) {
+            learningTargetSet.add(target.targetName);
+            learningTargetGroup.columns.push({
+               Header: target.targetName,
+               accessor: `row.${target.targetName}`,
+            });
+         }
       }
       tableColumns.push(learningTargetGroup);
    }
