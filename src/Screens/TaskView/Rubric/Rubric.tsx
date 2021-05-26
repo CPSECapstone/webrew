@@ -1,6 +1,7 @@
-import { Checkbox, MenuItem } from '@material-ui/core';
+import { Checkbox, MenuItem, Typography } from '@material-ui/core';
 import { useState } from 'react';
-import { Navbar, Nav, Form, Button, Dropdown } from 'react-bootstrap';
+
+import { Form } from 'react-bootstrap';
 import { RubricRequirement } from '../../../__generated__/types';
 
 function Rubric({ requirement }: { requirement: RubricRequirement }) {
@@ -9,8 +10,9 @@ function Rubric({ requirement }: { requirement: RubricRequirement }) {
    const handleChange = () => {
       setComplete(!complete);
    };
+
    return (
-      <MenuItem>
+      <MenuItem style={{ width: '100%' }}>
          <Form.Group>
             <Checkbox
                checked={complete}
@@ -18,8 +20,7 @@ function Rubric({ requirement }: { requirement: RubricRequirement }) {
                inputProps={{ 'aria-label': 'primary checkbox' }}
                color="default"
             />
-            {/* <Form.Check required checked={requirement.isComplete} /> */}
-            <Form.Label>{requirement.description}</Form.Label>
+            <Typography>{requirement.description}</Typography>
          </Form.Group>
       </MenuItem>
    );

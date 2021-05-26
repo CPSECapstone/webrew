@@ -8,6 +8,7 @@
 -  [Environment Directions](docs/environment_directions.md)
 -  [Code Contribution Guidlines](docs/linter_info.md)
 -  [Use Chrome Debugger In VS Code](docs/use_chrome_debugger_in_vscode.md)
+-  [Generate GraphQL Types](docs/codegen.md)
 
 ### References
 

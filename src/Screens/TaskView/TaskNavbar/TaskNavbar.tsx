@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { Navbar, Nav, Form, Button, NavDropdown, Dropdown } from 'react-bootstrap';
 import { RubricRequirement } from '../../../__generated__/types';
 import Rubric from '../Rubric/Rubric';
+import RubricMenu from '../Rubric/RubricMenu';
 import './TaskNavbar.css';
 
 function TaskNavbar({ rubric }: { rubric: RubricRequirement[] }) {
@@ -12,7 +13,7 @@ function TaskNavbar({ rubric }: { rubric: RubricRequirement[] }) {
          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
          <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="container-fluid">
-               <Form inline>
+               <Form className="mr-3" inline>
                   <Button className="rounded-circle btn-light" type="submit" href="/">
                      <FontAwesomeIcon icon={faCaretLeft} />
                   </Button>
@@ -22,8 +23,10 @@ function TaskNavbar({ rubric }: { rubric: RubricRequirement[] }) {
                      <FontAwesomeIcon icon={faHandPaper} />
                   </Button>
                </Form>
-
-               <NavDropdown drop="left" title="Task Rubric" id="rubric-dropdown" className="ml-2">
+               <div className="ml-1 mr-0">
+                  <RubricMenu requirements={rubric} />
+               </div>
+               {/* <NavDropdown drop="left" title="Task Rubric" id="rubric-dropdown" className="ml-2">
                   <Form>
                      {rubric.map((requirement: RubricRequirement) => (
                         <Rubric requirement={requirement} />
@@ -33,7 +36,7 @@ function TaskNavbar({ rubric }: { rubric: RubricRequirement[] }) {
                         Submit Task
                      </Button>
                   </Form>
-               </NavDropdown>
+               </NavDropdown> */}
             </Nav>
          </Navbar.Collapse>
       </Navbar>
