@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable array-callback-return */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable no-param-reassign */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -5,12 +8,18 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-nested-ternary */
 import { useHistory } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
 import TableComponent from '../TableComponent/TableComponent';
 import {
+   CmStudentFieldsFragment,
+   Target,
+   useClassMissionMasteryQuery,
    useClassTargetMasteryQuery,
+   useGetCoursesQuery,
    useProgressOverviewQuery,
    UserProgress,
 } from '../../__generated__/types';
+import { LIST_TARGETS_BY_COURSE } from '../../hooks/ListTargetsByCourse';
 
 function LTStudentViewTable() {
    const { data: progressData } = useProgressOverviewQuery({
@@ -19,8 +28,14 @@ function LTStudentViewTable() {
       },
    });
 
+   const { data: missionMasteryData } = useClassMissionMasteryQuery();
+
    const { data: targetMasteryData } = useClassTargetMasteryQuery();
+
+   const { data: courseTargets } = useQuery(LIST_TARGETS_BY_COURSE);
+   console.log(missionMasteryData);
    console.log(targetMasteryData);
+   console.log(courseTargets);
 
    const history = useHistory();
 
@@ -32,30 +47,29 @@ function LTStudentViewTable() {
    };
 
    const data: any[] = [];
-   progressData?.progressOverview.userProgress.map((userProgress: UserProgress) =>
-      data.push({
-         row: {
-            section: 1,
-            name: userProgress.userName,
-            recent: {
-               status:
-                  userProgress.progress.length !== 0
-                     ? userProgress.progress[userProgress.progress.length - 1].taskId
-                     : '',
-               style: {
-                  backgroundColor:
-                     userProgress.progress.length !== 0
-                        ? userProgress.progress[userProgress.progress.length - 1].status
-                           ? '#00b300'
-                           : '#ff6666'
-                        : '#a6a6a6',
-               },
+   missionMasteryData?.classMissionMastery?.studentMissionMasteryList.map(
+      (studentMissionMastery: CmStudentFieldsFragment) =>
+         data.push({
+            row: {
+               section: '1',
+               name: `${studentMissionMastery.student.lastName} ${studentMissionMastery.student.firstName}`,
+               team: studentMissionMastery.student.team,
+               recent: studentMissionMastery.currentTaskName,
+               average: '',
+               progress: `${(studentMissionMastery.progress * 100).toFixed(1)}%`,
             },
-            average: '',
-            progress: '%',
-         },
-      })
+         })
    );
+
+   // TODO remove when names are populated
+   data.forEach((dataEntry) => {
+      if (dataEntry.row.name.indexOf('null') !== -1) {
+         dataEntry.row.name = 'Mary Lee';
+      }
+      if (dataEntry.row.name.length > 25) {
+         dataEntry.row.name = dataEntry.row.name.substring(0, 25);
+      }
+   });
 
    console.log(data);
 
@@ -72,12 +86,16 @@ function LTStudentViewTable() {
                accessor: 'row.name',
             },
             {
+               Header: 'Team',
+               accessor: 'row.team',
+            },
+            {
                Header: 'Recent',
                accessor: 'row.recent',
-               Cell: ({ value }: { value: any }) => {
-                  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-                  return <>{value.status} </>;
-               },
+               // Cell: ({ value }: { value: any }) => {
+
+               //    return <>{value.status} </>;
+               // },
             },
             {
                Header: 'Average',
@@ -98,9 +116,9 @@ function LTStudentViewTable() {
 
    const learningTargetSet = new Set();
 
-   if (progressData !== undefined) {
-      for (const target of progressData?.progressOverview.targets) {
-         data.map((row) => {
+   if (courseTargets !== undefined) {
+      courseTargets.targets.map((target: Target) => {
+         data.map((row: any) => {
             row.row[target.targetName] = '';
          });
          if (!learningTargetSet.has(target.targetName)) {
@@ -110,7 +128,7 @@ function LTStudentViewTable() {
                accessor: `row.${target.targetName}`,
             });
          }
-      }
+      });
       tableColumns.push(learningTargetGroup);
    }
 

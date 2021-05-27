@@ -1773,7 +1773,7 @@ export type ClassMissionMasteryLazyQueryHookResult = ReturnType<typeof useClassM
 export type ClassMissionMasteryQueryResult = Apollo.QueryResult<ClassMissionMasteryQuery, ClassMissionMasteryQueryVariables>;
 export const ClassTargetMasteryDocument = gql`
     query ClassTargetMastery {
-  classTargetMastery(targetId: "3f88ed2c542") {
+  classTargetMastery(targetId: "27871da36e7") {
     target {
       ...CTMTargetField
     }
