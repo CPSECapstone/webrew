@@ -14,12 +14,10 @@ function handlePageChange(
 ) {
    setPage(page + changeDir);
    if ((page === 0 && changeDir < 0) || (page === maxPage && changeDir > 0)) {
-      console.log(maxPage);
       setPage(page);
    } else {
-      console.log('right');
       setPage(page + changeDir);
-      setProgress((page + 1) / (maxPage + 1));
+      setProgress(((page + changeDir) / (maxPage + 1)) * 100);
    }
 }
 
@@ -37,14 +35,14 @@ function TaskProgress({
    const [progress, setProgress] = useState((page + 1) / (maxPage + 1));
 
    return (
-      <div className="container-fluid">
+      <div id="box" className="container-fluid">
          <div className="row py-3">
-            <div className="col-12 justifyCenter">
-               <h1>{taskInformation.task.name}</h1>
+            <div className="col-12 text-center">
+               <h4 className="primary-color">{taskInformation.task.name.toUpperCase()}</h4>
             </div>
          </div>
          <div className="row py-3 m-auto">
-            <div className="col-md-3 justifyCenter">
+            <div className="col-md-3 text-center">
                <Button
                   className="rounded-circle btn-primary"
                   type="submit"
@@ -53,10 +51,10 @@ function TaskProgress({
                   <FontAwesomeIcon icon={faCaretLeft} />
                </Button>
             </div>
-            <div className="col-md-6 justifyCenter">
+            <div className="col-md-6 text-center">
                <ProgressBar now={progress} />
             </div>
-            <div className="col-md-3 justifyCenter">
+            <div className="col-md-3 text-center">
                <Button
                   className="rounded-circle btn-primary"
                   type="submit"

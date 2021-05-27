@@ -5,8 +5,8 @@
    flex-direction: column;
    align-items: center;
    padding: 22px;
+   background-color: #fff;
 }
-
 
 .sidebar .menu-container {
    width: 80px;
@@ -15,7 +15,6 @@
    text-align: center;
    align-self: center;
    padding-top: 22px !important;
-
 }
 
 .menu-container .menu-icon {

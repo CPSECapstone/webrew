@@ -8,13 +8,13 @@ import {
 import TaskNavbar from './TaskNavbar/TaskNavbar';
 import TaskProgress from './TaskProgress/TaskProgress';
 import BlockPageHandler from './BlockPageHandler/BlockPageHandler';
+import './TaskView.css';
 
 // function TaskView({ taskId }: { taskId: string }) {
 function TaskView() {
    const [page, setPage] = useState(0);
    const { taskId } = useParams<Record<string, string | undefined>>();
-   let { username } = useParams<Record<string, string | undefined>>();
-   username = 'bob';
+   const { username } = useParams<Record<string, string | undefined>>();
    const { data: taskSubmissionQuery } = useTaskSubmissionResultQuery({
       variables: {
          taskId: '4f681550ba9',
@@ -43,7 +43,7 @@ function TaskView() {
    const requirements = taskByIdQuery.task.requirements as RubricRequirement[];
 
    return (
-      <div>
+      <div className="back">
          <TaskNavbar rubric={requirements} />
          <div>
             <TaskProgress

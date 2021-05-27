@@ -1424,7 +1424,7 @@ export type VideoBlockFieldsFragment = (
 
 export type ImageBlockFieldsFragment = (
   { __typename: 'ImageBlock' }
-  & Pick<ImageBlock, 'imageUrl'>
+  & Pick<ImageBlock, 'imageUrl' | 'title'>
 );
 
 export type QuizBlockFieldsFragment = (
@@ -1676,6 +1676,7 @@ ${FrQuestionFieldsFragmentDoc}`;
 export const ImageBlockFieldsFragmentDoc = gql`
     fragment ImageBlockFields on ImageBlock {
   imageUrl
+  title
 }
     `;
 export const McBlockFieldsFragmentDoc = gql`
