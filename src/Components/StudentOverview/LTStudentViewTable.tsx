@@ -1,6 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable no-param-reassign */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-nested-ternary */
 import { useHistory } from 'react-router-dom';
 import TableComponent from '../TableComponent/TableComponent';
-import { useProgressOverviewQuery, UserProgress } from '../../__generated__/types';
+import {
+   useClassTargetMasteryQuery,
+   useProgressOverviewQuery,
+   UserProgress,
+} from '../../__generated__/types';
 
 function LTStudentViewTable() {
    const { data: progressData } = useProgressOverviewQuery({
@@ -8,6 +18,9 @@ function LTStudentViewTable() {
          course: 'Integrated Science',
       },
    });
+
+   const { data: targetMasteryData } = useClassTargetMasteryQuery();
+   console.log(targetMasteryData);
 
    const history = useHistory();
 
