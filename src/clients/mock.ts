@@ -15,7 +15,7 @@ import {
    TaskBlock,
    TaskSubmissionResult,
    TextBlock,
-   VideoBlock
+   VideoBlock,
 } from '../__generated__/types';
 
 const quizblockSubmissions: QuizBlockSubmission[] = [
@@ -177,12 +177,14 @@ export const mockTask: Task = {
 };
 
 const ansone: Answer = {
+   graded: false,
    questionId: 'fakemcqid',
    pointsAwarded: 50,
    answer: 'All of us!',
 };
 
 const anstwo: Answer = {
+   graded: false,
    questionId: 'fakefrqid',
    pointsAwarded: 50,
    answer: 'Dr. Janzen',

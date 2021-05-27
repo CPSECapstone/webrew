@@ -2,8 +2,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable react/no-array-index-key */
 import {
+   FrBlockFieldsFragment,
    GetTaskByIdQuery,
    ImageBlockFieldsFragment,
+   McBlockFieldsFragment,
    QuizBlockFieldsFragment,
    TextBlockFieldsFragment,
    VideoBlockFieldsFragment,
@@ -21,50 +23,55 @@ function BlockPageHandler({
    taskInformation: GetTaskByIdQuery;
    page: number;
 }) {
+   if (taskInformation.task.pages[page] === undefined) {
+      return <>Quiz is Not Yet Defined</>;
+   }
    const pageBlocks = taskInformation.task.pages[page].blocks;
 
    type TaskBlock =
+      | McBlockFieldsFragment
+      | FrBlockFieldsFragment
       | ImageBlockFieldsFragment
       | TextBlockFieldsFragment
       | QuizBlockFieldsFragment
       | VideoBlockFieldsFragment;
 
-   // const blockList = pageBlocks.map((block: TaskBlock, index: number) => {
-   //    switch (block.__typename) {
-   //       case 'ImageBlock': {
-   //          const iBlock = block;
-   //          return <ImageBlock title="PLACEHOLDER" contents={iBlock.imageUrl} key={index} />;
-   //       }
-   //       case 'TextBlock': {
-   //          const tBlock = block;
-   //          return <TextBlock title={tBlock.title} contents={tBlock.contents} key={index} />;
-   //       }
-   //       case 'QuizBlock': {
-   //          const qBlock = block;
-   //          return (
-   //             <QuizBlock
-   //                title={qBlock.title}
-   //                questions={qBlock.questions}
-   //                reqScore={qBlock.requiredScore}
-   //                key={index}
-   //             />
-   //          );
-   //       }
-   //       case 'VideoBlock': {
-   //          const vBlock = block;
-   //          return <VideoBlock title={vBlock.title} contents={vBlock.videoUrl} key={index} />;
-   //       }
-   //       default:
-   //          return <></>;
-   //    }
-   // });
+   const blockList = pageBlocks.map((block: TaskBlock, index: number) => {
+      switch (block.__typename) {
+         case 'ImageBlock': {
+            const iBlock = block;
+            return <ImageBlock title="PLACEHOLDER" contents={iBlock.imageUrl} key={index} />;
+         }
+         case 'TextBlock': {
+            const tBlock = block;
+            return <TextBlock title={tBlock.title} contents={tBlock.contents} key={index} />;
+         }
+         case 'QuizBlock': {
+            const qBlock = block;
+            return (
+               <QuizBlock
+                  title={qBlock.title}
+                  questions={qBlock.questions}
+                  reqScore={qBlock.requiredScore}
+                  key={index}
+               />
+            );
+         }
+         case 'VideoBlock': {
+            const vBlock = block;
+            return <VideoBlock title={vBlock.title} contents={vBlock.videoUrl} key={index} />;
+         }
+         default:
+            return <></>;
+      }
+   });
 
    return (
       <div className="container-fluid">
          <div className="row">
             <div className="col-10 mx-auto">
                <IntroBlock instructions={taskInformation.task.instructions} />
-               {/* {blockList} */}
+               {blockList}
             </div>
          </div>
       </div>
