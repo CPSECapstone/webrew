@@ -120,7 +120,7 @@ function LTStudentViewTable() {
       if (!learningTargetSet.has(target.targetName)) {
          learningTargetSet.add(target.targetName);
          learningTargetGroup.columns.push({
-            Header: target.targetName,
+            Header: target.description,
             accessor: `row.${target.targetName}`,
          });
       }
@@ -129,7 +129,12 @@ function LTStudentViewTable() {
 
    return (
       <div>
-         <ToggleButtonGroup value={selectedLT} exclusive onChange={handleLTSelection}>
+         <ToggleButtonGroup
+            value={selectedLT}
+            style={{ paddingLeft: '20px' }}
+            exclusive
+            onChange={handleLTSelection}
+         >
             {courseTargets.targets.map((target: Target) => {
                return (
                   <ToggleButton value={target.targetId} style={{ width: '100px' }}>

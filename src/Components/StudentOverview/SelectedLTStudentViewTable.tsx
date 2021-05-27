@@ -10,6 +10,8 @@
 import TableComponent from '../TableComponent/TableComponent';
 import {
    CmStudentFieldsFragment,
+   CtmObjectiveMasteryFieldsFragment,
+   CtmStudentObjectiveMasteryFieldsFragment,
    Objective,
    useClassTargetMasteryQuery,
 } from '../../__generated__/types';
@@ -124,20 +126,22 @@ function SelectedLTStudentViewTable(classMissionMastery: any, selectedLTId: stri
    colorMap.set('NOT_GRADED', 'rgb(191, 191, 191)');
    colorMap.set('NEARLY_MASTERED', 'rgb(230, 230, 0)');
    targetMasteryData.classTargetMastery.studentObjectiveMasteryList.map(
-      (studentObjectiveMastery: any) => {
+      (studentObjectiveMastery: CtmStudentObjectiveMasteryFieldsFragment) => {
          if (studentObjectiveMastery.objectiveMasteryList.length === 0) {
-            objectiveSet.forEach((value: any) => {
-               data[index].row[value] = '';
+            objectiveSet.forEach((objectiveId: any) => {
+               data[index].row[objectiveId] = '';
             });
          } else {
-            studentObjectiveMastery.objectiveMasteryList.map((objectiveMastery: any) => {
-               data[index].row[objectiveMastery.objectiveId] = {
-                  status: objectiveMastery.mastery,
-                  style: {
-                     backgroundColor: colorMap.get(objectiveMastery.mastery),
-                  },
-               };
-            });
+            studentObjectiveMastery.objectiveMasteryList.map(
+               (objectiveMastery: CtmObjectiveMasteryFieldsFragment) => {
+                  data[index].row[objectiveMastery.objectiveId] = {
+                     status: objectiveMastery.mastery,
+                     style: {
+                        backgroundColor: colorMap.get(objectiveMastery.mastery),
+                     },
+                  };
+               }
+            );
          }
          index++;
       }
