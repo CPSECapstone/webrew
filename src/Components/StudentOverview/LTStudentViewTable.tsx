@@ -6,38 +6,38 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable no-restricted-syntax */
-/* eslint-disable no-nested-ternary */
 import { useHistory } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
+import React, { useState } from 'react';
+import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import TableComponent from '../TableComponent/TableComponent';
 import {
    CmStudentFieldsFragment,
    Target,
    useClassMissionMasteryQuery,
-   useClassTargetMasteryQuery,
-   useGetCoursesQuery,
-   useProgressOverviewQuery,
-   UserProgress,
 } from '../../__generated__/types';
 import { LIST_TARGETS_BY_COURSE } from '../../hooks/ListTargetsByCourse';
+import SelectedLTStudentViewTable from './SelectedLTStudentViewTable';
 
 function LTStudentViewTable() {
-   const { data: progressData } = useProgressOverviewQuery({
-      variables: {
-         course: 'Integrated Science',
-      },
-   });
-
    const { data: missionMasteryData } = useClassMissionMasteryQuery();
 
-   const { data: targetMasteryData } = useClassTargetMasteryQuery();
+   const [selectedLT, setSlectedLT] = useState<string | null>(null);
 
-   const { data: courseTargets } = useQuery(LIST_TARGETS_BY_COURSE);
-   console.log(missionMasteryData);
-   console.log(targetMasteryData);
-   console.log(courseTargets);
+   const handleLTSelection = (
+      event: React.MouseEvent<HTMLElement>,
+      newSelectedLT: string | null
+   ) => {
+      setSlectedLT(newSelectedLT);
+   };
 
    const history = useHistory();
+
+   const { data: courseTargets } = useQuery(LIST_TARGETS_BY_COURSE);
+
+   if (!courseTargets) {
+      return <div />;
+   }
 
    const rowClicked = (userName: string) => {
       history.push({
@@ -92,10 +92,6 @@ function LTStudentViewTable() {
             {
                Header: 'Recent',
                accessor: 'row.recent',
-               // Cell: ({ value }: { value: any }) => {
-
-               //    return <>{value.status} </>;
-               // },
             },
             {
                Header: 'Average',
@@ -114,27 +110,45 @@ function LTStudentViewTable() {
       columns: [],
    };
 
+   // Set handles the case of two learing targets with the same name
    const learningTargetSet = new Set();
 
-   if (courseTargets !== undefined) {
-      courseTargets.targets.map((target: Target) => {
-         data.map((row: any) => {
-            row.row[target.targetName] = '';
-         });
-         if (!learningTargetSet.has(target.targetName)) {
-            learningTargetSet.add(target.targetName);
-            learningTargetGroup.columns.push({
-               Header: target.targetName,
-               accessor: `row.${target.targetName}`,
-            });
-         }
+   courseTargets.targets.map((target: Target) => {
+      data.map((row: any) => {
+         row.row[target.targetName] = '';
       });
-      tableColumns.push(learningTargetGroup);
-   }
+      if (!learningTargetSet.has(target.targetName)) {
+         learningTargetSet.add(target.targetName);
+         learningTargetGroup.columns.push({
+            Header: target.targetName,
+            accessor: `row.${target.targetName}`,
+         });
+      }
+   });
+   tableColumns.push(learningTargetGroup);
 
    return (
-      <div className="base-table">
-         <TableComponent columns={tableColumns} data={data} rowClickFunction={rowClicked} />
+      <div>
+         <ToggleButtonGroup value={selectedLT} exclusive onChange={handleLTSelection}>
+            {courseTargets.targets.map((target: Target) => {
+               return (
+                  <ToggleButton value={target.targetId} style={{ width: '100px' }}>
+                     {target.targetName}
+                  </ToggleButton>
+               );
+            })}
+         </ToggleButtonGroup>
+
+         {selectedLT === null ? (
+            <div className="base-table">
+               <TableComponent columns={tableColumns} data={data} rowClickFunction={rowClicked} />
+            </div>
+         ) : (
+            <SelectedLTStudentViewTable
+               classMissionMastery={missionMasteryData?.classMissionMastery}
+               selectedLTId={selectedLT}
+            />
+         )}
       </div>
    );
 }

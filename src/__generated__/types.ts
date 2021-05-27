@@ -1056,7 +1056,9 @@ export type CmStudentFieldsFragment = (
   ) }
 );
 
-export type ClassTargetMasteryQueryVariables = Exact<{ [key: string]: never; }>;
+export type ClassTargetMasteryQueryVariables = Exact<{
+  targetId: Scalars['String'];
+}>;
 
 
 export type ClassTargetMasteryQuery = (
@@ -1772,8 +1774,8 @@ export type ClassMissionMasteryQueryHookResult = ReturnType<typeof useClassMissi
 export type ClassMissionMasteryLazyQueryHookResult = ReturnType<typeof useClassMissionMasteryLazyQuery>;
 export type ClassMissionMasteryQueryResult = Apollo.QueryResult<ClassMissionMasteryQuery, ClassMissionMasteryQueryVariables>;
 export const ClassTargetMasteryDocument = gql`
-    query ClassTargetMastery {
-  classTargetMastery(targetId: "27871da36e7") {
+    query ClassTargetMastery($targetId: String!) {
+  classTargetMastery(targetId: $targetId) {
     target {
       ...CTMTargetField
     }
@@ -1797,10 +1799,11 @@ ${CtmStudentObjectiveMasteryFieldsFragmentDoc}`;
  * @example
  * const { data, loading, error } = useClassTargetMasteryQuery({
  *   variables: {
+ *      targetId: // value for 'targetId'
  *   },
  * });
  */
-export function useClassTargetMasteryQuery(baseOptions?: Apollo.QueryHookOptions<ClassTargetMasteryQuery, ClassTargetMasteryQueryVariables>) {
+export function useClassTargetMasteryQuery(baseOptions: Apollo.QueryHookOptions<ClassTargetMasteryQuery, ClassTargetMasteryQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<ClassTargetMasteryQuery, ClassTargetMasteryQueryVariables>(ClassTargetMasteryDocument, options);
       }

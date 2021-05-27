@@ -1,5 +1,5 @@
-query ClassTargetMastery {
-  classTargetMastery(targetId: "27871da36e7") {
+query ClassTargetMastery($targetId: String!) {
+  classTargetMastery(targetId: $targetId) {
     target {
       ...CTMTargetField
     }
