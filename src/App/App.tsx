@@ -57,12 +57,14 @@ function App() {
          <Navigation />
          <div className="main container-fluid">
             <div className="row h-100">
-               <div className="sidebar-container col-md-2">
-                  <img src={StudentPicture} alt="" style={{ width: 180, height: 180 }} />
-                  {fname}
+               <div className="sidebar-container col-md-2 p-0 side">
+                  <div className="img-container">
+                     <img src={StudentPicture} alt="" className="img-fluid" />
+                  </div>
+                  <div className="pl-2 pt-2 pr-2">{fname}</div>
                   <Sidebar />
                </div>
-               <div className="content-container col-md-10">
+               <div className="content-container col-md-10 p-0">
                   <Content />
                </div>
             </div>
