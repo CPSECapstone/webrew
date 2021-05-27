@@ -177,12 +177,14 @@ export const mockTask: Task = {
 };
 
 const ansone: Answer = {
+   graded: false,
    questionId: 'fakemcqid',
    pointsAwarded: 50,
    answer: 'All of us!',
 };
 
 const anstwo: Answer = {
+   graded: false,
    questionId: 'fakefrqid',
    pointsAwarded: 50,
    answer: 'Dr. Janzen',
@@ -201,6 +203,7 @@ const qandatwo: QuestionAndAnswer = {
 const mockQandAList: QuestionAndAnswer[] = [qandaone, qandatwo];
 
 export const mockTaskSubmissionResult: TaskSubmissionResult = {
+   taskId: 'testid',
    graded: true,
    pointsAwarded: 100,
    pointsPossible: 100,
