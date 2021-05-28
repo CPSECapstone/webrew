@@ -1,12 +1,10 @@
 import '../TaskBlock.css';
 
-function IntroBlock({ instructions }: { instructions: string }) {
+function IntroBlock({ instructions, cssKey }: { instructions: string; cssKey: number }) {
    return (
-      <div className="row">
-         <div className="col-md-12 my-2 p-3">
-            <h2 className="text-left">
-               <b>Introduction</b>
-            </h2>
+      <div className="white row">
+         <div className="col-md-6 text-center py-5 mx-auto">
+            <h3 className="text-left mb-3">Introduction</h3>
             <p className="text-left">{instructions || 'No instructions given.'}</p>
          </div>
       </div>

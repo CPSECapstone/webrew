@@ -1289,7 +1289,7 @@ export type AnswerFieldsFragment = (
 
 export type TaskSubmissionResultQueryVariables = Exact<{
   taskId: Scalars['String'];
-  username?: Maybe<Scalars['String']>;
+  username: Scalars['String'];
 }>;
 
 
@@ -1375,7 +1375,7 @@ export type VideoBlockFieldsFragment = (
 
 export type ImageBlockFieldsFragment = (
   { __typename: 'ImageBlock' }
-  & Pick<ImageBlock, 'imageUrl'>
+  & Pick<ImageBlock, 'imageUrl' | 'title'>
 );
 
 export type QuizBlockFieldsFragment = (
@@ -1595,6 +1595,7 @@ ${FrQuestionFieldsFragmentDoc}`;
 export const ImageBlockFieldsFragmentDoc = gql`
     fragment ImageBlockFields on ImageBlock {
   imageUrl
+  title
 }
     `;
 export const McBlockFieldsFragmentDoc = gql`
@@ -1956,7 +1957,7 @@ export type QuizBlockQueryHookResult = ReturnType<typeof useQuizBlockQuery>;
 export type QuizBlockLazyQueryHookResult = ReturnType<typeof useQuizBlockLazyQuery>;
 export type QuizBlockQueryResult = Apollo.QueryResult<QuizBlockQuery, QuizBlockQueryVariables>;
 export const TaskSubmissionResultDocument = gql`
-    query TaskSubmissionResult($taskId: String!, $username: String) {
+    query TaskSubmissionResult($taskId: String!, $username: String!) {
   retrieveTaskSubmission(taskId: $taskId, username: $username) {
     graded
     pointsAwarded
