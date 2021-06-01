@@ -17,13 +17,30 @@ import {
    useClassTargetMasteryQuery,
 } from '../../__generated__/types';
 
+function getUniqueObjectives(objectives: Objective[]): Objective[] {
+   const uniqueObjectives: Objective[] = [];
+   const objectiveNameSet = new Set();
+   objectives.forEach((objective) => {
+      if (!objectiveNameSet.has(objective.objectiveName)) {
+         objectiveNameSet.add(objective.objectiveName);
+         uniqueObjectives.push(objective);
+      }
+   });
+
+   return uniqueObjectives;
+}
+
 function genObjectiveGroup(targetMasteryData: any): any {
    const objectiveGorup: any = {
       Header: 'Objectives',
       columns: [],
    };
 
-   targetMasteryData.classTargetMastery.target.objectives.map((objective: any) => {
+   const uniqueObjectives = getUniqueObjectives(
+      targetMasteryData.classTargetMastery.target.objectives
+   );
+
+   uniqueObjectives.forEach((objective) => {
       objectiveGorup.columns.push({
          Header: objective.objectiveName,
          accessor: `row.${objective.objectiveId}`,
