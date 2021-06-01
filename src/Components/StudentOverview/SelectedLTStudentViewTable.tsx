@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable no-plusplus */
 /* eslint-disable array-callback-return */
 /* eslint-disable no-param-reassign */
@@ -15,6 +16,25 @@ import {
    Objective,
    useClassTargetMasteryQuery,
 } from '../../__generated__/types';
+
+function genObjectiveGroup(targetMasteryData: any): any {
+   const objectiveGorup: any = {
+      Header: 'Objectives',
+      columns: [],
+   };
+
+   targetMasteryData.classTargetMastery.target.objectives.map((objective: any) => {
+      objectiveGorup.columns.push({
+         Header: objective.objectiveName,
+         accessor: `row.${objective.objectiveId}`,
+         Cell: ({ value }: { value: any }) => {
+            return <>{value.status} </>;
+         },
+      });
+   });
+
+   return objectiveGorup;
+}
 
 function SelectedLTStudentViewTable(classMissionMastery: any, selectedLTId: string | null) {
    const { data: targetMasteryData } = useClassTargetMasteryQuery({
@@ -93,27 +113,8 @@ function SelectedLTStudentViewTable(classMissionMastery: any, selectedLTId: stri
       },
    ];
 
-   const objectiveGorup: any = {
-      Header: 'Objectives',
-      columns: [],
-   };
-
-   // Set handles the case of two objectives with the same name
-   const objectiveSet = new Set();
-
-   targetMasteryData.classTargetMastery.target.objectives.map((objective: any) => {
-      if (!objectiveSet.has(objective.objectiveId)) {
-         objectiveSet.add(objective.objectiveId);
-         objectiveGorup.columns.push({
-            Header: objective.objectiveName,
-            accessor: `row.${objective.objectiveId}`,
-            Cell: ({ value }: { value: any }) => {
-               return <>{value.status} </>;
-            },
-         });
-      }
-   });
-   tableColumns.push(objectiveGorup);
+   const objectiveGroup = genObjectiveGroup(targetMasteryData);
+   tableColumns.push(objectiveGroup);
 
    // TODO This makes two massive assumptions:
    // One that classMissionMastery and classTargetMastery are in the exact same student order
@@ -128,8 +129,8 @@ function SelectedLTStudentViewTable(classMissionMastery: any, selectedLTId: stri
    targetMasteryData.classTargetMastery.studentObjectiveMasteryList.map(
       (studentObjectiveMastery: CtmStudentObjectiveMasteryFieldsFragment) => {
          if (studentObjectiveMastery.objectiveMasteryList.length === 0) {
-            objectiveSet.forEach((objectiveId: any) => {
-               data[index].row[objectiveId] = '';
+            objectiveGroup.columns.forEach((column: any) => {
+               data[index].row[column.accessor.substring(4)] = '';
             });
          } else {
             studentObjectiveMastery.objectiveMasteryList.map(
