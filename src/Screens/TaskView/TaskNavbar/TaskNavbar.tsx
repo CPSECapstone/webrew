@@ -9,7 +9,7 @@ import './TaskNavbar.css';
 
 function TaskNavbar({ rubric }: { rubric: RubricRequirement[] }) {
    return (
-      <Navbar collapseOnSelect expand="sm" bg="primary" variant="light">
+      <Navbar className="navbar-custom border-top border-light" collapseOnSelect expand="sm">
          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
          <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="container-fluid">

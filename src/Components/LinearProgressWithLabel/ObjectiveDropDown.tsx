@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme, createStyles, withStyles } from '@material-ui/core/styles';
 import styled from 'styled-components';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -8,6 +8,7 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import { Link } from 'react-router-dom';
+import { Box, LinearProgress } from '@material-ui/core';
 import LinearProgressWithLabel from './LinearProgressWithLabel';
 import {
    Task,
@@ -30,6 +31,71 @@ const useStyles = makeStyles((theme: Theme) =>
       },
    })
 );
+const MasteredProgress = withStyles((theme: Theme) =>
+   createStyles({
+      root: {
+         height: 25,
+         borderRadius: 5,
+      },
+      colorPrimary: {
+         backgroundColor: '#30CC30',
+      },
+      bar: {
+         borderRadius: 5,
+         backgroundColor: '#30CC30',
+      },
+   })
+)(LinearProgress);
+
+const NotStartedProgress = withStyles((theme: Theme) =>
+   createStyles({
+      root: {
+         height: 25,
+         borderRadius: 5,
+         display: 'flex',
+         justifyContent: 'right',
+      },
+      colorPrimary: {
+         backgroundColor: '#E0E0E0',
+      },
+      bar: {
+         borderRadius: 5,
+         backgroundColor: '#E0E0E0',
+      },
+   })
+)(LinearProgress);
+
+const NotMasteredProgress = withStyles((theme: Theme) =>
+   createStyles({
+      root: {
+         height: 25,
+         borderRadius: 5,
+      },
+      colorPrimary: {
+         backgroundColor: '#EA6868',
+      },
+      bar: {
+         borderRadius: 5,
+         backgroundColor: '#EA6868',
+      },
+   })
+)(LinearProgress);
+
+const AlmostMasteredProgress = withStyles((theme: Theme) =>
+   createStyles({
+      root: {
+         height: 25,
+         borderRadius: 5,
+      },
+      colorPrimary: {
+         backgroundColor: '#F2C94C',
+      },
+      bar: {
+         borderRadius: 5,
+         backgroundColor: '#F2C94C',
+      },
+   })
+)(LinearProgress);
 
 const DoublePaddedDiv = styled.div`
    padding-left: 40px;
@@ -40,6 +106,19 @@ const DoublePaddedDiv = styled.div`
 export interface ObjectiveDropDownProps {
    name: string;
    tasks: TaskObjectiveProgress[];
+}
+
+function getProgressBar(status: number) {
+   if (status === 0) {
+      return <NotStartedProgress />;
+   }
+   if (status < 0.75) {
+      return <NotMasteredProgress />;
+   }
+   if (status >= 0.75 && status < 1) {
+      return <AlmostMasteredProgress />;
+   }
+   return <MasteredProgress />;
 }
 
 // Handles state to open and close dropdown
@@ -54,11 +133,14 @@ function getObjectivePercent(tasks: TaskObjectiveProgress[]) {
    let count = 0;
    for (const task of tasks) {
       const mastery = getTaskPercent(task.mastery);
-      if (mastery === 100) {
+      if (mastery === 1) {
          count++;
       }
    }
-   return count;
+   if (tasks.length === 0) {
+      return 0;
+   }
+   return count / tasks.length;
 }
 
 function getTaskPercent(mastery: string) {
@@ -66,30 +148,28 @@ function getTaskPercent(mastery: string) {
       return 0;
    }
    if (mastery === 'NOT_MASTERED') {
-      return 50;
+      return 0.5;
    }
    if (mastery === 'ALMOST_MASTERED') {
-      return 75;
+      return 0.75;
    }
-   return 100;
+   return 1;
 }
 
-export default function TargetDropDown({ name, tasks }: ObjectiveDropDownProps) {
+export default function ObjectiveDropDown({ name, tasks }: ObjectiveDropDownProps) {
    const classes = useStyles();
    const [open, setOpen] = useState(false);
-
-   const TASK_PERCENT = 100;
-   const OBJECTIVE_PERCENT = 50;
 
    return (
       <List component="div" disablePadding style={{ justifyContent: 'right', width: '100%' }}>
          <ListItem button onClick={() => handleClick(open, setOpen)} divider>
             {open ? <ExpandLess /> : <ExpandMore />}
             <ListItemText primary={name} />
-            <LinearProgressWithLabel
-               className={classes.progressBar}
-               value={getObjectivePercent(tasks)}
-            />
+            <Box display="flex" style={{ justifyContent: 'right' }} width="80%">
+               <Box width="100%" mr={1} ml={1}>
+                  {getProgressBar(getObjectivePercent(tasks))}
+               </Box>
+            </Box>
          </ListItem>
 
          <Collapse in={open} timeout="auto" unmountOnExit>
@@ -100,10 +180,11 @@ export default function TargetDropDown({ name, tasks }: ObjectiveDropDownProps) 
                         <DoublePaddedDiv>
                            <ListItem button className={classes.nested} divider>
                               <ListItemText primary={task.task.name} />
-                              <LinearProgressWithLabel
-                                 className={classes.progressBar}
-                                 value={getTaskPercent(task.mastery)}
-                              />
+                              <Box display="flex" alignItems="center" width="80%">
+                                 <Box width="100%" mr={1} ml={1}>
+                                    {getProgressBar(getTaskPercent(task.mastery))}
+                                 </Box>
+                              </Box>
                            </ListItem>
                         </DoublePaddedDiv>
                      </div>
