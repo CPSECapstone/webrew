@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from './test-utils';
 import '@testing-library/jest-dom/extend-expect';
 // import CreateCourseDialog from '../course/create-course-dialog';
-import SingleStudentMasteryOverview from '../single-student-mastery-overview/single-student-mastery-overview';
+import SingleStudentMasteryOverview from '../Components/SingleStudentMasteryOverview/SingleStudentMasteryOverview';
 
 test('displays student overview', async () => {
    // Arrange
