@@ -104,7 +104,7 @@ function getStatusTitle(status: number) {
    if (status <= 0.75) {
       return 'Not Mastered';
    }
-   if (status >= 0.75) {
+   if (status > 0.75) {
       return 'Almost Mastered';
    }
    return 'Mastered';
@@ -113,6 +113,7 @@ function getStatusTitle(status: number) {
 export default function MasteryCard({ name, status, user }: Props) {
    console.log(status);
    const history = useHistory();
+
    return (
       <Link to={{ pathname: `/singleTargetOverview/${name}`, state: user }}>
          <div className="mission-card">

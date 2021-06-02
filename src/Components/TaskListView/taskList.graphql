@@ -1,0 +1,11 @@
+query TaskList($course: String!) {
+   tasksByCourse(course: $course) {
+      ...TaskListTaskFields
+   }
+}
+
+fragment TaskListTaskFields on Task {
+   id
+   name
+   instructions
+}

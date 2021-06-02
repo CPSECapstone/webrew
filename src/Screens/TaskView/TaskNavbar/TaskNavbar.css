@@ -1,5 +1,11 @@
 #rubric-dropdown {
-   background-color: #f8f9fa;
+   background-color: #4274f3;
    color: #212529;
    border-radius: 10;
+}
+
+.navbar-custom {
+   background-color: #4274f3;
+   border-top: 1pt;
+   border-color: #212529;
 }

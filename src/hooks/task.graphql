@@ -62,6 +62,7 @@ fragment VideoBlockFields on VideoBlock {
 
 fragment ImageBlockFields on ImageBlock {
    imageUrl
+   title
 }
 
 fragment QuizBlockFields on QuizBlock {

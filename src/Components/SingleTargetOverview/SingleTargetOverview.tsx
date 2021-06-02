@@ -4,21 +4,14 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Divider, ListItemText, Typography } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import IconButton from '@material-ui/core/IconButton';
 import StudentPicture from '../../assets/images/images-1.png';
 import {
-   Objective,
    useGetTargetProgressQuery,
    TargetProgress,
-   TaskObjectiveProgress,
-   TargetProgressFieldsFragment,
-   ObjectiveProgressFieldsFragment,
    ObjectiveProgress,
-   TaskObjectiveProgressFieldsFragment,
 } from '../../__generated__/types';
 import { User } from '../../interfaces/User';
 import ObjectiveDropDown from '../LinearProgressWithLabel/ObjectiveDropDown';
-import CircularProgressWithLabel from '../LinearProgressWithLabel/CircularProgressWithLabel';
 
 const HeaderDiv = styled.div`
    height: 100%;
@@ -88,29 +81,6 @@ const TargetColumnDiv = styled.div`
    // border-right: 1px solid #c2d2fc;
 `;
 
-const CircleColumnDiv = styled.div`
-   width: 25%;
-   flex-direction: column;
-   padding: 5px;
-   justify-content: center;
-`;
-
-const useStyles = makeStyles((theme: Theme) =>
-   createStyles({
-      root: {
-         width: '100%',
-         maxWidth: 500,
-         backgroundColor: theme.palette.background.paper,
-      },
-      nested: {
-         paddingLeft: theme.spacing(4),
-      },
-      progressBar: {
-         minWidth: '150px',
-      },
-   })
-);
-
 function getTargetData(targetData1: TargetProgress[], name: string) {
    for (const target of targetData1) {
       if (target.target.targetName === name) {
@@ -120,7 +90,6 @@ function getTargetData(targetData1: TargetProgress[], name: string) {
 }
 
 export default function SingleTargetOveriew() {
-   const classes = useStyles();
    const history = useHistory();
    const { name } = useParams<Record<string, string | undefined>>();
    const test: any = history.location.state;
@@ -148,8 +117,6 @@ export default function SingleTargetOveriew() {
 
    const targetData1 = data.getAllTargetProgress;
    console.log(targetData1);
-   // const targetData = data?.getAllTargetProgress[0];
-   // console.log(targetData);
    const targetData = getTargetData((targetData1 as unknown) as TargetProgress[], name as string);
 
    // A hardcoded name to account for reaching the page via the side menu
@@ -173,7 +140,9 @@ export default function SingleTargetOveriew() {
             </TargetDiv>
             <StudentDiv className="col-3">
                <ColumnDiv>
-                  <StudentNameDiv>{targetData?.target.targetName}</StudentNameDiv>
+                  <StudentNameDiv>
+                     {inputUser.firstName} {inputUser.lastName}
+                  </StudentNameDiv>
                   <StudentImageDiv>
                      <img src={StudentPicture} alt="" style={{ width: 120, height: 120 }} />
                   </StudentImageDiv>

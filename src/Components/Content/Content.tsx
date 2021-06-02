@@ -12,6 +12,8 @@ import SingleMissionOverview from '../SingleStudentOverview/SingleMissionOvervie
 
 import TaskView from '../../Screens/TaskView/TaskView';
 import Mission from '../MissionOverview/Mission';
+import TaskListView from '../TaskListView';
+import TaskSubmissionSummaryView from '../TaskSubmissionSummaryView';
 import { ClassMastery } from '../../Screens/ClassMastery';
 import './Content.css';
 import MissionsScreen from '../MissionOverview/MissionOverview';
@@ -55,7 +57,13 @@ export default function Content() {
                   <SingleMissionOverview />
                </Route>
             </Route>
-            <Route path="/viewTask/:taskId">
+            <Route path="/taskList">
+               <TaskListView />
+            </Route>
+            <Route path="/taskSubmissionSummary/:taskId">
+               <TaskSubmissionSummaryView />
+            </Route>
+            <Route path="/viewTask/:taskId/:username">
                <TaskView />
             </Route>
             <Route path="/classMastery">

@@ -8,7 +8,7 @@ schema:
    ]
 
 documents:
-   - src/hooks/*.graphql
+   - src/**/*.graphql
 generates:
    src/__generated__/types.ts:
       plugins:
@@ -42,6 +42,7 @@ generates:
          nonOptionalTypename: true
          useTypeImports: false
          withHooks: true
+         preResolveTypes: true
    ./graphql.schema.json:
       plugins:
          - 'introspection'

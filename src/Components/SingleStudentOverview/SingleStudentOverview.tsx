@@ -5,22 +5,13 @@ import { useQuery } from '@apollo/client';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import styled from 'styled-components';
-import { Link, useHistory } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
-import { Divider, Typography } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+import { Divider } from '@material-ui/core';
 import StudentPicture from '../../assets/images/images-1.png';
 import { User } from '../../interfaces/User';
-import LinearProgressWithLabel from '../LinearProgressWithLabel/LinearProgressWithLabel';
-import MissionDropDown from '../LinearProgressWithLabel/MissionDropDown';
 import { GET_USERS } from '../../queries/user-queries';
-import {
-   CourseInfoFieldsFragment,
-   TaskStats,
-   useGetMissionProgressQuery,
-} from '../../__generated__/types';
-import CircularProgressWithLabel from '../LinearProgressWithLabel/CircularProgressWithLabel';
+import { TaskStats, useGetMissionProgressQuery } from '../../__generated__/types';
 import MasteryCard from './MasteryCard';
 
 const StudentDiv = styled.div`
