@@ -10,33 +10,34 @@ import TaskProgress from './TaskProgress/TaskProgress';
 import BlockPageHandler from './BlockPageHandler/BlockPageHandler';
 import './TaskView.css';
 
-// function TaskView({ taskId }: { taskId: string }) {
 function TaskView() {
    const [page, setPage] = useState(0);
-   const { taskId } = useParams<Record<string, string | undefined>>();
-   const { username } = useParams<Record<string, string | undefined>>();
+   const { taskId } = useParams<Record<string, string>>();
+   const { username } = useParams<Record<string, string>>();
+
+   console.log(taskId);
+   console.log(username);
+
    const { data: taskSubmissionQuery } = useTaskSubmissionResultQuery({
       variables: {
-         taskId: '4f681550ba9',
-         username: 'bob',
+         taskId,
+         username,
       },
    });
-   if (taskId === undefined) {
-      return <>Task Undefined</>;
-   }
 
    const { data: taskByIdQuery } = useGetTaskByIdQuery({
       variables: { taskId },
    });
 
-   console.log(taskSubmissionQuery?.retrieveTaskSubmission);
+   console.log(taskSubmissionQuery);
+   console.log(taskByIdQuery);
 
    const maxPage: number =
       taskByIdQuery === undefined || taskByIdQuery.task.pages === undefined
          ? 0
          : taskByIdQuery.task.pages.length - 1;
 
-   if (!taskByIdQuery) {
+   if (!taskByIdQuery || !taskSubmissionQuery) {
       return <></>;
    }
 
@@ -52,7 +53,12 @@ function TaskView() {
                page={page}
                maxPage={maxPage}
             />
-            <BlockPageHandler taskInformation={taskByIdQuery} page={page} />
+            <BlockPageHandler
+               taskInformation={taskByIdQuery}
+               page={page}
+               taskSubmissionResult={taskSubmissionQuery}
+               studentId="Google_114813486146105420824"
+            />
          </div>
       </div>
    );

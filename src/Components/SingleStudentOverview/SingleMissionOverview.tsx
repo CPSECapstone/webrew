@@ -1,21 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { useQuery } from '@apollo/client';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import styled from 'styled-components';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
 import { Divider } from '@material-ui/core';
 import StudentPicture from '../../assets/images/images-1.png';
 import { User } from '../../interfaces/User';
 import LinearProgressWithLabel from '../LinearProgressWithLabel/LinearProgressWithLabel';
-import { GET_USERS } from '../../queries/user-queries';
 import { MissionProgress, TaskStats, useGetMissionProgressQuery } from '../../__generated__/types';
-import CircularProgressWithLabel from '../LinearProgressWithLabel/CircularProgressWithLabel';
 
 const StudentDiv = styled.div`
    height: 200px;
@@ -222,17 +218,6 @@ function SingleMissionOverview() {
                   </Link>
                ))}
             </LeftColumnDiv>
-            {/* <Divider orientation="vertical" flexItem />
-            <RightColumnDiv className="col-3">
-               <List>
-                  <ListItem alignItems="center">
-                     <CircularProgressWithLabel value={100} name="First 1" />
-                  </ListItem>
-                  <ListItem alignItems="center">
-                     <CircularProgressWithLabel value={90} name="Second 2" />
-                  </ListItem>
-               </List>
-            </RightColumnDiv> */}
          </TaskRowDiv>
       </div>
    );

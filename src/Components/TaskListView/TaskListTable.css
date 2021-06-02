@@ -1,0 +1,11 @@
+.cell-taskname {
+   width: 25%;
+   text-overflow: ellipsis;
+}
+.cell-instructions {
+   width: 65%;
+   text-overflow: ellipsis;
+}
+.cell-view {
+   width: 10%;
+}

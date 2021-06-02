@@ -97,6 +97,7 @@
     "eslint-config-airbnb-typescript-prettier": "^4.2.0",
     "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "node": "^16.0.0",
     "prettier": "^2.2.1",
     "prettier-eslint": "^12.0.0",
