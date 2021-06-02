@@ -8,7 +8,16 @@ function TaskList() {
       },
    });
 
-   const tasks = data?.tasksByCourse || [];
+   let tasks = data?.tasksByCourse || [];
+
+   // sort by task name
+   tasks = [...tasks].sort((a, b) => {
+      if (a.name === b.name) {
+         return 0;
+      }
+
+      return a.name < b.name ? -1 : 1;
+   });
 
    return (
       <div className="base-table">
