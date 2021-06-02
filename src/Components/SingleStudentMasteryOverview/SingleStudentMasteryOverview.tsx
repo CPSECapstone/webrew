@@ -343,20 +343,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { useQuery } from '@apollo/client';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import styled from 'styled-components';
-import { Link, useHistory } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
-import { Divider, Typography } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+import { Divider } from '@material-ui/core';
 import StudentPicture from '../../assets/images/images-1.png';
 import { User } from '../../interfaces/User';
-import LinearProgressWithLabel from '../LinearProgressWithLabel/LinearProgressWithLabel';
-import MissionDropDown from '../LinearProgressWithLabel/MissionDropDown';
-import { GET_USERS } from '../../queries/user-queries';
 // import {
 //    CourseInfoFieldsFragment,
 //    TaskStats,
@@ -364,17 +358,10 @@ import { GET_USERS } from '../../queries/user-queries';
 // } from '../../__generated__/types';
 // import TargetDropDown from '../LinearProgressWithLabel/TargetDropDown';
 import {
-   Objective,
-   ObjectiveFieldsFragmentDoc,
-   ObjectiveProgress,
    ObjectiveProgressFieldsFragment,
-   TargetProgress,
-   TaskFieldsFragmentDoc,
-   TaskObjectiveProgress,
    TaskObjectiveProgressFieldsFragment,
    useGetTargetProgressQuery,
 } from '../../__generated__/types';
-import CircularProgressWithLabel from '../LinearProgressWithLabel/CircularProgressWithLabel';
 import TargetMasteryCard from './TargetMasteryCard';
 
 const StudentDiv = styled.div`
@@ -541,10 +528,7 @@ function SingleStudentMasteryOverview() {
    console.log(targetData);
 
    return (
-      <div
-         className="container d-inline-block "
-         style={{ marginLeft: '5px', marginRight: '5px', backgroundColor: 'white' }}
-      >
+      <div className="container" style={{ backgroundColor: 'white' }}>
          <HeaderDiv className="row">
             <TargetDiv className="col-8">
                <List>
@@ -552,7 +536,7 @@ function SingleStudentMasteryOverview() {
                </List>
             </TargetDiv>
             <StudentDiv className="col-4">
-               <ColumnDiv className="container d-inline-block">
+               <ColumnDiv className="container">
                   <StudentNameDiv className="container-sm">
                      {inputUser.firstName}
                      {inputUser.lastName}

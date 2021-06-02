@@ -114,7 +114,7 @@ function RubricMenu({ requirements }: { requirements: RubricRequirement[] }) {
                ))}
                <NavDropdown.Divider />
                <Button className="mx-auto" type="submit">
-                  Submit Task
+                  Submit Grade
                </Button>
             </Form>
          </Drawer>
