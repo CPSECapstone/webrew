@@ -12,21 +12,25 @@ import './TaskView.css';
 
 function TaskView() {
    const [page, setPage] = useState(0);
-   const { taskId } = useParams<Record<string, string | undefined>>();
-   const { username } = useParams<Record<string, string | undefined>>();
-   if (taskId === undefined) {
-      return <>Task Undefined</>;
-   }
+   const { taskId } = useParams<Record<string, string>>();
+   const { username } = useParams<Record<string, string>>();
+
+   console.log(taskId);
+   console.log(username);
+
    const { data: taskSubmissionQuery } = useTaskSubmissionResultQuery({
       variables: {
          taskId,
-         username: 'Google_114813486146105420824',
+         username,
       },
    });
 
    const { data: taskByIdQuery } = useGetTaskByIdQuery({
       variables: { taskId },
    });
+
+   console.log(taskSubmissionQuery);
+   console.log(taskByIdQuery);
 
    const maxPage: number =
       taskByIdQuery === undefined || taskByIdQuery.task.pages === undefined

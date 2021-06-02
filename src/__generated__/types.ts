@@ -526,6 +526,7 @@ export type Query = {
   retrieveTaskProgress?: Maybe<TaskProgress>;
   /** Returns student's task progress on the rubric requirements if it exists. */
   retrieveQuestionProgress: QuestionProgress;
+  taskSubmissionSummary: TaskSubmissionSummary;
   quizblock: QuizBlock;
   target: Target;
   targets: Array<Target>;
@@ -614,6 +615,12 @@ export type QueryRetrieveTaskProgressArgs = {
 
 
 export type QueryRetrieveQuestionProgressArgs = {
+  taskId: Scalars['String'];
+};
+
+
+export type QueryTaskSubmissionSummaryArgs = {
+  course: Scalars['String'];
   taskId: Scalars['String'];
 };
 
@@ -814,6 +821,19 @@ export type StudentObjectiveMasteryInput = {
   mastery: Scalars['String'];
 };
 
+export type StudentTaskSubmissionResult = {
+  studentName: Scalars['String'];
+  studentId: Scalars['String'];
+  /**
+   * Todo
+   * The pointsAwarded is calculated on fly when a single task submission is queried. Here we are querying a list of task submission, the pointsAwarded would not be accurate since we are not recalcuated it.
+   */
+  pointsAwarded?: Maybe<Scalars['Int']>;
+  graded: Scalars['Boolean'];
+  teacherComment?: Maybe<Scalars['String']>;
+  submitted: Scalars['Boolean'];
+};
+
 export type SubGoal = {
   title: Scalars['String'];
   dueDate: Scalars['Date'];
@@ -993,6 +1013,11 @@ export type TaskSubmissionResult = {
   taskId: Scalars['String'];
 };
 
+export type TaskSubmissionSummary = {
+  task: Task;
+  results: Array<StudentTaskSubmissionResult>;
+};
+
 export type TextBlock = TaskBlock & {
   title: Scalars['String'];
   blockId: Scalars['String'];
@@ -1062,6 +1087,24 @@ export type TaskListQuery = { __typename: 'Query', tasksByCourse: Array<(
   )> };
 
 export type TaskListTaskFieldsFragment = { __typename: 'Task', id: string, name: string, instructions: string };
+
+export type TaskSubmissionSummaryQueryVariables = Exact<{
+  course: Scalars['String'];
+  taskId: Scalars['String'];
+}>;
+
+
+export type TaskSubmissionSummaryQuery = { __typename: 'Query', taskSubmissionSummary: { __typename: 'TaskSubmissionSummary', task: (
+      { __typename: 'Task' }
+      & SummaryTaskFieldsFragment
+    ), results: Array<(
+      { __typename: 'StudentTaskSubmissionResult' }
+      & SummaryStudentResultFieldsFragment
+    )> } };
+
+export type SummaryTaskFieldsFragment = { __typename: 'Task', id: string, name: string, instructions: string, points: number };
+
+export type SummaryStudentResultFieldsFragment = { __typename: 'StudentTaskSubmissionResult', studentId: string, studentName: string, submitted: boolean, graded: boolean, pointsAwarded?: Maybe<number>, teacherComment?: Maybe<string> };
 
 export type ClassMissionMasteryQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1290,6 +1333,24 @@ export const TaskListTaskFieldsFragmentDoc = gql`
   id
   name
   instructions
+}
+    `;
+export const SummaryTaskFieldsFragmentDoc = gql`
+    fragment SummaryTaskFields on Task {
+  id
+  name
+  instructions
+  points
+}
+    `;
+export const SummaryStudentResultFieldsFragmentDoc = gql`
+    fragment SummaryStudentResultFields on StudentTaskSubmissionResult {
+  studentId
+  studentName
+  submitted
+  graded
+  pointsAwarded
+  teacherComment
 }
     `;
 export const CmMissionFieldsFragmentDoc = gql`
@@ -1582,6 +1643,48 @@ export function useTaskListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<T
 export type TaskListQueryHookResult = ReturnType<typeof useTaskListQuery>;
 export type TaskListLazyQueryHookResult = ReturnType<typeof useTaskListLazyQuery>;
 export type TaskListQueryResult = Apollo.QueryResult<TaskListQuery, TaskListQueryVariables>;
+export const TaskSubmissionSummaryDocument = gql`
+    query TaskSubmissionSummary($course: String!, $taskId: String!) {
+  taskSubmissionSummary(course: $course, taskId: $taskId) {
+    task {
+      ...SummaryTaskFields
+    }
+    results {
+      ...SummaryStudentResultFields
+    }
+  }
+}
+    ${SummaryTaskFieldsFragmentDoc}
+${SummaryStudentResultFieldsFragmentDoc}`;
+
+/**
+ * __useTaskSubmissionSummaryQuery__
+ *
+ * To run a query within a React component, call `useTaskSubmissionSummaryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTaskSubmissionSummaryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTaskSubmissionSummaryQuery({
+ *   variables: {
+ *      course: // value for 'course'
+ *      taskId: // value for 'taskId'
+ *   },
+ * });
+ */
+export function useTaskSubmissionSummaryQuery(baseOptions: Apollo.QueryHookOptions<TaskSubmissionSummaryQuery, TaskSubmissionSummaryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TaskSubmissionSummaryQuery, TaskSubmissionSummaryQueryVariables>(TaskSubmissionSummaryDocument, options);
+      }
+export function useTaskSubmissionSummaryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TaskSubmissionSummaryQuery, TaskSubmissionSummaryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TaskSubmissionSummaryQuery, TaskSubmissionSummaryQueryVariables>(TaskSubmissionSummaryDocument, options);
+        }
+export type TaskSubmissionSummaryQueryHookResult = ReturnType<typeof useTaskSubmissionSummaryQuery>;
+export type TaskSubmissionSummaryLazyQueryHookResult = ReturnType<typeof useTaskSubmissionSummaryLazyQuery>;
+export type TaskSubmissionSummaryQueryResult = Apollo.QueryResult<TaskSubmissionSummaryQuery, TaskSubmissionSummaryQueryVariables>;
 export const ClassMissionMasteryDocument = gql`
     query ClassMissionMastery {
   classMissionMastery(missionId: "4df2cfa5710") {
