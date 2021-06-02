@@ -12,7 +12,7 @@ function TaskNavbar({
    objectiveProgress,
 }: {
    rubric: RubricRequirement[];
-   objectiveProgress: TaskObjectiveProgress;
+   objectiveProgress: TaskObjectiveProgress[];
 }) {
    return (
       <Navbar className="navbar-custom border-top border-light" collapseOnSelect expand="sm">

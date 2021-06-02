@@ -1082,6 +1082,55 @@ export type CmStudentFieldsFragment = (
   ) }
 );
 
+export type ClassTargetMasteryQueryVariables = Exact<{
+  targetId: Scalars['String'];
+}>;
+
+
+export type ClassTargetMasteryQuery = (
+  { __typename: 'Query' }
+  & { classTargetMastery: (
+    { __typename: 'ClassTargetMastery' }
+    & { target: (
+      { __typename: 'Target' }
+      & CtmTargetFieldFragment
+    ), studentObjectiveMasteryList: Array<(
+      { __typename: 'StudentObjectiveMastery' }
+      & CtmStudentObjectiveMasteryFieldsFragment
+    )> }
+  ) }
+);
+
+export type CtmTargetFieldFragment = (
+  { __typename: 'Target' }
+  & Pick<Target, 'targetId' | 'targetName'>
+  & { objectives: Array<(
+    { __typename: 'Objective' }
+    & CtmObjectiveFieldFragment
+  )> }
+);
+
+export type CtmObjectiveFieldFragment = (
+  { __typename: 'Objective' }
+  & Pick<Objective, 'objectiveId' | 'objectiveName'>
+);
+
+export type CtmStudentObjectiveMasteryFieldsFragment = (
+  { __typename: 'StudentObjectiveMastery' }
+  & { student: (
+    { __typename: 'Student' }
+    & Pick<Student, 'studentId' | 'email'>
+  ), objectiveMasteryList: Array<(
+    { __typename: 'ObjectiveMastery' }
+    & CtmObjectiveMasteryFieldsFragment
+  )> }
+);
+
+export type CtmObjectiveMasteryFieldsFragment = (
+  { __typename: 'ObjectiveMastery' }
+  & Pick<ObjectiveMastery, 'objectiveId' | 'mastery'>
+);
+
 export type GetObjectiveByIdQueryVariables = Exact<{
   objectiveId: Scalars['String'];
 }>;
@@ -1093,6 +1142,27 @@ export type GetObjectiveByIdQuery = (
     { __typename: 'Objective' }
     & Pick<Objective, 'objectiveId' | 'objectiveName' | 'description' | 'targetId' | 'targetName' | 'course'>
   ) }
+);
+
+export type GetTaskObjectiveProgressQueryVariables = Exact<{
+  taskId: Scalars['String'];
+  username?: Maybe<Scalars['String']>;
+}>;
+
+
+export type GetTaskObjectiveProgressQuery = (
+  { __typename: 'Query' }
+  & { getTaskObjectiveProgress: Array<(
+    { __typename: 'TaskObjectiveProgress' }
+    & Pick<TaskObjectiveProgress, 'mastery'>
+    & { task: (
+      { __typename: 'Task' }
+      & Pick<Task, 'id' | 'name'>
+    ), objective: (
+      { __typename: 'Objective' }
+      & Pick<Objective, 'objectiveId' | 'objectiveName' | 'description'>
+    ) }
+  )> }
 );
 
 export type GetMissionProgressQueryVariables = Exact<{
@@ -1472,6 +1542,38 @@ export const CmStudentFieldsFragmentDoc = gql`
   progress
 }
     `;
+export const CtmObjectiveFieldFragmentDoc = gql`
+    fragment CTMObjectiveField on Objective {
+  objectiveId
+  objectiveName
+}
+    `;
+export const CtmTargetFieldFragmentDoc = gql`
+    fragment CTMTargetField on Target {
+  targetId
+  targetName
+  objectives {
+    ...CTMObjectiveField
+  }
+}
+    ${CtmObjectiveFieldFragmentDoc}`;
+export const CtmObjectiveMasteryFieldsFragmentDoc = gql`
+    fragment CTMObjectiveMasteryFields on ObjectiveMastery {
+  objectiveId
+  mastery
+}
+    `;
+export const CtmStudentObjectiveMasteryFieldsFragmentDoc = gql`
+    fragment CTMStudentObjectiveMasteryFields on StudentObjectiveMastery {
+  student {
+    studentId
+    email
+  }
+  objectiveMasteryList {
+    ...CTMObjectiveMasteryFields
+  }
+}
+    ${CtmObjectiveMasteryFieldsFragmentDoc}`;
 export const ObjectiveFieldsFragmentDoc = gql`
     fragment ObjectiveFields on Objective {
   objectiveId
@@ -1747,6 +1849,47 @@ export function useClassMissionMasteryLazyQuery(baseOptions?: Apollo.LazyQueryHo
 export type ClassMissionMasteryQueryHookResult = ReturnType<typeof useClassMissionMasteryQuery>;
 export type ClassMissionMasteryLazyQueryHookResult = ReturnType<typeof useClassMissionMasteryLazyQuery>;
 export type ClassMissionMasteryQueryResult = Apollo.QueryResult<ClassMissionMasteryQuery, ClassMissionMasteryQueryVariables>;
+export const ClassTargetMasteryDocument = gql`
+    query ClassTargetMastery($targetId: String!) {
+  classTargetMastery(targetId: $targetId) {
+    target {
+      ...CTMTargetField
+    }
+    studentObjectiveMasteryList {
+      ...CTMStudentObjectiveMasteryFields
+    }
+  }
+}
+    ${CtmTargetFieldFragmentDoc}
+${CtmStudentObjectiveMasteryFieldsFragmentDoc}`;
+
+/**
+ * __useClassTargetMasteryQuery__
+ *
+ * To run a query within a React component, call `useClassTargetMasteryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useClassTargetMasteryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useClassTargetMasteryQuery({
+ *   variables: {
+ *      targetId: // value for 'targetId'
+ *   },
+ * });
+ */
+export function useClassTargetMasteryQuery(baseOptions: Apollo.QueryHookOptions<ClassTargetMasteryQuery, ClassTargetMasteryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ClassTargetMasteryQuery, ClassTargetMasteryQueryVariables>(ClassTargetMasteryDocument, options);
+      }
+export function useClassTargetMasteryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ClassTargetMasteryQuery, ClassTargetMasteryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ClassTargetMasteryQuery, ClassTargetMasteryQueryVariables>(ClassTargetMasteryDocument, options);
+        }
+export type ClassTargetMasteryQueryHookResult = ReturnType<typeof useClassTargetMasteryQuery>;
+export type ClassTargetMasteryLazyQueryHookResult = ReturnType<typeof useClassTargetMasteryLazyQuery>;
+export type ClassTargetMasteryQueryResult = Apollo.QueryResult<ClassTargetMasteryQuery, ClassTargetMasteryQueryVariables>;
 export const GetObjectiveByIdDocument = gql`
     query GetObjectiveById($objectiveId: String!) {
   objective(objectiveId: $objectiveId) {
@@ -1787,6 +1930,51 @@ export function useGetObjectiveByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type GetObjectiveByIdQueryHookResult = ReturnType<typeof useGetObjectiveByIdQuery>;
 export type GetObjectiveByIdLazyQueryHookResult = ReturnType<typeof useGetObjectiveByIdLazyQuery>;
 export type GetObjectiveByIdQueryResult = Apollo.QueryResult<GetObjectiveByIdQuery, GetObjectiveByIdQueryVariables>;
+export const GetTaskObjectiveProgressDocument = gql`
+    query GetTaskObjectiveProgress($taskId: String!, $username: String) {
+  getTaskObjectiveProgress(taskId: $taskId, username: $username) {
+    task {
+      id
+      name
+    }
+    objective {
+      objectiveId
+      objectiveName
+      description
+    }
+    mastery
+  }
+}
+    `;
+
+/**
+ * __useGetTaskObjectiveProgressQuery__
+ *
+ * To run a query within a React component, call `useGetTaskObjectiveProgressQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTaskObjectiveProgressQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTaskObjectiveProgressQuery({
+ *   variables: {
+ *      taskId: // value for 'taskId'
+ *      username: // value for 'username'
+ *   },
+ * });
+ */
+export function useGetTaskObjectiveProgressQuery(baseOptions: Apollo.QueryHookOptions<GetTaskObjectiveProgressQuery, GetTaskObjectiveProgressQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTaskObjectiveProgressQuery, GetTaskObjectiveProgressQueryVariables>(GetTaskObjectiveProgressDocument, options);
+      }
+export function useGetTaskObjectiveProgressLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTaskObjectiveProgressQuery, GetTaskObjectiveProgressQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTaskObjectiveProgressQuery, GetTaskObjectiveProgressQueryVariables>(GetTaskObjectiveProgressDocument, options);
+        }
+export type GetTaskObjectiveProgressQueryHookResult = ReturnType<typeof useGetTaskObjectiveProgressQuery>;
+export type GetTaskObjectiveProgressLazyQueryHookResult = ReturnType<typeof useGetTaskObjectiveProgressLazyQuery>;
+export type GetTaskObjectiveProgressQueryResult = Apollo.QueryResult<GetTaskObjectiveProgressQuery, GetTaskObjectiveProgressQueryVariables>;
 export const GetMissionProgressDocument = gql`
     query GetMissionProgress($courseId: String!, $username: String!) {
   getAllMissionProgress(courseId: $courseId, username: $username) {

@@ -33,6 +33,21 @@ function TaskView() {
       variables: { taskId },
    });
 
+   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+   // const { data: taskObjectiveProgressQuery } = useGetTaskObjectiveProgressQuery({
+   //    variables: {
+   //       taskId,
+   //       username: 'Google_114813486146105420824',
+   //    },
+   // });
+
+   // if (taskObjectiveProgressQuery === undefined) {
+   //    return <>Task Objective Progress Undefined</>;
+   // }
+
+   // const taskObjectiveProgress = taskObjectiveProgressQuery?.getTaskObjectiveProgress[0];
+   // console.log(taskObjectiveProgress as TaskObjectiveProgress);
+
    const maxPage: number =
       taskByIdQuery === undefined || taskByIdQuery.task.pages === undefined
          ? 0
@@ -43,17 +58,17 @@ function TaskView() {
    }
 
    const requirements = taskByIdQuery.task.requirements as RubricRequirement[];
-   const { objectiveId } = taskByIdQuery.task;
-   if (objectiveId === undefined) {
-      return <></>;
-   }
-   console.log(taskByIdQuery.task);
+   // const { objectiveId } = taskByIdQuery.task;
+   // if (objectiveId === undefined) {
+   //    return <></>;
+   // }
+   // console.log(taskByIdQuery.task);
 
    return (
       <div className="back">
          <TaskNavbar
             rubric={requirements}
-            objectiveProgress={taskObjectiveProgress as TaskObjectiveProgress}
+            objectiveProgress={taskObjectiveProgress as TaskObjectiveProgress[]}
          />
          <div>
             <TaskProgress

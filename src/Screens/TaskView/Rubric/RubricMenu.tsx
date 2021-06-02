@@ -78,30 +78,30 @@ function RubricMenu({
    objectiveProgress,
 }: {
    requirements: RubricRequirement[];
-   objectiveProgress: TaskObjectiveProgress;
+   objectiveProgress: TaskObjectiveProgress[];
 }) {
-   const objectiveList = [];
    const classes = useStyles();
    const theme = useTheme();
    const [open, setOpen] = React.useState(false);
-   console.log(requirements);
+
    // const objectiveId = '0035256d7d5';
 
-   if (objectiveProgress !== null) {
-      // const { data: objectiveQuery } = useGetObjectiveByIdQuery({
-      //    variables: {
-      //       // objectiveId,
-      //       objectiveId: '0035256d7d5',
-      //    },
-      // });
-      // console.log(objectiveQuery);
-      objectiveList.push(objectiveProgress);
-      // console.log(objectiveList);
-   } else {
-      objectiveList.push('');
-   }
+   // if (objectiveProgress !== null) {
+   //    // const { data: objectiveQuery } = useGetObjectiveByIdQuery({
+   //    //    variables: {
+   //    //       // objectiveId,
+   //    //       objectiveId: '0035256d7d5',
+   //    //    },
+   //    // });
+   //    // console.log(objectiveQuery);
+   //    objectiveList.push(objectiveProgress);
+   //    // console.log(objectiveList);
+   // } else {
+   //    objectiveList.push('');
+   // }
 
-   console.log(objectiveList);
+   // console.log(objectiveList);
+
    const handleDrawerOpen = () => {
       setOpen(true);
    };
@@ -134,22 +134,27 @@ function RubricMenu({
                <IconButton onClick={handleDrawerClose}>
                   {theme.direction === 'rtl' ? <ChevronLeft /> : <ChevronRight />}
                </IconButton>
-               <Typography>Task Rubric</Typography>
+               <Typography variant="h6">Task Rubric</Typography>
             </div>
             <Divider />
-            <Form>
+            <div>
                {requirements.map((requirement: RubricRequirement) => (
                   <Rubric requirement={requirement} />
                ))}
-               <NavDropdown.Divider />
-               <Typography style={{ paddingLeft: '5px' }}> Learning Objectives </Typography>
-               <NavDropdown.Divider />
-               {objectiveList.map((objective: TaskObjectiveProgress | string) => (
-                  <ObjectiveRubric objective={objective} />
-               ))}
+            </div>
+            {/* <NavDropdown.Divider />
                <Button className="mx-auto" type="submit">
-                  Submit Grade
-               </Button>
+                  Submit Rubric
+               </Button> */}
+            <NavDropdown.Divider />
+            <Typography style={{ paddingLeft: '15px' }} variant="h6">
+               {' '}
+               Learning Objectives{' '}
+            </Typography>
+            <NavDropdown.Divider />
+            <Form>
+               {/* {objectiveList.map((objective: TaskObjectiveProgress) => ( */}
+               <ObjectiveRubric objective={objectiveProgress} />
             </Form>
          </Drawer>
       </div>

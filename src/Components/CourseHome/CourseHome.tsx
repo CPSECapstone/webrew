@@ -93,7 +93,6 @@ function CourseHome() {
                <InputLabel>View As</InputLabel>
                <Select
                   inputProps={{ 'data-testid': 'courseHomeViewSelector' }}
-                  // data-testid="courseHomeViewSelector"
                   value={viewType}
                   onChange={handleChange}
                   classes={{ root: classes.menuItem }}

@@ -1,35 +1,42 @@
+import { useMutation } from '@apollo/client';
 import { Checkbox, MenuItem, Typography } from '@material-ui/core';
 import { useState } from 'react';
+import { Form, NavDropdown } from 'react-bootstrap';
+import {
+   RubricRequirement,
+   TaskObjectiveProgress,
+   useGetTaskObjectiveProgressQuery,
+} from '../../../__generated__/types';
+import MasteryRubricGrading from './MasteryRubricGrading';
 
-import { Form } from 'react-bootstrap';
-import { RubricRequirement, TaskObjectiveProgress } from '../../../__generated__/types';
-
-function ObjectiveRubric({ objective }: { objective: TaskObjectiveProgress | string }) {
-   const [complete, setComplete] = useState(false);
-   const handleChange = () => {
-      setComplete(!complete);
-   };
+function ObjectiveRubric({ objective }: { objective: TaskObjectiveProgress[] }) {
+   //    const { data: taskObjectiveProgress } = useGetTaskObjectiveProgressQuery({
+   //       variables: {
+   //          taskId: objective.task.id,
+   //       },
+   //    });
+   //    if (taskObjectiveProgress === undefined) {
+   //       return <></>;
+   //    }
+   //    const objectiveProgresses = (taskObjectiveProgress.getTaskObjectiveProgress as unknown) as TaskObjectiveProgress[];
+   const objectiveProgresses = objective;
 
    return (
-      <MenuItem style={{ width: '100%' }}>
+      <MenuItem>
          <Form.Group>
-            {(() => {
+            {/* {(() => {
                if (objective !== '') {
-                  return (
-                     <div>
-                        <Checkbox
-                           checked={complete}
-                           onChange={handleChange}
-                           inputProps={{ 'aria-label': 'primary checkbox' }}
-                           color="default"
-                        />
-                        <Typography>
-                           {(objective as TaskObjectiveProgress).objective.objectiveName}
-                        </Typography>
-                     </div>
-                  );
-               }
-            })()}
+                  return ( */}
+            {objectiveProgresses.map((objectiveProgress1: TaskObjectiveProgress) => (
+               <div className="row">
+                  <div className="col-8" style={{ width: '50%' }}>
+                     <MasteryRubricGrading objectiveProgress={objectiveProgress1} />
+                  </div>
+                  <div className="col-4" style={{ paddingTop: '25px', width: '50%' }}>
+                     <Typography>{objectiveProgress1.objective.objectiveName}</Typography>
+                  </div>
+               </div>
+            ))}
          </Form.Group>
       </MenuItem>
    );

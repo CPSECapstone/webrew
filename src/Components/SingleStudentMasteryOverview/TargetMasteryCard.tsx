@@ -105,7 +105,7 @@ function getStatusTitle(status: number) {
       return 'Not Mastered';
    }
    if (status > 0.75) {
-      return 'Almost Mastered';
+      return 'Nearly Mastered';
    }
    return 'Mastered';
 }
