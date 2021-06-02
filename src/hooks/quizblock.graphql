@@ -41,6 +41,8 @@ fragment AnswerFields on Answer {
    pointsAwarded
    questionId
    answer
+   graded
+   teacherComment
 }
 
 query TaskSubmissionResult($taskId: String!, $username: String!) {

@@ -41,8 +41,7 @@ h3 {
 }
 
 .question-container .option-correct {
-   background-color: #4274f3;
-   color: #fff;
+   background-color: green;
 }
 
 input[type='radio'] {
@@ -54,4 +53,12 @@ label {
 }
 input:checked + label {
    color: #4274f3;
+}
+
+.question-container .selected-option {
+   background-color: salmon;
+}
+
+.option-correct.selected-option {
+   background-color: #4274f3;
 }

@@ -280,11 +280,13 @@ export type Mutation = {
   addTarget: Scalars['String'];
   addObjective: Scalars['String'];
   addProgress: Scalars['String'];
+  wipeAllProgress: Scalars['String'];
   editOrCreateGoal: Scalars['String'];
   deleteGoal: Scalars['String'];
   addStudent: Scalars['String'];
   gradeTaskSubmission: TaskSubmissionGrade;
   gradeAnswer: AnswerGrade;
+  gradeObjectiveTaskMastery: ObjectiveTaskMastery;
 };
 
 
@@ -388,6 +390,11 @@ export type MutationAddProgressArgs = {
 };
 
 
+export type MutationWipeAllProgressArgs = {
+  username: Scalars['String'];
+};
+
+
 export type MutationEditOrCreateGoalArgs = {
   goal: GoalInput;
 };
@@ -410,6 +417,11 @@ export type MutationGradeTaskSubmissionArgs = {
 
 export type MutationGradeAnswerArgs = {
   grade: AnswerGradeInput;
+};
+
+
+export type MutationGradeObjectiveTaskMasteryArgs = {
+  grade: ObjectiveTaskMasteryInput;
 };
 
 export type Objective = {
@@ -441,6 +453,20 @@ export type ObjectiveProgress = {
   objectiveId: Scalars['String'];
   objectiveName: Scalars['String'];
   tasks: Array<TaskObjectiveProgress>;
+};
+
+export type ObjectiveTaskMastery = {
+  student: Scalars['String'];
+  taskId: Scalars['String'];
+  objectiveId: Scalars['String'];
+  mastery: Mastery;
+};
+
+export type ObjectiveTaskMasteryInput = {
+  student: Scalars['String'];
+  taskId: Scalars['String'];
+  objectiveId: Scalars['String'];
+  mastery: Mastery;
 };
 
 export type Page = {
@@ -1260,6 +1286,19 @@ export type TaskObjectiveProgressFieldsFragment = (
   ) }
 );
 
+export type EditTaskGradeMutationVariables = Exact<{
+  taskGradeInput: TaskSubmissionGradeInput;
+}>;
+
+
+export type EditTaskGradeMutation = (
+  { __typename: 'Mutation' }
+  & { gradeTaskSubmission: (
+    { __typename: 'TaskSubmissionGrade' }
+    & Pick<TaskSubmissionGrade, 'taskId'>
+  ) }
+);
+
 export type QuizBlockQueryVariables = Exact<{
   taskId: Scalars['String'];
   blockId: Scalars['String'];
@@ -1297,7 +1336,7 @@ export type FrQuestionFieldsFragment = (
 
 export type AnswerFieldsFragment = (
   { __typename: 'Answer' }
-  & Pick<Answer, 'pointsAwarded' | 'questionId' | 'answer'>
+  & Pick<Answer, 'pointsAwarded' | 'questionId' | 'answer' | 'graded' | 'teacherComment'>
 );
 
 export type TaskSubmissionResultQueryVariables = Exact<{
@@ -1558,6 +1597,8 @@ export const AnswerFieldsFragmentDoc = gql`
   pointsAwarded
   questionId
   answer
+  graded
+  teacherComment
 }
     `;
 export const QuestionAndAnswerFieldsFragmentDoc = gql`
@@ -1959,6 +2000,39 @@ export function useGetTargetProgressLazyQuery(baseOptions?: Apollo.LazyQueryHook
 export type GetTargetProgressQueryHookResult = ReturnType<typeof useGetTargetProgressQuery>;
 export type GetTargetProgressLazyQueryHookResult = ReturnType<typeof useGetTargetProgressLazyQuery>;
 export type GetTargetProgressQueryResult = Apollo.QueryResult<GetTargetProgressQuery, GetTargetProgressQueryVariables>;
+export const EditTaskGradeDocument = gql`
+    mutation editTaskGrade($taskGradeInput: TaskSubmissionGradeInput!) {
+  gradeTaskSubmission(grade: $taskGradeInput) {
+    taskId
+  }
+}
+    `;
+export type EditTaskGradeMutationFn = Apollo.MutationFunction<EditTaskGradeMutation, EditTaskGradeMutationVariables>;
+
+/**
+ * __useEditTaskGradeMutation__
+ *
+ * To run a mutation, you first call `useEditTaskGradeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditTaskGradeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editTaskGradeMutation, { data, loading, error }] = useEditTaskGradeMutation({
+ *   variables: {
+ *      taskGradeInput: // value for 'taskGradeInput'
+ *   },
+ * });
+ */
+export function useEditTaskGradeMutation(baseOptions?: Apollo.MutationHookOptions<EditTaskGradeMutation, EditTaskGradeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditTaskGradeMutation, EditTaskGradeMutationVariables>(EditTaskGradeDocument, options);
+      }
+export type EditTaskGradeMutationHookResult = ReturnType<typeof useEditTaskGradeMutation>;
+export type EditTaskGradeMutationResult = Apollo.MutationResult<EditTaskGradeMutation>;
+export type EditTaskGradeMutationOptions = Apollo.BaseMutationOptions<EditTaskGradeMutation, EditTaskGradeMutationVariables>;
 export const QuizBlockDocument = gql`
     query QuizBlock($taskId: String!, $blockId: String!) {
   quizblock(taskId: $taskId, blockId: $blockId) {

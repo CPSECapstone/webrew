@@ -112,7 +112,6 @@ function getStatusTitle(status: number) {
 }
 
 export default function MasteryCard({ name, progress, status, user }: Props) {
-   console.log(status);
    const history = useHistory();
    return (
       <Link to={{ pathname: `/singleMissionOverview/${name}`, state: user }}>
