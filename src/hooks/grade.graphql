@@ -1,0 +1,5 @@
+mutation editTaskGrade($taskGradeInput: TaskSubmissionGradeInput!) {
+   gradeTaskSubmission(grade: $taskGradeInput) {
+      taskId
+   }
+}

@@ -2,13 +2,17 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable react/no-array-index-key */
 import {
+   AnswerFieldsFragment,
+   AnswerFieldsFragmentDoc,
    FrBlockFieldsFragment,
    FrQuestionFieldsFragment,
    GetTaskByIdQuery,
    ImageBlockFieldsFragment,
    McBlockFieldsFragment,
    McQuestionFieldsFragment,
+   QuestionAndAnswerFieldsFragment,
    QuizBlockFieldsFragment,
+   TaskSubmissionResultQuery,
    TextBlockFieldsFragment,
    VideoBlockFieldsFragment,
 } from '../../../__generated__/types';
@@ -18,17 +22,47 @@ import VideoBlock from '../../../Components/TaskBlocks/VideoBlock/VideoBlock';
 import IntroBlock from '../../../Components/TaskBlocks/IntroBlock/IntroBlock';
 import FrBlock from '../../../Components/TaskBlocks/FrBlock/FrBlock';
 import McBlock from '../../../Components/TaskBlocks/McBlock/McBlock';
+import InstructorDetail from '../InstructorDetail/InstructorDetail';
 
 function BlockPageHandler({
    taskInformation,
    page,
+   taskSubmissionResult,
+   studentId,
 }: {
    taskInformation: GetTaskByIdQuery;
    page: number;
+   taskSubmissionResult: TaskSubmissionResultQuery;
+   studentId: string;
 }) {
    if (taskInformation.task.pages[page] === undefined) {
       return <>Quiz is Not Yet Defined</>;
    }
+
+   const taskSubmission = taskSubmissionResult.retrieveTaskSubmission;
+
+   const instructorDetail = taskSubmission ? (
+      <InstructorDetail taskSubmission={taskSubmission} studentId={studentId} />
+   ) : (
+      <></>
+   );
+
+   const questionsAndAnswers: QuestionAndAnswerFieldsFragment[] = taskSubmission?.questionAndAnswers
+      ? taskSubmission.questionAndAnswers
+      : [];
+   const answerMap = new Map<string, AnswerFieldsFragment>();
+   questionsAndAnswers.forEach((qAndAnswer) => {
+      if (qAndAnswer.answer) {
+         answerMap.set(qAndAnswer.question.id, qAndAnswer.answer);
+      } else {
+         answerMap.set(qAndAnswer.question.id, {
+            __typename: 'Answer',
+            pointsAwarded: 0,
+            questionId: qAndAnswer.question.id,
+            graded: false,
+         });
+      }
+   });
    const pageBlocks = taskInformation.task.pages[page].blocks;
 
    type TaskBlock =
@@ -78,12 +112,15 @@ function BlockPageHandler({
                switch (question.__typename) {
                   case 'FrQuestion': {
                      const answer = question.answer ? question.answer : 'Not answered.';
+                     const studentAnswer = answerMap.get(question.id);
                      blockList.push(
                         <FrBlock
                            title={block.title}
                            question={question.description}
                            answer={answer}
+                           studentAnswer={studentAnswer}
                            key={tempIndex}
+                           points={question.points}
                            cssKey={tempIndex}
                         />
                      );
@@ -91,13 +128,16 @@ function BlockPageHandler({
                      break;
                   }
                   case 'McQuestion': {
+                     const studentAnswer = answerMap.get(question.id);
                      blockList.push(
                         <McBlock
                            title={block.title}
                            question={question.description}
                            options={question.options}
                            answers={question.answers}
+                           studentAnswer={studentAnswer}
                            key={tempIndex}
+                           points={question.points}
                            cssKey={tempIndex}
                         />
                      );
@@ -135,6 +175,7 @@ function BlockPageHandler({
       <div className="container-fluid">
          <div className="row">
             <div className="col-12">
+               {instructorDetail}
                <IntroBlock instructions={taskInformation.task.instructions} cssKey={0} />
                {blockList}
             </div>
