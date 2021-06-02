@@ -12,8 +12,13 @@ import { Form, Button, NavDropdown } from 'react-bootstrap';
 import { ChevronLeft, ChevronRight, Menu } from '@material-ui/icons';
 import clsx from 'clsx';
 import React from 'react';
-import { RubricRequirement } from '../../../__generated__/types';
+import {
+   RubricRequirement,
+   TaskObjectiveProgress,
+   useGetObjectiveByIdQuery,
+} from '../../../__generated__/types';
 import Rubric from './Rubric';
+import ObjectiveRubric from './ObjectiveRubric';
 
 const useStyles = makeStyles((theme: Theme) =>
    createStyles({
@@ -68,11 +73,35 @@ const useStyles = makeStyles((theme: Theme) =>
    })
 );
 
-function RubricMenu({ requirements }: { requirements: RubricRequirement[] }) {
+function RubricMenu({
+   requirements,
+   objectiveProgress,
+}: {
+   requirements: RubricRequirement[];
+   objectiveProgress: TaskObjectiveProgress;
+}) {
+   const objectiveList = [];
    const classes = useStyles();
    const theme = useTheme();
    const [open, setOpen] = React.useState(false);
+   console.log(requirements);
+   // const objectiveId = '0035256d7d5';
 
+   if (objectiveProgress !== null) {
+      // const { data: objectiveQuery } = useGetObjectiveByIdQuery({
+      //    variables: {
+      //       // objectiveId,
+      //       objectiveId: '0035256d7d5',
+      //    },
+      // });
+      // console.log(objectiveQuery);
+      objectiveList.push(objectiveProgress);
+      // console.log(objectiveList);
+   } else {
+      objectiveList.push('');
+   }
+
+   console.log(objectiveList);
    const handleDrawerOpen = () => {
       setOpen(true);
    };
@@ -113,6 +142,11 @@ function RubricMenu({ requirements }: { requirements: RubricRequirement[] }) {
                   <Rubric requirement={requirement} />
                ))}
                <NavDropdown.Divider />
+               <Typography style={{ paddingLeft: '5px' }}> Learning Objectives </Typography>
+               <NavDropdown.Divider />
+               {objectiveList.map((objective: TaskObjectiveProgress | string) => (
+                  <ObjectiveRubric objective={objective} />
+               ))}
                <Button className="mx-auto" type="submit">
                   Submit Grade
                </Button>

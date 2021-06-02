@@ -1056,6 +1056,19 @@ export type CmStudentFieldsFragment = (
   ) }
 );
 
+export type GetObjectiveByIdQueryVariables = Exact<{
+  objectiveId: Scalars['String'];
+}>;
+
+
+export type GetObjectiveByIdQuery = (
+  { __typename: 'Query' }
+  & { objective: (
+    { __typename: 'Objective' }
+    & Pick<Objective, 'objectiveId' | 'objectiveName' | 'description' | 'targetId' | 'targetName' | 'course'>
+  ) }
+);
+
 export type GetMissionProgressQueryVariables = Exact<{
   courseId: Scalars['String'];
   username: Scalars['String'];
@@ -1693,6 +1706,46 @@ export function useClassMissionMasteryLazyQuery(baseOptions?: Apollo.LazyQueryHo
 export type ClassMissionMasteryQueryHookResult = ReturnType<typeof useClassMissionMasteryQuery>;
 export type ClassMissionMasteryLazyQueryHookResult = ReturnType<typeof useClassMissionMasteryLazyQuery>;
 export type ClassMissionMasteryQueryResult = Apollo.QueryResult<ClassMissionMasteryQuery, ClassMissionMasteryQueryVariables>;
+export const GetObjectiveByIdDocument = gql`
+    query GetObjectiveById($objectiveId: String!) {
+  objective(objectiveId: $objectiveId) {
+    objectiveId
+    objectiveName
+    description
+    targetId
+    targetName
+    course
+  }
+}
+    `;
+
+/**
+ * __useGetObjectiveByIdQuery__
+ *
+ * To run a query within a React component, call `useGetObjectiveByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetObjectiveByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetObjectiveByIdQuery({
+ *   variables: {
+ *      objectiveId: // value for 'objectiveId'
+ *   },
+ * });
+ */
+export function useGetObjectiveByIdQuery(baseOptions: Apollo.QueryHookOptions<GetObjectiveByIdQuery, GetObjectiveByIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetObjectiveByIdQuery, GetObjectiveByIdQueryVariables>(GetObjectiveByIdDocument, options);
+      }
+export function useGetObjectiveByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetObjectiveByIdQuery, GetObjectiveByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetObjectiveByIdQuery, GetObjectiveByIdQueryVariables>(GetObjectiveByIdDocument, options);
+        }
+export type GetObjectiveByIdQueryHookResult = ReturnType<typeof useGetObjectiveByIdQuery>;
+export type GetObjectiveByIdLazyQueryHookResult = ReturnType<typeof useGetObjectiveByIdLazyQuery>;
+export type GetObjectiveByIdQueryResult = Apollo.QueryResult<GetObjectiveByIdQuery, GetObjectiveByIdQueryVariables>;
 export const GetMissionProgressDocument = gql`
     query GetMissionProgress($courseId: String!, $username: String!) {
   getAllMissionProgress(courseId: $courseId, username: $username) {

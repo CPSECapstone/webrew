@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
    RubricRequirement,
+   TaskObjectiveProgress,
    useGetTaskByIdQuery,
    useTaskSubmissionResultQuery,
 } from '../../__generated__/types';
@@ -14,7 +15,9 @@ import './TaskView.css';
 function TaskView() {
    const [page, setPage] = useState(0);
    const { taskId } = useParams<Record<string, string | undefined>>();
-   const { username } = useParams<Record<string, string | undefined>>();
+   const history = useHistory();
+   console.log(history.location);
+   const taskObjectiveProgress = history.location.state;
    const { data: taskSubmissionQuery } = useTaskSubmissionResultQuery({
       variables: {
          taskId: '4f681550ba9',
@@ -41,10 +44,18 @@ function TaskView() {
    }
 
    const requirements = taskByIdQuery.task.requirements as RubricRequirement[];
+   const { objectiveId } = taskByIdQuery.task;
+   if (objectiveId === undefined) {
+      return <></>;
+   }
+   console.log(taskByIdQuery.task);
 
    return (
       <div className="back">
-         <TaskNavbar rubric={requirements} />
+         <TaskNavbar
+            rubric={requirements}
+            objectiveProgress={taskObjectiveProgress as TaskObjectiveProgress}
+         />
          <div>
             <TaskProgress
                taskInformation={taskByIdQuery}

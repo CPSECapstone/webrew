@@ -142,6 +142,7 @@ function SingleStudentOverview() {
       firstName: testVal?.firstName,
       lastName: testVal?.lastName,
    };
+
    const { data } = useGetMissionProgressQuery({
       variables: {
          courseId: 'Integrated Science',
