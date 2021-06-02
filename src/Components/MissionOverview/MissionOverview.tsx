@@ -5,11 +5,7 @@ import { useState } from 'react';
 import { useHistory } from 'react-router';
 import { GET_MISSIONS, GET_ALL_MISSION_PROGRESS } from '../../queries/mission-queries';
 import './MissionOverview.css';
-import ProgressBar from './ProgressBar';
 
-const MISSION_COMPONENT_PATH = '/courseHome/Integrated Science';
-
-// this component displays all of the Missions in a course
 export default function MissionsScreen() {
    const hist = useHistory();
 
@@ -36,8 +32,6 @@ export default function MissionsScreen() {
       );
 
    if (error || progressError) {
-      console.warn(error);
-      // throw error;
       return (
          <div className="tasks">
             <h1>Error!</h1>
@@ -48,17 +42,12 @@ export default function MissionsScreen() {
    return MissionsScreenDisplay(data, progressData, hist, focusedMission, setFocusedMission);
 }
 
-// this function allows for dependency injection during testing
 export function MissionsScreenDisplay(data, progressData, hist, focusedMission, setFocusedMission) {
    function displayMissionList() {
       return (
          <div className="missionList">
             {data.missions.map((mission) => (
-               <div
-                  data-testid={mission.id}
-                  className="Mission"
-                  onClick={() => setFocusedMission(mission)}
-               >
+               <div className="Mission" onClick={() => setFocusedMission(mission)}>
                   {/* <HdrWeakIcon style={{ color: "white", transform: "scale(6)" }}/> */}
                   <h1 style={{ color: 'white' }}>{mission.name}</h1>
                </div>
@@ -71,29 +60,12 @@ export function MissionsScreenDisplay(data, progressData, hist, focusedMission, 
       if (props.mission != null) {
          const prog = calculateMissionProgress(props.mission.id, progressData);
          return (
-            <div data-testid="missionOverview">
+            <div>
                <h1>{props.mission.name}</h1>
                <h2>{props.mission.description}</h2>
                <div className="progress">
                   <div />
-                  <div data-testid="missionOverviewProgressBar">
-                     <ProgressBar
-                        width="700"
-                        height="10"
-                        doneColor="#4274F3"
-                        leftColor="rgb(108, 108, 133)"
-                        total={100}
-                        done={prog}
-                     />
-                  </div>
-                  <h1
-                     style={{
-                        margin: '0',
-                        padding: '0',
-                     }}
-                  >
-                     % Complete
-                  </h1>
+                  <div />
                </div>
                <div className="start">
                   <button
@@ -141,10 +113,5 @@ export function calculateMissionProgress(missionId, progressData) {
 }
 
 export function redirectToMission(hist, missionId) {
-   hist.push({
-      pathname: MISSION_COMPONENT_PATH,
-      state: {
-         id: missionId,
-      },
-   });
+   hist.push(`/mission/${missionId}`);
 }

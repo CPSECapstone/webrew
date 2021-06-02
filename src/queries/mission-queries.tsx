@@ -28,3 +28,34 @@ export const GET_ALL_MISSION_PROGRESS = gql`
       }
    }
 `;
+
+export const GET_MISSION = gql`
+   query getMission($id: String!) {
+      mission(missionId: $id) {
+         id
+         course
+         name
+         description
+         missionContent {
+            ... on Task {
+               id
+               name
+               instructions
+               points
+               dueDate
+               missionId
+               missionIndex
+               requirements {
+                  id
+                  description
+               }
+            }
+            ... on SubMission {
+               id
+               name
+               description
+            }
+         }
+      }
+   }
+`;

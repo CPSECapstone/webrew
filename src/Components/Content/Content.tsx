@@ -11,10 +11,10 @@ import SingleTargetOverview from '../SingleTargetOverview/SingleTargetOverview';
 import SingleMissionOverview from '../SingleStudentOverview/SingleMissionOverview';
 
 import TaskView from '../../Screens/TaskView/TaskView';
-import MissionsScreen from '../MissionOverview/MissionOverview';
-
+import Mission from '../MissionOverview/Mission';
 import { ClassMastery } from '../../Screens/ClassMastery';
 import './Content.css';
+import MissionsScreen from '../MissionOverview/MissionOverview';
 
 export default function Content() {
    return (
@@ -41,19 +41,20 @@ export default function Content() {
             <Route path="/singleStudentMasteryOverview">
                <SingleStudentMasteryOverview />
             </Route>
+            <Route path="/mission/:missionId">
+               <Mission />
+            </Route>
             <Route path="/missions">
                <MissionsScreen />
             </Route>
             <Route path="/viewTask">
-            <Route path="/singleTargetOverview/:name">
-               <SingleTargetOverview />
+               <Route path="/singleTargetOverview/:name">
+                  <SingleTargetOverview />
+               </Route>
+               <Route path="/singleMissionOverview/:name">
+                  <SingleMissionOverview />
+               </Route>
             </Route>
-            <Route path="/singleMissionOverview/:name">
-               <SingleMissionOverview />
-            </Route>
-            {/* <Route path="/viewTask">
-               <TaskView taskId="90e0c730e56" />
-            </Route> */}
             <Route path="/viewTask/:taskId">
                <TaskView />
             </Route>
