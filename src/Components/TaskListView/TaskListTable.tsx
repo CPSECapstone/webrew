@@ -3,23 +3,19 @@ import { TaskListTaskFieldsFragment } from '../../__generated__/types';
 
 import './TaskListTable.css';
 
-type HeadProps = {
-   headers: Array<string>;
-};
-
 type RowProps = {
    data: Array<TaskListTaskFieldsFragment>;
 };
 
-type TaskTableProps = HeadProps & RowProps;
+type TaskTableProps = RowProps;
 
-const TaskListTableHead = ({ headers }: HeadProps): JSX.Element => {
+const TaskListTableHead = (): JSX.Element => {
    return (
       <thead>
          <tr>
-            {headers.map((header) => (
-               <th>{header}</th>
-            ))}
+            <th>Task Name</th>
+            <th>Instructions</th>
+            <th>Submissions</th>
          </tr>
       </thead>
    );
@@ -34,7 +30,7 @@ const TaskListTableBody = ({ data }: RowProps): JSX.Element => {
             <td className="cell-view">
                <Link
                   to={{
-                     pathname: `/viewTask/${task.id}`,
+                     pathname: `/taskSubmissionSummary/${task.id}`,
                   }}
                >
                   view
@@ -47,10 +43,10 @@ const TaskListTableBody = ({ data }: RowProps): JSX.Element => {
    return <tbody>{rows}</tbody>;
 };
 
-const TaskListTable = ({ headers: columns, data }: TaskTableProps): JSX.Element => {
+const TaskListTable = ({ data }: TaskTableProps): JSX.Element => {
    return (
       <table>
-         <TaskListTableHead headers={columns} />
+         <TaskListTableHead />
          <TaskListTableBody data={data} />
       </table>
    );

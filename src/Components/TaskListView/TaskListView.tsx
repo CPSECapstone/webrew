@@ -9,11 +9,10 @@ function TaskList() {
    });
 
    const tasks = data?.tasksByCourse || [];
-   const headers = ['Task Name', 'Instructions', 'Submissions'];
 
    return (
       <div className="base-table">
-         <TaskListTable headers={headers} data={tasks} />
+         <TaskListTable data={tasks} />
       </div>
    );
 }
