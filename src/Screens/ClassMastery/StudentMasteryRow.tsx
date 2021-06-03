@@ -5,10 +5,11 @@ import { color } from '../../Components/constants.json';
 type MasteryBarProps = { percentage: number };
 
 const MasteryBar = styled.div`
-   position: relative;
    border-radius: 11px;
    background-color: ${color.bgGrey};
    overflow: hidden;
+   width: 100%;
+   height: 100%;
 `;
 
 const InnerBar = styled.div<MasteryBarProps>`
@@ -18,17 +19,17 @@ const InnerBar = styled.div<MasteryBarProps>`
    bottom: 0;
    background-color: ${({ percentage }) =>
       percentage > 0.66 ? color.green : percentage > 0.33 ? color.yellow : color.red};
-   right: ${({ percentage }) => 100 - percentage * 100 + '%'};
+   right: ${({ percentage }) => `${100 - percentage * 100}%`};
    > span {
       position: absolute;
-      color: white;
+      color: black;
       top: 4px;
       font-size: 14px;
       right: ${({ percentage }) => (percentage > 0.25 ? '5px' : '-33px')};
    }
 `;
 
-function Mastery({ percentage }: MasteryBarProps) {
+export function Mastery({ percentage }: MasteryBarProps) {
    return (
       <MasteryBar>
          <InnerBar percentage={percentage}>
