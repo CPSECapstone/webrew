@@ -1,3 +1,7 @@
+import { useMutation } from '@apollo/client';
+import { Formik } from 'formik';
+import { Form, Button } from 'react-bootstrap';
+import { EDIT_QUESTION_GRADE } from '../../../queries/grade';
 import { AnswerFieldsFragment, QuestionOption } from '../../../__generated__/types';
 
 function renderQuestionOptions(
@@ -37,6 +41,7 @@ function McBlock({
    cssKey,
    studentAnswer,
    points,
+   studentId,
 }: {
    title: string;
    question: string;
@@ -45,27 +50,90 @@ function McBlock({
    cssKey: number;
    points: number;
    studentAnswer: AnswerFieldsFragment | undefined;
+   studentId: string;
 }) {
+   const [editQuestionGrade] = useMutation(EDIT_QUESTION_GRADE);
+
    return (
       <div className={`${cssKey % 2 === 1 ? 'white ' : 'gray '}row`}>
-         <div className="col-md-6 text-center py-5 mx-auto">
-            <h3 className="text-left mb-3">{title}</h3>
-            <div className="question-container p-4 shadow w-100">
-               <p className="text-left">{question}</p>
-               <span className="text-left">
-                  {`${studentAnswer?.pointsAwarded ? studentAnswer.pointsAwarded : 0} / ${points}`}
-               </span>
-               <span />
-               <br />
-               <div className="mx-4">
-                  {renderQuestionOptions(
-                     options,
-                     answers,
-                     studentAnswer?.answer ? studentAnswer.answer : '-1'
-                  )}
+         <Formik
+            initialValues={{
+               student: studentId,
+               questionId: studentAnswer?.questionId,
+               pointsAwarded: studentAnswer?.pointsAwarded || 0,
+               teacherComment: studentAnswer?.teacherComment || '',
+            }}
+            onSubmit={(values, { setSubmitting }) => {
+               setTimeout(() => {
+                  setSubmitting(false);
+                  editQuestionGrade({
+                     variables: {
+                        answerGradeInput: {
+                           student: values.student,
+                           questionId: values.questionId,
+                           pointsAwarded: values.pointsAwarded,
+                           teacherComment: values.teacherComment,
+                        },
+                     },
+                  })
+                     .then((data) => {
+                        alert('Question Grade Change Submitted.');
+                        location.reload();
+                     })
+                     .catch((error) => {
+                        alert(error);
+                        location.reload();
+                     });
+               }, 400);
+            }}
+         >
+            {({ values, handleChange, handleBlur, handleSubmit }) => (
+               <div className="col-md-6 text-center py-5 mx-auto">
+                  <Form onSubmit={handleSubmit}>
+                     <div className="text-right">
+                        <Button type="submit">Submit Changes</Button>
+                     </div>
+                     <h3 className="text-left mb-3">{title}</h3>
+                     <div className="question-container p-4 shadow w-100">
+                        <p className="text-left">{question}</p>
+                        <div className="d-inline-block">
+                           <Form.Control
+                              as="input"
+                              type="number"
+                              value={values.pointsAwarded}
+                              bsCustomPrefix="d-inline"
+                              id="pointsAwarded"
+                              className="indiv-points"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                           />
+                           <Form.Text
+                              as="h4"
+                              className="w-25 text-left right"
+                           >{` / ${points}`}</Form.Text>
+                        </div>
+                        <Form.Control
+                           as="textarea"
+                           onChange={handleChange}
+                           onBlur={handleBlur}
+                           id="teacherComment"
+                           placeholder="Awaiting feedback..."
+                           value={values.teacherComment}
+                           rows={1}
+                        />
+                        <br />
+                        <div className="mx-4">
+                           {renderQuestionOptions(
+                              options,
+                              answers,
+                              studentAnswer?.answer ? studentAnswer.answer : '-1'
+                           )}
+                        </div>
+                     </div>
+                  </Form>
                </div>
-            </div>
-         </div>
+            )}
+         </Formik>
       </div>
    );
 }

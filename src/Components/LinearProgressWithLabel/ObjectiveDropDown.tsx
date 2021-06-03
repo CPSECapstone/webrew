@@ -14,6 +14,7 @@ import {
    Task,
    TaskObjectiveProgress,
    TaskObjectiveProgressFieldsFragment,
+   useGetTaskObjectiveProgressQuery,
 } from '../../__generated__/types';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -106,6 +107,21 @@ const DoublePaddedDiv = styled.div`
 export interface ObjectiveDropDownProps {
    name: string;
    tasks: TaskObjectiveProgress[];
+   username: string;
+}
+
+function getTaskObjectivePorgress(task: TaskObjectiveProgress) {
+   const { data: taskObjectiveProgress } = useGetTaskObjectiveProgressQuery({
+      variables: {
+         taskId: task.task.id,
+         username: 'Google_114813486146105420824',
+      },
+   });
+   if (taskObjectiveProgress === undefined) {
+      return <></>;
+   }
+   const objectiveProgresses = (taskObjectiveProgress.getTaskObjectiveProgress as unknown) as TaskObjectiveProgress[];
+   return objectiveProgresses;
 }
 
 function getProgressBar(status: number) {
@@ -156,7 +172,7 @@ function getTaskPercent(mastery: string) {
    return 1;
 }
 
-export default function ObjectiveDropDown({ name, tasks }: ObjectiveDropDownProps) {
+export default function ObjectiveDropDown({ name, tasks, username }: ObjectiveDropDownProps) {
    const classes = useStyles();
    const [open, setOpen] = useState(false);
 
@@ -174,7 +190,13 @@ export default function ObjectiveDropDown({ name, tasks }: ObjectiveDropDownProp
 
          <Collapse in={open} timeout="auto" unmountOnExit>
             {tasks.map((task: TaskObjectiveProgress) => (
-               <Link to={`/viewTask/${task.task.id}`}>
+               <Link
+                  to={{
+                     pathname: `/viewTask/${task.task.id}/${username}`,
+                     state: getTaskObjectivePorgress(task),
+                  }}
+               >
+                  {console.log(task)}
                   <List component="div" disablePadding>
                      <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <DoublePaddedDiv>

@@ -9,6 +9,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable no-restricted-syntax */
+
 import { useHistory } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import React, { useState } from 'react';
@@ -24,6 +25,20 @@ import {
 import { LIST_TARGETS_BY_COURSE } from '../../hooks/ListTargetsByCourse';
 import SelectedLTStudentViewTable from './SelectedLTStudentViewTable';
 import { Mastery } from '../../Screens/ClassMastery/StudentMasteryRow';
+
+interface LTStudentViewRow {
+   row: {
+      section: string;
+      name: string;
+      firstname: string;
+      lastname: string;
+      team?: string;
+      recent: string;
+      average: string;
+      progress: string;
+      studentId: string;
+   };
+}
 
 function LTStudentViewTable() {
    const { data: missionMasteryData } = useClassMissionMasteryQuery();
@@ -79,35 +94,33 @@ function LTStudentViewTable() {
       console.log('Target Mastery Datas: ', targetMasteryDatas);
    }
 
-   const rowClicked = (userName: string) => {
+   const rowClicked = (row: LTStudentViewRow) => {
       history.push({
-         pathname: '/singleStudentMasteryOverview',
-         state: { id: '', firstName: userName, lastName: ' ' },
+         pathname: `/singleStudentMasteryOverview/${row.row.studentId}`,
+         state: { id: row.row.studentId, firstname: row.row.firstname, lastname: row.row.lastname },
       });
    };
 
-   const data: any[] = [];
-   missionMasteryData?.classMissionMastery?.studentMissionMasteryList.map(
-      (studentMissionMastery: CmStudentFieldsFragment) =>
-         data.push({
-            row: {
-               section: '1',
-               name: `${studentMissionMastery.student.lastName} ${studentMissionMastery.student.firstName}`,
-               team: studentMissionMastery.student.team,
-               recent: studentMissionMastery.currentTaskName,
-               average: '',
-            },
-         })
-   );
+   const studentMissionMasteryList: CmStudentFieldsFragment[] =
+      missionMasteryData?.classMissionMastery?.studentMissionMasteryList || [];
 
-   // TODO remove when names are populated
-   data.forEach((dataEntry) => {
-      if (dataEntry.row.name.indexOf('null') !== -1) {
-         dataEntry.row.name = 'Mary Lee';
-      }
-      if (dataEntry.row.name.length > 25) {
-         dataEntry.row.name = dataEntry.row.name.substring(0, 25);
-      }
+   const data: LTStudentViewRow[] = studentMissionMasteryList.map((studentMissionMastery) => {
+      const firstname = studentMissionMastery.student.firstName || 'Mary';
+      const lastname = studentMissionMastery.student.lastName || 'Lee';
+
+      return {
+         row: {
+            section: '1',
+            name: `${firstname} ${lastname}`,
+            firstname,
+            lastname,
+            team: studentMissionMastery.student.team,
+            recent: studentMissionMastery.currentTaskName,
+            average: '',
+            progress: `${(studentMissionMastery.progress * 100).toFixed(1)}%`,
+            studentId: studentMissionMastery.student.studentId,
+         },
+      };
    });
 
    const tableColumns = [

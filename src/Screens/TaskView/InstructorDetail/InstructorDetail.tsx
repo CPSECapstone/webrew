@@ -63,19 +63,8 @@ function InstructorDetail({
                            <Form.Label className="text-left w-100">Score:</Form.Label>
                            <Col>
                               <Form.Row>
-                                 <Col>
-                                    <Form.Control
-                                       as="input"
-                                       type="number"
-                                       value={values.pointsAwarded}
-                                       bsCustomPrefix="d-inline"
-                                       id="pointsAwarded"
-                                       onChange={handleChange}
-                                       onBlur={handleBlur}
-                                    />
-                                 </Col>
                                  <Col className="text-left">
-                                    <Form.Text as="h4">{` / ${
+                                    <Form.Text as="h4">{`${values.pointsAwarded} / ${
                                        taskSubmission.pointsPossible || 0
                                     }`}</Form.Text>
                                  </Col>

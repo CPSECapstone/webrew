@@ -6,7 +6,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Divider } from '@material-ui/core';
 import StudentPicture from '../../assets/images/images-1.png';
 import { User } from '../../interfaces/User';
@@ -133,7 +133,7 @@ function SingleStudentOverview() {
    // const { userId } = useParams();
    const classes = useStyles();
    const history = useHistory();
-
+   const { username } = useParams<Record<string, string>>();
    const COMP_TASK_PERCENT = 100;
 
    const testVal: any = history.location.state;
@@ -142,6 +142,7 @@ function SingleStudentOverview() {
       firstName: testVal?.firstName,
       lastName: testVal?.lastName,
    };
+
    const { data } = useGetMissionProgressQuery({
       variables: {
          courseId: 'Integrated Science',
@@ -184,6 +185,7 @@ function SingleStudentOverview() {
                   progress={mission.progress as TaskStats[]}
                   status={calculateStatus(mission.progress as TaskStats[])}
                   user={inputUser}
+                  username={username}
                />
             ))}
          </RowDiv>

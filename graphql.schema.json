@@ -5470,9 +5470,13 @@
               }
             ],
             "type": {
-              "kind": "OBJECT",
-              "name": "ClassMissionMastery",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "ClassMissionMastery",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null

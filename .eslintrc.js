@@ -23,5 +23,6 @@ module.exports = {
       ],
       'no-underscore-dangle': ['error', { allow: ['__typename'] }],
       'no-console': 'off',
+      'no-plusplus': 'off',
    },
 };

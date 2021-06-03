@@ -11,7 +11,13 @@ import { Divider } from '@material-ui/core';
 import StudentPicture from '../../assets/images/images-1.png';
 import { User } from '../../interfaces/User';
 import LinearProgressWithLabel from '../LinearProgressWithLabel/LinearProgressWithLabel';
-import { MissionProgress, TaskStats, useGetMissionProgressQuery } from '../../__generated__/types';
+import {
+   MissionProgress,
+   TaskObjectiveProgress,
+   TaskStats,
+   useGetMissionProgressQuery,
+   useGetTaskObjectiveProgressQuery,
+} from '../../__generated__/types';
 
 const StudentDiv = styled.div`
    height: 200px;
@@ -109,6 +115,20 @@ const useStyles = makeStyles((theme: Theme) =>
    })
 );
 
+function getTaskObjectiveProgress(task: TaskStats) {
+   const { data: taskObjectiveProgress } = useGetTaskObjectiveProgressQuery({
+      variables: {
+         taskId: task.taskId,
+         username: 'Google_114813486146105420824',
+      },
+   });
+   if (taskObjectiveProgress === undefined) {
+      return <></>;
+   }
+   const objectiveProgresses = (taskObjectiveProgress.getTaskObjectiveProgress as unknown) as TaskObjectiveProgress[];
+   return objectiveProgresses;
+}
+
 function getMissionProgress(missionData: MissionProgress[], name: string) {
    for (const mission of missionData) {
       if (mission.mission.name === name) {
@@ -120,6 +140,8 @@ function getMissionProgress(missionData: MissionProgress[], name: string) {
 function SingleMissionOverview() {
    // const { data: users } = useQuery<User>(GET_USERS);
    const { name } = useParams<Record<string, string | undefined>>();
+   // const { username } = useParams<Record<string, string | undefined>>();
+   const username = 'Google_114813486146105420824';
    const classes = useStyles();
    const history = useHistory();
    console.log(history);
@@ -176,7 +198,15 @@ function SingleMissionOverview() {
          <TaskRowDiv className="row">
             <LeftColumnDiv className="col-12" style={{ justifyContent: 'right' }}>
                {missionProgressData?.map((task: TaskStats) => (
-                  <Link to={`/viewTask/${task.taskId}`} data-testid="task-btn">
+                  // <Link to={`/viewTask/${task.taskId}`} data-testid="task-btn">
+                  <Link
+                     to={{
+                        pathname: `/viewTask/${task.taskId}/${username}`,
+                        state: getTaskObjectiveProgress(task),
+                     }}
+                     data-testid="task-btn"
+                  >
+                     {console.log(task)}
                      <List
                         component="div"
                         disablePadding
