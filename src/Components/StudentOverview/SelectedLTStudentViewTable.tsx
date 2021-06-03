@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable no-plusplus */
 /* eslint-disable array-callback-return */
@@ -164,6 +165,22 @@ function SelectedLTStudentViewTable(classMissionMastery: any, selectedLTId: stri
          index++;
       }
    );
+
+   data.forEach((dataEntry) => {
+      let count = 0;
+      for (const [key, value] of Object.entries(dataEntry.row)) {
+         const value2: any = value;
+         if (typeof value === 'object' && value !== null) {
+            if (value2.status === 'MASTERED') {
+               count++;
+            }
+         }
+         dataEntry.row.progress = `${(
+            (count / targetMasteryData.classTargetMastery.target.objectives.length) *
+            100
+         ).toFixed(1)}%`;
+      }
+   });
 
    return (
       <div>
