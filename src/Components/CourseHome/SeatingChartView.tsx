@@ -49,13 +49,15 @@ function SeatingChartView(classMissionMasterydata: any) {
                         <ProgressContent>
                            <strong>
                               {/* Abbreviates last name if name is more than 25 chars */}
-                              {/* {studentMissionMastery.student.email.split('@')[0]} */}
-
-                              {studentMissionMastery.student.email.split('@')[0].length < 10
-                                 ? `${studentMissionMastery.student.email.split('@')[0]}`
-                                 : `${studentMissionMastery.student.email
-                                      .split('@')[0]
-                                      .substring(0, 10)}...`}
+                              {!studentMissionMastery.student.firstName
+                                 ? 'Mary Lee'
+                                 : `${studentMissionMastery.student.firstName} ${
+                                      studentMissionMastery.student.firstName.length +
+                                         studentMissionMastery.student.lastName.length <
+                                      25
+                                         ? `${studentMissionMastery.student.lastName}`
+                                         : `${studentMissionMastery.student.lastName.charAt(0)}.`
+                                   }`}
                            </strong>
                            <CurrentTask>
                               <div>

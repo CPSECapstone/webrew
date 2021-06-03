@@ -36,7 +36,7 @@ function ListView(classMissionMasterydata: any) {
       (studentMissionMastery: CmStudentFieldsFragment) => {
          return {
             row: {
-               name: `${studentMissionMastery.student.email}`,
+               name: `${studentMissionMastery.student.lastName} ${studentMissionMastery.student.firstName}`,
                recent: studentMissionMastery.currentTaskName,
                masteryLevel: studentMissionMastery.level,
                lastLogOn: 'Jan. 7, 2021',
@@ -45,6 +45,13 @@ function ListView(classMissionMasterydata: any) {
          };
       }
    );
+
+   // TODO remove when names are populated
+   data.forEach((dataEntry: MissionMasteryRow) => {
+      if (dataEntry.row.name.indexOf('null') !== -1) {
+         dataEntry.row.name = 'Mary Lee';
+      }
+   });
 
    const tableColumns = [
       {
