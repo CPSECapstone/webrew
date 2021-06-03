@@ -2,17 +2,11 @@ import React, { SetStateAction } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { useMutation, useQuery } from '@apollo/client';
 import { EDIT_OBJECTIVE_GRADE } from '../../../queries/objective-grade';
-import { TASK_OBJECTIVE_PROGRESS } from '../../../queries/task-objective-progress';
-import {
-   Mastery,
-   TaskObjectiveProgress,
-   useGetTaskObjectiveProgressQuery,
-} from '../../../__generated__/types';
+import { Mastery, TaskObjectiveProgress } from '../../../__generated__/types';
 
 const useStyles = makeStyles((theme: Theme) =>
    createStyles({
@@ -28,10 +22,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function MasteryRubricGrading({
    objectiveProgress,
-   username
+   username,
 }: {
    objectiveProgress: TaskObjectiveProgress;
-   username: string
+   username: string;
 }) {
    const classes = useStyles();
    const [masteryVal, setMastery] = React.useState(objectiveProgress.mastery);

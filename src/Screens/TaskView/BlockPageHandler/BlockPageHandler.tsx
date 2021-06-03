@@ -178,7 +178,7 @@ function BlockPageHandler({
          <div className="row">
             <div className="col-12">
                {instructorDetail}
-               <IntroBlock instructions={taskInformation.task.instructions} cssKey={0} />
+               <IntroBlock instructions={taskInformation.task.instructions} />
                {blockList}
             </div>
          </div>

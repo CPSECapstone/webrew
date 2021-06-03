@@ -1,4 +1,3 @@
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import styled from 'styled-components';
 import { useHistory, useParams } from 'react-router-dom';
 import { Divider, ListItemText, Typography } from '@material-ui/core';

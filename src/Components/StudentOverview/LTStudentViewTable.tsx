@@ -24,8 +24,8 @@ interface LTStudentViewRow {
    row: {
       section: string;
       name: string;
-      firstname: string;
-      lastname: string;
+      firstName: string;
+      lastName: string;
       team?: string;
       recent: string;
       average: string;
@@ -57,7 +57,7 @@ function LTStudentViewTable() {
    const rowClicked = (row: LTStudentViewRow) => {
       history.push({
          pathname: `/singleStudentMasteryOverview/${row.row.studentId}`,
-         state: { id: row.row.studentId, firstname: row.row.firstname, lastname: row.row.lastname },
+         state: { id: row.row.studentId, firstName: row.row.lastName, lastName: row.row.lastName },
       });
    };
 
@@ -65,15 +65,15 @@ function LTStudentViewTable() {
       missionMasteryData?.classMissionMastery?.studentMissionMasteryList || [];
 
    const data: LTStudentViewRow[] = studentMissionMasteryList.map((studentMissionMastery) => {
-      const firstname = studentMissionMastery.student.firstName || 'Mary';
-      const lastname = studentMissionMastery.student.lastName || 'Lee';
+      const firstName = studentMissionMastery.student.firstName || 'Mary';
+      const lastName = studentMissionMastery.student.lastName || 'Lee';
 
       return {
          row: {
             section: '1',
-            name: `${firstname} ${lastname}`,
-            firstname,
-            lastname,
+            name: `${firstName} ${lastName}`,
+            firstName,
+            lastName,
             team: studentMissionMastery.student.team,
             recent: studentMissionMastery.currentTaskName,
             average: '',

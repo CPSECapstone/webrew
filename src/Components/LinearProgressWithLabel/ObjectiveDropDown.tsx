@@ -9,13 +9,8 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import { Link } from 'react-router-dom';
 import { Box, LinearProgress } from '@material-ui/core';
-import LinearProgressWithLabel from './LinearProgressWithLabel';
-import {
-   Task,
-   TaskObjectiveProgress,
-   TaskObjectiveProgressFieldsFragment,
-   useGetTaskObjectiveProgressQuery,
-} from '../../__generated__/types';
+
+import { TaskObjectiveProgress, useGetTaskObjectiveProgressQuery } from '../../__generated__/types';
 
 const useStyles = makeStyles((theme: Theme) =>
    createStyles({
@@ -32,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
    })
 );
-const MasteredProgress = withStyles((theme: Theme) =>
+const MasteredProgress = withStyles(() =>
    createStyles({
       root: {
          height: 25,
@@ -48,7 +43,7 @@ const MasteredProgress = withStyles((theme: Theme) =>
    })
 )(LinearProgress);
 
-const NotStartedProgress = withStyles((theme: Theme) =>
+const NotStartedProgress = withStyles(() =>
    createStyles({
       root: {
          height: 25,
@@ -66,7 +61,7 @@ const NotStartedProgress = withStyles((theme: Theme) =>
    })
 )(LinearProgress);
 
-const NotMasteredProgress = withStyles((theme: Theme) =>
+const NotMasteredProgress = withStyles(() =>
    createStyles({
       root: {
          height: 25,
@@ -82,7 +77,7 @@ const NotMasteredProgress = withStyles((theme: Theme) =>
    })
 )(LinearProgress);
 
-const AlmostMasteredProgress = withStyles((theme: Theme) =>
+const AlmostMasteredProgress = withStyles(() =>
    createStyles({
       root: {
          height: 25,

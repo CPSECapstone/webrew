@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import {
    RubricRequirement,
-   TaskObjectiveProgress,
    useGetTaskByIdQuery,
    useTaskSubmissionResultQuery,
 } from '../../__generated__/types';
@@ -13,16 +12,8 @@ import './TaskView.css';
 
 function TaskView() {
    const [page, setPage] = useState(0);
-   const history = useHistory();
-   console.log(history.location);
-   const taskObjectiveProgress = history.location.state;
    const { taskId } = useParams<Record<string, string>>();
    const { username } = useParams<Record<string, string>>();
-
-   console.log(taskObjectiveProgress);
-   if (taskId === undefined) {
-      return <>Task Undefined</>;
-   }
 
    const { data: taskSubmissionQuery } = useTaskSubmissionResultQuery({
       variables: {

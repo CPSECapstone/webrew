@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { useQuery } from '@apollo/client';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import styled from 'styled-components';
@@ -10,7 +8,6 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Divider } from '@material-ui/core';
 import StudentPicture from '../../assets/images/images-1.png';
 import { User } from '../../interfaces/User';
-import { GET_USERS } from '../../queries/user-queries';
 import { TaskStats, useGetMissionProgressQuery } from '../../__generated__/types';
 import MasteryCard from './MasteryCard';
 
@@ -41,19 +38,6 @@ const StudentImageDiv = styled.div`
    align-items: left;
 `;
 
-const FieldTitleDiv = styled.div`
-   height: 30px;
-   width: 100%;
-   background-color: #99d6ff;
-   align-items: center;
-   display: flex;
-   padding: 5px;
-   border: 1px;
-   border-color: #1A8BDE;
-   border-style: solid;
-}
-`;
-
 const RowDiv = styled.div`
    width: 100%;
    display: flex;
@@ -67,20 +51,6 @@ const ColumnDiv = styled.div`
    width: 100%;
    flex-direction: column;
    padding: 5px;
-`;
-const LeftColumnDiv = styled.div`
-   width: 75%;
-   flex-direction: column;
-   padding: 5px;
-`;
-const RightColumnDiv = styled.div`
-   width: 25%;
-   flex-direction: column;
-   padding: 5px;
-`;
-
-const PaddedDiv = styled.div`
-   padding-left: 5px;
 `;
 const HeaderDiv = styled.div`
    height: 100%;
@@ -98,22 +68,6 @@ const TargetDiv = styled.div`
    align-items: flex-end;
 `;
 
-const useStyles = makeStyles((theme: Theme) =>
-   createStyles({
-      root: {
-         width: '100%',
-         maxWidth: 500,
-         backgroundColor: theme.palette.background.paper,
-      },
-      nested: {
-         paddingLeft: theme.spacing(4),
-      },
-      progressBar: {
-         minWidth: '150px',
-      },
-   })
-);
-
 function calculateStatus(progress: TaskStats[]) {
    let count = 0;
    for (const taskStat of progress) {
@@ -129,12 +83,8 @@ function calculateStatus(progress: TaskStats[]) {
 }
 
 function SingleStudentOverview() {
-   const { data: users } = useQuery<User>(GET_USERS);
-   // const { userId } = useParams();
-   const classes = useStyles();
    const history = useHistory();
    const { username } = useParams<Record<string, string>>();
-   const COMP_TASK_PERCENT = 100;
 
    const testVal: any = history.location.state;
    const inputUser: User = {
@@ -149,7 +99,7 @@ function SingleStudentOverview() {
          username: 'Google_113982570160032635204',
       },
    });
-   const missionData1 = data?.getAllMissionProgress[0];
+
    const missionData = data?.getAllMissionProgress;
    console.log(missionData);
 

@@ -1,4 +1,4 @@
-import { Theme, createStyles, Paper, makeStyles, Tab } from '@material-ui/core';
+import { Theme, createStyles, makeStyles, Tab } from '@material-ui/core';
 import React, { useState } from 'react';
 import TabContext from '@material-ui/lab/TabContext';
 import TabPanel from '@material-ui/lab/TabPanel';

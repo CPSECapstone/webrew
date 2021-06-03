@@ -16,6 +16,8 @@ import { CmStudentFieldsFragment } from '../../__generated__/types';
 interface MissionMasteryRow {
    row: {
       name: string;
+      firstName: string;
+      lastName: string;
       recent: string;
       masteryLevel: string;
       lastLogOn: string;
@@ -29,14 +31,21 @@ function ListView(classMissionMasterydata: any) {
       console.log(row);
       history.push({
          pathname: `/singleStudentOverview/${row.row.studentId}`,
+         state: { id: row.row.studentId, firstName: row.row.firstName, lastName: row.row.lastName },
       });
    };
 
    const data: MissionMasteryRow[] = classMissionMasterydata.classMissionMasterydata.studentMissionMasteryList.map(
       (studentMissionMastery: CmStudentFieldsFragment) => {
+         const firstName = studentMissionMastery.student.firstName || 'Mary';
+         const lastName = studentMissionMastery.student.lastName || 'Lee';
+         const name = `${firstName} ${lastName}`;
+
          return {
             row: {
-               name: `${studentMissionMastery.student.lastName} ${studentMissionMastery.student.firstName}`,
+               name,
+               firstName,
+               lastName,
                recent: studentMissionMastery.currentTaskName,
                masteryLevel: studentMissionMastery.level,
                lastLogOn: 'Jan. 7, 2021',
