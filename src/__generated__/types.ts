@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
-export type Maybe<T> = T | null | undefined;
+export type Maybe<T> = T | undefined;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
@@ -543,7 +543,7 @@ export type Query = {
   getGoalById: Goal;
   student: Student;
   students: Array<Student>;
-  classMissionMastery?: Maybe<ClassMissionMastery>;
+  classMissionMastery: ClassMissionMastery;
   classTargetMastery: ClassTargetMastery;
 };
 
@@ -1079,13 +1079,13 @@ export type VideoBlockInput = {
 export type ClassMissionMasteryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ClassMissionMasteryQuery = { __typename: 'Query', classMissionMastery?: Maybe<{ __typename: 'ClassMissionMastery', mission: (
+export type ClassMissionMasteryQuery = { __typename: 'Query', classMissionMastery: { __typename: 'ClassMissionMastery', mission: (
       { __typename: 'Mission' }
       & CmMissionFieldsFragment
     ), studentMissionMasteryList: Array<(
       { __typename: 'StudentMissionMastery' }
       & CmStudentFieldsFragment
-    )> }> };
+    )> } };
 
 export type CmMissionFieldsFragment = { __typename: 'Mission', name: string, description: string };
 
@@ -1153,13 +1153,7 @@ export type GetObjectiveByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetObjectiveByIdQuery = (
-  { __typename: 'Query' }
-  & { objective: (
-    { __typename: 'Objective' }
-    & Pick<Objective, 'objectiveId' | 'objectiveName' | 'description' | 'targetId' | 'targetName' | 'course'>
-  ) }
-);
+export type GetObjectiveByIdQuery = { __typename: 'Query', objective: { __typename: 'Objective', objectiveId: string, objectiveName: string, description: string, targetId: string, targetName: string, course: string } };
 
 export type GetTaskObjectiveProgressQueryVariables = Exact<{
   taskId: Scalars['String'];
@@ -1167,20 +1161,7 @@ export type GetTaskObjectiveProgressQueryVariables = Exact<{
 }>;
 
 
-export type GetTaskObjectiveProgressQuery = (
-  { __typename: 'Query' }
-  & { getTaskObjectiveProgress: Array<(
-    { __typename: 'TaskObjectiveProgress' }
-    & Pick<TaskObjectiveProgress, 'mastery'>
-    & { task: (
-      { __typename: 'Task' }
-      & Pick<Task, 'id' | 'name'>
-    ), objective: (
-      { __typename: 'Objective' }
-      & Pick<Objective, 'objectiveId' | 'objectiveName' | 'description'>
-    ) }
-  )> }
-);
+export type GetTaskObjectiveProgressQuery = { __typename: 'Query', getTaskObjectiveProgress: Array<{ __typename: 'TaskObjectiveProgress', mastery: Mastery, task: { __typename: 'Task', id: string, name: string }, objective: { __typename: 'Objective', objectiveId: string, objectiveName: string, description: string } }> };
 
 export type GetMissionProgressQueryVariables = Exact<{
   courseId: Scalars['String'];
