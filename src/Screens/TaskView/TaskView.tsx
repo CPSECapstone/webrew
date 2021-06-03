@@ -18,6 +18,7 @@ function TaskView() {
    console.log(history.location);
    const taskObjectiveProgress = history.location.state;
 
+   console.log(taskObjectiveProgress);
    const { username } = useParams<Record<string, string | undefined>>();
    if (taskId === undefined) {
       return <>Task Undefined</>;

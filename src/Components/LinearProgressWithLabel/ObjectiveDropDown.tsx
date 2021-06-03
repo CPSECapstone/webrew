@@ -113,6 +113,7 @@ function getTaskObjectivePorgress(task: TaskObjectiveProgress) {
    const { data: taskObjectiveProgress } = useGetTaskObjectiveProgressQuery({
       variables: {
          taskId: task.task.id,
+         username: 'Google_114813486146105420824',
       },
    });
    if (taskObjectiveProgress === undefined) {

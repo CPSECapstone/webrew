@@ -34,7 +34,6 @@ export default function MasteryRubricGrading({
    const classes = useStyles();
    const [masteryVal, setMastery] = React.useState(objectiveProgress.mastery);
    const [editObjectiveGrade, { data }] = useMutation(EDIT_OBJECTIVE_GRADE);
-   console.log(objectiveProgress);
 
    const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
       //   console.log(event.target.value);
@@ -47,7 +46,9 @@ export default function MasteryRubricGrading({
                mastery: event.target.value,
             },
          },
-      }).catch((error) => console.log(error));
+      })
+         .then((data1) => alert(data1))
+         .catch((error) => console.log(error));
       setMastery(event.target.value as SetStateAction<Mastery>);
    };
 
