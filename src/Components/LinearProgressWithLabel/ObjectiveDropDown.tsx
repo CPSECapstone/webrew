@@ -107,6 +107,7 @@ const DoublePaddedDiv = styled.div`
 export interface ObjectiveDropDownProps {
    name: string;
    tasks: TaskObjectiveProgress[];
+   username: string;
 }
 
 function getTaskObjectivePorgress(task: TaskObjectiveProgress) {
@@ -171,7 +172,7 @@ function getTaskPercent(mastery: string) {
    return 1;
 }
 
-export default function ObjectiveDropDown({ name, tasks }: ObjectiveDropDownProps) {
+export default function ObjectiveDropDown({ name, tasks, username }: ObjectiveDropDownProps) {
    const classes = useStyles();
    const [open, setOpen] = useState(false);
 
@@ -191,7 +192,7 @@ export default function ObjectiveDropDown({ name, tasks }: ObjectiveDropDownProp
             {tasks.map((task: TaskObjectiveProgress) => (
                <Link
                   to={{
-                     pathname: `/viewTask/${task.task.id}`,
+                     pathname: `/viewTask/${task.task.id}/${username}`,
                      state: getTaskObjectivePorgress(task),
                   }}
                >

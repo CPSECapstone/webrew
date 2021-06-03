@@ -8,15 +8,11 @@ import {
    useTheme,
    Typography,
 } from '@material-ui/core';
-import { Form, Button, NavDropdown } from 'react-bootstrap';
+import { Form, NavDropdown } from 'react-bootstrap';
 import { ChevronLeft, ChevronRight, Menu } from '@material-ui/icons';
 import clsx from 'clsx';
 import React from 'react';
-import {
-   RubricRequirement,
-   TaskObjectiveProgress,
-   useGetObjectiveByIdQuery,
-} from '../../../__generated__/types';
+import { RubricRequirement } from '../../../__generated__/types';
 import Rubric from './Rubric';
 import ObjectiveRubric from './ObjectiveRubric';
 
