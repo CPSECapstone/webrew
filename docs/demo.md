@@ -24,7 +24,11 @@ Clicking on a Task here will show the student's submission and allow an authoriz
 
 ![Task View: Rubric and Grading](.gitbook/assets/image%20%2811%29.png)
 
-Clicking on Students and Groups on the Sidebar will show the Mastery Level for each student and their progress
+Clicking on Students and Groups on the Sidebar will show the Mastery Level for each student and their progress on Learning Targets
+
+![Learning Target Progress](.gitbook/assets/image%20%2812%29.png)
+
+Clicking on a Learning Target will show mastery progress for Objectives.
 
 ![Viewing all Students&apos; Mastery Level on Objectives](.gitbook/assets/image%20%287%29.png)
 
