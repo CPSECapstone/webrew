@@ -92,6 +92,9 @@ function getTargetData(targetData1: TargetProgress[], name: string) {
 export default function SingleTargetOveriew() {
    const history = useHistory();
    const { name } = useParams<Record<string, string | undefined>>();
+
+   const username = 'Google_114813486146105420824';
+
    const test: any = history.location.state;
    const inputUser: User = {
       id: test?.id,
@@ -101,7 +104,7 @@ export default function SingleTargetOveriew() {
    const { data, loading, error } = useGetTargetProgressQuery({
       variables: {
          courseId: 'Integrated Science',
-         username: 'Google_118280657086683968595',
+         username,
       },
    });
 
@@ -153,7 +156,11 @@ export default function SingleTargetOveriew() {
          <RowDiv className="row">
             <TargetColumnDiv className="col-12">
                {targetData?.objectives.map((objective: ObjectiveProgress) => (
-                  <ObjectiveDropDown name={objective.objectiveName} tasks={objective.tasks} />
+                  <ObjectiveDropDown
+                     name={objective.objectiveName}
+                     tasks={objective.tasks}
+                     username={username}
+                  />
                ))}
             </TargetColumnDiv>
          </RowDiv>
