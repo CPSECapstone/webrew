@@ -52,7 +52,7 @@ function LTStudentViewTable() {
          data.push({
             row: {
                section: '1',
-               name: `${studentMissionMastery.student.lastName} ${studentMissionMastery.student.firstName}`,
+               name: `${studentMissionMastery.student.email}`,
                team: studentMissionMastery.student.team,
                recent: studentMissionMastery.currentTaskName,
                average: '',
@@ -63,9 +63,9 @@ function LTStudentViewTable() {
 
    // TODO remove when names are populated
    data.forEach((dataEntry) => {
-      if (dataEntry.row.name.indexOf('null') !== -1) {
-         dataEntry.row.name = 'Mary Lee';
-      }
+      // if (dataEntry.row.name.indexOf('null') !== -1) {
+      //    dataEntry.row.name = 'Mary Lee';
+      // }
       if (dataEntry.row.name.length > 25) {
          dataEntry.row.name = dataEntry.row.name.substring(0, 25);
       }
