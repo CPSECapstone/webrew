@@ -7,3 +7,11 @@ export const EDIT_GRADE = gql`
       }
    }
 `;
+
+export const EDIT_QUESTION_GRADE = gql`
+   mutation editAnswerGrade($answerGradeInput: AnswerGradeInput!) {
+      gradeAnswer(grade: $answerGradeInput) {
+         questionId
+      }
+   }
+`;

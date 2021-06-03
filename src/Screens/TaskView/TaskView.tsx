@@ -15,9 +15,6 @@ function TaskView() {
    const { taskId } = useParams<Record<string, string>>();
    const { username } = useParams<Record<string, string>>();
 
-   console.log(taskId);
-   console.log(username);
-
    const { data: taskSubmissionQuery } = useTaskSubmissionResultQuery({
       variables: {
          taskId,
@@ -28,9 +25,6 @@ function TaskView() {
    const { data: taskByIdQuery } = useGetTaskByIdQuery({
       variables: { taskId },
    });
-
-   console.log(taskSubmissionQuery);
-   console.log(taskByIdQuery);
 
    const maxPage: number =
       taskByIdQuery === undefined || taskByIdQuery.task.pages === undefined
@@ -57,7 +51,7 @@ function TaskView() {
                taskInformation={taskByIdQuery}
                page={page}
                taskSubmissionResult={taskSubmissionQuery}
-               studentId="Google_114813486146105420824"
+               studentId={username}
             />
          </div>
       </div>
