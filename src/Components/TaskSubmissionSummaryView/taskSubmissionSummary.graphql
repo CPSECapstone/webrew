@@ -1,0 +1,26 @@
+query TaskSubmissionSummary($course: String!, $taskId: String!) {
+   taskSubmissionSummary(course: $course, taskId: $taskId) {
+      task {
+         ...SummaryTaskFields
+      }
+      results {
+         ...SummaryStudentResultFields
+      }
+   }
+}
+
+fragment SummaryTaskFields on Task {
+   id
+   name
+   instructions
+   points
+}
+
+fragment SummaryStudentResultFields on StudentTaskSubmissionResult {
+   studentId
+   studentName
+   submitted
+   graded
+   pointsAwarded
+   teacherComment
+}

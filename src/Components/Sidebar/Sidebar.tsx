@@ -39,7 +39,7 @@ const sideBarItems = [
    },
    {
       name: 'Task',
-      link: '/viewTask',
+      link: '/taskList',
       Icon: IconPeople,
    },
    {
