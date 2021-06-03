@@ -1076,6 +1076,21 @@ export type VideoBlockInput = {
   videoUrl: Scalars['String'];
 };
 
+export type ClassMissionMasteryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ClassMissionMasteryQuery = { __typename: 'Query', classMissionMastery?: Maybe<{ __typename: 'ClassMissionMastery', mission: (
+      { __typename: 'Mission' }
+      & CmMissionFieldsFragment
+    ), studentMissionMasteryList: Array<(
+      { __typename: 'StudentMissionMastery' }
+      & CmStudentFieldsFragment
+    )> }> };
+
+export type CmMissionFieldsFragment = { __typename: 'Mission', name: string, description: string };
+
+export type CmStudentFieldsFragment = { __typename: 'StudentMissionMastery', currentTaskId: string, currentTaskName: string, level: number, progress: number, student: { __typename: 'Student', studentId: string, lastName?: Maybe<string>, firstName?: Maybe<string>, email: string, team?: Maybe<string> } };
+
 export type TaskListQueryVariables = Exact<{
   course: Scalars['String'];
 }>;
@@ -1106,69 +1121,32 @@ export type SummaryTaskFieldsFragment = { __typename: 'Task', id: string, name: 
 
 export type SummaryStudentResultFieldsFragment = { __typename: 'StudentTaskSubmissionResult', studentId: string, studentName: string, submitted: boolean, graded: boolean, pointsAwarded?: Maybe<number>, teacherComment?: Maybe<string> };
 
-export type ClassMissionMasteryQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type ClassMissionMasteryQuery = { __typename: 'Query', classMissionMastery?: Maybe<{ __typename: 'ClassMissionMastery', mission: (
-      { __typename: 'Mission' }
-      & CmMissionFieldsFragment
-    ), studentMissionMasteryList: Array<(
-      { __typename: 'StudentMissionMastery' }
-      & CmStudentFieldsFragment
-    )> }> };
-
-export type CmMissionFieldsFragment = { __typename: 'Mission', name: string, description: string };
-
-export type CmStudentFieldsFragment = { __typename: 'StudentMissionMastery', currentTaskId: string, currentTaskName: string, level: number, progress: number, student: { __typename: 'Student', lastName?: Maybe<string>, firstName?: Maybe<string>, email: string, team?: Maybe<string> } };
-
 export type ClassTargetMasteryQueryVariables = Exact<{
   targetId: Scalars['String'];
 }>;
 
 
-export type ClassTargetMasteryQuery = (
-  { __typename: 'Query' }
-  & { classTargetMastery: (
-    { __typename: 'ClassTargetMastery' }
-    & { target: (
+export type ClassTargetMasteryQuery = { __typename: 'Query', classTargetMastery: { __typename: 'ClassTargetMastery', target: (
       { __typename: 'Target' }
       & CtmTargetFieldFragment
     ), studentObjectiveMasteryList: Array<(
       { __typename: 'StudentObjectiveMastery' }
       & CtmStudentObjectiveMasteryFieldsFragment
-    )> }
-  ) }
-);
+    )> } };
 
-export type CtmTargetFieldFragment = (
-  { __typename: 'Target' }
-  & Pick<Target, 'targetId' | 'targetName'>
-  & { objectives: Array<(
+export type CtmTargetFieldFragment = { __typename: 'Target', targetId: string, targetName: string, objectives: Array<(
     { __typename: 'Objective' }
     & CtmObjectiveFieldFragment
-  )> }
-);
+  )> };
 
-export type CtmObjectiveFieldFragment = (
-  { __typename: 'Objective' }
-  & Pick<Objective, 'objectiveId' | 'objectiveName'>
-);
+export type CtmObjectiveFieldFragment = { __typename: 'Objective', objectiveId: string, objectiveName: string };
 
-export type CtmStudentObjectiveMasteryFieldsFragment = (
-  { __typename: 'StudentObjectiveMastery' }
-  & { student: (
-    { __typename: 'Student' }
-    & Pick<Student, 'studentId' | 'email'>
-  ), objectiveMasteryList: Array<(
+export type CtmStudentObjectiveMasteryFieldsFragment = { __typename: 'StudentObjectiveMastery', student: { __typename: 'Student', studentId: string, email: string }, objectiveMasteryList: Array<(
     { __typename: 'ObjectiveMastery' }
     & CtmObjectiveMasteryFieldsFragment
-  )> }
-);
+  )> };
 
-export type CtmObjectiveMasteryFieldsFragment = (
-  { __typename: 'ObjectiveMastery' }
-  & Pick<ObjectiveMastery, 'objectiveId' | 'mastery'>
-);
+export type CtmObjectiveMasteryFieldsFragment = { __typename: 'ObjectiveMastery', objectiveId: string, mastery: string };
 
 export type GetMissionProgressQueryVariables = Exact<{
   courseId: Scalars['String'];
@@ -1377,6 +1355,27 @@ export type McBlockFieldsFragment = { __typename: 'McBlock', title: string, bloc
 
 export type FrBlockFieldsFragment = { __typename: 'FrBlock', title: string, blockId: string, blockIndex: number, pageIndex: number, points: number, stem: string, answer?: Maybe<string> };
 
+export const CmMissionFieldsFragmentDoc = gql`
+    fragment CMMissionFields on Mission {
+  name
+  description
+}
+    `;
+export const CmStudentFieldsFragmentDoc = gql`
+    fragment CMStudentFields on StudentMissionMastery {
+  student {
+    studentId
+    lastName
+    firstName
+    email
+    team
+  }
+  currentTaskId
+  currentTaskName
+  level
+  progress
+}
+    `;
 export const TaskListTaskFieldsFragmentDoc = gql`
     fragment TaskListTaskFields on Task {
   id
@@ -1400,26 +1399,6 @@ export const SummaryStudentResultFieldsFragmentDoc = gql`
   graded
   pointsAwarded
   teacherComment
-}
-    `;
-export const CmMissionFieldsFragmentDoc = gql`
-    fragment CMMissionFields on Mission {
-  name
-  description
-}
-    `;
-export const CmStudentFieldsFragmentDoc = gql`
-    fragment CMStudentFields on StudentMissionMastery {
-  student {
-    lastName
-    firstName
-    email
-    team
-  }
-  currentTaskId
-  currentTaskName
-  level
-  progress
 }
     `;
 export const CtmObjectiveFieldFragmentDoc = gql`
@@ -1689,6 +1668,46 @@ ${QuizBlockFieldsFragmentDoc}
 ${ImageBlockFieldsFragmentDoc}
 ${McBlockFieldsFragmentDoc}
 ${FrBlockFieldsFragmentDoc}`;
+export const ClassMissionMasteryDocument = gql`
+    query ClassMissionMastery {
+  classMissionMastery(missionId: "4df2cfa5710") {
+    mission {
+      ...CMMissionFields
+    }
+    studentMissionMasteryList {
+      ...CMStudentFields
+    }
+  }
+}
+    ${CmMissionFieldsFragmentDoc}
+${CmStudentFieldsFragmentDoc}`;
+
+/**
+ * __useClassMissionMasteryQuery__
+ *
+ * To run a query within a React component, call `useClassMissionMasteryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useClassMissionMasteryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useClassMissionMasteryQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useClassMissionMasteryQuery(baseOptions?: Apollo.QueryHookOptions<ClassMissionMasteryQuery, ClassMissionMasteryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ClassMissionMasteryQuery, ClassMissionMasteryQueryVariables>(ClassMissionMasteryDocument, options);
+      }
+export function useClassMissionMasteryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ClassMissionMasteryQuery, ClassMissionMasteryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ClassMissionMasteryQuery, ClassMissionMasteryQueryVariables>(ClassMissionMasteryDocument, options);
+        }
+export type ClassMissionMasteryQueryHookResult = ReturnType<typeof useClassMissionMasteryQuery>;
+export type ClassMissionMasteryLazyQueryHookResult = ReturnType<typeof useClassMissionMasteryLazyQuery>;
+export type ClassMissionMasteryQueryResult = Apollo.QueryResult<ClassMissionMasteryQuery, ClassMissionMasteryQueryVariables>;
 export const TaskListDocument = gql`
     query TaskList($course: String!) {
   tasksByCourse(course: $course) {
@@ -1766,46 +1785,6 @@ export function useTaskSubmissionSummaryLazyQuery(baseOptions?: Apollo.LazyQuery
 export type TaskSubmissionSummaryQueryHookResult = ReturnType<typeof useTaskSubmissionSummaryQuery>;
 export type TaskSubmissionSummaryLazyQueryHookResult = ReturnType<typeof useTaskSubmissionSummaryLazyQuery>;
 export type TaskSubmissionSummaryQueryResult = Apollo.QueryResult<TaskSubmissionSummaryQuery, TaskSubmissionSummaryQueryVariables>;
-export const ClassMissionMasteryDocument = gql`
-    query ClassMissionMastery {
-  classMissionMastery(missionId: "4df2cfa5710") {
-    mission {
-      ...CMMissionFields
-    }
-    studentMissionMasteryList {
-      ...CMStudentFields
-    }
-  }
-}
-    ${CmMissionFieldsFragmentDoc}
-${CmStudentFieldsFragmentDoc}`;
-
-/**
- * __useClassMissionMasteryQuery__
- *
- * To run a query within a React component, call `useClassMissionMasteryQuery` and pass it any options that fit your needs.
- * When your component renders, `useClassMissionMasteryQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useClassMissionMasteryQuery({
- *   variables: {
- *   },
- * });
- */
-export function useClassMissionMasteryQuery(baseOptions?: Apollo.QueryHookOptions<ClassMissionMasteryQuery, ClassMissionMasteryQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ClassMissionMasteryQuery, ClassMissionMasteryQueryVariables>(ClassMissionMasteryDocument, options);
-      }
-export function useClassMissionMasteryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ClassMissionMasteryQuery, ClassMissionMasteryQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ClassMissionMasteryQuery, ClassMissionMasteryQueryVariables>(ClassMissionMasteryDocument, options);
-        }
-export type ClassMissionMasteryQueryHookResult = ReturnType<typeof useClassMissionMasteryQuery>;
-export type ClassMissionMasteryLazyQueryHookResult = ReturnType<typeof useClassMissionMasteryLazyQuery>;
-export type ClassMissionMasteryQueryResult = Apollo.QueryResult<ClassMissionMasteryQuery, ClassMissionMasteryQueryVariables>;
 export const ClassTargetMasteryDocument = gql`
     query ClassTargetMastery($targetId: String!) {
   classTargetMastery(targetId: $targetId) {
