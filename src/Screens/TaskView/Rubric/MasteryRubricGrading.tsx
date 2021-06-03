@@ -28,8 +28,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function MasteryRubricGrading({
    objectiveProgress,
+   username
 }: {
    objectiveProgress: TaskObjectiveProgress;
+   username: string
 }) {
    const classes = useStyles();
    const [masteryVal, setMastery] = React.useState(objectiveProgress.mastery);
@@ -40,15 +42,13 @@ export default function MasteryRubricGrading({
       editObjectiveGrade({
          variables: {
             objectiveGradeInput: {
-               student: 'Google_114813486146105420824',
+               student: username,
                taskId: objectiveProgress.task.id,
                objectiveId: objectiveProgress.objective.objectiveId,
                mastery: event.target.value,
             },
          },
-      })
-         .then((data1) => alert(data1))
-         .catch((error) => console.log(error));
+      }).catch((error) => console.log(error));
       setMastery(event.target.value as SetStateAction<Mastery>);
    };
 

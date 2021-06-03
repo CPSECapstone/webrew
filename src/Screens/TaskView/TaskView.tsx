@@ -13,41 +13,27 @@ import './TaskView.css';
 
 function TaskView() {
    const [page, setPage] = useState(0);
-   const { taskId } = useParams<Record<string, string | undefined>>();
    const history = useHistory();
    console.log(history.location);
    const taskObjectiveProgress = history.location.state;
+   const { taskId } = useParams<Record<string, string>>();
+   const { username } = useParams<Record<string, string>>();
 
    console.log(taskObjectiveProgress);
-   const { username } = useParams<Record<string, string | undefined>>();
    if (taskId === undefined) {
       return <>Task Undefined</>;
    }
+
    const { data: taskSubmissionQuery } = useTaskSubmissionResultQuery({
       variables: {
          taskId,
-         username: 'Google_114813486146105420824',
+         username,
       },
    });
 
    const { data: taskByIdQuery } = useGetTaskByIdQuery({
       variables: { taskId },
    });
-
-   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-   // const { data: taskObjectiveProgressQuery } = useGetTaskObjectiveProgressQuery({
-   //    variables: {
-   //       taskId,
-   //       username: 'Google_114813486146105420824',
-   //    },
-   // });
-
-   // if (taskObjectiveProgressQuery === undefined) {
-   //    return <>Task Objective Progress Undefined</>;
-   // }
-
-   // const taskObjectiveProgress = taskObjectiveProgressQuery?.getTaskObjectiveProgress[0];
-   // console.log(taskObjectiveProgress as TaskObjectiveProgress);
 
    const maxPage: number =
       taskByIdQuery === undefined || taskByIdQuery.task.pages === undefined
@@ -69,7 +55,9 @@ function TaskView() {
       <div className="back">
          <TaskNavbar
             rubric={requirements}
-            objectiveProgress={taskObjectiveProgress as TaskObjectiveProgress[]}
+            // objectiveProgress={taskObjectiveProgress as TaskObjectiveProgress[]}
+            taskId={taskId}
+            username={username}
          />
          <div>
             <TaskProgress
@@ -82,7 +70,7 @@ function TaskView() {
                taskInformation={taskByIdQuery}
                page={page}
                taskSubmissionResult={taskSubmissionQuery}
-               studentId="Google_114813486146105420824"
+               studentId={username}
             />
          </div>
       </div>

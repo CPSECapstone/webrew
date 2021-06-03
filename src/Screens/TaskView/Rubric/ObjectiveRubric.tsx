@@ -9,17 +9,21 @@ import {
 } from '../../../__generated__/types';
 import MasteryRubricGrading from './MasteryRubricGrading';
 
-function ObjectiveRubric({ objective }: { objective: TaskObjectiveProgress[] }) {
-   //    const { data: taskObjectiveProgress } = useGetTaskObjectiveProgressQuery({
-   //       variables: {
-   //          taskId: objective.task.id,
-   //       },
-   //    });
-   //    if (taskObjectiveProgress === undefined) {
-   //       return <></>;
-   //    }
-   //    const objectiveProgresses = (taskObjectiveProgress.getTaskObjectiveProgress as unknown) as TaskObjectiveProgress[];
-   const objectiveProgresses = objective;
+function ObjectiveRubric({ taskId, username }: { taskId: string; username: string }) {
+   const { data: taskObjectiveProgress } = useGetTaskObjectiveProgressQuery({
+      variables: {
+         taskId,
+         username,
+      },
+   });
+   if (taskObjectiveProgress === undefined) {
+      return <></>;
+   }
+   let objectiveProgresses = (taskObjectiveProgress.getTaskObjectiveProgress as unknown) as TaskObjectiveProgress[];
+
+   if (objectiveProgresses === undefined) {
+      objectiveProgresses = [];
+   }
 
    return (
       <MenuItem>
@@ -30,7 +34,7 @@ function ObjectiveRubric({ objective }: { objective: TaskObjectiveProgress[] }) 
             {objectiveProgresses.map((objectiveProgress1: TaskObjectiveProgress) => (
                <div className="row">
                   <div className="col-8" style={{ width: '50%' }}>
-                     <MasteryRubricGrading objectiveProgress={objectiveProgress1} />
+                     <MasteryRubricGrading objectiveProgress={objectiveProgress1} username={username} />
                   </div>
                   <div className="col-4" style={{ paddingTop: '25px', width: '50%' }}>
                      <Typography>{objectiveProgress1.objective.objectiveName}</Typography>

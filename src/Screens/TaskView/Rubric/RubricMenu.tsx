@@ -75,10 +75,12 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function RubricMenu({
    requirements,
-   objectiveProgress,
+   taskId,
+   username,
 }: {
    requirements: RubricRequirement[];
-   objectiveProgress: TaskObjectiveProgress[];
+   taskId: string;
+   username: string;
 }) {
    const classes = useStyles();
    const theme = useTheme();
@@ -154,7 +156,7 @@ function RubricMenu({
             <NavDropdown.Divider />
             <Form>
                {/* {objectiveList.map((objective: TaskObjectiveProgress) => ( */}
-               <ObjectiveRubric objective={objectiveProgress} />
+               <ObjectiveRubric taskId={taskId} username={username} />
             </Form>
          </Drawer>
       </div>

@@ -9,10 +9,12 @@ import './TaskNavbar.css';
 
 function TaskNavbar({
    rubric,
-   objectiveProgress,
+   taskId,
+   username,
 }: {
    rubric: RubricRequirement[];
-   objectiveProgress: TaskObjectiveProgress[];
+   taskId: string;
+   username: string;
 }) {
    return (
       <Navbar className="navbar-custom border-top border-light" collapseOnSelect expand="sm">
@@ -30,7 +32,7 @@ function TaskNavbar({
                   </Button>
                </Form>
                <div className="ml-1 mr-0">
-                  <RubricMenu requirements={rubric} objectiveProgress={objectiveProgress} />
+                  <RubricMenu requirements={rubric} taskId={taskId} username={username} />
                </div>
             </Nav>
          </Navbar.Collapse>
