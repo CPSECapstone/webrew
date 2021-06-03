@@ -1,4 +1,4 @@
-import { Checkbox, MenuItem, Typography } from '@material-ui/core';
+import { Checkbox, Divider, MenuItem, Typography } from '@material-ui/core';
 import { useState } from 'react';
 
 import { Form } from 'react-bootstrap';
@@ -13,15 +13,15 @@ function Rubric({ requirement }: { requirement: RubricRequirement }) {
 
    return (
       <MenuItem style={{ width: '100%' }}>
-         <Form.Group>
-            <Checkbox
+         {/* <Form.Group> */}
+         {/* <Checkbox
                checked={complete}
                onChange={handleChange}
                inputProps={{ 'aria-label': 'primary checkbox' }}
                color="default"
-            />
-            <Typography>{requirement.description}</Typography>
-         </Form.Group>
+            /> */}
+         <Typography>{requirement.description}</Typography>
+         {/* </Form.Gro up> */}
       </MenuItem>
    );
 }

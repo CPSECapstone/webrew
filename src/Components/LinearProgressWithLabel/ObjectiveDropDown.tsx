@@ -14,6 +14,7 @@ import {
    Task,
    TaskObjectiveProgress,
    TaskObjectiveProgressFieldsFragment,
+   useGetTaskObjectiveProgressQuery,
 } from '../../__generated__/types';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -108,6 +109,20 @@ export interface ObjectiveDropDownProps {
    tasks: TaskObjectiveProgress[];
 }
 
+function getTaskObjectivePorgress(task: TaskObjectiveProgress) {
+   const { data: taskObjectiveProgress } = useGetTaskObjectiveProgressQuery({
+      variables: {
+         taskId: task.task.id,
+         username: 'Google_114813486146105420824',
+      },
+   });
+   if (taskObjectiveProgress === undefined) {
+      return <></>;
+   }
+   const objectiveProgresses = (taskObjectiveProgress.getTaskObjectiveProgress as unknown) as TaskObjectiveProgress[];
+   return objectiveProgresses;
+}
+
 function getProgressBar(status: number) {
    if (status === 0) {
       return <NotStartedProgress />;
@@ -174,7 +189,13 @@ export default function ObjectiveDropDown({ name, tasks }: ObjectiveDropDownProp
 
          <Collapse in={open} timeout="auto" unmountOnExit>
             {tasks.map((task: TaskObjectiveProgress) => (
-               <Link to={`/viewTask/${task.task.id}`}>
+               <Link
+                  to={{
+                     pathname: `/viewTask/${task.task.id}`,
+                     state: getTaskObjectivePorgress(task),
+                  }}
+               >
+                  {console.log(task)}
                   <List component="div" disablePadding>
                      <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <DoublePaddedDiv>

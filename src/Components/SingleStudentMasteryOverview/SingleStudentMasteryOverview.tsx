@@ -509,12 +509,12 @@ function SingleStudentMasteryOverview() {
       firstName: test?.firstName,
       lastName: test?.lastName,
    };
-   console.log(inputUser.id);
+   console.log(inputUser.firstName);
 
    const { data } = useGetTargetProgressQuery({
       variables: {
          courseId: 'Integrated Science',
-         username: '74caa373-b13a-4a97-84d3-ba9e27236290',
+         username: 'Google_113982570160032635204',
       },
    });
 
