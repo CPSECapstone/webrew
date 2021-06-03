@@ -34,7 +34,10 @@ function ObjectiveRubric({ taskId, username }: { taskId: string; username: strin
             {objectiveProgresses.map((objectiveProgress1: TaskObjectiveProgress) => (
                <div className="row">
                   <div className="col-8" style={{ width: '50%' }}>
-                     <MasteryRubricGrading objectiveProgress={objectiveProgress1} username={username} />
+                     <MasteryRubricGrading
+                        objectiveProgress={objectiveProgress1}
+                        username={username}
+                     />
                   </div>
                   <div className="col-4" style={{ paddingTop: '25px', width: '50%' }}>
                      <Typography>{objectiveProgress1.objective.objectiveName}</Typography>

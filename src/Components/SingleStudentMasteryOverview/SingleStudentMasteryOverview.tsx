@@ -509,7 +509,7 @@ function SingleStudentMasteryOverview() {
       firstName: test?.firstName,
       lastName: test?.lastName,
    };
-   console.log(inputUser.id);
+   console.log(inputUser.firstName);
 
    const { data } = useGetTargetProgressQuery({
       variables: {

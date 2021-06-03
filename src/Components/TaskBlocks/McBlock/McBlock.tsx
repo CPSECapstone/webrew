@@ -103,6 +103,7 @@ function McBlock({
                               value={values.pointsAwarded}
                               bsCustomPrefix="d-inline"
                               id="pointsAwarded"
+                              className="indiv-points"
                               onChange={handleChange}
                               onBlur={handleBlur}
                            />

@@ -140,6 +140,8 @@ function getMissionProgress(missionData: MissionProgress[], name: string) {
 function SingleMissionOverview() {
    // const { data: users } = useQuery<User>(GET_USERS);
    const { name } = useParams<Record<string, string | undefined>>();
+   // const { username } = useParams<Record<string, string | undefined>>();
+   const username = 'Google_114813486146105420824';
    const classes = useStyles();
    const history = useHistory();
    console.log(history);
@@ -199,7 +201,7 @@ function SingleMissionOverview() {
                   // <Link to={`/viewTask/${task.taskId}`} data-testid="task-btn">
                   <Link
                      to={{
-                        pathname: `/viewTask/${task.taskId}`,
+                        pathname: `/viewTask/${task.taskId}/${username}`,
                         state: getTaskObjectiveProgress(task),
                      }}
                      data-testid="task-btn"

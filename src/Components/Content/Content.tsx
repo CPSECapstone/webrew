@@ -35,7 +35,7 @@ export default function Content() {
             <Route path="/studentOverview">
                <StudentOverview />
             </Route>
-            <Route path="/singleStudentOverview">
+            <Route path="/singleStudentOverview/:username">
                <SingleStudentOverview />
             </Route>
             <Route path="/singleStudentMasteryOverview">
@@ -44,7 +44,7 @@ export default function Content() {
             <Route path="/singleTargetOverview/:name">
                <SingleTargetOverview />
             </Route>
-            <Route path="/singleMissionOverview/:name">
+            <Route path="/singleMissionOverview/:name/:username">
                <SingleMissionOverview />
             </Route>
             <Route path="/taskList">
