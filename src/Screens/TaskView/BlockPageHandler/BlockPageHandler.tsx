@@ -122,6 +122,7 @@ function BlockPageHandler({
                            key={tempIndex}
                            points={question.points}
                            cssKey={tempIndex}
+                           studentId={studentId}
                         />
                      );
                      tempIndex += 1;
@@ -139,6 +140,7 @@ function BlockPageHandler({
                            key={tempIndex}
                            points={question.points}
                            cssKey={tempIndex}
+                           studentId={studentId}
                         />
                      );
                      tempIndex += 1;

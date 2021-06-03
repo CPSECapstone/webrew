@@ -1,0 +1,38 @@
+query ClassTargetMastery($targetId: String!) {
+  classTargetMastery(targetId: $targetId) {
+    target {
+      ...CTMTargetField
+    }
+    studentObjectiveMasteryList {
+      ...CTMStudentObjectiveMasteryFields
+    }
+  }
+}
+
+fragment CTMTargetField on Target {
+  targetId
+  targetName
+  objectives {
+    ...CTMObjectiveField
+  }
+}
+
+fragment CTMObjectiveField on Objective {
+  objectiveId
+  objectiveName
+}
+
+fragment CTMStudentObjectiveMasteryFields on StudentObjectiveMastery {
+  student {
+    studentId
+    email
+  }
+  objectiveMasteryList {
+    ...CTMObjectiveMasteryFields
+  }
+}
+
+fragment CTMObjectiveMasteryFields on ObjectiveMastery {
+  objectiveId
+  mastery
+}

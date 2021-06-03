@@ -15,9 +15,6 @@ function TaskView() {
    const { taskId } = useParams<Record<string, string>>();
    const { username } = useParams<Record<string, string>>();
 
-   console.log(taskId);
-   console.log(username);
-
    const { data: taskSubmissionQuery } = useTaskSubmissionResultQuery({
       variables: {
          taskId,
@@ -57,7 +54,7 @@ function TaskView() {
                taskInformation={taskByIdQuery}
                page={page}
                taskSubmissionResult={taskSubmissionQuery}
-               studentId="Google_114813486146105420824"
+               studentId={username}
             />
          </div>
       </div>
