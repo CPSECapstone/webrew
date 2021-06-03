@@ -11,31 +11,43 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import TableComponent from '../TableComponent/TableComponent';
+import { CmStudentFieldsFragment } from '../../__generated__/types';
+
+interface MissionMasteryRow {
+   row: {
+      name: string;
+      recent: string;
+      masteryLevel: string;
+      lastLogOn: string;
+      studentId: string;
+   };
+}
 
 function ListView(classMissionMasterydata: any) {
    const history = useHistory();
-   const rowClicked = (userName: string) => {
+   const rowClicked = (row: MissionMasteryRow) => {
+      console.log(row);
       history.push({
-         pathname: '/singleStudentOverview',
-         state: { id: '', firstName: userName, lastName: ' ' },
+         pathname: `/singleStudentOverview/${row.row.studentId}`,
       });
    };
 
-   const data: any[] = [];
-   classMissionMasterydata.classMissionMasterydata.studentMissionMasteryList.map(
-      (studentMissionMastery: any) =>
-         data.push({
+   const data: MissionMasteryRow[] = classMissionMasterydata.classMissionMasterydata.studentMissionMasteryList.map(
+      (studentMissionMastery: CmStudentFieldsFragment) => {
+         return {
             row: {
                name: `${studentMissionMastery.student.lastName} ${studentMissionMastery.student.firstName}`,
                recent: studentMissionMastery.currentTaskName,
                masteryLevel: studentMissionMastery.level,
                lastLogOn: 'Jan. 7, 2021',
+               studentId: studentMissionMastery.student.studentId,
             },
-         })
+         };
+      }
    );
 
    // TODO remove when names are populated
-   data.forEach((dataEntry) => {
+   data.forEach((dataEntry: MissionMasteryRow) => {
       if (dataEntry.row.name.indexOf('null') !== -1) {
          dataEntry.row.name = 'Mary Lee';
       }

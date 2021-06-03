@@ -83,6 +83,7 @@ type Props = {
    progress: TaskStats[];
    status: number;
    user: User;
+   username: string;
 };
 
 function getProgressBar(status: number) {
@@ -106,16 +107,15 @@ function getStatusTitle(status: number) {
       return 'Not Mastered';
    }
    if (status >= 0.75) {
-      return 'Almost Mastered';
+      return 'Nearly Mastered';
    }
    return 'Mastered';
 }
 
-export default function MasteryCard({ name, progress, status, user }: Props) {
-   console.log(status);
+export default function MasteryCard({ name, progress, status, user, username }: Props) {
    const history = useHistory();
    return (
-      <Link to={{ pathname: `/singleMissionOverview/${name}`, state: user }}>
+      <Link to={{ pathname: `/singleMissionOverview/${name}/${username}`, state: user }}>
          <div className="mission-card">
             <div className="mission-card-header" />
             <div className="mission-card-body">
