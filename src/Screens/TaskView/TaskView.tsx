@@ -35,6 +35,9 @@ function TaskView() {
       variables: { taskId },
    });
 
+   console.log(taskSubmissionQuery);
+   console.log(taskByIdQuery);
+
    const maxPage: number =
       taskByIdQuery === undefined || taskByIdQuery.task.pages === undefined
          ? 0
