@@ -1,3 +1,4 @@
+import { withAuthenticator } from '@aws-amplify/ui-react';
 import { CourseInfoFieldsFragment, useGetCoursesQuery } from '../../__generated__/types';
 import CourseCard from './CourseCard';
 import CreateCourseDialog from '../CreateCourseDialog/CreateCourseDialog';
@@ -27,4 +28,4 @@ function Dashboard() {
    );
 }
 
-export default Dashboard;
+export default withAuthenticator(Dashboard);

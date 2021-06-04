@@ -12,8 +12,8 @@
 
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
 const GridWrapper = styled.div`
    display: grid;
@@ -33,9 +33,11 @@ const CurrentTask = styled.div`
    margin-top: 5px;
    display: flex;
    flex-direction: column;
+   color: blue;
 `;
 
 function SeatingChartView(classMissionMasterydata: any) {
+   const hist = useHistory();
    return (
       <GridWrapper>
          {classMissionMasterydata.classMissionMasterydata.studentMissionMasteryList.map(
@@ -59,12 +61,21 @@ function SeatingChartView(classMissionMasterydata: any) {
                                          : `${studentMissionMastery.student.lastName.charAt(0)}.`
                                    }`}
                            </strong>
-                           <CurrentTask>
-                              <div>
-                                 <Link to="/viewTask">Current Task</Link>
-                              </div>
+                           <div>
+                              <CurrentTask>
+                                 <div
+                                    key={studentMissionMastery}
+                                    onClick={() =>
+                                       hist.push(
+                                          `/viewTask/${studentMissionMastery.currentTaskId}/${studentMissionMastery.student.studentId}`
+                                       )
+                                    }
+                                 >
+                                    Current Task
+                                 </div>
+                              </CurrentTask>
                               <div>{studentMissionMastery.currentTaskName}</div>
-                           </CurrentTask>
+                           </div>
                         </ProgressContent>
                      </CircularProgressbarWithChildren>
                   </div>
