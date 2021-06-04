@@ -1,0 +1,20 @@
+query GetMissionProgress($courseId: String!, $username: String!) {
+   getAllMissionProgress(courseId: $courseId, username: $username) {
+      student
+      mission {
+         name
+         description
+         id
+         course
+      }
+      progress {
+         name
+         taskId
+         submission {
+            graded
+            pointsAwarded
+            pointsPossible
+         }
+      }
+   }
+}

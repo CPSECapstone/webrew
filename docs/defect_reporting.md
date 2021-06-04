@@ -1,12 +1,18 @@
 # Defect Reporting
 
-Please follow the following steps to report any defects you find in the prototype.
+## Internel Tester - Submit JIRA issue ticket
 
-First go to JIRA board homepage at [Here](http://platinum.cscaws.com:8080/secure/RapidBoard.jspa?rapidView=52&view=planning.nodetail&issueLimit=100), then
+If you have access to the JIRA system, please use the link to file a issue ticket in our webrew JIRA board.
 
-1. Click the `Create` Button in the navigation bar.
-2. In the pop up window, select `Bug` for `Issue Type`.
-3. Click the `Create` at the right bottom corner of the pop up window to submit the bug when you are done inputing,
+[webrew board](http://platinum.cscaws.com:8080/secure/RapidBoard.jspa?rapidView=52&view=planning&selectedIssue=WEB-187&issueLimit=100)
 
-   ![report issue](.gitbook/assets/report_issue.png)
+## External Testers - Use Google Form
+
+For those whose who don't access to JIRA, please use this google form link to report any defect you find in the prototype.
+
+[Flipt\(ed\)-webrew Defect Report](https://forms.gle/aTeX2EaxwV6vFZPq9)
+
+## Contact
+
+If you have trouble accessing webrew app, please reach out to our team contact point @zhongyuan on slack at [here](https://secapstone2021.slack.com/archives/D01J7HYCZRA). Thanks.
 

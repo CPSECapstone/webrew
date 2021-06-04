@@ -1,6 +1,11 @@
 .App {
    text-align: left;
    height: 100%;
+   background-color: #fff;
+}
+
+.side {
+   background-color: #fff;
 }
 
 .App-logo {
@@ -41,7 +46,7 @@
 .main {
    height: calc(100vh - 56px);
    .sidebar-container {
-      background-color: #5884ab;
+      background-color: ghostwhite;
    }
    .content-container {
       background-color: ghostwhite;

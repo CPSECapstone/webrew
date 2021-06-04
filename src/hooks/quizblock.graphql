@@ -41,10 +41,12 @@ fragment AnswerFields on Answer {
    pointsAwarded
    questionId
    answer
+   graded
+   teacherComment
 }
 
-query TaskSubmissionResult($taskId: String) {
-   retrieveTaskSubmission(taskId: $taskId) {
+query TaskSubmissionResult($taskId: String!, $username: String!) {
+   retrieveTaskSubmission(taskId: $taskId, username: $username) {
       graded
       pointsAwarded
       pointsPossible
@@ -52,6 +54,7 @@ query TaskSubmissionResult($taskId: String) {
          ...QuestionAndAnswerFields
       }
       teacherComment
+      taskId
    }
 }
 

@@ -41,9 +41,7 @@ function TableComponent({ columns, data, rowClickFunction }: any) {
                      className={rowClickFunction !== undefined ? 'hoverRow' : ''}
                      {...row.getRowProps()}
                      onClick={() =>
-                        rowClickFunction !== undefined
-                           ? rowClickFunction(row.values['row.name'])
-                           : undefined
+                        rowClickFunction !== undefined ? rowClickFunction(row.original) : undefined
                      }
                   >
                      {row.cells.map((cell) => {

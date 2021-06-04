@@ -1,16 +1,27 @@
-import React from 'react';
-import { useParams, useHistory } from 'react-router-dom';
-import { createStyles, makeStyles, Theme } from '@material-ui/core';
+// TODO fix linting complaints
 
+/* eslint-disable no-nested-ternary */
+/* eslint-disable no-param-reassign */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+import React, { useState } from 'react';
 import {
-   Mission,
-   ProgressOverview,
-   useProgressOverviewQuery,
-   UserProgress,
-} from '../../__generated__/types';
-import TableComponent from '../TableComponent/TableComponent';
+   createStyles,
+   FormControl,
+   InputLabel,
+   makeStyles,
+   MenuItem,
+   Select,
+   Theme,
+} from '@material-ui/core';
 
+import { useClassMissionMasteryQuery } from '../../__generated__/types';
 import '../TableComponent/TableComponent.css';
+import MissionIcon from '../../assets/images/missionmedical-logo.png';
+import ListView from './ListView';
+import SeatingChartView from './SeatingChartView';
 
 const useStyles = makeStyles((theme: Theme) =>
    createStyles({
@@ -18,131 +29,103 @@ const useStyles = makeStyles((theme: Theme) =>
          flexGrow: 1,
          backgroundColor: theme.palette.background.paper,
       },
+      menuItem: {
+         fontSize: '20px',
+      },
    })
 );
 
 function CourseHome() {
-   const { data: progressData } = useProgressOverviewQuery({
-      variables: {
-         course: 'Integrated Science',
-      },
-   });
-
    const classes = useStyles();
-   const { className } = useParams<Record<string, string | undefined>>();
+   const [viewType, setViewType] = useState('List');
 
-   const history = useHistory();
-   const rowClicked = (userName: string) => {
-      history.push({
-         pathname: '/singleStudentOverview',
-         state: { id: '', firstName: userName, lastName: ' ' },
-      });
+   const { data: missionMasteryData } = useClassMissionMasteryQuery();
+
+   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+      setViewType(event.target.value as string);
    };
-
-   const data: any[] = [];
-   progressData?.progressOverview.userProgress.map((userProgress: UserProgress) =>
-      data.push({
-         row: {
-            section: 1,
-            name: userProgress.userName,
-            team: '',
-            time: '',
-            recent: {
-               status:
-                  userProgress.progress.length !== 0
-                     ? userProgress.progress[userProgress.progress.length - 1].taskId
-                     : '',
-               style: {
-                  backgroundColor:
-                     userProgress.progress.length !== 0
-                        ? userProgress.progress[userProgress.progress.length - 1].status
-                           ? '#00b300'
-                           : '#ff6666'
-                        : '#a6a6a6',
-               },
-            },
-         },
-      })
-   );
-
-   const tableColumns = [
-      {
-         Header: 'Student Information',
-         columns: [
-            {
-               Header: 'Section',
-               accessor: 'row.section',
-            },
-            {
-               Header: 'Student',
-               accessor: 'row.name',
-            },
-            {
-               Header: 'Team',
-               accessor: 'row.team',
-            },
-            {
-               Header: 'Time',
-               accessor: 'row.time',
-            },
-            {
-               Header: 'Status',
-               accessor: 'row.recent',
-               Cell: ({ value }: { value: any }) => {
-                  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-                  return <>{value.status} </>;
-               },
-            },
-         ],
-      },
-   ];
-
-   const taskGroup: any = {
-      Header: 'Tasks',
-      columns: [],
-   };
-
-   let taskCounter = 1;
-   if (progressData !== undefined) {
-      const currentMission: any = progressData?.progressOverview.missions[0];
-      // console.log(progressData?.progressOverview.missions);
-      // console.log(currentMission);
-      for (const missionContent of currentMission.missionContent) {
-         if (missionContent.__typename === 'Task') {
-            const taskName = `Task #${taskCounter}`;
-            data.map((row) => {
-               row.row[taskName] = '';
-            });
-            taskGroup.columns.push({
-               Header: taskName,
-               accessor: `row.${taskName}`,
-            });
-            taskCounter++;
-         }
-      }
-      tableColumns.push(taskGroup);
-   }
-
-   console.log(data);
-   console.log(tableColumns);
 
    return (
       <div>
          <div
+            className=""
             style={{
-               color: 'white',
-               fontSize: '50px',
-               fontWeight: 'bold',
-               textAlign: 'center',
-               background:
-                  'linear-gradient(90deg, rgb(49, 119, 238) 0%, rgb(17, 61, 138) 100%) white',
+               height: '200px',
+               display: 'flex',
+               flexDirection: 'column',
+               justifyContent: 'center',
             }}
          >
-            {className} ({progressData ? progressData.progressOverview.missions[0].name : ''})
+            <div className="row ">
+               <img
+                  src={MissionIcon}
+                  alt=""
+                  style={{
+                     marginRight: '-28px',
+                     marginTop: '-8px',
+                     width: '90px',
+                     height: '90px',
+                     zIndex: 1,
+                     position: 'relative',
+                  }}
+               />
+               <div
+                  style={{
+                     color: 'white',
+                     fontSize: '50px',
+                     fontWeight: 'bold',
+                     display: 'inline-block',
+                     minWidth: '550px',
+                     height: '75px',
+                     textAlign: 'center',
+
+                     background:
+                        'linear-gradient(90deg, rgb(49, 119, 238) 0%, rgb(17, 61, 138) 100%) white',
+                  }}
+               >
+                  {missionMasteryData ? missionMasteryData.classMissionMastery?.mission.name : ''}
+               </div>
+            </div>
          </div>
+
          <div className={classes.tableContainer}>
-            <div className="base-table">
-               <TableComponent columns={tableColumns} data={data} rowClickFunction={rowClicked} />
+            <FormControl style={{ minWidth: '150px', marginLeft: '21px', marginTop: '6px' }}>
+               <InputLabel>View As</InputLabel>
+               <Select
+                  inputProps={{ 'data-testid': 'courseHomeViewSelector' }}
+                  value={viewType}
+                  onChange={handleChange}
+                  classes={{ root: classes.menuItem }}
+               >
+                  <MenuItem value="List" classes={{ root: classes.menuItem }}>
+                     List
+                  </MenuItem>
+                  <MenuItem value="Chart" classes={{ root: classes.menuItem }}>
+                     Seating Chart
+                  </MenuItem>
+               </Select>
+            </FormControl>
+
+            <div
+               data-testid={viewType}
+               style={{ marginTop: '12px', borderTop: '1px', borderTopStyle: 'solid' }}
+            >
+               {missionMasteryData ? (
+                  viewType === 'List' ? (
+                     <div className="base-table">
+                        <ListView
+                           classMissionMasterydata={missionMasteryData.classMissionMastery}
+                        />
+                     </div>
+                  ) : (
+                     <SeatingChartView
+                        inputProps={{ 'data-testid': 'seatingChartView' }}
+                        classMissionMasterydata={missionMasteryData.classMissionMastery}
+                     />
+                  )
+               ) : (
+                  <div />
+               )}
             </div>
          </div>
       </div>

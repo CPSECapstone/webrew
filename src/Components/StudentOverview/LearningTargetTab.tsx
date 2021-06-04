@@ -30,9 +30,7 @@ function LearningTargetTab() {
          <TabPanel value="1">
             <LTStudentViewTable />
          </TabPanel>
-         <TabPanel value="2">
-            <LTTargetViewTable />
-         </TabPanel>
+         <TabPanel value="2">Not Implemented</TabPanel>
       </TabContext>
    );
 }

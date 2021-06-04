@@ -5,29 +5,28 @@ import { useQuery } from '@apollo/client';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import styled from 'styled-components';
-import { Link, useHistory } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { useHistory, useParams } from 'react-router-dom';
+import { Divider } from '@material-ui/core';
 import StudentPicture from '../../assets/images/images-1.png';
 import { User } from '../../interfaces/User';
-import LinearProgressWithLabel from '../LinearProgressWithLabel/LinearProgressWithLabel';
-import MissionDropDown from '../LinearProgressWithLabel/MissionDropDown';
 import { GET_USERS } from '../../queries/user-queries';
+import { TaskStats, useGetMissionProgressQuery } from '../../__generated__/types';
+import MasteryCard from './MasteryCard';
 
 const StudentDiv = styled.div`
-   height: 275px;
+   height: 200px;
    width: 100%;
    font-size: 24pt;
    display: flex;
-   justify-content: flex-start;
+   justify-content: flex-end;
    align-items: left;
 `;
 
 const StudentNameDiv = styled.div`
    height: 50px;
    width: 100%;
-   font-size: 24pt;
+   font-size: 18pt;
    display: flex;
    justify-content: flex-start;
    align-items: left;
@@ -59,6 +58,9 @@ const RowDiv = styled.div`
    width: 100%;
    display: flex;
    background-color: white;
+   flex-direction: row;
+   height: 100%;
+   justify-content: left;
 `;
 
 const ColumnDiv = styled.div`
@@ -66,9 +68,34 @@ const ColumnDiv = styled.div`
    flex-direction: column;
    padding: 5px;
 `;
+const LeftColumnDiv = styled.div`
+   width: 75%;
+   flex-direction: column;
+   padding: 5px;
+`;
+const RightColumnDiv = styled.div`
+   width: 25%;
+   flex-direction: column;
+   padding: 5px;
+`;
 
 const PaddedDiv = styled.div`
    padding-left: 5px;
+`;
+const HeaderDiv = styled.div`
+   height: 100%;
+   width: 100%;
+   font-size: 24pt;
+   display: flex;
+`;
+
+const TargetDiv = styled.div`
+   height: 175px;
+   width: 100%;
+   color: #2f80ed;
+   display: flex;
+   justify-content: flex-start;
+   align-items: flex-end;
 `;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -87,179 +114,80 @@ const useStyles = makeStyles((theme: Theme) =>
    })
 );
 
+function calculateStatus(progress: TaskStats[]) {
+   let count = 0;
+   for (const taskStat of progress) {
+      console.log(taskStat);
+      if (taskStat.submission?.graded) {
+         count++;
+      }
+   }
+   if (progress.length > 0) {
+      return count / progress.length;
+   }
+   return 0;
+}
+
 function SingleStudentOverview() {
    const { data: users } = useQuery<User>(GET_USERS);
    // const { userId } = useParams();
    const classes = useStyles();
    const history = useHistory();
-   console.log(users);
-
+   const { username } = useParams<Record<string, string>>();
    const COMP_TASK_PERCENT = 100;
 
-   const test: any = history.location.state;
+   const testVal: any = history.location.state;
    const inputUser: User = {
-      id: test?.id,
-      firstName: test?.firstName,
-      lastName: test?.lastName,
+      id: testVal?.id,
+      firstName: testVal?.firstName,
+      lastName: testVal?.lastName,
    };
 
-   const missions = [
-      {
-         id: '123',
-         name: 'Mission 1',
-         description: 'mission1 for you',
-         subMissions: [
-            {
-               id: '345',
-               name: 'Sub-Mission 1',
-               description: 'SubMission1 description',
-               tasks: [
-                  {
-                     id: 'string',
-                     name: 'Task 1',
-                     instructions: 'string',
-                     points: 3,
-                     parentMissionId: 'string',
-                     parentMissionIndex: 4,
-                     pages: [],
-                     requirements: [],
-                  },
-                  {
-                     id: 'string2',
-                     name: 'Task 2',
-                     instructions: 'string2',
-                     points: 3,
-                     parentMissionId: 'string2',
-                     parentMissionIndex: 4,
-                     pages: [],
-                     requirements: [],
-                  },
-               ],
-            },
-         ],
+   const { data } = useGetMissionProgressQuery({
+      variables: {
+         courseId: 'Integrated Science',
+         username: 'Google_113982570160032635204',
       },
-   ];
-
-   const goals = [
-      {
-         name: 'Goal 1',
-      },
-      {
-         name: 'Goal 2',
-      },
-      {
-         name: 'Goal 3',
-      },
-   ];
-
-   const compGoals = [
-      {
-         name: 'Goal 0',
-      },
-      {
-         name: 'Goal 0.1',
-      },
-      {
-         name: 'Goal 0.2',
-      },
-   ];
+   });
+   const missionData1 = data?.getAllMissionProgress[0];
+   const missionData = data?.getAllMissionProgress;
+   console.log(missionData);
 
    return (
-      <div style={{ marginLeft: '5px', marginRight: '5px', backgroundColor: '#DAEFFE' }}>
-         <StudentDiv>
-            <ColumnDiv>
-               <StudentNameDiv>
-                  {inputUser.firstName} {inputUser.lastName}
-               </StudentNameDiv>
-               <StudentImageDiv>
-                  <img src={StudentPicture} alt="" style={{ width: 200, height: 200 }} />
-               </StudentImageDiv>
-            </ColumnDiv>
-            <ColumnDiv>
-               <Link
-                  to={{
-                     pathname: '/singleStudentMasteryOverview',
-                     state: {
-                        id: inputUser.id,
-                        firstName: inputUser.firstName,
-                        lastName: inputUser.lastName,
-                     },
-                  }}
-               >
-                  <Button variant="info" size="lg">
-                     Click to View Mastery Progress
-                  </Button>
-               </Link>
-            </ColumnDiv>
-         </StudentDiv>
-         <RowDiv>
-            <ColumnDiv>
-               <FieldTitleDiv>Current Missions</FieldTitleDiv>
-               {missions.map((mission) => (
-                  <MissionDropDown name={mission.name} subMissions={mission.subMissions as any[]} />
-               ))}
-            </ColumnDiv>
-            <ColumnDiv>
-               <FieldTitleDiv>Current Goals</FieldTitleDiv>
-               {goals.map((goal) => (
-                  <List>
-                     <PaddedDiv>
-                        <ListItem
-                           button
-                           className={classes.nested}
-                           style={{
-                              border: '1px',
-                              borderColor: '#C2D2FC',
-                              borderStyle: 'solid',
-                              backgroundColor: '#E9EEFC',
-                           }}
-                        >
-                           <ListItemText primary={goal.name} />
-                           <LinearProgressWithLabel
-                              className={classes.progressBar}
-                              value={COMP_TASK_PERCENT}
-                           />
-                        </ListItem>
-                     </PaddedDiv>
-                  </List>
-               ))}
-            </ColumnDiv>
-         </RowDiv>
-         <RowDiv>
-            <ColumnDiv>
-               <FieldTitleDiv>Completed Missions</FieldTitleDiv>
-               {missions.map((compMission) => (
-                  <MissionDropDown
-                     name={compMission.name}
-                     subMissions={compMission.subMissions as any[]}
-                  />
-               ))}
-            </ColumnDiv>
-            <ColumnDiv>
-               <FieldTitleDiv>Completed Goals</FieldTitleDiv>
-               {compGoals.map((compGoal) => (
-                  <List>
-                     <PaddedDiv>
-                        <ListItem
-                           button
-                           className={classes.nested}
-                           style={{
-                              border: '1px',
-                              borderColor: '#C2D2FC',
-                              borderStyle: 'solid',
-                              backgroundColor: '#E9EEFC',
-                           }}
-                        >
-                           <ListItemText primary={compGoal.name} />
-                           <LinearProgressWithLabel
-                              className={classes.progressBar}
-                              value={COMP_TASK_PERCENT}
-                           />
-                        </ListItem>
-                     </PaddedDiv>
-                  </List>
-               ))}
-            </ColumnDiv>
+      <div
+         data-testid="single-student-overview"
+         className="container d-inline-block "
+         style={{ marginLeft: '5px', marginRight: '5px', backgroundColor: 'white' }}
+      >
+         <HeaderDiv className="row">
+            <TargetDiv className="col-8">
+               <List>
+                  <ListItem>Mission Progress</ListItem>
+               </List>
+            </TargetDiv>
+            <StudentDiv className="col-4">
+               <ColumnDiv className="container d-inline-block">
+                  <StudentNameDiv className="container-sm">
+                     {inputUser.firstName}
+                     {inputUser.lastName}
+                  </StudentNameDiv>
+                  <StudentImageDiv className="container-sm">
+                     <img src={StudentPicture} alt="" style={{ width: 120, height: 120 }} />
+                  </StudentImageDiv>
+               </ColumnDiv>
+            </StudentDiv>
+         </HeaderDiv>
+         <Divider orientation="horizontal" />
+         <RowDiv className="row">
+            {missionData?.map((mission) => (
+               <MasteryCard
+                  name={mission.mission.name}
+                  progress={mission.progress as TaskStats[]}
+                  status={calculateStatus(mission.progress as TaskStats[])}
+                  user={inputUser}
+                  username={username}
+               />
+            ))}
          </RowDiv>
       </div>
    );

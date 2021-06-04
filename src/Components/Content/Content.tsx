@@ -7,9 +7,14 @@ import ViewTaskSubmission from '../ViewTaskSubmission';
 import SingleStudentOverview from '../SingleStudentOverview/SingleStudentOverview';
 import SingleStudentMasteryOverview from '../SingleStudentMasteryOverview/SingleStudentMasteryOverview';
 import CourseHome from '../CourseHome/CourseHome';
+import SingleTargetOverview from '../SingleTargetOverview/SingleTargetOverview';
+import SingleMissionOverview from '../SingleStudentOverview/SingleMissionOverview';
 
-import './Content.css';
 import TaskView from '../../Screens/TaskView/TaskView';
+import TaskListView from '../TaskListView';
+import TaskSubmissionSummaryView from '../TaskSubmissionSummaryView';
+import { ClassMastery } from '../../Screens/ClassMastery';
+import './Content.css';
 
 export default function Content() {
    return (
@@ -30,14 +35,29 @@ export default function Content() {
             <Route path="/studentOverview">
                <StudentOverview />
             </Route>
-            <Route path="/singleStudentOverview">
+            <Route path="/singleStudentOverview/:username">
                <SingleStudentOverview />
             </Route>
             <Route path="/singleStudentMasteryOverview">
                <SingleStudentMasteryOverview />
             </Route>
-            <Route path="/viewTask">
-               <TaskView taskId="90e0c730e56" />
+            <Route path="/singleTargetOverview/:name">
+               <SingleTargetOverview />
+            </Route>
+            <Route path="/singleMissionOverview/:name/:username">
+               <SingleMissionOverview />
+            </Route>
+            <Route path="/taskList">
+               <TaskListView />
+            </Route>
+            <Route path="/taskSubmissionSummary/:taskId">
+               <TaskSubmissionSummaryView />
+            </Route>
+            <Route path="/viewTask/:taskId/:username">
+               <TaskView />
+            </Route>
+            <Route path="/classMastery">
+               <ClassMastery />
             </Route>
             <Route path="/">
                <Dashboard />

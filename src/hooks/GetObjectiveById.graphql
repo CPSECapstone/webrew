@@ -1,0 +1,10 @@
+query GetObjectiveById($objectiveId: String!) {
+   objective(objectiveId: $objectiveId) {
+      objectiveId
+      objectiveName
+      description
+      targetId
+      targetName
+      course
+   }
+}

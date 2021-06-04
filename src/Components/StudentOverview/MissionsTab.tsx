@@ -31,11 +31,9 @@ function MissionsTab() {
                className={value === '3' ? 'selected-inner-tab' : 'inner-tab'}
             />
          </TabList>
-         <TabPanel value="1">
-            <MissionStudentViewTable />
-         </TabPanel>
-         <TabPanel value="2">Mission Task View Table</TabPanel>
-         <TabPanel value="3">Mission Objective View Table</TabPanel>
+         <TabPanel value="1">Not Implemented</TabPanel>
+         <TabPanel value="2">Not Implemented</TabPanel>
+         <TabPanel value="3">Not Implemented</TabPanel>
       </TabContext>
    );
 }
