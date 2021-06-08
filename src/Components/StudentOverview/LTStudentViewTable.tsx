@@ -97,7 +97,7 @@ function LTStudentViewTable() {
    const rowClicked = (row: LTStudentViewRow) => {
       history.push({
          pathname: `/singleStudentMasteryOverview/${row.row.studentId}`,
-         state: { id: row.row.studentId, firstname: row.row.firstname, lastname: row.row.lastname },
+         state: { id: row.row.studentId, firstName: row.row.firstname, lastName: row.row.lastname },
       });
    };
 
