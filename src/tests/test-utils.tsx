@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { FC, ReactElement } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { render, RenderOptions } from '@testing-library/react';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 
@@ -12,6 +13,7 @@ const Providers: FC = ({ children }) => {
 const customRender = (ui: ReactElement, options?: Omit<RenderOptions, 'queries'>) =>
    render(ui, { wrapper: Providers, ...options });
 
+// eslint-disable-next-line import/no-extraneous-dependencies
 export * from '@testing-library/react';
 
 export { customRender as render };

@@ -22,7 +22,9 @@ const SideBarItemComponent: React.FC<SideBarItemComponentProps> = (props) => {
          button
          className={className}
          children={children}
+         // eslint-disable-next-line @typescript-eslint/no-explicit-any
          component={forwardRef((props: NavLinkProps, ref: any) => (
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             <NavLink exact {...props} innerRef={ref} />
          ))}
          to={link}

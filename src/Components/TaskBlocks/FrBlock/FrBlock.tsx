@@ -1,5 +1,4 @@
-import { InputGroup, FormControl, Button, Form } from 'react-bootstrap';
-import { useState } from 'react';
+import { InputGroup, Button, Form } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 import { Formik } from 'formik';
 import { AnswerFieldsFragment } from '../../../__generated__/types';
@@ -9,6 +8,7 @@ import './FrBlock.css';
 function FrBlock({
    title,
    question,
+   // eslint-disable-next-line @typescript-eslint/no-unused-vars
    answer,
    cssKey,
    studentAnswer,
@@ -47,12 +47,17 @@ function FrBlock({
                         },
                      },
                   })
+                     // eslint-disable-next-line @typescript-eslint/no-unused-vars
                      .then((data) => {
+                        // eslint-disable-next-line no-alert
                         alert('Question Grade Change Submitted.');
+                        // eslint-disable-next-line no-restricted-globals
                         location.reload();
                      })
                      .catch((error) => {
+                        // eslint-disable-next-line no-alert
                         alert(error);
+                        // eslint-disable-next-line no-restricted-globals
                         location.reload();
                      });
                }, 400);

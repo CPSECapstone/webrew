@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Form, FormControl, Col, Button } from 'react-bootstrap';
 import { Formik } from 'formik';
 import { useMutation } from '@apollo/client';
@@ -16,7 +15,9 @@ function InstructorDetail({
       return <></>;
    }
 
-   const [editTaskGrade, { data }] = useMutation(EDIT_GRADE);
+   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+   // eslint-disable-next-line react-hooks/rules-of-hooks
+   const [editTaskGrade] = useMutation(EDIT_GRADE);
 
    return (
       <div className="white row">
@@ -41,10 +42,13 @@ function InstructorDetail({
                            },
                         },
                      })
-                        .then((data) => {
+                        .then(() => {
+                           // eslint-disable-next-line no-alert
                            alert('Grade Change Submitted.');
+                           // eslint-disable-next-line no-restricted-globals
                            location.reload();
                         })
+                        // eslint-disable-next-line no-alert
                         .catch((error) => alert(error));
                   }, 400);
                }}

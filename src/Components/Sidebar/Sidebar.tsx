@@ -48,7 +48,7 @@ const sideBarItems = [
       Icon: IconShoppingCart,
    },
    {
-      name: 'Students and Groups',
+      name: 'Progress',
       link: '/studentOverview/Biology',
       Icon: IconPeople,
    },
@@ -72,6 +72,7 @@ function Sidebar() {
    return (
       <List component="nav" disablePadding>
          {sideBarItems.map((item, index) => (
+            // eslint-disable-next-line react/no-array-index-key
             <SideBarItem {...item} key={index} />
          ))}
       </List>

@@ -4,8 +4,10 @@ import YouTube from 'react-youtube';
 import getVideoId from 'get-video-id';
 import '../TaskBlock.css';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function onReady(event: any) {
    // access to player in all event handlers via event.target
+   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
    event.target.pauseVideo();
 }
 

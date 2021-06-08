@@ -54,6 +54,7 @@ function genObjectiveGroup(targetMasteryData: any): any {
    return objectiveGorup;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function SelectedLTStudentViewTable(classMissionMastery: any, selectedLTId: string | null) {
    const { data: targetMasteryData } = useClassTargetMasteryQuery({
       variables: {
@@ -168,6 +169,7 @@ function SelectedLTStudentViewTable(classMissionMastery: any, selectedLTId: stri
 
    data.forEach((dataEntry) => {
       let count = 0;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       for (const [key, value] of Object.entries(dataEntry.row)) {
          const value2: any = value;
          if (typeof value === 'object' && value !== null) {

@@ -10,7 +10,6 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import { Link } from 'react-router-dom';
 import { Divider } from '@material-ui/core';
 import LinearProgressWithLabel from './LinearProgressWithLabel';
-import { MissionSubMission } from '../../interfaces/MissionSubMission';
 import { TaskStats } from '../../__generated__/types';
 
 const useStyles = makeStyles((theme: Theme) =>

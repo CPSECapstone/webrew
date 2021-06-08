@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
@@ -65,6 +66,7 @@ function SideBarItem({ name, link, Icon, items = [] }: SideBarItemProps) {
          <Divider />
          <List component="div" disablePadding>
             {items.map((item, index) => (
+               // eslint-disable-next-line react/no-array-index-key
                <SideBarItem {...item} key={index} />
             ))}
          </List>

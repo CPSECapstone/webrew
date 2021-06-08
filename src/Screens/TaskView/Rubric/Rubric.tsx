@@ -1,12 +1,12 @@
-import { Checkbox, Divider, MenuItem, Typography } from '@material-ui/core';
+import { MenuItem, Typography } from '@material-ui/core';
 import { useState } from 'react';
 
-import { Form } from 'react-bootstrap';
 import { RubricRequirement } from '../../../__generated__/types';
 
 function Rubric({ requirement }: { requirement: RubricRequirement }) {
    const [complete, setComplete] = useState(requirement.isComplete);
    console.log(requirement);
+   // eslint-disable-next-line @typescript-eslint/no-unused-vars
    const handleChange = () => {
       setComplete(!complete);
    };

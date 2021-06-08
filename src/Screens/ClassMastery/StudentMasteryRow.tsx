@@ -1,4 +1,6 @@
-import { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import styled from 'styled-components';
 import { color } from '../../Components/constants.json';
 
@@ -18,6 +20,7 @@ const InnerBar = styled.div<MasteryBarProps>`
    left: 0;
    bottom: 0;
    background-color: ${({ percentage }) =>
+      // eslint-disable-next-line no-nested-ternary
       percentage > 0.66 ? color.green : percentage > 0.33 ? color.yellow : color.red};
    right: ${({ percentage }) => `${100 - percentage * 100}%`};
    > span {
@@ -84,6 +87,7 @@ function StudentMasteryRow({ name, learningObjectives }: any) {
          </Header>
          <Content>
             {learningObjectives.map(({ percentage }: any) => (
+               // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
                <Mastery percentage={percentage} />
             ))}
          </Content>

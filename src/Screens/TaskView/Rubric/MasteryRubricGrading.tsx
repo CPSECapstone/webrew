@@ -4,7 +4,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { EDIT_OBJECTIVE_GRADE } from '../../../queries/objective-grade';
 import { Mastery, TaskObjectiveProgress } from '../../../__generated__/types';
 
@@ -29,7 +29,8 @@ export default function MasteryRubricGrading({
 }) {
    const classes = useStyles();
    const [masteryVal, setMastery] = React.useState(objectiveProgress.mastery);
-   const [editObjectiveGrade, { data }] = useMutation(EDIT_OBJECTIVE_GRADE);
+   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+   const [editObjectiveGrade] = useMutation(EDIT_OBJECTIVE_GRADE);
 
    const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
       //   console.log(event.target.value);
