@@ -1,8 +1,8 @@
 /* eslint-disable react/destructuring-assignment */
 import { Box, LinearProgress, LinearProgressProps, Typography } from '@material-ui/core';
-import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, withStyles } from '@material-ui/core/styles';
 
-const BorderLinearProgress = withStyles((theme: Theme) =>
+const BorderLinearProgress = withStyles(() =>
    createStyles({
       root: {
          height: 20,

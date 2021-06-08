@@ -20,7 +20,6 @@ import {
    CtmObjectiveMasteryFieldsFragment,
    Target,
    useClassMissionMasteryQuery,
-   useClassTargetMasteryQuery,
 } from '../../__generated__/types';
 import { LIST_TARGETS_BY_COURSE } from '../../hooks/ListTargetsByCourse';
 import SelectedLTStudentViewTable from './SelectedLTStudentViewTable';
@@ -30,8 +29,8 @@ interface LTStudentViewRow {
    row: {
       section: string;
       name: string;
-      firstname: string;
-      lastname: string;
+      firstName: string;
+      lastName: string;
       team?: string;
       recent: string;
       average: string;
@@ -105,15 +104,15 @@ function LTStudentViewTable() {
       missionMasteryData?.classMissionMastery?.studentMissionMasteryList || [];
 
    const data: LTStudentViewRow[] = studentMissionMasteryList.map((studentMissionMastery) => {
-      const firstname = studentMissionMastery.student.firstName || 'Mary';
-      const lastname = studentMissionMastery.student.lastName || 'Lee';
+      const firstName = studentMissionMastery.student.firstName || 'Mary';
+      const lastName = studentMissionMastery.student.lastName || 'Lee';
 
       return {
          row: {
             section: '1',
-            name: `${firstname} ${lastname}`,
-            firstname,
-            lastname,
+            name: `${firstName} ${lastName}`,
+            firstName,
+            lastName,
             team: studentMissionMastery.student.team,
             recent: studentMissionMastery.currentTaskName,
             average: '',

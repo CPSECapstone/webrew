@@ -46,15 +46,6 @@ const StudentImageDiv = styled.div`
    align-items: left;
 `;
 
-const RowDiv = styled.div`
-   width: 100%;
-   display: flex;
-   background-color: white;
-   flex-direction: row;
-   height: 100%;
-   justify-content: center;
-`;
-
 const TaskRowDiv = styled.div`
    width: 100%;
    display: flex;
@@ -74,15 +65,7 @@ const LeftColumnDiv = styled.div`
    align-items: right;
    justify-content: right;
 `;
-const RightColumnDiv = styled.div`
-   width: 25%;
-   flex-direction: column;
-   padding: 5px;
-`;
 
-const PaddedDiv = styled.div`
-   padding-left: 5px;
-`;
 const HeaderDiv = styled.div`
    height: 100%;
    width: 100%;

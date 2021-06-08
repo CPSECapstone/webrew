@@ -1,6 +1,6 @@
 import '../TaskBlock.css';
 
-function IntroBlock({ instructions, cssKey }: { instructions: string; cssKey: number }) {
+function IntroBlock({ instructions }: { instructions: string }) {
    return (
       <div className="white row">
          <div className="col-md-6 text-center py-5 mx-auto">
