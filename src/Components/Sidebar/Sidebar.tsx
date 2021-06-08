@@ -72,6 +72,7 @@ function Sidebar() {
    return (
       <List component="nav" disablePadding>
          {sideBarItems.map((item, index) => (
+            // eslint-disable-next-line react/no-array-index-key
             <SideBarItem {...item} key={index} />
          ))}
       </List>

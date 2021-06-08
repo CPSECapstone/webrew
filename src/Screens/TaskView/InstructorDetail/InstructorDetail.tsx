@@ -16,7 +16,9 @@ function InstructorDetail({
       return <></>;
    }
 
-   const [editTaskGrade, { data }] = useMutation(EDIT_GRADE);
+   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+   // eslint-disable-next-line react-hooks/rules-of-hooks
+   const [editTaskGrade] = useMutation(EDIT_GRADE);
 
    return (
       <div className="white row">
@@ -41,8 +43,9 @@ function InstructorDetail({
                            },
                         },
                      })
-                        .then((data) => {
+                        .then(() => {
                            alert('Grade Change Submitted.');
+                           // eslint-disable-next-line no-restricted-globals
                            location.reload();
                         })
                         .catch((error) => alert(error));

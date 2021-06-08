@@ -29,6 +29,7 @@ export default function MasteryRubricGrading({
 }) {
    const classes = useStyles();
    const [masteryVal, setMastery] = React.useState(objectiveProgress.mastery);
+   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
    const [editObjectiveGrade, { data }] = useMutation(EDIT_OBJECTIVE_GRADE);
 
    const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {

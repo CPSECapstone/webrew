@@ -99,6 +99,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function getTaskObjectiveProgress(task: TaskStats) {
+   // eslint-disable-next-line react-hooks/rules-of-hooks
    const { data: taskObjectiveProgress } = useGetTaskObjectiveProgressQuery({
       variables: {
          taskId: task.taskId,
@@ -112,7 +113,9 @@ function getTaskObjectiveProgress(task: TaskStats) {
    return objectiveProgresses;
 }
 
+// eslint-disable-next-line consistent-return
 function getMissionProgress(missionData: MissionProgress[], name: string) {
+   // eslint-disable-next-line no-restricted-syntax
    for (const mission of missionData) {
       if (mission.mission.name === name) {
          return mission.progress;

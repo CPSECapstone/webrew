@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import styled from 'styled-components';
 import { useHistory, useParams } from 'react-router-dom';
 import { Divider, ListItemText, Typography } from '@material-ui/core';
@@ -80,7 +82,9 @@ const TargetColumnDiv = styled.div`
    // border-right: 1px solid #c2d2fc;
 `;
 
+// eslint-disable-next-line consistent-return
 function getTargetData(targetData1: TargetProgress[], name: string) {
+   // eslint-disable-next-line no-restricted-syntax
    for (const target of targetData1) {
       if (target.target.targetName === name) {
          return target;
@@ -97,7 +101,9 @@ export default function SingleTargetOveriew() {
    const test: any = history.location.state;
    const inputUser: User = {
       id: test?.id,
+
       firstName: test?.firstName,
+
       lastName: test?.lastName,
    };
    const { data, loading, error } = useGetTargetProgressQuery({

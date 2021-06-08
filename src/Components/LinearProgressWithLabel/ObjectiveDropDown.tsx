@@ -10,7 +10,10 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import { Link } from 'react-router-dom';
 import { Box, LinearProgress } from '@material-ui/core';
 
-import { TaskObjectiveProgress, useGetTaskObjectiveProgressQuery } from '../../__generated__/types';
+import {
+   TaskObjectiveProgress,
+   useGetTaskObjectiveProgressQuery as UseGetTaskObjectiveProgressQuery,
+} from '../../__generated__/types';
 
 const useStyles = makeStyles((theme: Theme) =>
    createStyles({
@@ -106,7 +109,7 @@ export interface ObjectiveDropDownProps {
 }
 
 function getTaskObjectivePorgress(task: TaskObjectiveProgress) {
-   const { data: taskObjectiveProgress } = useGetTaskObjectiveProgressQuery({
+   const { data: taskObjectiveProgress } = UseGetTaskObjectiveProgressQuery({
       variables: {
          taskId: task.task.id,
          username: 'Google_114813486146105420824',
@@ -140,20 +143,6 @@ function handleClick(
    openFunction(!openObjectBool);
 }
 
-function getObjectivePercent(tasks: TaskObjectiveProgress[]) {
-   let count = 0;
-   for (const task of tasks) {
-      const mastery = getTaskPercent(task.mastery);
-      if (mastery === 1) {
-         count++;
-      }
-   }
-   if (tasks.length === 0) {
-      return 0;
-   }
-   return count / tasks.length;
-}
-
 function getTaskPercent(mastery: string) {
    if (mastery === 'NOT_GRADED') {
       return 0;
@@ -165,6 +154,21 @@ function getTaskPercent(mastery: string) {
       return 0.75;
    }
    return 1;
+}
+
+function getObjectivePercent(tasks: TaskObjectiveProgress[]) {
+   let count = 0;
+   // eslint-disable-next-line no-restricted-syntax
+   for (const task of tasks) {
+      const mastery = getTaskPercent(task.mastery);
+      if (mastery === 1) {
+         count++;
+      }
+   }
+   if (tasks.length === 0) {
+      return 0;
+   }
+   return count / tasks.length;
 }
 
 export default function ObjectiveDropDown({ name, tasks, username }: ObjectiveDropDownProps) {

@@ -70,6 +70,7 @@ const TargetDiv = styled.div`
 
 function calculateStatus(progress: TaskStats[]) {
    let count = 0;
+   // eslint-disable-next-line no-restricted-syntax
    for (const taskStat of progress) {
       console.log(taskStat);
       if (taskStat.submission?.graded) {

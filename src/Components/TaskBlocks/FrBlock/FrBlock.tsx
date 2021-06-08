@@ -49,10 +49,12 @@ function FrBlock({
                   })
                      .then((data) => {
                         alert('Question Grade Change Submitted.');
+                        // eslint-disable-next-line no-restricted-globals
                         location.reload();
                      })
                      .catch((error) => {
                         alert(error);
+                        // eslint-disable-next-line no-restricted-globals
                         location.reload();
                      });
                }, 400);

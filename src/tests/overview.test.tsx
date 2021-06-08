@@ -1,5 +1,6 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
+// eslint-disable-next-line import/no-unresolved
 import { createMemoryHistory } from 'history';
 import { render, screen } from './test-utils';
 import '@testing-library/jest-dom/extend-expect';

@@ -75,6 +75,7 @@ const TargetDiv = styled.div`
 
 function getTaskCount(tasks: TaskObjectiveProgressFieldsFragment[]) {
    let count = 0;
+   // eslint-disable-next-line no-restricted-syntax
    for (const task of tasks) {
       if (task.mastery !== 'NOT_GRADED') {
          count++;
@@ -85,6 +86,7 @@ function getTaskCount(tasks: TaskObjectiveProgressFieldsFragment[]) {
 
 function calculateStatus(objectives: ObjectiveProgressFieldsFragment[]) {
    let count = 0;
+   // eslint-disable-next-line no-restricted-syntax
    for (const objective of objectives) {
       count += getTaskCount(objective.tasks);
    }
