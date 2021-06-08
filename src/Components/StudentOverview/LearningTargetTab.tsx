@@ -4,7 +4,6 @@ import TabList from '@material-ui/lab/TabList';
 import TabPanel from '@material-ui/lab/TabPanel';
 import React, { useState } from 'react';
 import LTStudentViewTable from './LTStudentViewTable';
-import LTTargetViewTable from './LTTargetViewTable';
 
 function LearningTargetTab() {
    const [value, setValue] = useState('1');

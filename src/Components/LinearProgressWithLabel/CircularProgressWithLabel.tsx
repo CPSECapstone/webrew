@@ -8,6 +8,7 @@ interface NewCircularProgressProps extends CircularProgressProps {
    name: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const BigCircularProgress = withStyles((theme: Theme) =>
    createStyles({
       root: {

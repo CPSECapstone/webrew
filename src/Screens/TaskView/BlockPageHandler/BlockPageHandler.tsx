@@ -3,6 +3,7 @@
 /* eslint-disable react/no-array-index-key */
 import {
    AnswerFieldsFragment,
+   // eslint-disable-next-line @typescript-eslint/no-unused-vars
    AnswerFieldsFragmentDoc,
    FrBlockFieldsFragment,
    FrQuestionFieldsFragment,
@@ -76,6 +77,7 @@ function BlockPageHandler({
    type QuestionFieldsFragment = McQuestionFieldsFragment | FrQuestionFieldsFragment;
 
    let tempIndex = 0;
+   // eslint-disable-next-line @typescript-eslint/no-explicit-any
    const blockList: any[] = [];
    pageBlocks.forEach((block: TaskBlock) => {
       switch (block.__typename) {

@@ -98,6 +98,7 @@ export default function SingleTargetOveriew() {
 
    const username = 'Google_114813486146105420824';
 
+   // eslint-disable-next-line @typescript-eslint/no-explicit-any
    const test: any = history.location.state;
    const inputUser: User = {
       id: test?.id,

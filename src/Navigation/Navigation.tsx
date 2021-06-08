@@ -1,5 +1,5 @@
-import { Navbar, Nav, Button, Form } from 'react-bootstrap';
-import { Auth, Hub } from 'aws-amplify';
+import { Navbar, Nav, Button } from 'react-bootstrap';
+import { Auth } from 'aws-amplify';
 import './Navigation.css';
 
 export default function Navigation() {

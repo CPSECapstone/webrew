@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Form, FormControl, Col, Button } from 'react-bootstrap';
 import { Formik } from 'formik';
 import { useMutation } from '@apollo/client';
@@ -44,10 +43,12 @@ function InstructorDetail({
                         },
                      })
                         .then(() => {
+                           // eslint-disable-next-line no-alert
                            alert('Grade Change Submitted.');
                            // eslint-disable-next-line no-restricted-globals
                            location.reload();
                         })
+                        // eslint-disable-next-line no-alert
                         .catch((error) => alert(error));
                   }, 400);
                }}

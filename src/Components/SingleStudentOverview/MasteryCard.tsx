@@ -102,6 +102,7 @@ function getStatusTitle(status: number) {
    return 'Mastered';
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function MasteryCard({ name, progress, status, user, username }: Props) {
    return (
       <Link to={{ pathname: `/singleMissionOverview/${name}/${username}`, state: user }}>

@@ -76,12 +76,15 @@ function McBlock({
                         },
                      },
                   })
+                     // eslint-disable-next-line @typescript-eslint/no-unused-vars
                      .then((data) => {
+                        // eslint-disable-next-line no-alert
                         alert('Question Grade Change Submitted.');
                         // eslint-disable-next-line no-restricted-globals
                         location.reload();
                      })
                      .catch((error) => {
+                        // eslint-disable-next-line no-alert
                         alert(error);
                         // eslint-disable-next-line no-restricted-globals
                         location.reload();
