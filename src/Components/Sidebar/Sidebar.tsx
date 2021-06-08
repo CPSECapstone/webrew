@@ -48,7 +48,7 @@ const sideBarItems = [
       Icon: IconShoppingCart,
    },
    {
-      name: 'Students and Groups',
+      name: 'Progress',
       link: '/studentOverview/Biology',
       Icon: IconPeople,
    },
