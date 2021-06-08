@@ -1,9 +1,7 @@
 import { faCaretLeft, faHandPaper } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Dispatch, SetStateAction } from 'react';
-import { Navbar, Nav, Form, Button, NavDropdown, Dropdown } from 'react-bootstrap';
-import { RubricRequirement, TaskObjectiveProgress } from '../../../__generated__/types';
-import Rubric from '../Rubric/Rubric';
+import { Navbar, Nav, Form, Button } from 'react-bootstrap';
+import { RubricRequirement } from '../../../__generated__/types';
 import RubricMenu from '../Rubric/RubricMenu';
 import './TaskNavbar.css';
 

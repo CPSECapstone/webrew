@@ -1,9 +1,6 @@
-import { useMutation } from '@apollo/client';
-import { Checkbox, MenuItem, Typography } from '@material-ui/core';
-import { useState } from 'react';
-import { Form, NavDropdown } from 'react-bootstrap';
+import { MenuItem, Typography } from '@material-ui/core';
+import { Form } from 'react-bootstrap';
 import {
-   RubricRequirement,
    TaskObjectiveProgress,
    useGetTaskObjectiveProgressQuery,
 } from '../../../__generated__/types';

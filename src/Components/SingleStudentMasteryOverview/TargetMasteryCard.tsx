@@ -1,20 +1,9 @@
-import { Link, useHistory } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
-import { faBell, faFolder } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-   Box,
-   createStyles,
-   LinearProgress,
-   Theme,
-   Typography,
-   withStyles,
-} from '@material-ui/core';
-import { TaskObjectiveProgress, TaskStats } from '../../__generated__/types';
+import { Link } from 'react-router-dom';
+import { Box, createStyles, LinearProgress, Typography, withStyles } from '@material-ui/core';
 import './MasteryCard.scss';
 import { User } from '../../interfaces/User';
 
-const MasteredProgress = withStyles((theme: Theme) =>
+const MasteredProgress = withStyles(() =>
    createStyles({
       root: {
          height: 20,
@@ -30,7 +19,7 @@ const MasteredProgress = withStyles((theme: Theme) =>
    })
 )(LinearProgress);
 
-const NotStartedProgress = withStyles((theme: Theme) =>
+const NotStartedProgress = withStyles(() =>
    createStyles({
       root: {
          height: 30,
@@ -46,7 +35,7 @@ const NotStartedProgress = withStyles((theme: Theme) =>
    })
 )(LinearProgress);
 
-const NotMasteredProgress = withStyles((theme: Theme) =>
+const NotMasteredProgress = withStyles(() =>
    createStyles({
       root: {
          height: 20,
@@ -62,7 +51,7 @@ const NotMasteredProgress = withStyles((theme: Theme) =>
    })
 )(LinearProgress);
 
-const AlmostMasteredProgress = withStyles((theme: Theme) =>
+const AlmostMasteredProgress = withStyles(() =>
    createStyles({
       root: {
          height: 20,
@@ -111,9 +100,6 @@ function getStatusTitle(status: number) {
 }
 
 export default function MasteryCard({ name, status, user }: Props) {
-   console.log(status);
-   const history = useHistory();
-
    return (
       <Link to={{ pathname: `/singleTargetOverview/${name}`, state: user }}>
          <div className="mission-card">

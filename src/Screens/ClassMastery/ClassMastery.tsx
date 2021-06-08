@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 import { color } from '../../Components/constants.json';
 
@@ -19,7 +18,6 @@ const Header = styled.div`
 const Content = styled.div``;
 
 function ClassMastery() {
-   //TODO Get real data
    return (
       <Page>
          <Header>Class Mastery</Header>
