@@ -3,6 +3,7 @@ import TabContext from '@material-ui/lab/TabContext';
 import TabList from '@material-ui/lab/TabList';
 import TabPanel from '@material-ui/lab/TabPanel';
 import React, { useState } from 'react';
+import MissionStudentViewTable from './MissionStudentViewTable';
 
 function MissionsTab() {
    const [value, setValue] = useState('1');
@@ -30,7 +31,9 @@ function MissionsTab() {
                className={value === '3' ? 'selected-inner-tab' : 'inner-tab'}
             />
          </TabList>
-         <TabPanel value="1">Not Implemented</TabPanel>
+         <TabPanel value="1">
+            <MissionStudentViewTable />
+         </TabPanel>
          <TabPanel value="2">Not Implemented</TabPanel>
          <TabPanel value="3">Not Implemented</TabPanel>
       </TabContext>

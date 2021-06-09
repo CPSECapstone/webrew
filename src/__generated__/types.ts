@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
-export type Maybe<T> = T | undefined;
+export type Maybe<T> = T | null | undefined;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
@@ -1171,6 +1171,11 @@ export type GetMissionProgressQueryVariables = Exact<{
 
 export type GetMissionProgressQuery = { __typename: 'Query', getAllMissionProgress: Array<{ __typename: 'MissionProgress', student: string, mission: { __typename: 'Mission', name: string, description: string, id: string, course: string }, progress: Array<{ __typename: 'TaskStats', name: string, taskId: string, submission?: Maybe<{ __typename: 'TaskSubmissionResult', graded: boolean, pointsAwarded?: Maybe<number>, pointsPossible?: Maybe<number> }> }> }> };
 
+export type MissionsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MissionsQuery = { __typename: 'Query', missions?: Maybe<Array<Maybe<{ __typename: 'Mission', name: string, id: string }>>> };
+
 export type ObjectivesQueryVariables = Exact<{
   course: Scalars['String'];
 }>;
@@ -1977,6 +1982,41 @@ export function useGetMissionProgressLazyQuery(baseOptions?: Apollo.LazyQueryHoo
 export type GetMissionProgressQueryHookResult = ReturnType<typeof useGetMissionProgressQuery>;
 export type GetMissionProgressLazyQueryHookResult = ReturnType<typeof useGetMissionProgressLazyQuery>;
 export type GetMissionProgressQueryResult = Apollo.QueryResult<GetMissionProgressQuery, GetMissionProgressQueryVariables>;
+export const MissionsDocument = gql`
+    query Missions {
+  missions(course: "Integrated Science") {
+    name
+    id
+  }
+}
+    `;
+
+/**
+ * __useMissionsQuery__
+ *
+ * To run a query within a React component, call `useMissionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMissionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMissionsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMissionsQuery(baseOptions?: Apollo.QueryHookOptions<MissionsQuery, MissionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MissionsQuery, MissionsQueryVariables>(MissionsDocument, options);
+      }
+export function useMissionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MissionsQuery, MissionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MissionsQuery, MissionsQueryVariables>(MissionsDocument, options);
+        }
+export type MissionsQueryHookResult = ReturnType<typeof useMissionsQuery>;
+export type MissionsLazyQueryHookResult = ReturnType<typeof useMissionsLazyQuery>;
+export type MissionsQueryResult = Apollo.QueryResult<MissionsQuery, MissionsQueryVariables>;
 export const ObjectivesDocument = gql`
     query Objectives($course: String!) {
   objectives(course: $course) {
