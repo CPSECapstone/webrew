@@ -1,0 +1,7 @@
+query GetStudentsByCourse {
+  students(course:"Integrated Science") {
+    studentId
+    firstName
+    lastName
+  }
+}
