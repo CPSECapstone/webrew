@@ -3,25 +3,37 @@ import React, { useState } from 'react';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import {
    GetStudentsByCourseQuery,
+   Maybe,
    MissionsQueryResult,
    useGetStudentsByCourseQuery,
    useMissionsQuery,
 } from '../../__generated__/types';
 import TableComponent from '../TableComponent/TableComponent';
 
-interface MissionStudentViewRow {
-   row: {
-      name: string;
-      studentId: string;
-   };
-}
-
 export interface TaskColumnGroup {
-   header: string;
+   Header: string;
    columns: {
       Header: string;
       accessor: string;
    }[];
+}
+
+export interface MissionStudentViewRow {
+   row: {
+      name: string;
+      studentId: string;
+      [task: string]: string;
+   };
+}
+
+export interface RowTaskData {
+   taskName: string;
+   taskId: string;
+}
+
+export interface RowStudentData {
+   firstName?: Maybe<string>;
+   studentId: string;
 }
 
 /**
@@ -29,27 +41,46 @@ export interface TaskColumnGroup {
  */
 export function generateTaskColumnGroup(
    missionName: string,
-   tasks: { taskName: string; taskId: string }[]
+   tasks: RowTaskData[]
 ): TaskColumnGroup {
    return {
-      header: `${missionName} Tasks`,
+      Header: `${missionName} Tasks`,
       columns: tasks.map((taskInfo) => {
-         return { Header: taskInfo.taskName, accessor: taskInfo.taskId };
+         return { Header: taskInfo.taskName, accessor: `row.${taskInfo.taskId}` };
       }),
    };
 }
 
-function generateStudentRows(students: GetStudentsByCourseQuery): MissionStudentViewRow[] {
-   return students.students.map((student) => {
-      return {
+export function generateStudentRows(
+   students: RowStudentData[],
+   tasks: RowTaskData[]
+): MissionStudentViewRow[] {
+   return students.map((student) => {
+      const base: MissionStudentViewRow = {
          row: {
             name: student.firstName ? student.firstName : student.studentId,
             studentId: student.studentId,
-            T1: 'Initialized!',
          },
       };
+
+      tasks.forEach((task) => {
+         base.row[`${task.taskId}`] = '22'; // TODO pass in grades
+      });
+
+      return base;
    });
 }
+
+const mockTasks = [
+   {
+      taskName: 'Task 1',
+      taskId: 'TASK#1',
+   },
+   {
+      taskName: 'Task 2',
+      taskId: 'TASK#2',
+   },
+];
 
 function MissionStudentViewTable() {
    const { data: students } = useGetStudentsByCourseQuery();
@@ -87,8 +118,12 @@ function MissionStudentViewTable() {
    if (!courseMissions || !students) {
       return <div />;
    }
+   const taskColumnGroup = generateTaskColumnGroup('Mission 1', mockTasks);
+   const tableData: MissionStudentViewRow[] = generateStudentRows(students.students, mockTasks);
+   tableColumns.push(taskColumnGroup);
 
-   const data: MissionStudentViewRow[] = generateStudentRows(students);
+   console.log(tableColumns)
+   console.log(tableData)
    return (
       <div>
          <ToggleButtonGroup
@@ -106,7 +141,7 @@ function MissionStudentViewTable() {
             })}
          </ToggleButtonGroup>
          <div className="base-table">
-            <TableComponent columns={tableColumns} data={data} />
+            <TableComponent columns={tableColumns} data={tableData} />
          </div>
       </div>
    );
