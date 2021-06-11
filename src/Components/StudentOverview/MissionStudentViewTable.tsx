@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import {
+   GetStudentsByCourseQuery,
    MissionsQueryResult,
    useGetStudentsByCourseQuery,
    useMissionsQuery,
@@ -15,9 +16,44 @@ interface MissionStudentViewRow {
    };
 }
 
+export interface TaskColumnGroup {
+   header: string;
+   columns: {
+      Header: string;
+      accessor: string;
+   }[];
+}
+
+/**
+ * Create a column, along with row accessors, for each task contained in the mission
+ */
+export function generateTaskColumnGroup(
+   missionName: string,
+   tasks: { taskName: string; taskId: string }[]
+): TaskColumnGroup {
+   return {
+      header: `${missionName} Tasks`,
+      columns: tasks.map((taskInfo) => {
+         return { Header: taskInfo.taskName, accessor: taskInfo.taskId };
+      }),
+   };
+}
+
+function generateStudentRows(students: GetStudentsByCourseQuery): MissionStudentViewRow[] {
+   return students.students.map((student) => {
+      return {
+         row: {
+            name: student.firstName ? student.firstName : student.studentId,
+            studentId: student.studentId,
+            T1: 'Initialized!',
+         },
+      };
+   });
+}
+
 function MissionStudentViewTable() {
    const { data: students } = useGetStudentsByCourseQuery();
-   const tableColumns = [
+   const tableColumns: any = [
       {
          Header: 'Student Grades',
          columns: [
@@ -52,15 +88,7 @@ function MissionStudentViewTable() {
       return <div />;
    }
 
-   const data: MissionStudentViewRow[] = students.students.map((student) => {
-      return {
-         row: {
-            name: student.firstName ? student.firstName : 'NAME NOT FOUND!!!',
-            studentId: student.studentId,
-         },
-      };
-   });
-
+   const data: MissionStudentViewRow[] = generateStudentRows(students);
    return (
       <div>
          <ToggleButtonGroup
