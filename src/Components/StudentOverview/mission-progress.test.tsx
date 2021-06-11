@@ -5,7 +5,7 @@ import {
    MissionStudentViewRow,
    RowTaskData,
    TaskColumnGroup,
-} from './MissionStudentViewTable';
+} from './SelectedMissionViewTable';
 
 test('Generate Task Column', () => {
    const input: RowTaskData[] = [

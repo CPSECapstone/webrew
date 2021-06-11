@@ -9,93 +9,9 @@ import {
    useMissionsQuery,
 } from '../../__generated__/types';
 import TableComponent from '../TableComponent/TableComponent';
-
-export interface TaskColumnGroup {
-   Header: string;
-   columns: {
-      Header: string;
-      accessor: string;
-   }[];
-}
-
-export interface MissionStudentViewRow {
-   row: {
-      name: string;
-      studentId: string;
-      [task: string]: string;
-   };
-}
-
-export interface RowTaskData {
-   taskName: string;
-   taskId: string;
-}
-
-export interface RowStudentData {
-   firstName?: Maybe<string>;
-   studentId: string;
-}
-
-/**
- * Create a column, along with row accessors, for each task contained in the mission
- */
-export function generateTaskColumnGroup(
-   missionName: string,
-   tasks: RowTaskData[]
-): TaskColumnGroup {
-   return {
-      Header: `${missionName} Tasks`,
-      columns: tasks.map((taskInfo) => {
-         return { Header: taskInfo.taskName, accessor: `row.${taskInfo.taskId}` };
-      }),
-   };
-}
-
-export function generateStudentRows(
-   students: RowStudentData[],
-   tasks: RowTaskData[]
-): MissionStudentViewRow[] {
-   return students.map((student) => {
-      const base: MissionStudentViewRow = {
-         row: {
-            name: student.firstName ? student.firstName : student.studentId,
-            studentId: student.studentId,
-         },
-      };
-
-      tasks.forEach((task) => {
-         base.row[`${task.taskId}`] = '22'; // TODO pass in grades
-      });
-
-      return base;
-   });
-}
-
-const mockTasks = [
-   {
-      taskName: 'Task 1',
-      taskId: 'TASK#1',
-   },
-   {
-      taskName: 'Task 2',
-      taskId: 'TASK#2',
-   },
-];
+import SelectedMissionViewTable from './SelectedMissionViewTable';
 
 function MissionStudentViewTable() {
-   const { data: students } = useGetStudentsByCourseQuery();
-   const tableColumns: any = [
-      {
-         Header: 'Student Grades',
-         columns: [
-            {
-               Header: 'Student',
-               accessor: 'row.name',
-            },
-         ],
-      },
-   ];
-
    const [selectedMission, setSelectedMission] = useState<string | null>(null);
    const [fetchOnce, setFetchOnce] = useState<boolean>(false);
 
@@ -115,15 +31,10 @@ function MissionStudentViewTable() {
       setFetchOnce(true);
    }, [fetchOnce, courseMissions]);
 
-   if (!courseMissions || !students) {
+   if (!courseMissions) {
       return <div />;
    }
-   const taskColumnGroup = generateTaskColumnGroup('Mission 1', mockTasks);
-   const tableData: MissionStudentViewRow[] = generateStudentRows(students.students, mockTasks);
-   tableColumns.push(taskColumnGroup);
 
-   console.log(tableColumns)
-   console.log(tableData)
    return (
       <div>
          <ToggleButtonGroup
@@ -140,9 +51,12 @@ function MissionStudentViewTable() {
                );
             })}
          </ToggleButtonGroup>
-         <div className="base-table">
-            <TableComponent columns={tableColumns} data={tableData} />
-         </div>
+
+         {selectedMission === null ? (
+            <div />
+         ) : (
+            <SelectedMissionViewTable selectedMissionID={selectedMission} />
+         )}
       </div>
    );
 }
