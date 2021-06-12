@@ -12,7 +12,6 @@ import StudentPicture from '../../assets/images/images-1.png';
 import { User } from '../../interfaces/User';
 import LinearProgressWithLabel from '../LinearProgressWithLabel/LinearProgressWithLabel';
 import {
-   MissionProgress,
    TaskObjectiveProgress,
    TaskStats,
    useGetMissionProgressQuery,
@@ -114,10 +113,11 @@ function getTaskObjectiveProgress(task: TaskStats) {
 }
 
 // eslint-disable-next-line consistent-return
-function getMissionProgress(missionData: MissionProgress[], name: string) {
+function getMissionProgress(missionData: any, name: string) {
    // eslint-disable-next-line no-restricted-syntax
    for (const mission of missionData) {
       if (mission.mission.name === name) {
+         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
          return mission.progress;
       }
    }
@@ -155,7 +155,7 @@ function SingleMissionOverview() {
 
    const missionData = data?.getAllMissionProgress;
 
-   const missionProgressData = getMissionProgress(missionData as MissionProgress[], name as string);
+   const missionProgressData = getMissionProgress(missionData, name as string);
 
    return (
       <div

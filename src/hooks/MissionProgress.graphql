@@ -10,6 +10,7 @@ query GetMissionProgress($courseId: String!, $username: String!) {
       progress {
          name
          taskId
+         username
          submission {
             graded
             pointsAwarded

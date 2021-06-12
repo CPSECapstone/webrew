@@ -18,12 +18,13 @@ import TableComponent from '../TableComponent/TableComponent';
 import {
    CmStudentFieldsFragment,
    CtmObjectiveMasteryFieldsFragment,
+   Maybe,
    Target,
    useClassMissionMasteryQuery,
 } from '../../__generated__/types';
-import { LIST_TARGETS_BY_COURSE } from '../../hooks/ListTargetsByCourse';
 import SelectedLTStudentViewTable from './SelectedLTStudentViewTable';
 import { Mastery } from '../../Screens/ClassMastery/StudentMasteryRow';
+import { LIST_TARGETS_BY_COURSE } from '../../hooks/ListTargetsByCourse';
 
 interface LTStudentViewRow {
    row: {
@@ -31,7 +32,7 @@ interface LTStudentViewRow {
       name: string;
       firstName: string;
       lastName: string;
-      team?: string;
+      team: Maybe<string>;
       recent: string;
       average: string;
       progress: string;
