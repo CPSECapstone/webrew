@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import React, { useState } from 'react';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
-import { MissionsQueryResult, useMissionsQuery } from '../../__generated__/types';
+import {
+   MissionsQueryResult,
+   useGetStudentsByCourseQuery,
+   useMissionsQuery,
+} from '../../__generated__/types';
 import SelectedMissionViewTable from './SelectedMissionViewTable';
 
 function MissionStudentViewTable() {
@@ -16,6 +20,7 @@ function MissionStudentViewTable() {
    };
 
    const { data: courseMissions }: MissionsQueryResult = useMissionsQuery();
+   const { data: enrolledStudents } = useGetStudentsByCourseQuery();
 
    React.useEffect(() => {
       if (!courseMissions || fetchOnce) {
@@ -52,7 +57,7 @@ function MissionStudentViewTable() {
          {selectedMission === null ? (
             <div />
          ) : (
-            <SelectedMissionViewTable mission={selectedMissionData} />
+            <SelectedMissionViewTable mission={selectedMissionData} students={enrolledStudents} />
          )}
       </div>
    );

@@ -11,6 +11,7 @@ import {
    MissionContent,
    MissionProgress,
    QueryGetAllEnrolledStudentMissionProgressArgs,
+   Student,
    TaskStats,
    useGetMissionProgressForEnrolledQuery,
    useGetStudentsByCourseQuery,
@@ -46,9 +47,12 @@ export interface RowStudentData {
 /**
  * Create a column, along with row accessors, for each task contained in the mission
  */
-export function generateTaskColumnGroup(mission: any): TaskColumnGroup {
+export function generateTaskColumnGroup(mission: {
+   name: string;
+   missionContent: { name: string; id: string }[];
+}): TaskColumnGroup {
    // eslint-disable-next-line array-callback-return
-   const tasks: { name: string; id: string }[] = mission.missionContent.filter((content: any) => {
+   const tasks: { name: string; id: string }[] = mission.missionContent.filter((content) => {
       // TODO: workaround to ignore sub-missions
       if ('name' in content && 'id' in content) {
          // is a task
@@ -65,12 +69,22 @@ export function generateTaskColumnGroup(mission: any): TaskColumnGroup {
 }
 
 export function generateStudentRows(
-   studentProgressQuery: GetMissionProgressForEnrolledQuery
+   studentProgressQuery: GetMissionProgressForEnrolledQuery,
+   students: Student[]
 ): MissionStudentViewRow[] {
    return studentProgressQuery.getAllEnrolledStudentMissionProgress.map((studentProgress) => {
+      const student = students.find((s) => {
+         return s.studentId === studentProgress.student;
+      });
+
+      const displayName =
+         student && student.firstName && student.lastName
+            ? `${student.firstName} ${student.lastName}`
+            : 'NULL STUDENT';
+
       const base: MissionStudentViewRow = {
          row: {
-            name: studentProgress.student,
+            name: displayName,
             studentId: studentProgress.student,
          },
       };
@@ -86,24 +100,13 @@ export function generateStudentRows(
    });
 }
 
-const mockTasks = [
-   {
-      taskName: 'Task 1',
-      taskId: 'TASK#1',
-   },
-   {
-      taskName: 'Task 2',
-      taskId: 'TASK#2',
-   },
-];
-
-function SelectedMissionViewTable(missionWrapper: any) {
-   console.log(missionWrapper);
+function SelectedMissionViewTable(data: any) {
+   console.log(data);
 
    const { data: studentProgress } = useGetMissionProgressForEnrolledQuery({
       variables: {
          courseId: 'Integrated Science', // TODO: pass in currently selected course
-         missionId: missionWrapper.mission.id,
+         missionId: data.mission.id,
       },
    });
 
@@ -123,8 +126,11 @@ function SelectedMissionViewTable(missionWrapper: any) {
       return <div />;
    }
 
-   const taskColumnGroup = generateTaskColumnGroup(missionWrapper.mission);
-   const tableData: MissionStudentViewRow[] = generateStudentRows(studentProgress);
+   const taskColumnGroup = generateTaskColumnGroup(data.mission);
+   const tableData: MissionStudentViewRow[] = generateStudentRows(
+      studentProgress,
+      data.students.students
+   );
    tableColumns.push(taskColumnGroup);
 
    return (

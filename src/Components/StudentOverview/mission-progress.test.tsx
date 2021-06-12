@@ -8,16 +8,20 @@ import {
 } from './SelectedMissionViewTable';
 
 test('Generate Task Column', () => {
-   const input: RowTaskData[] = [
-      {
-         taskName: 'Task 1',
-         taskId: 'TASK#1',
-      },
-      {
-         taskName: 'Task 2',
-         taskId: 'TASK#2',
-      },
-   ];
+   const input = {
+      name: 'Mission 1',
+      missionContent: [
+         {
+            name: 'Task 1',
+            id: 'TASK#1',
+         },
+         {
+            name: 'Task 2',
+            id: 'TASK#2',
+         },
+      ],
+   };
+
    const expectedRes: TaskColumnGroup = {
       Header: 'Mission 1 Tasks',
       columns: [
@@ -31,7 +35,7 @@ test('Generate Task Column', () => {
          },
       ],
    };
-   expect(generateTaskColumnGroup('Mission 1', input)).toStrictEqual(expectedRes);
+   expect(generateTaskColumnGroup(input)).toStrictEqual(expectedRes);
 });
 
 test('Generate Mission Progress Chart Data', () => {
