@@ -70,7 +70,7 @@ export function generateTaskColumnGroup(mission: {
 
 export function generateStudentRows(
    studentProgressQuery: GetMissionProgressForEnrolledQuery,
-   students: Student[]
+   students: Partial<Student>[]
 ): MissionStudentViewRow[] {
    return studentProgressQuery.getAllEnrolledStudentMissionProgress.map((studentProgress) => {
       const student = students.find((s) => {
