@@ -2,19 +2,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable react/destructuring-assignment */
-import React, { useState } from 'react';
 import {
    GetMissionProgressForEnrolledQuery,
-   GetMissionProgressForEnrolledQueryResult,
    Maybe,
-   Mission,
-   MissionContent,
-   MissionProgress,
-   QueryGetAllEnrolledStudentMissionProgressArgs,
    Student,
-   TaskStats,
    useGetMissionProgressForEnrolledQuery,
-   useGetStudentsByCourseQuery,
 } from '../../__generated__/types';
 import TableComponent from '../TableComponent/TableComponent';
 
@@ -100,9 +92,7 @@ export function generateStudentRows(
    });
 }
 
-function SelectedMissionViewTable(data: any) {
-   console.log(data);
-
+function SelectedMissionViewTable(data: { mission: any; students: any }) {
    const { data: studentProgress } = useGetMissionProgressForEnrolledQuery({
       variables: {
          courseId: 'Integrated Science', // TODO: pass in currently selected course
@@ -127,10 +117,7 @@ function SelectedMissionViewTable(data: any) {
    }
 
    const taskColumnGroup = generateTaskColumnGroup(data.mission);
-   const tableData: MissionStudentViewRow[] = generateStudentRows(
-      studentProgress,
-      data.students.students
-   );
+   const tableData: MissionStudentViewRow[] = generateStudentRows(studentProgress, data.students);
    tableColumns.push(taskColumnGroup);
 
    return (

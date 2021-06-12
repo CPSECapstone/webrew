@@ -12,7 +12,6 @@ import StudentPicture from '../../assets/images/images-1.png';
 import { User } from '../../interfaces/User';
 import LinearProgressWithLabel from '../LinearProgressWithLabel/LinearProgressWithLabel';
 import {
-   MissionProgress,
    TaskObjectiveProgress,
    TaskStats,
    useGetMissionProgressQuery,

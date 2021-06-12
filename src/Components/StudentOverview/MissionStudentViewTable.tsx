@@ -57,7 +57,10 @@ function MissionStudentViewTable() {
          {selectedMission === null ? (
             <div />
          ) : (
-            <SelectedMissionViewTable mission={selectedMissionData} students={enrolledStudents} />
+            <SelectedMissionViewTable
+               mission={selectedMissionData}
+               students={enrolledStudents?.students}
+            />
          )}
       </div>
    );
