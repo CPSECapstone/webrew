@@ -1,0 +1,15 @@
+  query GetMissionProgressForEnrolled($courseId: String!, $missionId: String!) {
+  getAllEnrolledStudentMissionProgress(courseId: $courseId, missionId: $missionId) {
+    student
+    progress {
+      name
+      taskId
+      submission {
+       pointsAwarded
+        pointsPossible
+        graded
+        teacherComment
+      }
+    }
+  }
+}

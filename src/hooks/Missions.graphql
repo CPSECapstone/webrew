@@ -1,6 +1,12 @@
- query Missions {
-      missions(course: "Integrated Science") {
-         name
-         id
+query Missions {
+   missions(course: "Integrated Science") {
+      name
+      id
+      missionContent {
+         ... on Task {
+            name
+            id
+         }
       }
    }
+}

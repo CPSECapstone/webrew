@@ -1,6 +1,20 @@
+/* eslint-disable consistent-return */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable react/destructuring-assignment */
 import React, { useState } from 'react';
-import { Maybe, useGetStudentsByCourseQuery } from '../../__generated__/types';
+import {
+   GetMissionProgressForEnrolledQuery,
+   GetMissionProgressForEnrolledQueryResult,
+   Maybe,
+   Mission,
+   MissionContent,
+   MissionProgress,
+   QueryGetAllEnrolledStudentMissionProgressArgs,
+   TaskStats,
+   useGetMissionProgressForEnrolledQuery,
+   useGetStudentsByCourseQuery,
+} from '../../__generated__/types';
 import TableComponent from '../TableComponent/TableComponent';
 
 export interface TaskColumnGroup {
@@ -32,32 +46,40 @@ export interface RowStudentData {
 /**
  * Create a column, along with row accessors, for each task contained in the mission
  */
-export function generateTaskColumnGroup(
-   missionName: string,
-   tasks: RowTaskData[]
-): TaskColumnGroup {
+export function generateTaskColumnGroup(mission: any): TaskColumnGroup {
+   // eslint-disable-next-line array-callback-return
+   const tasks: { name: string; id: string }[] = mission.missionContent.filter((content: any) => {
+      // TODO: workaround to ignore sub-missions
+      if ('name' in content && 'id' in content) {
+         // is a task
+         return content;
+      }
+   });
+
    return {
-      Header: `${missionName} Tasks`,
-      columns: tasks.map((taskInfo) => {
-         return { Header: taskInfo.taskName, accessor: `row.${taskInfo.taskId}` };
+      Header: `${mission.name} Tasks`,
+      columns: tasks.map((content: { name: string; id: string }) => {
+         return { Header: content.name, accessor: `row.${content.id}` };
       }),
    };
 }
 
 export function generateStudentRows(
-   students: RowStudentData[],
-   tasks: RowTaskData[]
+   studentProgressQuery: GetMissionProgressForEnrolledQuery
 ): MissionStudentViewRow[] {
-   return students.map((student) => {
+   return studentProgressQuery.getAllEnrolledStudentMissionProgress.map((studentProgress) => {
       const base: MissionStudentViewRow = {
          row: {
-            name: student.firstName ? student.firstName : student.studentId,
-            studentId: student.studentId,
+            name: studentProgress.student,
+            studentId: studentProgress.student,
          },
       };
 
-      tasks.forEach((task) => {
-         base.row[`${task.taskId}`] = '22'; // TODO pass in grades
+      studentProgress.progress.forEach((taskStats) => {
+         // Either display the grade or just a blank string
+         base.row[`${taskStats.taskId}`] = `${
+            taskStats.submission ? taskStats.submission.pointsAwarded : ''
+         }`;
       });
 
       return base;
@@ -75,13 +97,15 @@ const mockTasks = [
    },
 ];
 
-interface SelectedMissionData {
-   selectedMissionID: string;
-}
+function SelectedMissionViewTable(missionWrapper: any) {
+   console.log(missionWrapper);
 
-function SelectedMissionViewTable(selectedMissionData: SelectedMissionData) {
-   console.log(selectedMissionData);
-   const { data: students } = useGetStudentsByCourseQuery();
+   const { data: studentProgress } = useGetMissionProgressForEnrolledQuery({
+      variables: {
+         courseId: 'Integrated Science', // TODO: pass in currently selected course
+         missionId: missionWrapper.mission.id,
+      },
+   });
 
    const tableColumns: any = [
       {
@@ -95,15 +119,12 @@ function SelectedMissionViewTable(selectedMissionData: SelectedMissionData) {
       },
    ];
 
-   if (!students) {
+   if (!studentProgress) {
       return <div />;
    }
 
-   const taskColumnGroup = generateTaskColumnGroup(
-      selectedMissionData.selectedMissionID,
-      mockTasks
-   );
-   const tableData: MissionStudentViewRow[] = generateStudentRows(students.students, mockTasks);
+   const taskColumnGroup = generateTaskColumnGroup(missionWrapper.mission);
+   const tableData: MissionStudentViewRow[] = generateStudentRows(studentProgress);
    tableColumns.push(taskColumnGroup);
 
    return (

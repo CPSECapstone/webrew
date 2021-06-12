@@ -1,14 +1,7 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import React, { useState } from 'react';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
-import {
-   GetStudentsByCourseQuery,
-   Maybe,
-   MissionsQueryResult,
-   useGetStudentsByCourseQuery,
-   useMissionsQuery,
-} from '../../__generated__/types';
-import TableComponent from '../TableComponent/TableComponent';
+import { MissionsQueryResult, useMissionsQuery } from '../../__generated__/types';
 import SelectedMissionViewTable from './SelectedMissionViewTable';
 
 function MissionStudentViewTable() {
@@ -35,6 +28,10 @@ function MissionStudentViewTable() {
       return <div />;
    }
 
+   const selectedMissionData = courseMissions.missions?.find((mission) => {
+      return mission?.id === selectedMission;
+   });
+
    return (
       <div>
          <ToggleButtonGroup
@@ -55,7 +52,7 @@ function MissionStudentViewTable() {
          {selectedMission === null ? (
             <div />
          ) : (
-            <SelectedMissionViewTable selectedMissionID={selectedMission} />
+            <SelectedMissionViewTable mission={selectedMissionData} />
          )}
       </div>
    );
