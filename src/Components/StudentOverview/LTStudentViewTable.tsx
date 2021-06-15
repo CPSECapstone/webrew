@@ -114,7 +114,7 @@ function LTStudentViewTable() {
             name: `${firstName} ${lastName}`,
             firstName,
             lastName,
-            team: studentMissionMastery.student.team,
+            team: studentMissionMastery.student.team ?? '',
             recent: studentMissionMastery.currentTaskName,
             average: '',
             progress: `${(studentMissionMastery.progress * 100).toFixed(1)}%`,

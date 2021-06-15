@@ -82,7 +82,7 @@ function SelectedLTStudentViewTable(classMissionMastery: any, selectedLTId: stri
             row: {
                section: '1',
                name: `${studentMissionMastery.student.lastName} ${studentMissionMastery.student.firstName}`,
-               team: studentMissionMastery.student.team,
+               team: studentMissionMastery.student.team ?? '',
                recent: studentMissionMastery.currentTaskName,
                average: '',
                progress: `${(studentMissionMastery.progress * 100).toFixed(1)}%`,
