@@ -1,0 +1,46 @@
+.listing-card {
+   border: 1px solid gray;
+   margin: 12px;
+   box-sizing: border-box;
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+   border-radius: 4px;
+   overflow: hidden;
+   background: #fff;
+   width: 262px;
+   display: inline-block;
+   vertical-align: top;
+   margin: 36px 0 0 36px;
+}
+
+.listing-card {
+   .listing-title {
+      font-size: 1.2em;
+      color: teal;
+      text-overflow: ellipsis;
+      display: inline-block;
+   }
+
+   .listing-card-header {
+      display: block;
+      height: 146px;
+      background-color: #1296af;
+   }
+
+   .listing-card-body {
+      padding: 12px;
+
+      .listing-instructor {
+         text-overflow: ellipsis;
+      }
+      .listing-desc {
+         text-overflow: ellipsis;
+         white-space: nowrap;
+         overflow: hidden;
+      }
+   }
+}
+
+.listing-icon {
+   margin-left: 10px;
+   margin-bottom: 10px;
+}

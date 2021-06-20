@@ -14,13 +14,14 @@ import TaskListView from '../TaskListView';
 import TaskSubmissionSummaryView from '../TaskSubmissionSummaryView';
 import { ClassMastery } from '../../Screens/ClassMastery';
 import './Content.css';
+import MarketHome from '../MarketHome/MarketHome';
 
 export default function Content() {
    return (
       <div className="content">
          <Switch>
             <Route path="/courseHome/:className">
-               <CourseHome />
+               <MarketHome />
             </Route>
             <Route path="/addNewCourse">
                <CreateCourseDialog />

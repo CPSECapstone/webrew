@@ -1,0 +1,17 @@
+query MarketListings($courseId: String!) {
+   marketListings(course: $courseId) {
+      ...ListingFields
+   }
+}
+
+fragment ListingFields on MarketListing {
+   id
+   listingName
+   description
+   image
+   course
+   listedDate
+   price
+   stock
+   timesPurchased
+}
