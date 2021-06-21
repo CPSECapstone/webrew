@@ -27,13 +27,7 @@
       height: 40;
       border-radius: 50%;
    }
-   .listing-title {
-      word-wrap: break-word;
-      font-size: 1em;
-      color: rgb(0, 0, 0);
-      text-overflow: clip;
-      display: 'inline-block';
-   }
+
 
    .listing-card-header {
       display: block;
@@ -41,21 +35,20 @@
    }
 
    .listing-card-body {
-      padding: 30px;
       float: right;
-      .listing-points {
-         text-overflow: clip;
-         color: rgb(0, 0, 0);
-         font-size: 1.3em;
-         font-weight: bold;
+      width: 55%;
+      padding-top: 10%;
+      padding-right: 9%;
+      .listing-title {
+         font-size: 1.4em;
+         color: black;
+         display: inline-flex;
+         align-content: center;
       }
-      .listing-desc {
+      .listing-points {
          color: rgb(0, 0, 0);
-
-         text-overflow: ellipsis;
-         word-wrap: normal;
-         white-space: nowrap;
-         overflow: visible;
+         font-size: 1.5em;
+         font-weight: bold;
       }
    }
 }

@@ -24,7 +24,7 @@ export default function listingCard({ listingInfo }: Props) {
                <h3 className="listing-title">
                   <span>{listingInfo.listingName}</span>
                </h3>
-               <p className="listing-points">{listingInfo.price} Points</p>
+               <p className="listing-points">{listingInfo.price} P</p>
             </div>
          </div>
       </Link>

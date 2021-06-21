@@ -19,7 +19,7 @@ function MarketHome() {
 
    return (
       <div>
-         <>{className} Marketplace</>
+         <h1>{className} Marketplace</h1>
          {marketListings.map((listing: ListingFieldsFragment) => (
             <ListingCard listingInfo={listing} />
          ))}
