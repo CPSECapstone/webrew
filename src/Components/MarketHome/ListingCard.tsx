@@ -13,19 +13,18 @@ export default function listingCard({ listingInfo }: Props) {
    return (
       <Link to={`/listingHome/${listingInfo.listingName}`}>
          <div className="listing-card">
-            <div className="listing-card-header" />
+            <div className="listing-card-image">
+               <img
+                  src={listingInfo.image}
+                  alt=""
+                  style={{ width: 100, height: 100, borderRadius: '50%' }}
+               />
+            </div>
             <div className="listing-card-body">
                <h3 className="listing-title">
                   <span>{listingInfo.listingName}</span>
                </h3>
-               <p className="listing-instrucor">{listingInfo.price} Points</p>
-               <p className="listing-desc">
-                  <span>{listingInfo.description}</span>
-               </p>
-            </div>
-            <div>
-               <FontAwesomeIcon icon={faBell} size="lg" className="listing-icon" />
-               <FontAwesomeIcon icon={faFolder} size="lg" className="listing-icon" />
+               <p className="listing-points">{listingInfo.price} Points</p>
             </div>
          </div>
       </Link>
