@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-import { faBell, faFolder } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import { ListingFieldsFragment } from '../../__generated__/types';
 import './ListingCard.scss';

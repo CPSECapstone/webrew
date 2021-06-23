@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { ListingFieldsFragment, useMarketListingsQuery } from '../../__generated__/types';
+import CreateListingDialog from './CreateListingDialog';
 import ListingCard from './ListingCard';
 
 function MarketHome() {
@@ -19,7 +20,8 @@ function MarketHome() {
 
    return (
       <div>
-         <h1>{className} Marketplace</h1>
+         <h1 className="market-course-header">{className} Marketplace</h1>
+         <CreateListingDialog course={className} />
          {marketListings.map((listing: ListingFieldsFragment) => (
             <ListingCard listingInfo={listing} />
          ))}

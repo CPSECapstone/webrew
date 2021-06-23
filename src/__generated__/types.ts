@@ -1232,6 +1232,17 @@ export type MarketListingsQuery = { __typename: 'Query', marketListings: Array<(
     & ListingFieldsFragment
   )> };
 
+export type AddListingMutationVariables = Exact<{
+  course: Scalars['String'];
+  input: MarketListingInput;
+}>;
+
+
+export type AddListingMutation = { __typename: 'Mutation', addMarketListing: (
+    { __typename: 'MarketListing' }
+    & ListingFieldsFragment
+  ) };
+
 export type ListingFieldsFragment = { __typename: 'MarketListing', id: string, listingName: string, description: string, image: string, course: string, listedDate: any, price: number, stock?: Maybe<number>, timesPurchased: number };
 
 export type TaskListQueryVariables = Exact<{
@@ -1932,6 +1943,40 @@ export function useMarketListingsLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
 export type MarketListingsQueryHookResult = ReturnType<typeof useMarketListingsQuery>;
 export type MarketListingsLazyQueryHookResult = ReturnType<typeof useMarketListingsLazyQuery>;
 export type MarketListingsQueryResult = Apollo.QueryResult<MarketListingsQuery, MarketListingsQueryVariables>;
+export const AddListingDocument = gql`
+    mutation AddListing($course: String!, $input: MarketListingInput!) {
+  addMarketListing(course: $course, listing: $input) {
+    ...ListingFields
+  }
+}
+    ${ListingFieldsFragmentDoc}`;
+export type AddListingMutationFn = Apollo.MutationFunction<AddListingMutation, AddListingMutationVariables>;
+
+/**
+ * __useAddListingMutation__
+ *
+ * To run a mutation, you first call `useAddListingMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddListingMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addListingMutation, { data, loading, error }] = useAddListingMutation({
+ *   variables: {
+ *      course: // value for 'course'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAddListingMutation(baseOptions?: Apollo.MutationHookOptions<AddListingMutation, AddListingMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddListingMutation, AddListingMutationVariables>(AddListingDocument, options);
+      }
+export type AddListingMutationHookResult = ReturnType<typeof useAddListingMutation>;
+export type AddListingMutationResult = Apollo.MutationResult<AddListingMutation>;
+export type AddListingMutationOptions = Apollo.BaseMutationOptions<AddListingMutation, AddListingMutationVariables>;
 export const TaskListDocument = gql`
     query TaskList($course: String!) {
   tasksByCourse(course: $course) {

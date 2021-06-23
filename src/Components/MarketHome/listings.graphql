@@ -4,6 +4,15 @@ query MarketListings($courseId: String!) {
    }
 }
 
+mutation AddListing($course: String!, $input: MarketListingInput!) {
+  addMarketListing(
+    course: $course
+    listing: $input
+  ) {
+    ...ListingFields
+  }
+}
+
 fragment ListingFields on MarketListing {
    id
    listingName
