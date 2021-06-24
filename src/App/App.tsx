@@ -58,9 +58,6 @@ function App() {
          <div className="main container-fluid">
             <div className="row h-100">
                <div className="sidebar-container col-md-2 p-0 side">
-                  <div className="img-container">
-                     <img src={StudentPicture} alt="" className="img-fluid" />
-                  </div>
                   <div className="pl-2 pt-2 pr-2">{fname}</div>
                   <Sidebar />
                </div>
