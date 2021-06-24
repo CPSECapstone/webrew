@@ -1,38 +1,38 @@
 query ClassTargetMastery($targetId: String!) {
-  classTargetMastery(targetId: $targetId) {
-    target {
-      ...CTMTargetField
-    }
-    studentObjectiveMasteryList {
-      ...CTMStudentObjectiveMasteryFields
-    }
-  }
+   classTargetMastery(targetId: $targetId) {
+      target {
+         ...CTMTargetField
+      }
+      studentObjectiveMasteryList {
+         ...CTMStudentObjectiveMasteryFields
+      }
+   }
 }
 
 fragment CTMTargetField on Target {
-  targetId
-  targetName
-  objectives {
-    ...CTMObjectiveField
-  }
+   targetId
+   targetName
+   objectives {
+      ...CTMObjectiveField
+   }
 }
 
 fragment CTMObjectiveField on Objective {
-  objectiveId
-  objectiveName
+   objectiveId
+   objectiveName
 }
 
 fragment CTMStudentObjectiveMasteryFields on StudentObjectiveMastery {
-  student {
-    studentId
-    email
-  }
-  objectiveMasteryList {
-    ...CTMObjectiveMasteryFields
-  }
+   student {
+      studentId
+      email
+   }
+   objectiveMasteryList {
+      ...CTMObjectiveMasteryFields
+   }
 }
 
 fragment CTMObjectiveMasteryFields on ObjectiveMastery {
-  objectiveId
-  mastery
+   objectiveId
+   mastery
 }

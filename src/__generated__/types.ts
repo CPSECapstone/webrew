@@ -166,6 +166,26 @@ export type ImageBlockInput = {
   imageUrl: Scalars['String'];
 };
 
+export type MarketListing = {
+  id: Scalars['String'];
+  listingName: Scalars['String'];
+  description: Scalars['String'];
+  image: Scalars['String'];
+  course: Scalars['String'];
+  listedDate: Scalars['Date'];
+  price: Scalars['Int'];
+  stock?: Maybe<Scalars['Int']>;
+  timesPurchased: Scalars['Int'];
+};
+
+export type MarketListingInput = {
+  listingName: Scalars['String'];
+  description: Scalars['String'];
+  image: Scalars['String'];
+  price: Scalars['Int'];
+  stock?: Maybe<Scalars['Int']>;
+};
+
 export enum Mastery {
   NotGraded = 'NOT_GRADED',
   NotMastered = 'NOT_MASTERED',
@@ -287,6 +307,12 @@ export type Mutation = {
   gradeTaskSubmission: TaskSubmissionGrade;
   gradeAnswer: AnswerGrade;
   gradeObjectiveTaskMastery: ObjectiveTaskMastery;
+  fulfillPurchase: Receipt;
+  purchase: Receipt;
+  editMarketListing: MarketListing;
+  addMarketListing: MarketListing;
+  removeMarketListing: Scalars['String'];
+  changePoints: Scalars['Int'];
 };
 
 
@@ -424,6 +450,47 @@ export type MutationGradeObjectiveTaskMasteryArgs = {
   grade: ObjectiveTaskMasteryInput;
 };
 
+
+export type MutationFulfillPurchaseArgs = {
+  course: Scalars['String'];
+  receiptId: Scalars['String'];
+  fulfilled: Scalars['Boolean'];
+};
+
+
+export type MutationPurchaseArgs = {
+  course: Scalars['String'];
+  listingId: Scalars['String'];
+  quantity: Scalars['Int'];
+  note: Scalars['String'];
+};
+
+
+export type MutationEditMarketListingArgs = {
+  course: Scalars['String'];
+  id: Scalars['String'];
+  listing: MarketListingInput;
+};
+
+
+export type MutationAddMarketListingArgs = {
+  course: Scalars['String'];
+  listing: MarketListingInput;
+};
+
+
+export type MutationRemoveMarketListingArgs = {
+  course: Scalars['String'];
+  id: Scalars['String'];
+};
+
+
+export type MutationChangePointsArgs = {
+  course: Scalars['String'];
+  student: Scalars['String'];
+  points: Scalars['Int'];
+};
+
 export type Objective = {
   objectiveId: Scalars['String'];
   objectiveName: Scalars['String'];
@@ -547,6 +614,15 @@ export type Query = {
   students: Array<Student>;
   classMissionMastery: ClassMissionMastery;
   classTargetMastery: ClassTargetMastery;
+  marketListings: Array<MarketListing>;
+  /**
+   * If the student field is null or this API is called by a student, it will only return that student's purchases.
+   * Otherwise, it will return all for that course.
+   *
+   * Will only return the most recent N purchased passed into the fetch parameter
+   */
+  recentPurchases: Array<Receipt>;
+  unfulfilledPurchases: Array<Receipt>;
 };
 
 
@@ -706,7 +782,7 @@ export type QueryGetGoalByIdArgs = {
 
 
 export type QueryStudentArgs = {
-  studentId: Scalars['String'];
+  studentId?: Maybe<Scalars['String']>;
   course: Scalars['String'];
 };
 
@@ -723,6 +799,24 @@ export type QueryClassMissionMasteryArgs = {
 
 export type QueryClassTargetMasteryArgs = {
   targetId: Scalars['String'];
+};
+
+
+export type QueryMarketListingsArgs = {
+  course: Scalars['String'];
+};
+
+
+export type QueryRecentPurchasesArgs = {
+  course: Scalars['String'];
+  student?: Maybe<Scalars['String']>;
+  fetch: Scalars['Int'];
+};
+
+
+export type QueryUnfulfilledPurchasesArgs = {
+  course: Scalars['String'];
+  student?: Maybe<Scalars['String']>;
 };
 
 export interface Question {
@@ -772,6 +866,25 @@ export type QuizBlockInput = {
   questionIds: Array<Scalars['String']>;
 };
 
+/**
+ * The student and listing objects contained in the receipt will reflect
+ * the updated values as a result of the purchase.
+ */
+export type Receipt = {
+  studentId: Scalars['String'];
+  listingName: Scalars['String'];
+  listingId: Scalars['String'];
+  student: Student;
+  listing: MarketListing;
+  receiptId: Scalars['String'];
+  course: Scalars['String'];
+  note: Scalars['String'];
+  purchaseDate: Scalars['Date'];
+  pointsSpent: Scalars['Int'];
+  quantity: Scalars['Int'];
+  fulfilled: Scalars['Boolean'];
+};
+
 export enum Role {
   Student = 'STUDENT',
   Instructor = 'INSTRUCTOR'
@@ -795,6 +908,9 @@ export type Student = {
   course: Scalars['String'];
   section: Scalars['Int'];
   team?: Maybe<Scalars['String']>;
+  points: Scalars['Int'];
+  totalPointsAwarded: Scalars['Int'];
+  totalPointsSpent: Scalars['Int'];
 };
 
 export type StudentInput = {
@@ -1105,6 +1221,49 @@ export type ClassMissionMasteryQuery = { __typename: 'Query', classMissionMaster
 export type CmMissionFieldsFragment = { __typename: 'Mission', name: string, description: string };
 
 export type CmStudentFieldsFragment = { __typename: 'StudentMissionMastery', currentTaskId: string, currentTaskName: string, level: number, progress: number, student: { __typename: 'Student', studentId: string, lastName?: Maybe<string>, firstName?: Maybe<string>, email: string, team?: Maybe<string> } };
+
+export type MarketListingsQueryVariables = Exact<{
+  courseId: Scalars['String'];
+}>;
+
+
+export type MarketListingsQuery = { __typename: 'Query', marketListings: Array<(
+    { __typename: 'MarketListing' }
+    & ListingFieldsFragment
+  )> };
+
+export type AddListingMutationVariables = Exact<{
+  course: Scalars['String'];
+  input: MarketListingInput;
+}>;
+
+
+export type AddListingMutation = { __typename: 'Mutation', addMarketListing: (
+    { __typename: 'MarketListing' }
+    & ListingFieldsFragment
+  ) };
+
+export type EditListingMutationVariables = Exact<{
+  course: Scalars['String'];
+  id: Scalars['String'];
+  input: MarketListingInput;
+}>;
+
+
+export type EditListingMutation = { __typename: 'Mutation', editMarketListing: (
+    { __typename: 'MarketListing' }
+    & ListingFieldsFragment
+  ) };
+
+export type DeleteListingMutationVariables = Exact<{
+  course: Scalars['String'];
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteListingMutation = { __typename: 'Mutation', removeMarketListing: string };
+
+export type ListingFieldsFragment = { __typename: 'MarketListing', id: string, listingName: string, description: string, image: string, course: string, listedDate: any, price: number, stock?: Maybe<number>, timesPurchased: number };
 
 export type TaskListQueryVariables = Exact<{
   course: Scalars['String'];
@@ -1422,6 +1581,19 @@ export const CmStudentFieldsFragmentDoc = gql`
   currentTaskName
   level
   progress
+}
+    `;
+export const ListingFieldsFragmentDoc = gql`
+    fragment ListingFields on MarketListing {
+  id
+  listingName
+  description
+  image
+  course
+  listedDate
+  price
+  stock
+  timesPurchased
 }
     `;
 export const TaskListTaskFieldsFragmentDoc = gql`
@@ -1756,6 +1928,142 @@ export function useClassMissionMasteryLazyQuery(baseOptions?: Apollo.LazyQueryHo
 export type ClassMissionMasteryQueryHookResult = ReturnType<typeof useClassMissionMasteryQuery>;
 export type ClassMissionMasteryLazyQueryHookResult = ReturnType<typeof useClassMissionMasteryLazyQuery>;
 export type ClassMissionMasteryQueryResult = Apollo.QueryResult<ClassMissionMasteryQuery, ClassMissionMasteryQueryVariables>;
+export const MarketListingsDocument = gql`
+    query MarketListings($courseId: String!) {
+  marketListings(course: $courseId) {
+    ...ListingFields
+  }
+}
+    ${ListingFieldsFragmentDoc}`;
+
+/**
+ * __useMarketListingsQuery__
+ *
+ * To run a query within a React component, call `useMarketListingsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMarketListingsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMarketListingsQuery({
+ *   variables: {
+ *      courseId: // value for 'courseId'
+ *   },
+ * });
+ */
+export function useMarketListingsQuery(baseOptions: Apollo.QueryHookOptions<MarketListingsQuery, MarketListingsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MarketListingsQuery, MarketListingsQueryVariables>(MarketListingsDocument, options);
+      }
+export function useMarketListingsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MarketListingsQuery, MarketListingsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MarketListingsQuery, MarketListingsQueryVariables>(MarketListingsDocument, options);
+        }
+export type MarketListingsQueryHookResult = ReturnType<typeof useMarketListingsQuery>;
+export type MarketListingsLazyQueryHookResult = ReturnType<typeof useMarketListingsLazyQuery>;
+export type MarketListingsQueryResult = Apollo.QueryResult<MarketListingsQuery, MarketListingsQueryVariables>;
+export const AddListingDocument = gql`
+    mutation AddListing($course: String!, $input: MarketListingInput!) {
+  addMarketListing(course: $course, listing: $input) {
+    ...ListingFields
+  }
+}
+    ${ListingFieldsFragmentDoc}`;
+export type AddListingMutationFn = Apollo.MutationFunction<AddListingMutation, AddListingMutationVariables>;
+
+/**
+ * __useAddListingMutation__
+ *
+ * To run a mutation, you first call `useAddListingMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddListingMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addListingMutation, { data, loading, error }] = useAddListingMutation({
+ *   variables: {
+ *      course: // value for 'course'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAddListingMutation(baseOptions?: Apollo.MutationHookOptions<AddListingMutation, AddListingMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddListingMutation, AddListingMutationVariables>(AddListingDocument, options);
+      }
+export type AddListingMutationHookResult = ReturnType<typeof useAddListingMutation>;
+export type AddListingMutationResult = Apollo.MutationResult<AddListingMutation>;
+export type AddListingMutationOptions = Apollo.BaseMutationOptions<AddListingMutation, AddListingMutationVariables>;
+export const EditListingDocument = gql`
+    mutation EditListing($course: String!, $id: String!, $input: MarketListingInput!) {
+  editMarketListing(course: $course, id: $id, listing: $input) {
+    ...ListingFields
+  }
+}
+    ${ListingFieldsFragmentDoc}`;
+export type EditListingMutationFn = Apollo.MutationFunction<EditListingMutation, EditListingMutationVariables>;
+
+/**
+ * __useEditListingMutation__
+ *
+ * To run a mutation, you first call `useEditListingMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditListingMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editListingMutation, { data, loading, error }] = useEditListingMutation({
+ *   variables: {
+ *      course: // value for 'course'
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useEditListingMutation(baseOptions?: Apollo.MutationHookOptions<EditListingMutation, EditListingMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditListingMutation, EditListingMutationVariables>(EditListingDocument, options);
+      }
+export type EditListingMutationHookResult = ReturnType<typeof useEditListingMutation>;
+export type EditListingMutationResult = Apollo.MutationResult<EditListingMutation>;
+export type EditListingMutationOptions = Apollo.BaseMutationOptions<EditListingMutation, EditListingMutationVariables>;
+export const DeleteListingDocument = gql`
+    mutation DeleteListing($course: String!, $id: String!) {
+  removeMarketListing(course: $course, id: $id)
+}
+    `;
+export type DeleteListingMutationFn = Apollo.MutationFunction<DeleteListingMutation, DeleteListingMutationVariables>;
+
+/**
+ * __useDeleteListingMutation__
+ *
+ * To run a mutation, you first call `useDeleteListingMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteListingMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteListingMutation, { data, loading, error }] = useDeleteListingMutation({
+ *   variables: {
+ *      course: // value for 'course'
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteListingMutation(baseOptions?: Apollo.MutationHookOptions<DeleteListingMutation, DeleteListingMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteListingMutation, DeleteListingMutationVariables>(DeleteListingDocument, options);
+      }
+export type DeleteListingMutationHookResult = ReturnType<typeof useDeleteListingMutation>;
+export type DeleteListingMutationResult = Apollo.MutationResult<DeleteListingMutation>;
+export type DeleteListingMutationOptions = Apollo.BaseMutationOptions<DeleteListingMutation, DeleteListingMutationVariables>;
 export const TaskListDocument = gql`
     query TaskList($course: String!) {
   tasksByCourse(course: $course) {

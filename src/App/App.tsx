@@ -5,7 +5,6 @@ import { withAuthenticator } from 'aws-amplify-react';
 import Sidebar from '../Components/Sidebar';
 import Content from '../Components/Content';
 import Navigation from '../Navigation/Navigation';
-import StudentPicture from '../assets/images/images-1.png';
 
 import './App.scss';
 
@@ -58,9 +57,6 @@ function App() {
          <div className="main container-fluid">
             <div className="row h-100">
                <div className="sidebar-container col-md-2 p-0 side">
-                  <div className="img-container">
-                     <img src={StudentPicture} alt="" className="img-fluid" />
-                  </div>
                   <div className="pl-2 pt-2 pr-2">{fname}</div>
                   <Sidebar />
                </div>

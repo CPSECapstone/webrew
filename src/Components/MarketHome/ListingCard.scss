@@ -1,0 +1,75 @@
+.market-course-header {
+   margin-left: 36px;
+}
+
+.center {
+   margin: auto;
+   margin-top: 5em;
+   width: 50%;
+}
+
+.listing-card-outer {
+   display: inline-block;
+}
+
+.listing-card {
+   border: 1px solid rgb(255, 255, 255);
+   margin: 12px;
+   box-sizing: border-box;
+   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+   border-radius: 8px;
+   overflow: hidden;
+   background: #fff;
+   width: 300px;
+   height: 150px;
+   display: inline-block;
+   vertical-align: top;
+   position: relative;
+}
+
+.listing-card-details {
+   margin-top: 1em;
+}
+
+.listing-card {
+   .listing-card-image {
+      padding-left: 15px;
+      float: left;
+      margin: 0px auto;
+      position: absolute;
+      top: 50%;
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
+      width: 40;
+      height: 40;
+      border-radius: 50%;
+   }
+
+   .listing-card-header {
+      display: block;
+      height: 0px;
+   }
+
+   .listing-card-body {
+      float: right;
+      width: 55%;
+      padding-top: 10%;
+      padding-right: 9%;
+      .listing-title {
+         font-size: 1.4em;
+         color: black;
+         display: inline-flex;
+         align-content: center;
+      }
+      .listing-points {
+         color: rgb(0, 0, 0);
+         font-size: 1.5em;
+         font-weight: bold;
+      }
+   }
+}
+
+.listing-icon {
+   margin-left: 10px;
+   margin-bottom: 10px;
+}
