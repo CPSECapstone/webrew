@@ -1243,6 +1243,14 @@ export type AddListingMutation = { __typename: 'Mutation', addMarketListing: (
     & ListingFieldsFragment
   ) };
 
+export type DeleteListingMutationVariables = Exact<{
+  course: Scalars['String'];
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteListingMutation = { __typename: 'Mutation', removeMarketListing: string };
+
 export type ListingFieldsFragment = { __typename: 'MarketListing', id: string, listingName: string, description: string, image: string, course: string, listedDate: any, price: number, stock?: Maybe<number>, timesPurchased: number };
 
 export type TaskListQueryVariables = Exact<{
@@ -1977,6 +1985,38 @@ export function useAddListingMutation(baseOptions?: Apollo.MutationHookOptions<A
 export type AddListingMutationHookResult = ReturnType<typeof useAddListingMutation>;
 export type AddListingMutationResult = Apollo.MutationResult<AddListingMutation>;
 export type AddListingMutationOptions = Apollo.BaseMutationOptions<AddListingMutation, AddListingMutationVariables>;
+export const DeleteListingDocument = gql`
+    mutation DeleteListing($course: String!, $id: String!) {
+  removeMarketListing(course: $course, id: $id)
+}
+    `;
+export type DeleteListingMutationFn = Apollo.MutationFunction<DeleteListingMutation, DeleteListingMutationVariables>;
+
+/**
+ * __useDeleteListingMutation__
+ *
+ * To run a mutation, you first call `useDeleteListingMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteListingMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteListingMutation, { data, loading, error }] = useDeleteListingMutation({
+ *   variables: {
+ *      course: // value for 'course'
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteListingMutation(baseOptions?: Apollo.MutationHookOptions<DeleteListingMutation, DeleteListingMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteListingMutation, DeleteListingMutationVariables>(DeleteListingDocument, options);
+      }
+export type DeleteListingMutationHookResult = ReturnType<typeof useDeleteListingMutation>;
+export type DeleteListingMutationResult = Apollo.MutationResult<DeleteListingMutation>;
+export type DeleteListingMutationOptions = Apollo.BaseMutationOptions<DeleteListingMutation, DeleteListingMutationVariables>;
 export const TaskListDocument = gql`
     query TaskList($course: String!) {
   tasksByCourse(course: $course) {

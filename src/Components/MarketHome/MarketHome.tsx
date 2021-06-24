@@ -11,26 +11,6 @@ const sortListings = (a: ListingFieldsFragment, b: ListingFieldsFragment) => {
    return a.listingName.localeCompare(b.listingName);
 };
 
-function loader(
-   loading: boolean,
-   error: ApolloError | undefined,
-   data: any,
-   listings: ListingFieldsFragment[]
-) {
-   if (loading)
-      return (
-         <div>
-            <CircularProgress size={150} />
-         </div>
-      );
-   if (error) return <div>`Error! ${error.message}`</div>;
-   if (!data) {
-      return <></>;
-   }
-
-   return listings.map((listing: ListingFieldsFragment) => <ListingCard listingInfo={listing} />);
-}
-
 function MarketHome() {
    const { className } = useParams<Record<string, string>>();
    const [listings, setListings] = useState<ListingFieldsFragment[]>([]);
@@ -52,11 +32,27 @@ function MarketHome() {
       setListings([...listings, listing].sort(sortListings));
    };
 
+   const removeFromListings = (listingId: string) => {
+      setListings(listings.filter((listing) => listing.id !== listingId));
+   };
+
    return (
       <div>
          <h1 className="market-course-header">{className} Marketplace</h1>
          <CreateListingDialog course={className} callback={addToListings} refetch={refetch} />
-         {loader(loading, error, data, listings)}
+         {loading || error || !data ? (
+            <div>
+               <CircularProgress size={150} />
+            </div>
+         ) : (
+            listings.map((listing: ListingFieldsFragment) => (
+               <ListingCard
+                  listingInfo={listing}
+                  refetch={refetch}
+                  removeFromListings={removeFromListings}
+               />
+            ))
+         )}
       </div>
    );
 }

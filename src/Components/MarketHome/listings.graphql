@@ -5,12 +5,13 @@ query MarketListings($courseId: String!) {
 }
 
 mutation AddListing($course: String!, $input: MarketListingInput!) {
-  addMarketListing(
-    course: $course
-    listing: $input
-  ) {
-    ...ListingFields
-  }
+   addMarketListing(course: $course, listing: $input) {
+      ...ListingFields
+   }
+}
+
+mutation DeleteListing($course: String!, $id: String!) {
+   removeMarketListing(course: $course, id: $id)
 }
 
 fragment ListingFields on MarketListing {

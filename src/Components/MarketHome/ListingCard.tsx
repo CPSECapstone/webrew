@@ -8,15 +8,18 @@ import {
    Typography,
 } from '@material-ui/core';
 import { useState } from 'react';
-import { ListingFieldsFragment } from '../../__generated__/types';
+import { ListingFieldsFragment, useDeleteListingMutation } from '../../__generated__/types';
 import './ListingCard.scss';
 
 type Props = {
    listingInfo: ListingFieldsFragment;
+   refetch: any;
+   removeFromListings: (arg0: string) => void;
 };
 
-export default function ListingCard({ listingInfo }: Props) {
+export default function ListingCard({ listingInfo, refetch, removeFromListings }: Props) {
    const [open, setOpen] = useState(false);
+   const [deleteListing] = useDeleteListingMutation();
 
    const handleClickOpen = () => {
       setOpen(true);
@@ -24,6 +27,21 @@ export default function ListingCard({ listingInfo }: Props) {
 
    const handleClose = () => {
       setOpen(false);
+   };
+
+   const handleDelete = () => {
+      handleClose();
+      removeFromListings(listingInfo.id);
+      deleteListing({
+         variables: {
+            course: listingInfo.course,
+            id: listingInfo.id,
+         },
+      })
+         .then(() => {
+            refetch();
+         })
+         .catch((error) => console.log(error));
    };
 
    return (
@@ -74,7 +92,10 @@ export default function ListingCard({ listingInfo }: Props) {
             </DialogContent>
             <DialogActions>
                <Button autoFocus onClick={handleClose} color="primary">
-                  Save changes
+                  Edit
+               </Button>
+               <Button autoFocus onClick={handleDelete} color="primary">
+                  Delete
                </Button>
             </DialogActions>{' '}
          </Dialog>
