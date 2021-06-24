@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import { ApolloError } from '@apollo/client/errors';
 import { CircularProgress } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -36,6 +35,15 @@ function MarketHome() {
       setListings(listings.filter((listing) => listing.id !== listingId));
    };
 
+   const editListings = (listingId: string, info: any) => {
+      // 1. Make a shallow copy of the items
+      const items = [...listings];
+      const itemIndex = items.findIndex((listing) => listing.id === listingId);
+      items[itemIndex] = info;
+
+      setListings(items);
+   };
+
    return (
       <div>
          <h1 className="market-course-header">{className} Marketplace</h1>
@@ -50,6 +58,7 @@ function MarketHome() {
                   listingInfo={listing}
                   refetch={refetch}
                   removeFromListings={removeFromListings}
+                  editListings={editListings}
                />
             ))
          )}

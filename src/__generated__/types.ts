@@ -1243,6 +1243,18 @@ export type AddListingMutation = { __typename: 'Mutation', addMarketListing: (
     & ListingFieldsFragment
   ) };
 
+export type EditListingMutationVariables = Exact<{
+  course: Scalars['String'];
+  id: Scalars['String'];
+  input: MarketListingInput;
+}>;
+
+
+export type EditListingMutation = { __typename: 'Mutation', editMarketListing: (
+    { __typename: 'MarketListing' }
+    & ListingFieldsFragment
+  ) };
+
 export type DeleteListingMutationVariables = Exact<{
   course: Scalars['String'];
   id: Scalars['String'];
@@ -1985,6 +1997,41 @@ export function useAddListingMutation(baseOptions?: Apollo.MutationHookOptions<A
 export type AddListingMutationHookResult = ReturnType<typeof useAddListingMutation>;
 export type AddListingMutationResult = Apollo.MutationResult<AddListingMutation>;
 export type AddListingMutationOptions = Apollo.BaseMutationOptions<AddListingMutation, AddListingMutationVariables>;
+export const EditListingDocument = gql`
+    mutation EditListing($course: String!, $id: String!, $input: MarketListingInput!) {
+  editMarketListing(course: $course, id: $id, listing: $input) {
+    ...ListingFields
+  }
+}
+    ${ListingFieldsFragmentDoc}`;
+export type EditListingMutationFn = Apollo.MutationFunction<EditListingMutation, EditListingMutationVariables>;
+
+/**
+ * __useEditListingMutation__
+ *
+ * To run a mutation, you first call `useEditListingMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditListingMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editListingMutation, { data, loading, error }] = useEditListingMutation({
+ *   variables: {
+ *      course: // value for 'course'
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useEditListingMutation(baseOptions?: Apollo.MutationHookOptions<EditListingMutation, EditListingMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditListingMutation, EditListingMutationVariables>(EditListingDocument, options);
+      }
+export type EditListingMutationHookResult = ReturnType<typeof useEditListingMutation>;
+export type EditListingMutationResult = Apollo.MutationResult<EditListingMutation>;
+export type EditListingMutationOptions = Apollo.BaseMutationOptions<EditListingMutation, EditListingMutationVariables>;
 export const DeleteListingDocument = gql`
     mutation DeleteListing($course: String!, $id: String!) {
   removeMarketListing(course: $course, id: $id)

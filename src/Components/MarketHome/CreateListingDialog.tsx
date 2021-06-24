@@ -1,29 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import {
-   Button,
-   Dialog,
-   DialogTitle,
-   DialogContent,
-   TextField,
-   DialogActions,
-} from '@material-ui/core';
+import { Button, Dialog, DialogTitle, DialogContent } from '@material-ui/core';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { Formik, Form } from 'formik';
-import { useAddListingMutation } from '../../__generated__/types';
-
-const LargeTextField = styled(TextField)`
-   input {
-      height: 50px;
-      font-size: 20px;
-   }
-`;
-const SmallTextField = styled(TextField)`
-   input {
-      height: 30px;
-      font-size: 20px;
-   }
-`;
+import { MarketListingInput, useAddListingMutation } from '../../__generated__/types';
+import ListingForm, { MarketListingFormInput } from './ListingForm';
 
 const Container = styled.div`
    text-align: left;
@@ -37,9 +17,27 @@ type Props = {
    refetch: any;
 };
 
+export function listingFormToInputType(values: MarketListingFormInput): MarketListingInput {
+   return {
+      listingName: values.listingName,
+      description: values.description,
+      image: values.image,
+      price: parseInt(values.price, 10),
+      stock: values.stock === '' ? -1 : parseInt(values.stock, 10),
+   };
+}
+
 function CreateListingDialog(props: Props) {
    const [open, setOpen] = useState(false);
    const [addListing] = useAddListingMutation();
+
+   const initialValues: MarketListingFormInput = {
+      price: '',
+      stock: '',
+      image: 'https://d29fhpw069ctt2.cloudfront.net/icon/image/73614/preview.svg',
+      description: '',
+      listingName: '',
+   };
 
    const handleClickOpen = () => {
       setOpen(true);
@@ -47,6 +45,38 @@ function CreateListingDialog(props: Props) {
 
    const handleClose = () => {
       setOpen(false);
+   };
+
+   const handleSubmit = (values: MarketListingFormInput) => {
+      props.callback({
+         listingName: values.listingName,
+         price: values.price,
+         image: values.image,
+      });
+      handleClose();
+      addListing({
+         variables: {
+            course: props.course,
+            input: listingFormToInputType(values),
+         },
+         optimisticResponse: {
+            __typename: 'Mutation',
+            addMarketListing: {
+               course: props.course,
+               timesPurchased: 0,
+               __typename: 'MarketListing',
+               id: 'temp',
+               listedDate: new Date(),
+               listingName: values.listingName,
+               description: values.description,
+               image: values.image,
+               price: parseInt(values.price, 10),
+               stock: values.stock === '' ? -1 : parseInt(values.stock, 10),
+            },
+         },
+      })
+         .then(() => props.refetch())
+         .catch((error) => console.log(error));
    };
 
    return (
@@ -79,129 +109,11 @@ function CreateListingDialog(props: Props) {
                   New Listing
                </DialogTitle>
                <DialogContent>
-                  <Formik
-                     initialValues={{
-                        listingName: '',
-                        description: '',
-                        image: 'https://d29fhpw069ctt2.cloudfront.net/icon/image/73614/preview.svg',
-                        price: '',
-                        stock: '',
-                     }}
-                     onSubmit={(values, { setSubmitting }) => {
-                        setTimeout(() => {
-                           setSubmitting(false);
-                           props.callback({
-                              listingName: values.listingName,
-                              price: values.price,
-                              image: values.image,
-                           });
-                           handleClose();
-                           addListing({
-                              variables: {
-                                 course: props.course,
-                                 input: {
-                                    listingName: values.listingName,
-                                    description: values.description,
-                                    image: values.image,
-                                    price: parseInt(values.price, 10),
-                                    stock: values.stock === '' ? -1 : parseInt(values.stock, 10),
-                                 },
-                              },
-                              optimisticResponse: {
-                                 __typename: 'Mutation',
-                                 addMarketListing: {
-                                    course: props.course,
-                                    timesPurchased: 0,
-                                    __typename: 'MarketListing',
-                                    id: 'temp',
-                                    listedDate: new Date(),
-                                    listingName: values.listingName,
-                                    description: values.description,
-                                    image: values.image,
-                                    price: parseInt(values.price, 10),
-                                    stock: values.stock === '' ? -1 : parseInt(values.stock, 10),
-                                 },
-                              },
-                           })
-                              .then(() => props.refetch())
-                              .catch((error) => console.log(error));
-                        }, 0);
-                     }}
-                  >
-                     {({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
-                        <Form onSubmit={handleSubmit}>
-                           <LargeTextField
-                              required
-                              id="listingName"
-                              label="Listing Name"
-                              type="text"
-                              fullWidth
-                              variant="outlined"
-                              margin="dense"
-                              value={values.listingName}
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                           />
-
-                           <LargeTextField
-                              required
-                              id="description"
-                              label="Description"
-                              type="text"
-                              fullWidth
-                              variant="outlined"
-                              margin="dense"
-                              value={values.description}
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                           />
-                           <SmallTextField
-                              required
-                              id="image"
-                              label="Image"
-                              type="text"
-                              fullWidth
-                              variant="outlined"
-                              margin="dense"
-                              value={values.image}
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                           />
-                           <SmallTextField
-                              required
-                              id="price"
-                              label="Price"
-                              type="number"
-                              fullWidth
-                              variant="outlined"
-                              margin="dense"
-                              value={values.price}
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                           />
-                           <SmallTextField
-                              required
-                              id="stock"
-                              label="Stock"
-                              type="number"
-                              fullWidth
-                              variant="outlined"
-                              margin="dense"
-                              value={values.stock}
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                           />
-                           <DialogActions>
-                              <Button onClick={handleClose} color="primary">
-                                 Cancel
-                              </Button>
-                              <Button type="submit" disabled={isSubmitting} color="primary">
-                                 Create
-                              </Button>
-                           </DialogActions>
-                        </Form>
-                     )}
-                  </Formik>
+                  <ListingForm
+                     initialValues={initialValues}
+                     handleClose={handleClose}
+                     onSubmit={handleSubmit}
+                  />
                </DialogContent>
             </Dialog>
          </div>

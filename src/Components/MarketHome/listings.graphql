@@ -10,6 +10,12 @@ mutation AddListing($course: String!, $input: MarketListingInput!) {
    }
 }
 
+mutation EditListing($course: String!, $id: String!, $input: MarketListingInput!) {
+   editMarketListing(course: $course, id: $id, listing: $input) {
+      ...ListingFields
+   }
+}
+
 mutation DeleteListing($course: String!, $id: String!) {
    removeMarketListing(course: $course, id: $id)
 }
