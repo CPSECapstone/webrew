@@ -41,7 +41,7 @@ function MarketHome() {
          <h1 className="market-course-header">{className} Marketplace</h1>
          <CreateListingDialog course={className} callback={addToListings} refetch={refetch} />
          {loading || error || !data ? (
-            <div>
+            <div className="center">
                <CircularProgress size={150} />
             </div>
          ) : (

@@ -1,8 +1,14 @@
 .market-course-header {
-   margin-left: 36px
+   margin-left: 36px;
 }
 
-.listing-card-outer{
+.center {
+   margin: auto;
+   margin-top: 30%;
+   width: 50%;
+}
+
+.listing-card-outer {
    display: inline-block;
 }
 
@@ -22,7 +28,7 @@
 }
 
 .listing-card-details {
-   margin-top: 1em
+   margin-top: 1em;
 }
 
 .listing-card {
@@ -38,7 +44,6 @@
       height: 40;
       border-radius: 50%;
    }
-
 
    .listing-card-header {
       display: block;
