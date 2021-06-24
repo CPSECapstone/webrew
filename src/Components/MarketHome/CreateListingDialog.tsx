@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import {
    Button,
    Dialog,
@@ -9,7 +10,11 @@ import {
 import { useState } from 'react';
 import styled from 'styled-components';
 import { Formik, Form } from 'formik';
-import { useAddListingMutation } from '../../__generated__/types';
+import {
+   ListingFieldsFragment,
+   ListingFieldsFragmentDoc,
+   useAddListingMutation,
+} from '../../__generated__/types';
 
 const LargeTextField = styled(TextField)`
    input {
@@ -32,6 +37,8 @@ const Container = styled.div`
 
 type Props = {
    course: string;
+   callback: any;
+   refetch: any;
 };
 
 function CreateListingDialog(props: Props) {
@@ -87,6 +94,10 @@ function CreateListingDialog(props: Props) {
                      onSubmit={(values, { setSubmitting }) => {
                         setTimeout(() => {
                            setSubmitting(false);
+                           props.callback({
+                              listingName: values.listingName,
+                              price: values.price,
+                           });
                            handleClose();
                            addListing({
                               variables: {
@@ -99,8 +110,25 @@ function CreateListingDialog(props: Props) {
                                     stock: values.stock === '' ? -1 : parseInt(values.stock, 10),
                                  },
                               },
-                           }).catch((error) => console.log(error));
-                        }, 400);
+                              optimisticResponse: {
+                                 __typename: 'Mutation',
+                                 addMarketListing: {
+                                    course: props.course,
+                                    timesPurchased: 0,
+                                    __typename: 'MarketListing',
+                                    id: 'temp',
+                                    listedDate: new Date(),
+                                    listingName: values.listingName,
+                                    description: values.description,
+                                    image: values.image,
+                                    price: parseInt(values.price, 10),
+                                    stock: values.stock === '' ? -1 : parseInt(values.stock, 10),
+                                 },
+                              },
+                           })
+                              .then(() => props.refetch())
+                              .catch((error) => console.log(error));
+                        }, 0);
                      }}
                   >
                      {({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
