@@ -10,11 +10,7 @@ import {
 import { useState } from 'react';
 import styled from 'styled-components';
 import { Formik, Form } from 'formik';
-import {
-   ListingFieldsFragment,
-   ListingFieldsFragmentDoc,
-   useAddListingMutation,
-} from '../../__generated__/types';
+import { useAddListingMutation } from '../../__generated__/types';
 
 const LargeTextField = styled(TextField)`
    input {

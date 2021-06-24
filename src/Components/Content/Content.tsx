@@ -6,7 +6,6 @@ import TaskSubmissionOverview from '../TaskSubmissionOverview';
 import ViewTaskSubmission from '../ViewTaskSubmission';
 import SingleStudentOverview from '../SingleStudentOverview/SingleStudentOverview';
 import SingleStudentMasteryOverview from '../SingleStudentMasteryOverview/SingleStudentMasteryOverview';
-import CourseHome from '../CourseHome/CourseHome';
 import SingleTargetOverview from '../SingleTargetOverview/SingleTargetOverview';
 import SingleMissionOverview from '../SingleStudentOverview/SingleMissionOverview';
 import TaskView from '../../Screens/TaskView/TaskView';
