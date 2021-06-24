@@ -97,6 +97,7 @@ function CreateListingDialog(props: Props) {
                            props.callback({
                               listingName: values.listingName,
                               price: values.price,
+                              image: values.image,
                            });
                            handleClose();
                            addListing({

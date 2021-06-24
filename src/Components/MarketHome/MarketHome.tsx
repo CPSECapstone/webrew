@@ -28,6 +28,7 @@ function loader(
 function MarketHome() {
    const { className } = useParams<Record<string, string>>();
    const [listings, setListings] = useState<ListingFieldsFragment[]>([]);
+
    const { loading, error, data, refetch } = useMarketListingsQuery({
       variables: {
          courseId: className,
