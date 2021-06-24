@@ -5,7 +5,6 @@ import { withAuthenticator } from 'aws-amplify-react';
 import Sidebar from '../Components/Sidebar';
 import Content from '../Components/Content';
 import Navigation from '../Navigation/Navigation';
-import StudentPicture from '../assets/images/images-1.png';
 
 import './App.scss';
 

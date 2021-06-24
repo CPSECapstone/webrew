@@ -12,7 +12,6 @@ import { Formik, Form } from 'formik';
 import { useMutation } from '@apollo/client';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import { SAVE_COURSE } from '../../queries/course-queries';
-import CreateListingDialog from '../MarketHome/CreateListingDialog';
 
 const LargeTextField = styled(TextField)`
    input {
