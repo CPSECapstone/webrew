@@ -1,11 +1,6 @@
 import List from '@material-ui/core/List';
 import IconDashboard from '@material-ui/icons/Dashboard';
-import IconShoppingCart from '@material-ui/icons/ShoppingCart';
-import IconPeople from '@material-ui/icons/People';
-import IconBarChart from '@material-ui/icons/BarChart';
 import IconLibraryBooks from '@material-ui/icons/LibraryBooks';
-import ForumIcon from '@material-ui/icons/Forum';
-import SettingsIcon from '@material-ui/icons/Settings';
 import SideBarItem from './SideBarItem';
 
 const sideBarItems = [
@@ -37,6 +32,7 @@ const sideBarItems = [
       link: '/',
       Icon: IconLibraryBooks,
    },
+   /* 
    {
       name: 'Task',
       link: '/taskList',
@@ -47,7 +43,7 @@ const sideBarItems = [
       link: '/marketplace',
       Icon: IconShoppingCart,
    },
-   {
+      {
       name: 'Progress',
       link: '/studentOverview/Biology',
       Icon: IconPeople,
@@ -66,7 +62,7 @@ const sideBarItems = [
       name: 'Settings',
       link: '/settings',
       Icon: SettingsIcon,
-   },
+   }, */
 ];
 function Sidebar() {
    return (
