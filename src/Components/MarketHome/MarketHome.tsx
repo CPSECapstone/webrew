@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, List } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ListingFieldsFragment, useMarketListingsQuery } from '../../__generated__/types';
+import Sidebar from '../Sidebar/Sidebar';
+import SideBarItem from '../Sidebar/SideBarItem';
 import CreateListingDialog from './CreateListingDialog';
 import ListingCard from './ListingCard';
 
@@ -45,24 +47,57 @@ function MarketHome() {
       setListings(items);
    };
 
+   const sideBarItems = [
+      {
+         name: 'Students',
+         link: '/',
+      },
+      {
+         name: 'Listings',
+         link: `/courseHome/${classId}/${className}`,
+      },
+      {
+         name: 'Purchases',
+         link: '/settings',
+      },
+   ];
+
    return (
-      <div>
-         <h1 className="market-course-header">{className} Marketplace</h1>
-         <CreateListingDialog course={classId} callback={addToListings} refetch={refetch} />
-         {loading || error || !data ? (
-            <div className="center">
-               <CircularProgress size={150} />
+      <div className="main container-fluid">
+         <h3 className="market-course-header">{className} Marketplace</h3>
+         <div className="row h-100">
+            <div className="sidebar-container col-md-2 p-0 side">
+               <List component="nav" disablePadding>
+                  {sideBarItems.map((item, index) => (
+                     // eslint-disable-next-line react/no-array-index-key
+                     <SideBarItem {...item} key={index} />
+                  ))}
+               </List>
             </div>
-         ) : (
-            listings.map((listing: ListingFieldsFragment) => (
-               <ListingCard
-                  listingInfo={listing}
-                  refetch={refetch}
-                  removeFromListings={removeFromListings}
-                  editListings={editListings}
-               />
-            ))
-         )}
+            <div className="content-container col-md-10 p-0">
+               <div>
+                  <CreateListingDialog
+                     course={classId}
+                     callback={addToListings}
+                     refetch={refetch}
+                  />
+                  {loading || error || !data ? (
+                     <div className="center">
+                        <CircularProgress size={150} />
+                     </div>
+                  ) : (
+                     listings.map((listing: ListingFieldsFragment) => (
+                        <ListingCard
+                           listingInfo={listing}
+                           refetch={refetch}
+                           removeFromListings={removeFromListings}
+                           editListings={editListings}
+                        />
+                     ))
+                  )}
+               </div>
+            </div>
+         </div>
       </div>
    );
 }

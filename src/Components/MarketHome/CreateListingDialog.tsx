@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import { Button, Dialog, DialogTitle, DialogContent } from '@material-ui/core';
+import { Button, Dialog, DialogTitle, DialogContent, IconButton } from '@material-ui/core';
 import { useState } from 'react';
 import styled from 'styled-components';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import { MarketListingInput, useAddListingMutation } from '../../__generated__/types';
 import ListingForm, { MarketListingFormInput } from './ListingForm';
 
@@ -82,18 +83,18 @@ function CreateListingDialog(props: Props) {
    return (
       <Container>
          <div>
-            <Button
+            <IconButton
                style={{
-                  width: 200,
                   marginTop: 20,
                   backgroundColor: '#4274F3',
                   color: 'white',
                }}
+               color="primary"
+               aria-label="Create Listing"
                onClick={handleClickOpen}
-               data-testid="create-btn"
             >
-               Create New Listing
-            </Button>
+               <AddShoppingCartIcon />
+            </IconButton>
             <Dialog
                open={open}
                fullWidth
