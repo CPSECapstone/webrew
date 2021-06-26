@@ -477,7 +477,7 @@
             "deprecationReason": null
           },
           {
-            "name": "course",
+            "name": "courseName",
             "description": null,
             "args": [],
             "type": {
@@ -493,23 +493,7 @@
             "deprecationReason": null
           },
           {
-            "name": "instructor",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "description",
+            "name": "instructorId",
             "description": null,
             "args": [],
             "type": {
@@ -537,7 +521,7 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "course",
+            "name": "courseName",
             "description": null,
             "type": {
               "kind": "NON_NULL",
@@ -553,7 +537,7 @@
             "deprecationReason": null
           },
           {
-            "name": "instructor",
+            "name": "firstName",
             "description": null,
             "type": {
               "kind": "NON_NULL",
@@ -569,7 +553,7 @@
             "deprecationReason": null
           },
           {
-            "name": "description",
+            "name": "lastName",
             "description": null,
             "type": {
               "kind": "NON_NULL",
@@ -2831,8 +2815,8 @@
             "deprecationReason": null
           },
           {
-            "name": "addCourse",
-            "description": null,
+            "name": "createCourse",
+            "description": "Creates a new course associated with the instructor caller",
             "args": [
               {
                 "name": "course",
@@ -2855,8 +2839,41 @@
               "kind": "NON_NULL",
               "name": null,
               "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
+                "kind": "OBJECT",
+                "name": "CourseInfo",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "addStudent",
+            "description": "Callable by both instructor and student roles, but with different\nvalues overridden by the authentication header.\n\nIf called by student: overrides the student input\n\nIf called by an instructor: overrides the instructor input",
+            "args": [
+              {
+                "name": "student",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "StudentInput",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Student",
                 "ofType": null
               }
             },
@@ -3470,39 +3487,6 @@
                   "ofType": {
                     "kind": "SCALAR",
                     "name": "String",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "addStudent",
-            "description": null,
-            "args": [
-              {
-                "name": "student",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "StudentInput",
                     "ofType": null
                   }
                 },
@@ -4979,23 +4963,27 @@
             "deprecationReason": null
           },
           {
-            "name": "_empty",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "courseInfo",
+            "name": "course",
             "description": null,
             "args": [
               {
                 "name": "courseId",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "instructorId",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -5024,11 +5012,113 @@
             "deprecationReason": null
           },
           {
-            "name": "courseInfos",
-            "description": null,
+            "name": "courses",
+            "description": "Returns info on all courses associated with the user",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "CourseInfo",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "courseContent",
+            "description": "DEPRECATED",
             "args": [
               {
-                "name": "instructor",
+                "name": "course",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "CourseContent",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "student",
+            "description": "Returns information on a specific student associated with a course.",
+            "args": [
+              {
+                "name": "studentId",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "courseId",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Student",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "students",
+            "description": "Returns all students enrolled in a course",
+            "args": [
+              {
+                "name": "courseId",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -5055,43 +5145,10 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "CourseInfo",
+                    "name": "Student",
                     "ofType": null
                   }
                 }
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "courseContent",
-            "description": null,
-            "args": [
-              {
-                "name": "course",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "CourseContent",
-                "ofType": null
               }
             },
             "isDeprecated": false,
@@ -5557,6 +5614,18 @@
                   }
                 }
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "_empty",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -6087,92 +6156,6 @@
                 "kind": "OBJECT",
                 "name": "Goal",
                 "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "student",
-            "description": null,
-            "args": [
-              {
-                "name": "studentId",
-                "description": null,
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "course",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "Student",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "students",
-            "description": null,
-            "args": [
-              {
-                "name": "course",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "Student",
-                    "ofType": null
-                  }
-                }
               }
             },
             "isDeprecated": false,
@@ -7222,7 +7205,7 @@
             "deprecationReason": null
           },
           {
-            "name": "email",
+            "name": "firstName",
             "description": null,
             "args": [],
             "type": {
@@ -7233,18 +7216,6 @@
                 "name": "String",
                 "ofType": null
               }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "firstName",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -7254,15 +7225,19 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "course",
+            "name": "courseId",
             "description": null,
             "args": [],
             "type": {
@@ -7278,7 +7253,7 @@
             "deprecationReason": null
           },
           {
-            "name": "section",
+            "name": "instructorId",
             "description": null,
             "args": [],
             "type": {
@@ -7286,7 +7261,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Int",
+                "name": "String",
                 "ofType": null
               }
             },
@@ -7294,13 +7269,17 @@
             "deprecationReason": null
           },
           {
-            "name": "team",
+            "name": "courseName",
             "description": null,
             "args": [],
             "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -7382,7 +7361,7 @@
             "deprecationReason": null
           },
           {
-            "name": "email",
+            "name": "firstName",
             "description": null,
             "type": {
               "kind": "NON_NULL",
@@ -7392,18 +7371,6 @@
                 "name": "String",
                 "ofType": null
               }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "firstName",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -7413,16 +7380,20 @@
             "name": "lastName",
             "description": null,
             "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "defaultValue": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "course",
+            "name": "courseId",
             "description": null,
             "type": {
               "kind": "NON_NULL",
@@ -7438,28 +7409,16 @@
             "deprecationReason": null
           },
           {
-            "name": "section",
+            "name": "instructorId",
             "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Int",
+                "name": "String",
                 "ofType": null
               }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "team",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,

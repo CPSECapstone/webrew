@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import {
    Button,
    Dialog,
@@ -9,9 +10,7 @@ import {
 import { useState } from 'react';
 import styled from 'styled-components';
 import { Formik, Form } from 'formik';
-import { useMutation } from '@apollo/client';
-import { withAuthenticator } from '@aws-amplify/ui-react';
-import { SAVE_COURSE } from '../../queries/course-queries';
+import { useCreateCourseMutation } from '../../__generated__/types';
 
 const LargeTextField = styled(TextField)`
    input {
@@ -31,9 +30,13 @@ const Container = styled.div`
    fontfamily: 'Poppins', sans-serif;
 `;
 
-function CreateCourseDialog() {
+type Props = {
+   refetch: any;
+};
+
+function CreateCourseDialog({ refetch }: Props) {
    const [open, setOpen] = useState(false);
-   const [addCourse] = useMutation(SAVE_COURSE);
+   const [addCourse] = useCreateCourseMutation();
 
    const handleClickOpen = () => {
       setOpen(true);
@@ -76,8 +79,8 @@ function CreateCourseDialog() {
                   <Formik
                      initialValues={{
                         courseTitle: '',
-                        courseDescription: '',
-                        courseInstructor: 'Mr. Butcher', // stay hardcoded since dashboard uses this
+                        firstName: '',
+                        lastName: 'Mr. Butcher', // stay hardcoded since dashboard uses this
                      }}
                      onSubmit={(values, { setSubmitting }) => {
                         setTimeout(() => {
@@ -86,12 +89,14 @@ function CreateCourseDialog() {
                            addCourse({
                               variables: {
                                  course: {
-                                    course: values.courseTitle,
-                                    description: values.courseDescription,
-                                    instructor: values.courseInstructor,
+                                    courseName: values.courseTitle,
+                                    firstName: values.firstName,
+                                    lastName: values.lastName,
                                  },
                               },
-                           }).catch((error) => console.log(error));
+                           })
+                              .then(() => refetch())
+                              .catch((error) => console.log(error));
                         }, 400);
                      }}
                   >
@@ -112,25 +117,25 @@ function CreateCourseDialog() {
 
                            <LargeTextField
                               required
-                              id="courseDescription"
-                              label="Description"
+                              id="firstName"
+                              label="First Name"
                               type="text"
                               fullWidth
                               variant="outlined"
                               margin="dense"
-                              value={values.courseDescription}
+                              value={values.firstName}
                               onChange={handleChange}
                               onBlur={handleBlur}
                            />
                            <SmallTextField
                               required
-                              id="courseInstructor"
-                              label="Instructor"
+                              id="lastName"
+                              label="Last Name"
                               type="text"
                               fullWidth
                               variant="outlined"
                               margin="dense"
-                              value={values.courseInstructor}
+                              value={values.lastName}
                               onChange={handleChange}
                               onBlur={handleBlur}
                            />
@@ -152,4 +157,4 @@ function CreateCourseDialog() {
    );
 }
 
-export default withAuthenticator(CreateCourseDialog);
+export default CreateCourseDialog;

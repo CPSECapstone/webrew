@@ -26,9 +26,8 @@ fragment ProgressFields on Progress {
 }
 fragment CourseInfoFields on CourseInfo {
    courseId
-   course
-   instructor
-   description
+   courseName
+   instructorId
 }
 fragment TargetFields on Target {
    targetName

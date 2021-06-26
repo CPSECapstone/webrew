@@ -1,5 +1,5 @@
 query GetStudentsByCourse {
-  students(course:"Integrated Science") {
+  students(courseId:"Integrated Science") {
     studentId
     firstName
     lastName

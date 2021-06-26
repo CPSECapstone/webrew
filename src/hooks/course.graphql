@@ -1,5 +1,5 @@
-query GetCourses($instructor: String!) {
-   courseInfos(instructor: $instructor) {
+query GetCourses {
+   courses {
       ...CourseInfoFields
    }
 }
