@@ -3,6 +3,7 @@ import Dashboard from '../Dashboard/Dashboard';
 import './Content.css';
 import MarketHome from '../MarketHome/MarketHome';
 import { CourseInfoFieldsFragment } from '../../__generated__/types';
+import { Settings } from '../Settings/Settings';
 
 type Props = {
    courses: CourseInfoFieldsFragment[];
@@ -16,6 +17,13 @@ export default function Content({ courses, refetchCourses }: Props) {
             <Route path="/courseHome/:classId/:className">
                <MarketHome />
             </Route>
+            <Route path="/settings">
+               <Settings />
+            </Route>
+            <Route path="/">
+               <Dashboard courses={courses} refetchCourses={refetchCourses} />
+            </Route>
+
             {/*  <Route path="/taskSubmissionOverview">
                <TaskSubmissionOverview />
             </Route>
@@ -49,9 +57,6 @@ export default function Content({ courses, refetchCourses }: Props) {
             <Route path="/classMastery">
                <ClassMastery />
             </Route> */}
-            <Route path="/">
-               <Dashboard courses={courses} refetchCourses={refetchCourses} />
-            </Route>
          </Switch>
       </div>
    );

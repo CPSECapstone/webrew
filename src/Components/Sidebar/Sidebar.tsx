@@ -28,7 +28,7 @@ function Sidebar({ courses }: Props) {
          Icon: IconLibraryBooks,
       },
       {
-         name: 'Settings',
+         name: 'User',
          link: '/settings',
          Icon: IconSettings,
       },
