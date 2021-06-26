@@ -11,12 +11,13 @@ const sortListings = (a: ListingFieldsFragment, b: ListingFieldsFragment) => {
 };
 
 function MarketHome() {
-   const { className } = useParams<Record<string, string>>();
+   const { classId, className } = useParams<Record<string, string>>();
+
    const [listings, setListings] = useState<ListingFieldsFragment[]>([]);
 
    const { loading, error, data, refetch } = useMarketListingsQuery({
       variables: {
-         courseId: className,
+         courseId: classId,
       },
    });
 
@@ -47,7 +48,7 @@ function MarketHome() {
    return (
       <div>
          <h1 className="market-course-header">{className} Marketplace</h1>
-         <CreateListingDialog course={className} callback={addToListings} refetch={refetch} />
+         <CreateListingDialog course={classId} callback={addToListings} refetch={refetch} />
          {loading || error || !data ? (
             <div className="center">
                <CircularProgress size={150} />
