@@ -9,7 +9,7 @@ import ListingForm, { MarketListingFormInput } from './ListingForm';
 const Container = styled.div`
    text-align: left;
    fontfamily: 'Poppins', sans-serif;
-   margin-left: 36px;
+   margin-left: 18px;
 `;
 
 type Props = {

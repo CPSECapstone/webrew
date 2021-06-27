@@ -1,21 +1,50 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import { CircularProgress, List } from '@material-ui/core';
+import { CircularProgress, createStyles, List, makeStyles, Tab, Theme } from '@material-ui/core';
+import { TabContext, TabList, TabPanel } from '@material-ui/lab';
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ListingFieldsFragment, useMarketListingsQuery } from '../../__generated__/types';
-import Sidebar from '../Sidebar/Sidebar';
-import SideBarItem from '../Sidebar/SideBarItem';
+
 import CreateListingDialog from './CreateListingDialog';
 import ListingCard from './ListingCard';
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const useStyles = makeStyles((_theme: Theme) =>
+   createStyles({
+      tabContainer: {
+         flexGrow: 1,
+      },
+      selectedTab: {
+         backgroundColor: 'rgb(109, 158, 235)',
+         fontSize: '24px',
+         color: 'white',
+         fontWeight: 'bold',
+      },
+      defaultTab: {
+         backgroundColor: 'rgb(238, 238, 238)',
+         fontSize: '24px',
+         color: 'black',
+         fontWeight: 'bold',
+      },
+   })
+);
 
 const sortListings = (a: ListingFieldsFragment, b: ListingFieldsFragment) => {
    return a.listingName.localeCompare(b.listingName);
 };
 
 function MarketHome() {
+   const classes = useStyles();
+
    const { classId, className } = useParams<Record<string, string>>();
 
    const [listings, setListings] = useState<ListingFieldsFragment[]>([]);
+
+   const [value, setValue] = useState('1');
+
+   const handleChange = (event: React.ChangeEvent<Record<string, unknown>>, newValue: string) => {
+      setValue(newValue);
+   };
 
    const { loading, error, data, refetch } = useMarketListingsQuery({
       variables: {
@@ -63,40 +92,52 @@ function MarketHome() {
    ];
 
    return (
-      <div className="main container-fluid">
-         <h3 className="market-course-header">{className} Marketplace</h3>
-         <div className="row h-100">
-            <div className="sidebar-container col-md-2 p-0 side">
-               <List component="nav" disablePadding>
-                  {sideBarItems.map((item, index) => (
-                     // eslint-disable-next-line react/no-array-index-key
-                     <SideBarItem {...item} key={index} />
-                  ))}
-               </List>
-            </div>
-            <div className="content-container col-md-10 p-0">
-               <div>
-                  <CreateListingDialog
-                     course={classId}
-                     callback={addToListings}
-                     refetch={refetch}
+      <div className="content-container col-md-10 p-0">
+         <div className={classes.tabContainer}>
+            <TabContext value={value}>
+               <TabList onChange={handleChange} variant="fullWidth" centered>
+                  <Tab
+                     label="Listings"
+                     value="1"
+                     className={value === '1' ? classes.selectedTab : classes.defaultTab}
                   />
-                  {loading || error || !data ? (
-                     <div className="center">
-                        <CircularProgress size={150} />
-                     </div>
-                  ) : (
-                     listings.map((listing: ListingFieldsFragment) => (
-                        <ListingCard
-                           listingInfo={listing}
-                           refetch={refetch}
-                           removeFromListings={removeFromListings}
-                           editListings={editListings}
-                        />
-                     ))
-                  )}
-               </div>
-            </div>
+                  <Tab
+                     label="Purchases"
+                     value="2"
+                     className={value === '2' ? classes.selectedTab : classes.defaultTab}
+                  />
+                  <Tab
+                     label="Students"
+                     value="3"
+                     className={value === '3' ? classes.selectedTab : classes.defaultTab}
+                  />
+               </TabList>
+               <TabPanel value="1">
+                  <div>
+                     <CreateListingDialog
+                        course={classId}
+                        callback={addToListings}
+                        refetch={refetch}
+                     />
+                     {loading || error || !data ? (
+                        <div className="center">
+                           <CircularProgress size={150} />
+                        </div>
+                     ) : (
+                        listings.map((listing: ListingFieldsFragment) => (
+                           <ListingCard
+                              listingInfo={listing}
+                              refetch={refetch}
+                              removeFromListings={removeFromListings}
+                              editListings={editListings}
+                           />
+                        ))
+                     )}
+                  </div>
+               </TabPanel>
+               <TabPanel value="2">Purchases</TabPanel>
+               <TabPanel value="3">Students</TabPanel>
+            </TabContext>
          </div>
       </div>
    );
