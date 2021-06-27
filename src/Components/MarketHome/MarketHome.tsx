@@ -7,24 +7,25 @@ import { ListingFieldsFragment, useMarketListingsQuery } from '../../__generated
 
 import CreateListingDialog from './CreateListingDialog';
 import ListingCard from './ListingCard';
+import { ListingTab } from './ListingTab';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const useStyles = makeStyles((_theme: Theme) =>
+const useStyles = makeStyles((theme: Theme) =>
    createStyles({
       tabContainer: {
          flexGrow: 1,
       },
       selectedTab: {
          backgroundColor: 'rgb(109, 158, 235)',
-         fontSize: '24px',
+         fontSize: '18px',
          color: 'white',
          fontWeight: 'bold',
       },
       defaultTab: {
          backgroundColor: 'rgb(238, 238, 238)',
-         fontSize: '24px',
+         fontSize: '18px',
          color: 'black',
-         fontWeight: 'bold',
+         fontWeight: 'normal',
       },
    })
 );
@@ -36,63 +37,14 @@ const sortListings = (a: ListingFieldsFragment, b: ListingFieldsFragment) => {
 function MarketHome() {
    const classes = useStyles();
 
-   const { classId, className } = useParams<Record<string, string>>();
-
-   const [listings, setListings] = useState<ListingFieldsFragment[]>([]);
-
    const [value, setValue] = useState('1');
 
    const handleChange = (event: React.ChangeEvent<Record<string, unknown>>, newValue: string) => {
       setValue(newValue);
    };
 
-   const { loading, error, data, refetch } = useMarketListingsQuery({
-      variables: {
-         courseId: classId,
-      },
-   });
-
-   React.useEffect(() => {
-      if (!data) {
-         return;
-      }
-      setListings([...data.marketListings].sort(sortListings));
-   }, [data]);
-
-   const addToListings = (listing: ListingFieldsFragment) => {
-      setListings([...listings, listing].sort(sortListings));
-   };
-
-   const removeFromListings = (listingId: string) => {
-      setListings(listings.filter((listing) => listing.id !== listingId));
-   };
-
-   const editListings = (listingId: string, info: any) => {
-      // 1. Make a shallow copy of the items
-      const items = [...listings];
-      const itemIndex = items.findIndex((listing) => listing.id === listingId);
-      items[itemIndex] = info;
-
-      setListings(items);
-   };
-
-   const sideBarItems = [
-      {
-         name: 'Students',
-         link: '/',
-      },
-      {
-         name: 'Listings',
-         link: `/courseHome/${classId}/${className}`,
-      },
-      {
-         name: 'Purchases',
-         link: '/settings',
-      },
-   ];
-
    return (
-      <div >
+      <div>
          <div className={classes.tabContainer}>
             <TabContext value={value}>
                <TabList onChange={handleChange} variant="fullWidth" centered>
@@ -113,27 +65,7 @@ function MarketHome() {
                   />
                </TabList>
                <TabPanel value="1">
-                  <div>
-                     <CreateListingDialog
-                        course={classId}
-                        callback={addToListings}
-                        refetch={refetch}
-                     />
-                     {loading || error || !data ? (
-                        <div className="center">
-                           <CircularProgress size={150} />
-                        </div>
-                     ) : (
-                        listings.map((listing: ListingFieldsFragment) => (
-                           <ListingCard
-                              listingInfo={listing}
-                              refetch={refetch}
-                              removeFromListings={removeFromListings}
-                              editListings={editListings}
-                           />
-                        ))
-                     )}
-                  </div>
+                  <ListingTab />
                </TabPanel>
                <TabPanel value="2">Purchases</TabPanel>
                <TabPanel value="3">Students</TabPanel>

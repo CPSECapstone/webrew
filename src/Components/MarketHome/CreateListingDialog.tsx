@@ -85,7 +85,6 @@ function CreateListingDialog(props: Props) {
          <div>
             <IconButton
                style={{
-                  marginTop: 20,
                   backgroundColor: '#4274F3',
                   color: 'white',
                }}
