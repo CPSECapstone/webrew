@@ -48,6 +48,7 @@ function CreateListingDialog(props: Props) {
          listingName: values.listingName,
          price: values.price,
          image: values.image,
+         id: '-1',
       });
       handleClose();
       addListing({

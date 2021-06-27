@@ -9,6 +9,8 @@ const sortListings = (a: ListingFieldsFragment, b: ListingFieldsFragment) => {
    return a.listingName.localeCompare(b.listingName);
 };
 
+const newItemId = '-1';
+
 export function ListingTab() {
    const { classId } = useParams<Record<string, string>>();
 
@@ -57,7 +59,7 @@ export function ListingTab() {
             listings.map((listing: ListingFieldsFragment) => {
                return (
                   <ListingCard
-                     deleting={deletingId === listing.id}
+                     deleting={deletingId === listing.id || listing.id === newItemId}
                      listingInfo={listing}
                      refetch={refetch}
                      removeFromListings={removeFromListings}
