@@ -92,7 +92,7 @@ function MarketHome() {
    ];
 
    return (
-      <div className="content-container col-md-10 p-0">
+      <div >
          <div className={classes.tabContainer}>
             <TabContext value={value}>
                <TabList onChange={handleChange} variant="fullWidth" centered>
