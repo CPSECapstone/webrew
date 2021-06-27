@@ -1,13 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import { CircularProgress, createStyles, List, makeStyles, Tab, Theme } from '@material-ui/core';
+import { createStyles, makeStyles, Tab, Theme } from '@material-ui/core';
 import { TabContext, TabList, TabPanel } from '@material-ui/lab';
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { ListingFieldsFragment, useMarketListingsQuery } from '../../__generated__/types';
-
-import CreateListingDialog from './CreateListingDialog';
-import ListingCard from './ListingCard';
 import { ListingTab } from './ListingTab';
+import { StudentsTab } from './StudentsTab';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const useStyles = makeStyles((theme: Theme) =>
@@ -29,10 +25,6 @@ const useStyles = makeStyles((theme: Theme) =>
       },
    })
 );
-
-const sortListings = (a: ListingFieldsFragment, b: ListingFieldsFragment) => {
-   return a.listingName.localeCompare(b.listingName);
-};
 
 function MarketHome() {
    const classes = useStyles();
@@ -68,7 +60,9 @@ function MarketHome() {
                   <ListingTab />
                </TabPanel>
                <TabPanel value="2">Purchases</TabPanel>
-               <TabPanel value="3">Students</TabPanel>
+               <TabPanel value="3">
+                  <StudentsTab />
+               </TabPanel>
             </TabContext>
          </div>
       </div>

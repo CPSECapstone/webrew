@@ -1,7 +1,5 @@
 import { CircularProgress } from '@material-ui/core';
-import { TabContext, TabList, TabPanel } from '@material-ui/lab';
 import React, { useState } from 'react';
-import { Tab } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { ListingFieldsFragment, useMarketListingsQuery } from '../../__generated__/types';
 import CreateListingDialog from './CreateListingDialog';
@@ -12,15 +10,9 @@ const sortListings = (a: ListingFieldsFragment, b: ListingFieldsFragment) => {
 };
 
 export function ListingTab() {
-   const { classId, className } = useParams<Record<string, string>>();
+   const { classId } = useParams<Record<string, string>>();
 
    const [listings, setListings] = useState<ListingFieldsFragment[]>([]);
-
-   const [value, setValue] = useState('1');
-
-   const handleChange = (event: React.ChangeEvent<Record<string, unknown>>, newValue: string) => {
-      setValue(newValue);
-   };
 
    const { loading, error, data, refetch } = useMarketListingsQuery({
       variables: {

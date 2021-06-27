@@ -1,16 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import { Button, Dialog, DialogTitle, DialogContent, IconButton } from '@material-ui/core';
+import { Dialog, DialogTitle, DialogContent, IconButton } from '@material-ui/core';
 import { useState } from 'react';
 import styled from 'styled-components';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import { MarketListingInput, useAddListingMutation } from '../../__generated__/types';
 import ListingForm, { MarketListingFormInput } from './ListingForm';
-
-const Container = styled.div`
-   text-align: left;
-   fontfamily: 'Poppins', sans-serif;
-   margin-left: 18px;
-`;
+import { Container } from './FieldStyles';
 
 type Props = {
    course: string;
@@ -77,7 +72,10 @@ function CreateListingDialog(props: Props) {
          },
       })
          .then(() => props.refetch())
-         .catch((error) => console.log(error));
+         .catch((error) => {
+            props.refetch();
+            console.log(error);
+         });
    };
 
    return (

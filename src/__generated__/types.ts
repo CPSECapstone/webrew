@@ -1270,6 +1270,28 @@ export type DeleteListingMutation = { __typename: 'Mutation', removeMarketListin
 
 export type ListingFieldsFragment = { __typename: 'MarketListing', id: string, listingName: string, description: string, image: string, course: string, listedDate: any, price: number, stock?: Maybe<number>, timesPurchased: number };
 
+export type AddStudentMutationVariables = Exact<{
+  student: StudentInput;
+}>;
+
+
+export type AddStudentMutation = { __typename: 'Mutation', addStudent: (
+    { __typename: 'Student' }
+    & StudentInfoFragment
+  ) };
+
+export type StudentInfoFragment = { __typename: 'Student', firstName: string, lastName: string, points: number, totalPointsSpent: number, totalPointsAwarded: number };
+
+export type StudentsQueryVariables = Exact<{
+  courseId: Scalars['String'];
+}>;
+
+
+export type StudentsQuery = { __typename: 'Query', students: Array<(
+    { __typename: 'Student' }
+    & StudentInfoFragment
+  )> };
+
 export type UserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1607,6 +1629,15 @@ export const ListingFieldsFragmentDoc = gql`
   price
   stock
   timesPurchased
+}
+    `;
+export const StudentInfoFragmentDoc = gql`
+    fragment StudentInfo on Student {
+  firstName
+  lastName
+  points
+  totalPointsSpent
+  totalPointsAwarded
 }
     `;
 export const TaskListTaskFieldsFragmentDoc = gql`
@@ -2075,6 +2106,74 @@ export function useDeleteListingMutation(baseOptions?: Apollo.MutationHookOption
 export type DeleteListingMutationHookResult = ReturnType<typeof useDeleteListingMutation>;
 export type DeleteListingMutationResult = Apollo.MutationResult<DeleteListingMutation>;
 export type DeleteListingMutationOptions = Apollo.BaseMutationOptions<DeleteListingMutation, DeleteListingMutationVariables>;
+export const AddStudentDocument = gql`
+    mutation AddStudent($student: StudentInput!) {
+  addStudent(student: $student) {
+    ...StudentInfo
+  }
+}
+    ${StudentInfoFragmentDoc}`;
+export type AddStudentMutationFn = Apollo.MutationFunction<AddStudentMutation, AddStudentMutationVariables>;
+
+/**
+ * __useAddStudentMutation__
+ *
+ * To run a mutation, you first call `useAddStudentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddStudentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addStudentMutation, { data, loading, error }] = useAddStudentMutation({
+ *   variables: {
+ *      student: // value for 'student'
+ *   },
+ * });
+ */
+export function useAddStudentMutation(baseOptions?: Apollo.MutationHookOptions<AddStudentMutation, AddStudentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddStudentMutation, AddStudentMutationVariables>(AddStudentDocument, options);
+      }
+export type AddStudentMutationHookResult = ReturnType<typeof useAddStudentMutation>;
+export type AddStudentMutationResult = Apollo.MutationResult<AddStudentMutation>;
+export type AddStudentMutationOptions = Apollo.BaseMutationOptions<AddStudentMutation, AddStudentMutationVariables>;
+export const StudentsDocument = gql`
+    query Students($courseId: String!) {
+  students(courseId: $courseId) {
+    ...StudentInfo
+  }
+}
+    ${StudentInfoFragmentDoc}`;
+
+/**
+ * __useStudentsQuery__
+ *
+ * To run a query within a React component, call `useStudentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useStudentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useStudentsQuery({
+ *   variables: {
+ *      courseId: // value for 'courseId'
+ *   },
+ * });
+ */
+export function useStudentsQuery(baseOptions: Apollo.QueryHookOptions<StudentsQuery, StudentsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<StudentsQuery, StudentsQueryVariables>(StudentsDocument, options);
+      }
+export function useStudentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<StudentsQuery, StudentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<StudentsQuery, StudentsQueryVariables>(StudentsDocument, options);
+        }
+export type StudentsQueryHookResult = ReturnType<typeof useStudentsQuery>;
+export type StudentsLazyQueryHookResult = ReturnType<typeof useStudentsLazyQuery>;
+export type StudentsQueryResult = Apollo.QueryResult<StudentsQuery, StudentsQueryVariables>;
 export const UserDocument = gql`
     query User {
   getUser {
