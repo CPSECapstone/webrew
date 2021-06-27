@@ -95,11 +95,7 @@ export function AddStudentDialog(props: Props) {
                   Add Student
                </DialogTitle>
                <DialogContent>
-                  <StudentForm
-                     initialValues={initialValues}
-                     handleClose={handleClose}
-                     onSubmit={handleSubmit}
-                  />
+                  <StudentForm initialValues={initialValues} onSubmit={handleSubmit} />
                </DialogContent>
                <div style={{ marginLeft: '4%' }}>
                   {mutationLoading ? (

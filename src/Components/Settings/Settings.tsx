@@ -1,7 +1,7 @@
 import { useUserQuery } from '../../__generated__/types';
 
 export function Settings() {
-   const { loading, error, data, refetch } = useUserQuery();
+   const { loading, error, data } = useUserQuery();
 
    if (loading || error || !data) {
       return <></>;

@@ -2,7 +2,7 @@ import { DialogActions } from '@material-ui/core';
 import { Button } from 'aws-amplify-react';
 import { Formik, Form } from 'formik';
 import { StudentInput } from '../../__generated__/types';
-import { LargeTextField, SmallTextField } from './FieldStyles';
+import { SmallTextField } from './FieldStyles';
 
 export type AddStudentFormInput = {
    firstName: string;
@@ -23,10 +23,9 @@ export function studentFormToInputType(input: AddStudentFormInput, courseId: str
 type Props = {
    initialValues: AddStudentFormInput;
    onSubmit: (values: AddStudentFormInput) => void;
-   handleClose: () => void;
 };
 
-export function StudentForm({ initialValues, onSubmit, handleClose }: Props) {
+export function StudentForm({ initialValues, onSubmit }: Props) {
    return (
       <Formik
          initialValues={initialValues}

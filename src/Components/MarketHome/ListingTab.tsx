@@ -12,6 +12,8 @@ const sortListings = (a: ListingFieldsFragment, b: ListingFieldsFragment) => {
 export function ListingTab() {
    const { classId } = useParams<Record<string, string>>();
 
+   const [deletingId, setDeletingId] = useState<string>('');
+
    const [listings, setListings] = useState<ListingFieldsFragment[]>([]);
 
    const { loading, error, data, refetch } = useMarketListingsQuery({
@@ -32,7 +34,7 @@ export function ListingTab() {
    };
 
    const removeFromListings = (listingId: string) => {
-      setListings(listings.filter((listing) => listing.id !== listingId));
+      setDeletingId(listingId);
    };
 
    const editListings = (listingId: string, info: any) => {
@@ -52,14 +54,17 @@ export function ListingTab() {
                <CircularProgress size={150} />
             </div>
          ) : (
-            listings.map((listing: ListingFieldsFragment) => (
-               <ListingCard
-                  listingInfo={listing}
-                  refetch={refetch}
-                  removeFromListings={removeFromListings}
-                  editListings={editListings}
-               />
-            ))
+            listings.map((listing: ListingFieldsFragment) => {
+               return (
+                  <ListingCard
+                     deleting={deletingId === listing.id}
+                     listingInfo={listing}
+                     refetch={refetch}
+                     removeFromListings={removeFromListings}
+                     editListings={editListings}
+                  />
+               );
+            })
          )}
       </div>
    );
