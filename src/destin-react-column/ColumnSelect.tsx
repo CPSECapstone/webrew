@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import { ApolloError } from '@apollo/client';
-import { CircularProgress } from '@material-ui/core';
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import { PayStudentForm } from '../Components/MarketHome/PayStudentForm';
 import {
@@ -11,6 +10,7 @@ import Container from './components/container/container';
 import type { OptionType, Theme, ColumnType, OptionsType, ActionMeta, ActionTypes } from './types';
 
 interface ColumnSelectProps {
+   editStudents: any;
    courseId: string;
    /**
     * The array of available select options.
@@ -79,6 +79,7 @@ export function useStateWithDep<T>(defaultValue: any) {
 }
 
 const ColumnSelect: FC<ColumnSelectProps> = ({
+   editStudents,
    courseId,
    options,
    onChange,
@@ -93,8 +94,6 @@ const ColumnSelect: FC<ColumnSelectProps> = ({
    disableKeyboard,
    theme,
 }) => {
-   console.log('Loading Column Selector');
-
    const [availableOptions, setAvailableOptions] = useState<OptionsType>(options);
    const [selectOptions, setSelectOptions] = useState<OptionsType>(options);
    const [current, setCurrent] = useState<OptionType>(options[0]);
@@ -134,17 +133,21 @@ const ColumnSelect: FC<ColumnSelectProps> = ({
       setCurrentAction('add-all');
    };
 
+   const sortLabels = (a: OptionType, b: OptionType) => {
+      return a.label.localeCompare(b.label);
+   };
+
    const remove = () => {
       if (selectOptions.find((c: OptionType) => c.value === current.value)) return;
       setSelectedOptions(selectedOptions.filter((o) => o.value !== current.value));
-      setSelectOptions([...selectOptions, current]);
+      setSelectOptions([...selectOptions, current].sort(sortLabels));
 
       setCurrentAction('remove');
    };
 
    const removeAll = () => {
       if (!selectedOptions.length) return;
-      setSelectOptions([...selectOptions, ...selectedOptions]);
+      setSelectOptions([...selectOptions, ...selectedOptions].sort(sortLabels));
       setCurrent(selectedOptions[0]);
       setSelectedOptions([]);
 
@@ -193,6 +196,7 @@ const ColumnSelect: FC<ColumnSelectProps> = ({
 
    const onMutationCompleted = (data: AwardStudentsPointsMutation) => {
       console.log('Mutation Completed');
+      editStudents(data.awardStudentsPoints);
       removeAll();
    };
 

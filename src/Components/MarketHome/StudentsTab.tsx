@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import { CircularProgress } from '@material-ui/core';
 
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import useForceUpdate from 'use-force-update';
 import { StudentInfoFragment, useStudentsQuery } from '../../__generated__/types';
 import TableComponent from '../TableComponent/TableComponent';
 import { AddStudentDialog } from './AddStudentDialog';
@@ -23,7 +22,19 @@ const sortStudents = (a: StudentInfoFragment, b: StudentInfoFragment) => {
 };
 export function StudentsTab() {
    const { classId } = useParams<Record<string, string>>();
-   const forceUpdate = useForceUpdate();
+   const [students, setStudents] = useState<StudentInfoFragment[]>([]);
+
+   const editStudents = (updated: StudentInfoFragment[]) => {
+      const items = [...students];
+      updated.forEach((toBeUpdated) => {
+         const itemIndex = items.findIndex(
+            (student) => student.studentId === toBeUpdated.studentId
+         );
+         items[itemIndex] = toBeUpdated;
+      });
+
+      setStudents(items);
+   };
 
    let rowData: StudentRow[] = [];
 
@@ -32,6 +43,13 @@ export function StudentsTab() {
          courseId: classId,
       },
    });
+
+   useEffect(() => {
+      if (!data) {
+         return;
+      }
+      setStudents([...data.students].sort(sortStudents));
+   }, [data]);
 
    const rowClicked = (studentRow: StudentRow) => {
       console.log(`${studentRow.row.name} Clicked`);
@@ -71,9 +89,6 @@ export function StudentsTab() {
       return <s>error</s>;
    }
 
-   const students = [...data.students];
-   students.sort(sortStudents);
-
    rowData = students.map((student: StudentInfoFragment) => {
       return {
          row: {
@@ -87,7 +102,7 @@ export function StudentsTab() {
 
    return (
       <div>
-         <PayStudents students={students} refetch={refetch} forceUpdate={forceUpdate} />
+         <PayStudents students={students} refetch={refetch} editStudents={editStudents} />
          <AddStudentDialog course={classId} refetch={refetch} />
          <div className="table">
             <TableComponent columns={columns} data={rowData} rowClickFunction={rowClicked} />

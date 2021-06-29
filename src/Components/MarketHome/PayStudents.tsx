@@ -11,7 +11,7 @@ import { StudentInfoFragment } from '../../__generated__/types';
 type Props = {
    students: StudentInfoFragment[];
    refetch: any;
-   forceUpdate: any;
+   editStudents: any;
 };
 
 const theme = {
@@ -23,7 +23,7 @@ const theme = {
    searchFocusBorderColor: '#805Ad5',
 };
 
-export default function PayStudents({ students }: Props) {
+export default function PayStudents({ students, editStudents }: Props) {
    const options = students.map((student) => {
       return { value: student.studentId, label: `${student.firstName} ${student.lastName}` };
    });
@@ -34,6 +34,7 @@ export default function PayStudents({ students }: Props) {
       <div>
          <h4>Award Points</h4>
          <ColumnSelect
+            editStudents={editStudents}
             courseId={classId}
             isSearchable
             defaultValue={[]}
