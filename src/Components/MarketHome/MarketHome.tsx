@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
 function MarketHome() {
    const classes = useStyles();
 
-   const [value, setValue] = useState('1');
+   const [value, setValue] = useState('3');
 
    const handleChange = (event: React.ChangeEvent<Record<string, unknown>>, newValue: string) => {
       setValue(newValue);

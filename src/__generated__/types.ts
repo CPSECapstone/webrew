@@ -1280,7 +1280,7 @@ export type AddStudentMutation = { __typename: 'Mutation', addStudent: (
     & StudentInfoFragment
   ) };
 
-export type StudentInfoFragment = { __typename: 'Student', firstName: string, lastName: string, points: number, totalPointsSpent: number, totalPointsAwarded: number };
+export type StudentInfoFragment = { __typename: 'Student', firstName: string, lastName: string, points: number, totalPointsSpent: number, totalPointsAwarded: number, studentId: string };
 
 export type StudentsQueryVariables = Exact<{
   courseId: Scalars['String'];
@@ -1638,6 +1638,7 @@ export const StudentInfoFragmentDoc = gql`
   points
   totalPointsSpent
   totalPointsAwarded
+  studentId
 }
     `;
 export const TaskListTaskFieldsFragmentDoc = gql`
