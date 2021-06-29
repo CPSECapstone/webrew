@@ -204,10 +204,7 @@ const ColumnSelect: FC<ColumnSelectProps> = ({
       console.log(e.message);
    };
 
-   const [
-      awardPoints,
-      { loading: mutationLoading, error: mutationError },
-   ] = useAwardStudentsPointsMutation({
+   const [awardPoints, { loading: mutationLoading }] = useAwardStudentsPointsMutation({
       onCompleted: onMutationCompleted,
       onError: onMutationError,
    });

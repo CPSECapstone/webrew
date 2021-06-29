@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import { Dialog, DialogTitle, DialogContent, IconButton } from '@material-ui/core';
 import { useState } from 'react';
-import styled from 'styled-components';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import { MarketListingInput, useAddListingMutation } from '../../__generated__/types';
 import ListingForm, { MarketListingFormInput } from './ListingForm';

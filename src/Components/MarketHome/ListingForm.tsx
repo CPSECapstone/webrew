@@ -1,5 +1,4 @@
-import { Button, TextField, DialogActions } from '@material-ui/core';
-import styled from 'styled-components';
+import { Button, DialogActions } from '@material-ui/core';
 import { Formik, Form } from 'formik';
 import { LargeTextField, SmallTextField } from './FieldStyles';
 
