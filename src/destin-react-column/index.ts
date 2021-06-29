@@ -1,1 +1,1 @@
-export { default } from './ColumnSelect'
+export { default } from './ColumnSelect';
