@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
+import { useParams } from 'react-router-dom';
 import ColumnSelect from '../../destin-react-column';
 import { StudentInfoFragment } from '../../__generated__/types';
 
@@ -27,10 +28,13 @@ export default function PayStudents({ students }: Props) {
       return { value: student.studentId, label: `${student.firstName} ${student.lastName}` };
    });
 
+   const { classId } = useParams<Record<string, string>>();
+
    return (
       <div>
          <h4>Award Points</h4>
          <ColumnSelect
+            courseId={classId}
             isSearchable
             defaultValue={[]}
             options={[...options]}

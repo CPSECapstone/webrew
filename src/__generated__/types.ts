@@ -320,7 +320,8 @@ export type Mutation = {
   editMarketListing: MarketListing;
   addMarketListing: MarketListing;
   removeMarketListing: Scalars['String'];
-  changePoints: Scalars['Int'];
+  awardStudentPoints: Student;
+  awardStudentsPoints: Array<Student>;
 };
 
 
@@ -493,9 +494,16 @@ export type MutationRemoveMarketListingArgs = {
 };
 
 
-export type MutationChangePointsArgs = {
-  course: Scalars['String'];
+export type MutationAwardStudentPointsArgs = {
+  courseId: Scalars['String'];
   student: Scalars['String'];
+  points: Scalars['Int'];
+};
+
+
+export type MutationAwardStudentsPointsArgs = {
+  courseId: Scalars['String'];
+  studentIds: Array<Scalars['String']>;
   points: Scalars['Int'];
 };
 
@@ -1279,6 +1287,18 @@ export type AddStudentMutation = { __typename: 'Mutation', addStudent: (
     { __typename: 'Student' }
     & StudentInfoFragment
   ) };
+
+export type AwardStudentsPointsMutationVariables = Exact<{
+  studentIds: Array<Scalars['String']> | Scalars['String'];
+  courseId: Scalars['String'];
+  points: Scalars['Int'];
+}>;
+
+
+export type AwardStudentsPointsMutation = { __typename: 'Mutation', awardStudentsPoints: Array<(
+    { __typename: 'Student' }
+    & StudentInfoFragment
+  )> };
 
 export type StudentInfoFragment = { __typename: 'Student', firstName: string, lastName: string, points: number, totalPointsSpent: number, totalPointsAwarded: number, studentId: string };
 
@@ -2140,6 +2160,45 @@ export function useAddStudentMutation(baseOptions?: Apollo.MutationHookOptions<A
 export type AddStudentMutationHookResult = ReturnType<typeof useAddStudentMutation>;
 export type AddStudentMutationResult = Apollo.MutationResult<AddStudentMutation>;
 export type AddStudentMutationOptions = Apollo.BaseMutationOptions<AddStudentMutation, AddStudentMutationVariables>;
+export const AwardStudentsPointsDocument = gql`
+    mutation AwardStudentsPoints($studentIds: [String!]!, $courseId: String!, $points: Int!) {
+  awardStudentsPoints(
+    studentIds: $studentIds
+    courseId: $courseId
+    points: $points
+  ) {
+    ...StudentInfo
+  }
+}
+    ${StudentInfoFragmentDoc}`;
+export type AwardStudentsPointsMutationFn = Apollo.MutationFunction<AwardStudentsPointsMutation, AwardStudentsPointsMutationVariables>;
+
+/**
+ * __useAwardStudentsPointsMutation__
+ *
+ * To run a mutation, you first call `useAwardStudentsPointsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAwardStudentsPointsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [awardStudentsPointsMutation, { data, loading, error }] = useAwardStudentsPointsMutation({
+ *   variables: {
+ *      studentIds: // value for 'studentIds'
+ *      courseId: // value for 'courseId'
+ *      points: // value for 'points'
+ *   },
+ * });
+ */
+export function useAwardStudentsPointsMutation(baseOptions?: Apollo.MutationHookOptions<AwardStudentsPointsMutation, AwardStudentsPointsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AwardStudentsPointsMutation, AwardStudentsPointsMutationVariables>(AwardStudentsPointsDocument, options);
+      }
+export type AwardStudentsPointsMutationHookResult = ReturnType<typeof useAwardStudentsPointsMutation>;
+export type AwardStudentsPointsMutationResult = Apollo.MutationResult<AwardStudentsPointsMutation>;
+export type AwardStudentsPointsMutationOptions = Apollo.BaseMutationOptions<AwardStudentsPointsMutation, AwardStudentsPointsMutationVariables>;
 export const StudentsDocument = gql`
     query Students($courseId: String!) {
   students(courseId: $courseId) {

@@ -1,10 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
+import { ApolloError } from '@apollo/client';
+import { CircularProgress } from '@material-ui/core';
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import { PayStudentForm } from '../Components/MarketHome/PayStudentForm';
+import {
+   AwardStudentsPointsMutation,
+   useAwardStudentsPointsMutation,
+} from '../__generated__/types';
 import Container from './components/container/container';
 import type { OptionType, Theme, ColumnType, OptionsType, ActionMeta, ActionTypes } from './types';
 
 interface ColumnSelectProps {
+   courseId: string;
    /**
     * The array of available select options.
     */
@@ -72,6 +79,7 @@ export function useStateWithDep<T>(defaultValue: any) {
 }
 
 const ColumnSelect: FC<ColumnSelectProps> = ({
+   courseId,
    options,
    onChange,
    defaultValue = [],
@@ -183,8 +191,36 @@ const ColumnSelect: FC<ColumnSelectProps> = ({
       ...theme,
    };
 
-   const onPay = () => {
+   const onMutationCompleted = (data: AwardStudentsPointsMutation) => {
+      console.log('Mutation Completed');
       removeAll();
+   };
+
+   const onMutationError = (e: ApolloError) => {
+      console.log(e.message);
+   };
+
+   const [
+      awardPoints,
+      { loading: mutationLoading, error: mutationError },
+   ] = useAwardStudentsPointsMutation({
+      onCompleted: onMutationCompleted,
+      onError: onMutationError,
+   });
+
+   const onPay = (points: number) => {
+      if (selectedOptions.length < 1 || points < 1) return;
+      awardPoints({
+         variables: {
+            points,
+            courseId,
+            studentIds: selectedOptions.map((option) => {
+               return option.value as string;
+            }),
+         },
+      }).catch((e) => {
+         console.log(e);
+      });
    };
 
    return (
@@ -211,7 +247,7 @@ const ColumnSelect: FC<ColumnSelectProps> = ({
             disableKeyboard={disableKeyboard}
             theme={customTheme}
          />
-         <PayStudentForm onSubmit={onPay} />
+         <PayStudentForm onSubmit={onPay} submitting={mutationLoading} />
       </div>
    );
 };

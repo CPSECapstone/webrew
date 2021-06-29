@@ -1,7 +1,6 @@
-import { DialogActions } from '@material-ui/core';
+import { CircularProgress, DialogActions } from '@material-ui/core';
 import { Button } from 'aws-amplify-react';
 import { Formik, Form } from 'formik';
-import { StudentInput } from '../../__generated__/types';
 import { SmallTextField } from './FieldStyles';
 
 export type PayStudentFormInput = {
@@ -9,28 +8,21 @@ export type PayStudentFormInput = {
 };
 
 type Props = {
-   onSubmit: (values: PayStudentFormInput) => void;
+   submitting: boolean;
+   onSubmit: (points: number) => void;
 };
 
-// eslint-disable-next-line consistent-return
-const validateField = (values: PayStudentFormInput) => {
-   if (values.points < 0) {
-      console.log('Validation Error');
-      return { points: 'Must be positive' };
-   }
-};
-
-export function PayStudentForm({ onSubmit }: Props) {
+export function PayStudentForm({ onSubmit, submitting }: Props) {
    return (
       <Formik
-         validate={validateField}
          initialValues={{ points: 0 }}
-         onSubmit={(values, { setSubmitting }) => {
+         onSubmit={(values, { setSubmitting, setFieldValue }) => {
             setSubmitting(false);
-            onSubmit(values);
+            onSubmit(values.points);
+            setFieldValue('points', '0');
          }}
       >
-         {({ values, handleChange, handleBlur, handleSubmit, setFieldValue, isSubmitting }) => (
+         {({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
             <Form onSubmit={handleSubmit}>
                <SmallTextField
                   required
@@ -44,6 +36,9 @@ export function PayStudentForm({ onSubmit }: Props) {
                   onChange={handleChange}
                   onBlur={handleBlur}
                />
+               <div style={{ float: 'left', marginTop: '.5%', position: 'absolute' }}>
+                  {submitting ? <CircularProgress size={25} /> : <></>}
+               </div>
                <DialogActions>
                   <Button type="submit" disabled={isSubmitting} color="primary">
                      Award

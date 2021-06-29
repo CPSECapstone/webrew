@@ -147,7 +147,7 @@ const Container: FC<ContainerProps> = ({
                  o.label.toLocaleLowerCase().includes(search.left.toLocaleLowerCase())
               )
             : options,
-      [options, search.left]
+      [isSearchable, options, search.left]
    );
 
    const filteredSelected = useMemo(
@@ -157,7 +157,7 @@ const Container: FC<ContainerProps> = ({
                  s.label.toLocaleLowerCase().includes(search.right.toLocaleLowerCase())
               )
             : selected,
-      [selected, search.right]
+      [isSearchable, selected, search.right]
    );
 
    return (

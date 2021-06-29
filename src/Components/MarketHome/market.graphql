@@ -38,6 +38,12 @@ mutation AddStudent($student: StudentInput!) {
    }
 }
 
+mutation AwardStudentsPoints($studentIds: [String!]!, $courseId: String!, $points: Int!) {
+   awardStudentsPoints(studentIds: $studentIds, courseId: $courseId, points: $points) {
+      ...StudentInfo
+   }
+}
+
 fragment StudentInfo on Student {
    firstName
    lastName
