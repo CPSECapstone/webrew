@@ -1,15 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import { Button, Dialog, DialogTitle, DialogContent } from '@material-ui/core';
+import { Dialog, DialogTitle, DialogContent, IconButton } from '@material-ui/core';
 import { useState } from 'react';
-import styled from 'styled-components';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import { MarketListingInput, useAddListingMutation } from '../../__generated__/types';
 import ListingForm, { MarketListingFormInput } from './ListingForm';
-
-const Container = styled.div`
-   text-align: left;
-   fontfamily: 'Poppins', sans-serif;
-   margin-left: 36px;
-`;
+import { Container } from './FieldStyles';
 
 type Props = {
    course: string;
@@ -52,6 +47,7 @@ function CreateListingDialog(props: Props) {
          listingName: values.listingName,
          price: values.price,
          image: values.image,
+         id: '-1',
       });
       handleClose();
       addListing({
@@ -76,24 +72,26 @@ function CreateListingDialog(props: Props) {
          },
       })
          .then(() => props.refetch())
-         .catch((error) => console.log(error));
+         .catch((error) => {
+            props.refetch();
+            console.log(error);
+         });
    };
 
    return (
       <Container>
          <div>
-            <Button
+            <IconButton
                style={{
-                  width: 200,
-                  marginTop: 20,
                   backgroundColor: '#4274F3',
                   color: 'white',
                }}
+               color="primary"
+               aria-label="Create Listing"
                onClick={handleClickOpen}
-               data-testid="create-btn"
             >
-               Create New Listing
-            </Button>
+               <AddShoppingCartIcon />
+            </IconButton>
             <Dialog
                open={open}
                fullWidth

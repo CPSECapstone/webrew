@@ -7,11 +7,13 @@ import Content from '../Components/Content';
 import Navigation from '../Navigation/Navigation';
 
 import './App.scss';
+import { useGetCoursesQuery } from '../__generated__/types';
 
 // Entry point of the Flitped App
 function App() {
    const [, setUser] = useState(null);
    const [fname, setFirstName] = useState('');
+   const { loading, error, data: courseData, refetch } = useGetCoursesQuery();
 
    function storeToken(): void {
       Auth.currentSession()
@@ -51,6 +53,13 @@ function App() {
       storeToken();
    }, []);
 
+   if (loading) return <div>Loading...</div>;
+   if (error) return <div>`Error! ${error.message}`</div>;
+   if (!courseData) {
+      return <></>;
+   }
+   const { courses } = courseData;
+
    return (
       <div className="App">
          <Navigation />
@@ -58,10 +67,10 @@ function App() {
             <div className="row h-100">
                <div className="sidebar-container col-md-2 p-0 side">
                   <div className="pl-2 pt-2 pr-2">{fname}</div>
-                  <Sidebar />
+                  <Sidebar courses={courses} />
                </div>
                <div className="content-container col-md-10 p-0">
-                  <Content />
+                  <Content courses={courses} refetchCourses={refetch} />
                </div>
             </div>
          </div>

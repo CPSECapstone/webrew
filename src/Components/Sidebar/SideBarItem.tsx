@@ -44,7 +44,7 @@ export type SideBarItemProps = SideBarItemPropsWithoutItems & {
 function SideBarItem({ name, link, Icon, items = [] }: SideBarItemProps) {
    const classes = useStyles();
    const isExpandable = items && items.length > 0;
-   const [open, setOpen] = useState(false);
+   const [open, setOpen] = useState(true);
    function handleClick() {
       setOpen(!open);
    }

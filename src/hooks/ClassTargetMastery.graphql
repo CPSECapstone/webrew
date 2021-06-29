@@ -25,7 +25,6 @@ fragment CTMObjectiveField on Objective {
 fragment CTMStudentObjectiveMasteryFields on StudentObjectiveMastery {
    student {
       studentId
-      email
    }
    objectiveMasteryList {
       ...CTMObjectiveMasteryFields

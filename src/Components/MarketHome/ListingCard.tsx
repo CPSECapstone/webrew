@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import {
    Button,
+   CircularProgress,
    Dialog,
    DialogActions,
    DialogContent,
@@ -20,6 +21,7 @@ import ListingForm, { MarketListingFormInput } from './ListingForm';
 type Props = {
    listingInfo: ListingFieldsFragment;
    refetch: any;
+   deleting: boolean;
    removeFromListings: (arg0: string) => void;
    editListings: (listingId: string, info: any) => void;
 };
@@ -29,6 +31,7 @@ export default function ListingCard({
    refetch,
    removeFromListings,
    editListings,
+   deleting,
 }: Props) {
    const [open, setOpen] = useState(false);
    const [editing, setEditing] = useState(false);
@@ -95,19 +98,25 @@ export default function ListingCard({
       <div className="listing-card-outer">
          <Button onClick={handleClickOpen}>
             <div className="listing-card">
-               <div className="listing-card-image">
-                  <img
-                     src={listingInfo.image}
-                     alt=""
-                     style={{ width: 100, height: 100, borderRadius: '50%' }}
-                  />
-               </div>
-               <div className="listing-card-body">
-                  <h3 className="listing-title">
-                     <span>{listingInfo.listingName}</span>
-                  </h3>
-                  <p className="listing-points">{listingInfo.price} P</p>
-               </div>
+               {!deleting ? (
+                  <div>
+                     <div className="listing-card-image">
+                        <img
+                           src={listingInfo.image}
+                           alt=""
+                           style={{ width: 100, height: 100, borderRadius: '50%' }}
+                        />
+                     </div>
+                     <div className="listing-card-body">
+                        <h3 className="listing-title">
+                           <span>{listingInfo.listingName}</span>
+                        </h3>
+                        <p className="listing-points">{listingInfo.price} P</p>
+                     </div>
+                  </div>
+               ) : (
+                  <CircularProgress className="center" size={50} style={{}} />
+               )}
             </div>
          </Button>
          <Dialog

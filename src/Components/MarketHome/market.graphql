@@ -31,3 +31,30 @@ fragment ListingFields on MarketListing {
    stock
    timesPurchased
 }
+
+mutation AddStudent($student: StudentInput!) {
+   addStudent(student: $student) {
+      ...StudentInfo
+   }
+}
+
+mutation AwardStudentsPoints($studentIds: [String!]!, $courseId: String!, $points: Int!) {
+   awardStudentsPoints(studentIds: $studentIds, courseId: $courseId, points: $points) {
+      ...StudentInfo
+   }
+}
+
+fragment StudentInfo on Student {
+   firstName
+   lastName
+   points
+   totalPointsSpent
+   totalPointsAwarded
+   studentId
+}
+
+query Students($courseId: String!) {
+   students(courseId: $courseId) {
+      ...StudentInfo
+   }
+}

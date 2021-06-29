@@ -1,31 +1,30 @@
 import { Switch, Route } from 'react-router-dom';
-import CreateCourseDialog from '../CreateCourseDialog/CreateCourseDialog';
 import Dashboard from '../Dashboard/Dashboard';
-import StudentOverview from '../StudentOverview/StudentOverview';
-import TaskSubmissionOverview from '../TaskSubmissionOverview';
-import ViewTaskSubmission from '../ViewTaskSubmission';
-import SingleStudentOverview from '../SingleStudentOverview/SingleStudentOverview';
-import SingleStudentMasteryOverview from '../SingleStudentMasteryOverview/SingleStudentMasteryOverview';
-import SingleTargetOverview from '../SingleTargetOverview/SingleTargetOverview';
-import SingleMissionOverview from '../SingleStudentOverview/SingleMissionOverview';
-import TaskView from '../../Screens/TaskView/TaskView';
-import TaskListView from '../TaskListView';
-import TaskSubmissionSummaryView from '../TaskSubmissionSummaryView';
-import { ClassMastery } from '../../Screens/ClassMastery';
 import './Content.css';
 import MarketHome from '../MarketHome/MarketHome';
+import { CourseInfoFieldsFragment } from '../../__generated__/types';
+import { Settings } from '../Settings/Settings';
 
-export default function Content() {
+type Props = {
+   courses: CourseInfoFieldsFragment[];
+   refetchCourses: any;
+};
+
+export default function Content({ courses, refetchCourses }: Props) {
    return (
       <div className="content">
          <Switch>
-            <Route path="/courseHome/:className">
+            <Route path="/courseHome/:classId/:className">
                <MarketHome />
             </Route>
-            <Route path="/addNewCourse">
-               <CreateCourseDialog />
+            <Route path="/settings">
+               <Settings />
             </Route>
-            <Route path="/taskSubmissionOverview">
+            <Route path="/">
+               <Dashboard courses={courses} refetchCourses={refetchCourses} />
+            </Route>
+
+            {/*  <Route path="/taskSubmissionOverview">
                <TaskSubmissionOverview />
             </Route>
             <Route path="/viewTaskSubmission">
@@ -57,10 +56,7 @@ export default function Content() {
             </Route>
             <Route path="/classMastery">
                <ClassMastery />
-            </Route>
-            <Route path="/">
-               <Dashboard />
-            </Route>
+            </Route> */}
          </Switch>
       </div>
    );

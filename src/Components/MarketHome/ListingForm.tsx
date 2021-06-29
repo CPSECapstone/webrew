@@ -1,19 +1,6 @@
-import { Button, TextField, DialogActions } from '@material-ui/core';
-import styled from 'styled-components';
+import { Button, DialogActions } from '@material-ui/core';
 import { Formik, Form } from 'formik';
-
-const LargeTextField = styled(TextField)`
-   input {
-      height: 50px;
-      font-size: 20px;
-   }
-`;
-const SmallTextField = styled(TextField)`
-   input {
-      height: 30px;
-      font-size: 20px;
-   }
-`;
+import { LargeTextField, SmallTextField } from './FieldStyles';
 
 export type MarketListingFormInput = {
    price: string;

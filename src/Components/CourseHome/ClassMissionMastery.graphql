@@ -19,8 +19,6 @@ fragment CMStudentFields on StudentMissionMastery {
       studentId
       lastName
       firstName
-      email
-      team
    }
    currentTaskId
    currentTaskName

@@ -64,15 +64,14 @@ export type CourseContent = {
 
 export type CourseInfo = {
   courseId: Scalars['String'];
-  course: Scalars['String'];
-  instructor: Scalars['String'];
-  description: Scalars['String'];
+  courseName: Scalars['String'];
+  instructorId: Scalars['String'];
 };
 
 export type CourseInput = {
-  course: Scalars['String'];
-  instructor: Scalars['String'];
-  description: Scalars['String'];
+  courseName: Scalars['String'];
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
 };
 
 
@@ -269,7 +268,17 @@ export type Mutation = {
   updateUser?: Maybe<UpdateUserOutput>;
   addMission: Scalars['String'];
   addSubMission: Scalars['String'];
-  addCourse: Scalars['String'];
+  /** Creates a new course associated with the instructor caller */
+  createCourse: CourseInfo;
+  /**
+   * Callable by both instructor and student roles, but with different
+   * values overridden by the authentication header.
+   *
+   * If called by student: overrides the student input
+   *
+   * If called by an instructor: overrides the instructor input
+   */
+  addStudent: Student;
   addTask: Scalars['String'];
   addFrQuestion: Scalars['String'];
   addMcQuestion: Scalars['String'];
@@ -303,7 +312,6 @@ export type Mutation = {
   wipeAllProgress: Scalars['String'];
   editOrCreateGoal: Scalars['String'];
   deleteGoal: Scalars['String'];
-  addStudent: Scalars['String'];
   gradeTaskSubmission: TaskSubmissionGrade;
   gradeAnswer: AnswerGrade;
   gradeObjectiveTaskMastery: ObjectiveTaskMastery;
@@ -312,7 +320,8 @@ export type Mutation = {
   editMarketListing: MarketListing;
   addMarketListing: MarketListing;
   removeMarketListing: Scalars['String'];
-  changePoints: Scalars['Int'];
+  awardStudentPoints: Student;
+  awardStudentsPoints: Array<Student>;
 };
 
 
@@ -331,8 +340,13 @@ export type MutationAddSubMissionArgs = {
 };
 
 
-export type MutationAddCourseArgs = {
+export type MutationCreateCourseArgs = {
   course: CourseInput;
+};
+
+
+export type MutationAddStudentArgs = {
+  student: StudentInput;
 };
 
 
@@ -431,11 +445,6 @@ export type MutationDeleteGoalArgs = {
 };
 
 
-export type MutationAddStudentArgs = {
-  student: StudentInput;
-};
-
-
 export type MutationGradeTaskSubmissionArgs = {
   grade: TaskSubmissionGradeInput;
 };
@@ -485,9 +494,16 @@ export type MutationRemoveMarketListingArgs = {
 };
 
 
-export type MutationChangePointsArgs = {
-  course: Scalars['String'];
+export type MutationAwardStudentPointsArgs = {
+  courseId: Scalars['String'];
   student: Scalars['String'];
+  points: Scalars['Int'];
+};
+
+
+export type MutationAwardStudentsPointsArgs = {
+  courseId: Scalars['String'];
+  studentIds: Array<Scalars['String']>;
   points: Scalars['Int'];
 };
 
@@ -575,10 +591,15 @@ export type Query = {
   mission: Mission;
   missions: Array<Mission>;
   subMission?: Maybe<SubMission>;
-  _empty?: Maybe<Scalars['String']>;
-  courseInfo: CourseInfo;
-  courseInfos: Array<CourseInfo>;
+  course: CourseInfo;
+  /** Returns info on all courses associated with the user */
+  courses: Array<CourseInfo>;
+  /** DEPRECATED */
   courseContent: CourseContent;
+  /** Returns information on a specific student associated with a course. */
+  student: Student;
+  /** Returns all students enrolled in a course */
+  students: Array<Student>;
   task: Task;
   tasks: Array<Task>;
   taskInfo: Task;
@@ -597,6 +618,7 @@ export type Query = {
   quizblock: QuizBlock;
   target: Target;
   targets: Array<Target>;
+  _empty?: Maybe<Scalars['String']>;
   objective: Objective;
   objectives: Array<Objective>;
   progressByCourse: Array<UserProgress>;
@@ -610,8 +632,6 @@ export type Query = {
   getAllGoals: Array<Goal>;
   /** Instructor only: get a user's goal given the user and the goal id */
   getGoalById: Goal;
-  student: Student;
-  students: Array<Student>;
   classMissionMastery: ClassMissionMastery;
   classTargetMastery: ClassTargetMastery;
   marketListings: Array<MarketListing>;
@@ -641,18 +661,25 @@ export type QuerySubMissionArgs = {
 };
 
 
-export type QueryCourseInfoArgs = {
+export type QueryCourseArgs = {
   courseId: Scalars['String'];
-};
-
-
-export type QueryCourseInfosArgs = {
-  instructor: Scalars['String'];
+  instructorId: Scalars['String'];
 };
 
 
 export type QueryCourseContentArgs = {
   course: Scalars['String'];
+};
+
+
+export type QueryStudentArgs = {
+  studentId?: Maybe<Scalars['String']>;
+  courseId: Scalars['String'];
+};
+
+
+export type QueryStudentsArgs = {
+  courseId: Scalars['String'];
 };
 
 
@@ -781,17 +808,6 @@ export type QueryGetGoalByIdArgs = {
 };
 
 
-export type QueryStudentArgs = {
-  studentId?: Maybe<Scalars['String']>;
-  course: Scalars['String'];
-};
-
-
-export type QueryStudentsArgs = {
-  course: Scalars['String'];
-};
-
-
 export type QueryClassMissionMasteryArgs = {
   missionId: Scalars['String'];
 };
@@ -902,12 +918,11 @@ export type RubricRequirementInput = {
 
 export type Student = {
   studentId: Scalars['String'];
-  email: Scalars['String'];
-  firstName?: Maybe<Scalars['String']>;
-  lastName?: Maybe<Scalars['String']>;
-  course: Scalars['String'];
-  section: Scalars['Int'];
-  team?: Maybe<Scalars['String']>;
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  courseId: Scalars['String'];
+  instructorId: Scalars['String'];
+  courseName: Scalars['String'];
   points: Scalars['Int'];
   totalPointsAwarded: Scalars['Int'];
   totalPointsSpent: Scalars['Int'];
@@ -915,12 +930,10 @@ export type Student = {
 
 export type StudentInput = {
   studentId: Scalars['String'];
-  email: Scalars['String'];
-  firstName?: Maybe<Scalars['String']>;
-  lastName?: Maybe<Scalars['String']>;
-  course: Scalars['String'];
-  section: Scalars['Int'];
-  team?: Maybe<Scalars['String']>;
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  courseId: Scalars['String'];
+  instructorId: Scalars['String'];
 };
 
 export type StudentMissionMastery = {
@@ -1220,7 +1233,7 @@ export type ClassMissionMasteryQuery = { __typename: 'Query', classMissionMaster
 
 export type CmMissionFieldsFragment = { __typename: 'Mission', name: string, description: string };
 
-export type CmStudentFieldsFragment = { __typename: 'StudentMissionMastery', currentTaskId: string, currentTaskName: string, level: number, progress: number, student: { __typename: 'Student', studentId: string, lastName?: Maybe<string>, firstName?: Maybe<string>, email: string, team?: Maybe<string> } };
+export type CmStudentFieldsFragment = { __typename: 'StudentMissionMastery', currentTaskId: string, currentTaskName: string, level: number, progress: number, student: { __typename: 'Student', studentId: string, lastName: string, firstName: string } };
 
 export type MarketListingsQueryVariables = Exact<{
   courseId: Scalars['String'];
@@ -1264,6 +1277,45 @@ export type DeleteListingMutationVariables = Exact<{
 export type DeleteListingMutation = { __typename: 'Mutation', removeMarketListing: string };
 
 export type ListingFieldsFragment = { __typename: 'MarketListing', id: string, listingName: string, description: string, image: string, course: string, listedDate: any, price: number, stock?: Maybe<number>, timesPurchased: number };
+
+export type AddStudentMutationVariables = Exact<{
+  student: StudentInput;
+}>;
+
+
+export type AddStudentMutation = { __typename: 'Mutation', addStudent: (
+    { __typename: 'Student' }
+    & StudentInfoFragment
+  ) };
+
+export type AwardStudentsPointsMutationVariables = Exact<{
+  studentIds: Array<Scalars['String']> | Scalars['String'];
+  courseId: Scalars['String'];
+  points: Scalars['Int'];
+}>;
+
+
+export type AwardStudentsPointsMutation = { __typename: 'Mutation', awardStudentsPoints: Array<(
+    { __typename: 'Student' }
+    & StudentInfoFragment
+  )> };
+
+export type StudentInfoFragment = { __typename: 'Student', firstName: string, lastName: string, points: number, totalPointsSpent: number, totalPointsAwarded: number, studentId: string };
+
+export type StudentsQueryVariables = Exact<{
+  courseId: Scalars['String'];
+}>;
+
+
+export type StudentsQuery = { __typename: 'Query', students: Array<(
+    { __typename: 'Student' }
+    & StudentInfoFragment
+  )> };
+
+export type UserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UserQuery = { __typename: 'Query', getUser?: Maybe<{ __typename: 'User', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email?: Maybe<string>, role: Role }> };
 
 export type TaskListQueryVariables = Exact<{
   course: Scalars['String'];
@@ -1315,7 +1367,7 @@ export type CtmTargetFieldFragment = { __typename: 'Target', targetId: string, t
 
 export type CtmObjectiveFieldFragment = { __typename: 'Objective', objectiveId: string, objectiveName: string };
 
-export type CtmStudentObjectiveMasteryFieldsFragment = { __typename: 'StudentObjectiveMastery', student: { __typename: 'Student', studentId: string, email: string }, objectiveMasteryList: Array<(
+export type CtmStudentObjectiveMasteryFieldsFragment = { __typename: 'StudentObjectiveMastery', student: { __typename: 'Student', studentId: string }, objectiveMasteryList: Array<(
     { __typename: 'ObjectiveMastery' }
     & CtmObjectiveMasteryFieldsFragment
   )> };
@@ -1340,7 +1392,7 @@ export type GetObjectiveByIdQuery = { __typename: 'Query', objective: { __typena
 export type GetStudentsByCourseQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetStudentsByCourseQuery = { __typename: 'Query', students: Array<{ __typename: 'Student', studentId: string, firstName?: Maybe<string>, lastName?: Maybe<string> }> };
+export type GetStudentsByCourseQuery = { __typename: 'Query', students: Array<{ __typename: 'Student', studentId: string, firstName: string, lastName: string }> };
 
 export type GetTaskObjectiveProgressQueryVariables = Exact<{
   taskId: Scalars['String'];
@@ -1401,7 +1453,7 @@ export type UserProgressFieldsFragment = { __typename: 'UserProgress', userName:
 
 export type ProgressFieldsFragment = { __typename: 'Progress', taskId: string, status: boolean };
 
-export type CourseInfoFieldsFragment = { __typename: 'CourseInfo', courseId: string, course: string, instructor: string, description: string };
+export type CourseInfoFieldsFragment = { __typename: 'CourseInfo', courseId: string, courseName: string, instructorId: string };
 
 export type TargetFieldsFragment = { __typename: 'Target', targetName: string, objectives: Array<(
     { __typename: 'Objective' }
@@ -1432,12 +1484,10 @@ export type ProgressObjectiveFieldsFragment = { __typename: 'Objective', objecti
 
 export type TaskFieldsFragment = { __typename: 'Task', id: string, name: string };
 
-export type GetCoursesQueryVariables = Exact<{
-  instructor: Scalars['String'];
-}>;
+export type GetCoursesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCoursesQuery = { __typename: 'Query', courseInfos: Array<(
+export type GetCoursesQuery = { __typename: 'Query', courses: Array<(
     { __typename: 'CourseInfo' }
     & CourseInfoFieldsFragment
   )> };
@@ -1562,6 +1612,13 @@ export type McBlockFieldsFragment = { __typename: 'McBlock', title: string, bloc
 
 export type FrBlockFieldsFragment = { __typename: 'FrBlock', title: string, blockId: string, blockIndex: number, pageIndex: number, points: number, stem: string, answer?: Maybe<string> };
 
+export type CreateCourseMutationVariables = Exact<{
+  course: CourseInput;
+}>;
+
+
+export type CreateCourseMutation = { __typename: 'Mutation', createCourse: { __typename: 'CourseInfo', courseId: string, courseName: string, instructorId: string } };
+
 export const CmMissionFieldsFragmentDoc = gql`
     fragment CMMissionFields on Mission {
   name
@@ -1574,8 +1631,6 @@ export const CmStudentFieldsFragmentDoc = gql`
     studentId
     lastName
     firstName
-    email
-    team
   }
   currentTaskId
   currentTaskName
@@ -1594,6 +1649,16 @@ export const ListingFieldsFragmentDoc = gql`
   price
   stock
   timesPurchased
+}
+    `;
+export const StudentInfoFragmentDoc = gql`
+    fragment StudentInfo on Student {
+  firstName
+  lastName
+  points
+  totalPointsSpent
+  totalPointsAwarded
+  studentId
 }
     `;
 export const TaskListTaskFieldsFragmentDoc = gql`
@@ -1646,7 +1711,6 @@ export const CtmStudentObjectiveMasteryFieldsFragmentDoc = gql`
     fragment CTMStudentObjectiveMasteryFields on StudentObjectiveMastery {
   student {
     studentId
-    email
   }
   objectiveMasteryList {
     ...CTMObjectiveMasteryFields
@@ -1680,9 +1744,8 @@ export const UserProgressFieldsFragmentDoc = gql`
 export const CourseInfoFieldsFragmentDoc = gql`
     fragment CourseInfoFields on CourseInfo {
   courseId
-  course
-  instructor
-  description
+  courseName
+  instructorId
 }
     `;
 export const TaskFieldsFragmentDoc = gql`
@@ -2064,6 +2127,151 @@ export function useDeleteListingMutation(baseOptions?: Apollo.MutationHookOption
 export type DeleteListingMutationHookResult = ReturnType<typeof useDeleteListingMutation>;
 export type DeleteListingMutationResult = Apollo.MutationResult<DeleteListingMutation>;
 export type DeleteListingMutationOptions = Apollo.BaseMutationOptions<DeleteListingMutation, DeleteListingMutationVariables>;
+export const AddStudentDocument = gql`
+    mutation AddStudent($student: StudentInput!) {
+  addStudent(student: $student) {
+    ...StudentInfo
+  }
+}
+    ${StudentInfoFragmentDoc}`;
+export type AddStudentMutationFn = Apollo.MutationFunction<AddStudentMutation, AddStudentMutationVariables>;
+
+/**
+ * __useAddStudentMutation__
+ *
+ * To run a mutation, you first call `useAddStudentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddStudentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addStudentMutation, { data, loading, error }] = useAddStudentMutation({
+ *   variables: {
+ *      student: // value for 'student'
+ *   },
+ * });
+ */
+export function useAddStudentMutation(baseOptions?: Apollo.MutationHookOptions<AddStudentMutation, AddStudentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddStudentMutation, AddStudentMutationVariables>(AddStudentDocument, options);
+      }
+export type AddStudentMutationHookResult = ReturnType<typeof useAddStudentMutation>;
+export type AddStudentMutationResult = Apollo.MutationResult<AddStudentMutation>;
+export type AddStudentMutationOptions = Apollo.BaseMutationOptions<AddStudentMutation, AddStudentMutationVariables>;
+export const AwardStudentsPointsDocument = gql`
+    mutation AwardStudentsPoints($studentIds: [String!]!, $courseId: String!, $points: Int!) {
+  awardStudentsPoints(
+    studentIds: $studentIds
+    courseId: $courseId
+    points: $points
+  ) {
+    ...StudentInfo
+  }
+}
+    ${StudentInfoFragmentDoc}`;
+export type AwardStudentsPointsMutationFn = Apollo.MutationFunction<AwardStudentsPointsMutation, AwardStudentsPointsMutationVariables>;
+
+/**
+ * __useAwardStudentsPointsMutation__
+ *
+ * To run a mutation, you first call `useAwardStudentsPointsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAwardStudentsPointsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [awardStudentsPointsMutation, { data, loading, error }] = useAwardStudentsPointsMutation({
+ *   variables: {
+ *      studentIds: // value for 'studentIds'
+ *      courseId: // value for 'courseId'
+ *      points: // value for 'points'
+ *   },
+ * });
+ */
+export function useAwardStudentsPointsMutation(baseOptions?: Apollo.MutationHookOptions<AwardStudentsPointsMutation, AwardStudentsPointsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AwardStudentsPointsMutation, AwardStudentsPointsMutationVariables>(AwardStudentsPointsDocument, options);
+      }
+export type AwardStudentsPointsMutationHookResult = ReturnType<typeof useAwardStudentsPointsMutation>;
+export type AwardStudentsPointsMutationResult = Apollo.MutationResult<AwardStudentsPointsMutation>;
+export type AwardStudentsPointsMutationOptions = Apollo.BaseMutationOptions<AwardStudentsPointsMutation, AwardStudentsPointsMutationVariables>;
+export const StudentsDocument = gql`
+    query Students($courseId: String!) {
+  students(courseId: $courseId) {
+    ...StudentInfo
+  }
+}
+    ${StudentInfoFragmentDoc}`;
+
+/**
+ * __useStudentsQuery__
+ *
+ * To run a query within a React component, call `useStudentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useStudentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useStudentsQuery({
+ *   variables: {
+ *      courseId: // value for 'courseId'
+ *   },
+ * });
+ */
+export function useStudentsQuery(baseOptions: Apollo.QueryHookOptions<StudentsQuery, StudentsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<StudentsQuery, StudentsQueryVariables>(StudentsDocument, options);
+      }
+export function useStudentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<StudentsQuery, StudentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<StudentsQuery, StudentsQueryVariables>(StudentsDocument, options);
+        }
+export type StudentsQueryHookResult = ReturnType<typeof useStudentsQuery>;
+export type StudentsLazyQueryHookResult = ReturnType<typeof useStudentsLazyQuery>;
+export type StudentsQueryResult = Apollo.QueryResult<StudentsQuery, StudentsQueryVariables>;
+export const UserDocument = gql`
+    query User {
+  getUser {
+    id
+    firstName
+    lastName
+    email
+    role
+  }
+}
+    `;
+
+/**
+ * __useUserQuery__
+ *
+ * To run a query within a React component, call `useUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUserQuery(baseOptions?: Apollo.QueryHookOptions<UserQuery, UserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserQuery, UserQueryVariables>(UserDocument, options);
+      }
+export function useUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserQuery, UserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserQuery, UserQueryVariables>(UserDocument, options);
+        }
+export type UserQueryHookResult = ReturnType<typeof useUserQuery>;
+export type UserLazyQueryHookResult = ReturnType<typeof useUserLazyQuery>;
+export type UserQueryResult = Apollo.QueryResult<UserQuery, UserQueryVariables>;
 export const TaskListDocument = gql`
     query TaskList($course: String!) {
   tasksByCourse(course: $course) {
@@ -2270,7 +2478,7 @@ export type GetObjectiveByIdLazyQueryHookResult = ReturnType<typeof useGetObject
 export type GetObjectiveByIdQueryResult = Apollo.QueryResult<GetObjectiveByIdQuery, GetObjectiveByIdQueryVariables>;
 export const GetStudentsByCourseDocument = gql`
     query GetStudentsByCourse {
-  students(course: "Integrated Science") {
+  students(courseId: "Integrated Science") {
     studentId
     firstName
     lastName
@@ -2527,8 +2735,8 @@ export type ProgressOverviewQueryHookResult = ReturnType<typeof useProgressOverv
 export type ProgressOverviewLazyQueryHookResult = ReturnType<typeof useProgressOverviewLazyQuery>;
 export type ProgressOverviewQueryResult = Apollo.QueryResult<ProgressOverviewQuery, ProgressOverviewQueryVariables>;
 export const GetCoursesDocument = gql`
-    query GetCourses($instructor: String!) {
-  courseInfos(instructor: $instructor) {
+    query GetCourses {
+  courses {
     ...CourseInfoFields
   }
 }
@@ -2546,11 +2754,10 @@ export const GetCoursesDocument = gql`
  * @example
  * const { data, loading, error } = useGetCoursesQuery({
  *   variables: {
- *      instructor: // value for 'instructor'
  *   },
  * });
  */
-export function useGetCoursesQuery(baseOptions: Apollo.QueryHookOptions<GetCoursesQuery, GetCoursesQueryVariables>) {
+export function useGetCoursesQuery(baseOptions?: Apollo.QueryHookOptions<GetCoursesQuery, GetCoursesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetCoursesQuery, GetCoursesQueryVariables>(GetCoursesDocument, options);
       }
@@ -2784,3 +2991,38 @@ export function useGetTaskByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetTaskByIdQueryHookResult = ReturnType<typeof useGetTaskByIdQuery>;
 export type GetTaskByIdLazyQueryHookResult = ReturnType<typeof useGetTaskByIdLazyQuery>;
 export type GetTaskByIdQueryResult = Apollo.QueryResult<GetTaskByIdQuery, GetTaskByIdQueryVariables>;
+export const CreateCourseDocument = gql`
+    mutation CreateCourse($course: CourseInput!) {
+  createCourse(course: $course) {
+    courseId
+    courseName
+    instructorId
+  }
+}
+    `;
+export type CreateCourseMutationFn = Apollo.MutationFunction<CreateCourseMutation, CreateCourseMutationVariables>;
+
+/**
+ * __useCreateCourseMutation__
+ *
+ * To run a mutation, you first call `useCreateCourseMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCourseMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCourseMutation, { data, loading, error }] = useCreateCourseMutation({
+ *   variables: {
+ *      course: // value for 'course'
+ *   },
+ * });
+ */
+export function useCreateCourseMutation(baseOptions?: Apollo.MutationHookOptions<CreateCourseMutation, CreateCourseMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCourseMutation, CreateCourseMutationVariables>(CreateCourseDocument, options);
+      }
+export type CreateCourseMutationHookResult = ReturnType<typeof useCreateCourseMutation>;
+export type CreateCourseMutationResult = Apollo.MutationResult<CreateCourseMutation>;
+export type CreateCourseMutationOptions = Apollo.BaseMutationOptions<CreateCourseMutation, CreateCourseMutationVariables>;
