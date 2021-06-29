@@ -103,10 +103,10 @@ export function StudentsTab() {
    return (
       <div>
          <PayStudents students={students} refetch={refetch} editStudents={editStudents} />
-         <AddStudentDialog course={classId} refetch={refetch} />
          <div className="table">
             <TableComponent columns={columns} data={rowData} rowClickFunction={rowClicked} />
          </div>
+         <AddStudentDialog course={classId} refetch={refetch} />
       </div>
    );
 }

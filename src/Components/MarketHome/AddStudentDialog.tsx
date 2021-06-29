@@ -36,7 +36,7 @@ export function AddStudentDialog(props: Props) {
 
    const onMutationCompleted = (data: AddStudentMutation) => {
       console.log('Mutation Completed');
-      handleClose();
+      setError(false);
       props.refetch();
    };
 
