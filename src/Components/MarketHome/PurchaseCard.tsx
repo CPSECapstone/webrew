@@ -97,8 +97,10 @@ export function PurchaseCard({
             displayStudentName ? `${purchase.student.firstName} ${purchase.student.lastName}` : ''
          }${middleText}${displayListingName ? purchase.listingName : ''}`}</h6>
          <p>{`${purchase.purchaseDate}`}</p>
-         <p>Quantity: {`${purchase.quantity}`}</p>
-         <p>Spent: {`${purchase.pointsSpent}`}</p>
+         {purchase.quantity > 1 ? <p>Quantity: {`${purchase.quantity}`}</p> : <></>}
+         <p>
+            Spent: {`${purchase.pointsSpent}`} Point{purchase.pointsSpent > 1 ? 's' : ''}
+         </p>
          {purchase.note !== '' ? <p>Note: {`${purchase.note}`}</p> : <></>}
       </div>
    );
