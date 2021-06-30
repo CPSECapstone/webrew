@@ -55,7 +55,7 @@ export function PurchaseCard({
             course: purchase.course,
             receiptId: purchase.receiptId,
          },
-      });
+      }).catch((e) => console.log(e));
    };
 
    const onClickUnFulfill = () => {
@@ -65,7 +65,7 @@ export function PurchaseCard({
             course: purchase.course,
             receiptId: purchase.receiptId,
          },
-      });
+      }).catch((e) => console.log(e));
    };
 
    return (
