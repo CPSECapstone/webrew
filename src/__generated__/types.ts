@@ -1312,6 +1312,54 @@ export type StudentsQuery = { __typename: 'Query', students: Array<(
     & StudentInfoFragment
   )> };
 
+export type ReceiptInfoFragment = { __typename: 'Receipt', studentId: string, fulfilled: boolean, listingName: string, listingId: string, course: string, note: string, purchaseDate: any, pointsSpent: number, receiptId: string, quantity: number, student: { __typename: 'Student', firstName: string, lastName: string } };
+
+export type PurchaseMutationVariables = Exact<{
+  course: Scalars['String'];
+  listingId: Scalars['String'];
+  quantity: Scalars['Int'];
+  note: Scalars['String'];
+}>;
+
+
+export type PurchaseMutation = { __typename: 'Mutation', purchase: (
+    { __typename: 'Receipt' }
+    & ReceiptInfoFragment
+  ) };
+
+export type UnfulfilledQueryVariables = Exact<{
+  course: Scalars['String'];
+}>;
+
+
+export type UnfulfilledQuery = { __typename: 'Query', unfulfilledPurchases: Array<(
+    { __typename: 'Receipt' }
+    & ReceiptInfoFragment
+  )> };
+
+export type RecentQueryVariables = Exact<{
+  course: Scalars['String'];
+  fetch: Scalars['Int'];
+}>;
+
+
+export type RecentQuery = { __typename: 'Query', recentPurchases: Array<(
+    { __typename: 'Receipt' }
+    & ReceiptInfoFragment
+  )> };
+
+export type FulfillMutationVariables = Exact<{
+  receiptId: Scalars['String'];
+  course: Scalars['String'];
+  fulfilled: Scalars['Boolean'];
+}>;
+
+
+export type FulfillMutation = { __typename: 'Mutation', fulfillPurchase: (
+    { __typename: 'Receipt' }
+    & ReceiptInfoFragment
+  ) };
+
 export type UserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1659,6 +1707,24 @@ export const StudentInfoFragmentDoc = gql`
   totalPointsSpent
   totalPointsAwarded
   studentId
+}
+    `;
+export const ReceiptInfoFragmentDoc = gql`
+    fragment ReceiptInfo on Receipt {
+  studentId
+  fulfilled
+  listingName
+  listingId
+  course
+  note
+  purchaseDate
+  pointsSpent
+  receiptId
+  quantity
+  student {
+    firstName
+    lastName
+  }
 }
     `;
 export const TaskListTaskFieldsFragmentDoc = gql`
@@ -2234,6 +2300,153 @@ export function useStudentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<S
 export type StudentsQueryHookResult = ReturnType<typeof useStudentsQuery>;
 export type StudentsLazyQueryHookResult = ReturnType<typeof useStudentsLazyQuery>;
 export type StudentsQueryResult = Apollo.QueryResult<StudentsQuery, StudentsQueryVariables>;
+export const PurchaseDocument = gql`
+    mutation Purchase($course: String!, $listingId: String!, $quantity: Int!, $note: String!) {
+  purchase(
+    course: $course
+    listingId: $listingId
+    quantity: $quantity
+    note: $note
+  ) {
+    ...ReceiptInfo
+  }
+}
+    ${ReceiptInfoFragmentDoc}`;
+export type PurchaseMutationFn = Apollo.MutationFunction<PurchaseMutation, PurchaseMutationVariables>;
+
+/**
+ * __usePurchaseMutation__
+ *
+ * To run a mutation, you first call `usePurchaseMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePurchaseMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [purchaseMutation, { data, loading, error }] = usePurchaseMutation({
+ *   variables: {
+ *      course: // value for 'course'
+ *      listingId: // value for 'listingId'
+ *      quantity: // value for 'quantity'
+ *      note: // value for 'note'
+ *   },
+ * });
+ */
+export function usePurchaseMutation(baseOptions?: Apollo.MutationHookOptions<PurchaseMutation, PurchaseMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<PurchaseMutation, PurchaseMutationVariables>(PurchaseDocument, options);
+      }
+export type PurchaseMutationHookResult = ReturnType<typeof usePurchaseMutation>;
+export type PurchaseMutationResult = Apollo.MutationResult<PurchaseMutation>;
+export type PurchaseMutationOptions = Apollo.BaseMutationOptions<PurchaseMutation, PurchaseMutationVariables>;
+export const UnfulfilledDocument = gql`
+    query Unfulfilled($course: String!) {
+  unfulfilledPurchases(course: $course) {
+    ...ReceiptInfo
+  }
+}
+    ${ReceiptInfoFragmentDoc}`;
+
+/**
+ * __useUnfulfilledQuery__
+ *
+ * To run a query within a React component, call `useUnfulfilledQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUnfulfilledQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUnfulfilledQuery({
+ *   variables: {
+ *      course: // value for 'course'
+ *   },
+ * });
+ */
+export function useUnfulfilledQuery(baseOptions: Apollo.QueryHookOptions<UnfulfilledQuery, UnfulfilledQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UnfulfilledQuery, UnfulfilledQueryVariables>(UnfulfilledDocument, options);
+      }
+export function useUnfulfilledLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UnfulfilledQuery, UnfulfilledQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UnfulfilledQuery, UnfulfilledQueryVariables>(UnfulfilledDocument, options);
+        }
+export type UnfulfilledQueryHookResult = ReturnType<typeof useUnfulfilledQuery>;
+export type UnfulfilledLazyQueryHookResult = ReturnType<typeof useUnfulfilledLazyQuery>;
+export type UnfulfilledQueryResult = Apollo.QueryResult<UnfulfilledQuery, UnfulfilledQueryVariables>;
+export const RecentDocument = gql`
+    query Recent($course: String!, $fetch: Int!) {
+  recentPurchases(course: $course, fetch: $fetch) {
+    ...ReceiptInfo
+  }
+}
+    ${ReceiptInfoFragmentDoc}`;
+
+/**
+ * __useRecentQuery__
+ *
+ * To run a query within a React component, call `useRecentQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRecentQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRecentQuery({
+ *   variables: {
+ *      course: // value for 'course'
+ *      fetch: // value for 'fetch'
+ *   },
+ * });
+ */
+export function useRecentQuery(baseOptions: Apollo.QueryHookOptions<RecentQuery, RecentQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<RecentQuery, RecentQueryVariables>(RecentDocument, options);
+      }
+export function useRecentLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RecentQuery, RecentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<RecentQuery, RecentQueryVariables>(RecentDocument, options);
+        }
+export type RecentQueryHookResult = ReturnType<typeof useRecentQuery>;
+export type RecentLazyQueryHookResult = ReturnType<typeof useRecentLazyQuery>;
+export type RecentQueryResult = Apollo.QueryResult<RecentQuery, RecentQueryVariables>;
+export const FulfillDocument = gql`
+    mutation Fulfill($receiptId: String!, $course: String!, $fulfilled: Boolean!) {
+  fulfillPurchase(receiptId: $receiptId, course: $course, fulfilled: $fulfilled) {
+    ...ReceiptInfo
+  }
+}
+    ${ReceiptInfoFragmentDoc}`;
+export type FulfillMutationFn = Apollo.MutationFunction<FulfillMutation, FulfillMutationVariables>;
+
+/**
+ * __useFulfillMutation__
+ *
+ * To run a mutation, you first call `useFulfillMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useFulfillMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [fulfillMutation, { data, loading, error }] = useFulfillMutation({
+ *   variables: {
+ *      receiptId: // value for 'receiptId'
+ *      course: // value for 'course'
+ *      fulfilled: // value for 'fulfilled'
+ *   },
+ * });
+ */
+export function useFulfillMutation(baseOptions?: Apollo.MutationHookOptions<FulfillMutation, FulfillMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<FulfillMutation, FulfillMutationVariables>(FulfillDocument, options);
+      }
+export type FulfillMutationHookResult = ReturnType<typeof useFulfillMutation>;
+export type FulfillMutationResult = Apollo.MutationResult<FulfillMutation>;
+export type FulfillMutationOptions = Apollo.BaseMutationOptions<FulfillMutation, FulfillMutationVariables>;
 export const UserDocument = gql`
     query User {
   getUser {

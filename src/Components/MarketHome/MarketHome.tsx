@@ -3,6 +3,7 @@ import { createStyles, makeStyles, Tab, Theme } from '@material-ui/core';
 import { TabContext, TabList, TabPanel } from '@material-ui/lab';
 import React, { useState } from 'react';
 import { ListingTab } from './ListingTab';
+import { PurchaseTab } from './PurchaseTab';
 import { StudentsTab } from './StudentsTab';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
 function MarketHome() {
    const classes = useStyles();
 
-   const [value, setValue] = useState('3');
+   const [value, setValue] = useState('2');
 
    const handleChange = (event: React.ChangeEvent<Record<string, unknown>>, newValue: string) => {
       setValue(newValue);
@@ -59,7 +60,9 @@ function MarketHome() {
                <TabPanel value="1">
                   <ListingTab />
                </TabPanel>
-               <TabPanel value="2">Purchases</TabPanel>
+               <TabPanel value="2">
+                  <PurchaseTab />
+               </TabPanel>
                <TabPanel value="3">
                   <StudentsTab />
                </TabPanel>

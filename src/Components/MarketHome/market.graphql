@@ -58,3 +58,44 @@ query Students($courseId: String!) {
       ...StudentInfo
    }
 }
+
+fragment ReceiptInfo on Receipt {
+   studentId
+   fulfilled
+   listingName
+   listingId
+   course
+   note
+   purchaseDate
+   pointsSpent
+   receiptId
+   quantity
+   student {
+      firstName
+      lastName
+   }
+}
+
+mutation Purchase($course: String!, $listingId: String!, $quantity: Int!, $note: String!) {
+   purchase(course: $course, listingId: $listingId, quantity: $quantity, note: $note) {
+      ...ReceiptInfo
+   }
+}
+
+query Unfulfilled($course: String!) {
+   unfulfilledPurchases(course: $course) {
+      ...ReceiptInfo
+   }
+}
+
+query Recent($course: String!, $fetch: Int!) {
+   recentPurchases(course: $course, fetch: $fetch) {
+      ...ReceiptInfo
+   }
+}
+
+mutation Fulfill($receiptId: String!, $course: String!, $fulfilled: Boolean!) {
+   fulfillPurchase(receiptId: $receiptId, course: $course, fulfilled: $fulfilled) {
+      ...ReceiptInfo
+   }
+}
