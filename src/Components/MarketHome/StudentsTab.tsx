@@ -86,7 +86,7 @@ export function StudentsTab() {
    }
 
    if (error) {
-      return <s>error</s>;
+      return <s>{error}</s>;
    }
 
    rowData = students.map((student: StudentInfoFragment) => {
