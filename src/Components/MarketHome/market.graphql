@@ -99,3 +99,8 @@ mutation Fulfill($receiptId: String!, $course: String!, $fulfilled: Boolean!) {
       ...ReceiptInfo
    }
 }
+
+mutation Refund($receiptId: String!, $course: String!) {
+  refundPurchase(course: $course, receiptId: $receiptId)
+}
+
