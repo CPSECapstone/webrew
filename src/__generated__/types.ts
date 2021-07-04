@@ -315,6 +315,7 @@ export type Mutation = {
   gradeTaskSubmission: TaskSubmissionGrade;
   gradeAnswer: AnswerGrade;
   gradeObjectiveTaskMastery: ObjectiveTaskMastery;
+  refundPurchase: Scalars['Boolean'];
   fulfillPurchase: Receipt;
   purchase: Receipt;
   editMarketListing: MarketListing;
@@ -457,6 +458,12 @@ export type MutationGradeAnswerArgs = {
 
 export type MutationGradeObjectiveTaskMasteryArgs = {
   grade: ObjectiveTaskMasteryInput;
+};
+
+
+export type MutationRefundPurchaseArgs = {
+  course: Scalars['String'];
+  receiptId: Scalars['String'];
 };
 
 
@@ -1359,6 +1366,14 @@ export type FulfillMutation = { __typename: 'Mutation', fulfillPurchase: (
     { __typename: 'Receipt' }
     & ReceiptInfoFragment
   ) };
+
+export type RefundMutationVariables = Exact<{
+  receiptId: Scalars['String'];
+  course: Scalars['String'];
+}>;
+
+
+export type RefundMutation = { __typename: 'Mutation', refundPurchase: boolean };
 
 export type UserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2447,6 +2462,38 @@ export function useFulfillMutation(baseOptions?: Apollo.MutationHookOptions<Fulf
 export type FulfillMutationHookResult = ReturnType<typeof useFulfillMutation>;
 export type FulfillMutationResult = Apollo.MutationResult<FulfillMutation>;
 export type FulfillMutationOptions = Apollo.BaseMutationOptions<FulfillMutation, FulfillMutationVariables>;
+export const RefundDocument = gql`
+    mutation Refund($receiptId: String!, $course: String!) {
+  refundPurchase(course: $course, receiptId: $receiptId)
+}
+    `;
+export type RefundMutationFn = Apollo.MutationFunction<RefundMutation, RefundMutationVariables>;
+
+/**
+ * __useRefundMutation__
+ *
+ * To run a mutation, you first call `useRefundMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRefundMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [refundMutation, { data, loading, error }] = useRefundMutation({
+ *   variables: {
+ *      receiptId: // value for 'receiptId'
+ *      course: // value for 'course'
+ *   },
+ * });
+ */
+export function useRefundMutation(baseOptions?: Apollo.MutationHookOptions<RefundMutation, RefundMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RefundMutation, RefundMutationVariables>(RefundDocument, options);
+      }
+export type RefundMutationHookResult = ReturnType<typeof useRefundMutation>;
+export type RefundMutationResult = Apollo.MutationResult<RefundMutation>;
+export type RefundMutationOptions = Apollo.BaseMutationOptions<RefundMutation, RefundMutationVariables>;
 export const UserDocument = gql`
     query User {
   getUser {

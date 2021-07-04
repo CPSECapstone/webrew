@@ -40,7 +40,7 @@ export default function ListingCard({
 
    const initialValues: MarketListingFormInput = {
       price: listingInfo.price.toString(),
-      stock: listingInfo.stock ? listingInfo.stock.toString() : '',
+      stock: listingInfo.stock != null ? listingInfo.stock.toString() : '',
       image: listingInfo.image,
       description: listingInfo.description,
       listingName: listingInfo.listingName,
@@ -112,6 +112,7 @@ export default function ListingCard({
                            <span>{listingInfo.listingName}</span>
                         </h3>
                         <p className="listing-points">{listingInfo.price} P</p>
+                        {listingInfo.stock != null ? <p>{listingInfo.stock} Left</p> : <></>}
                      </div>
                   </div>
                ) : (

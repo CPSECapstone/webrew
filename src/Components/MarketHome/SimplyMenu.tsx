@@ -5,9 +5,10 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 type Props = {
    onClickUnfulfill: any;
    fulfilled: boolean;
+   onClickRefund: any;
 };
 
-export default function SimpleMenu({ onClickUnfulfill, fulfilled }: Props) {
+export default function SimpleMenu({ onClickUnfulfill, fulfilled, onClickRefund }: Props) {
    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -20,6 +21,11 @@ export default function SimpleMenu({ onClickUnfulfill, fulfilled }: Props) {
 
    const handleUnfulfill = () => {
       onClickUnfulfill();
+      handleClose();
+   };
+
+   const handleRefund = () => {
+      onClickRefund();
       handleClose();
    };
 
@@ -46,7 +52,7 @@ export default function SimpleMenu({ onClickUnfulfill, fulfilled }: Props) {
             onClose={handleClose}
          >
             {fulfilled ? <MenuItem onClick={handleUnfulfill}>Unfulfill</MenuItem> : <></>}
-            <MenuItem onClick={handleClose}>Refund</MenuItem>
+            <MenuItem onClick={handleRefund}>Refund</MenuItem>
          </Menu>
       </div>
    );

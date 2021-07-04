@@ -78,7 +78,6 @@ export default function ListingForm({ initialValues, onSubmit, handleClose }: Pr
                   onBlur={handleBlur}
                />
                <SmallTextField
-                  required
                   id="stock"
                   label="Stock"
                   type="number"

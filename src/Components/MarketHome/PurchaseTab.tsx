@@ -19,6 +19,14 @@ export function PurchaseTab() {
    const { classId } = useParams<Record<string, string>>();
    const [purchases, setPurchases] = useState<ReceiptInfoFragment[]>([]);
 
+   const removeFromPurchases = (receiptId: string) => {
+      setPurchases(
+         purchases.filter((p) => {
+            return p.receiptId !== receiptId;
+         })
+      );
+   };
+
    const { loading, error, data } = useRecentQuery({
       variables: {
          course: classId,
@@ -58,6 +66,7 @@ export function PurchaseTab() {
          {purchases.map((purchase) => {
             return (
                <PurchaseCard
+                  deletePurchase={removeFromPurchases}
                   purchase={purchase}
                   displayListingName
                   displayStudentName
