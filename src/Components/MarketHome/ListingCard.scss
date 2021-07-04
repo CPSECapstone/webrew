@@ -35,14 +35,16 @@
 
 .listing-card {
    border: 1px solid rgb(255, 255, 255);
-   margin: 12px;
+   margin: 0.5em;
    box-sizing: border-box;
    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
    border-radius: 8px;
    overflow: auto;
    background: #fff;
-   height: 15em;
-   width: 30em;
+   min-height: 16em;
+   height: auto;
+   min-width: 22em;
+   width: auto;
    display: inline-block;
    vertical-align: top;
    position: relative;
