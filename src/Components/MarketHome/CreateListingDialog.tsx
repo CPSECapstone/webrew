@@ -18,7 +18,7 @@ export function listingFormToInputType(values: MarketListingFormInput): MarketLi
       description: values.description,
       image: values.image,
       price: parseInt(values.price, 10),
-      stock: values.stock === '' ? -1 : parseInt(values.stock, 10),
+      stock: values.stock === '' ? null : Math.max(parseInt(values.stock, 10), 0),
    };
 }
 

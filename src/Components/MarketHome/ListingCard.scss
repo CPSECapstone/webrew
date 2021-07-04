@@ -3,15 +3,17 @@
 }
 
 .center {
-   margin: auto;
-   display: flex;
-   justify-content: center;
+   margin: 0;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   -ms-transform: translate(-50%, -50%);
+   transform: translate(-50%, -50%);
 }
 
 .listing-card-outer {
    display: inline-block;
 }
-
 
 .purchase-card {
    border: 1px solid rgb(253, 253, 253);
@@ -37,10 +39,10 @@
    box-sizing: border-box;
    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
    border-radius: 8px;
-   overflow: hidden;
+   overflow: auto;
    background: #fff;
-   width: 300px;
-   height: 150px;
+   height: 15em;
+   width: 30em;
    display: inline-block;
    vertical-align: top;
    position: relative;
