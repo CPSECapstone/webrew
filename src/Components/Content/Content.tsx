@@ -1,9 +1,10 @@
 import { Switch, Route } from 'react-router-dom';
 import Dashboard from '../Dashboard/Dashboard';
 import './Content.css';
-import MarketHome from '../MarketHome/MarketHome';
-import { CourseInfoFieldsFragment } from '../../__generated__/types';
+import MarketHomeInstructor from '../MarketHome/MarketHome';
+import { CourseInfoFieldsFragment, Role, useUserQuery } from '../../__generated__/types';
 import { Settings } from '../Settings/Settings';
+import { MarketHomeStudent } from '../MarketHome/Student/MarketHomeStudent';
 
 type Props = {
    courses: CourseInfoFieldsFragment[];
@@ -11,17 +12,25 @@ type Props = {
 };
 
 export default function Content({ courses, refetchCourses }: Props) {
+   const { loading, error, data } = useUserQuery();
+
+   if (loading || error || !data) {
+      return <></>;
+   }
+
+   const { getUser } = data;
+
    return (
       <div className="content">
          <Switch>
             <Route path="/courseHome/:classId/:className">
-               <MarketHome />
+               {getUser.role === Role.Instructor ? <MarketHomeInstructor /> : <MarketHomeStudent />}
             </Route>
             <Route path="/settings">
-               <Settings />
+               <Settings user={getUser} />
             </Route>
             <Route path="/">
-               <Dashboard courses={courses} refetchCourses={refetchCourses} />
+               <Dashboard courses={courses} refetchCourses={refetchCourses} role={getUser.role} />
             </Route>
 
             {/*  <Route path="/taskSubmissionOverview">

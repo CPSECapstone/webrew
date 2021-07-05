@@ -2,6 +2,61 @@
    margin-left: 18px;
 }
 
+.student-market-home {
+   background-color: #e3f2fd !important;
+   .student-welcome {
+      margin-left: 0.6em;
+      color: #4274f3;
+      display: flex;
+      justify-content: left;
+      width: 75%;
+   }
+
+   .student-listing-header {
+      display: flex;
+      justify-content: center;
+      color: #4274f3;
+      font-size: 36px;
+      font-weight: 600;
+      margin-bottom: 0px;
+   }
+
+   .line {
+      margin-top: 0px;
+      border-top: 5px solid #4274f3;
+      color: #4274f3;
+      width: 90%;
+      border-radius: 12px;
+   }
+}
+
+.student-balance {
+   font-size: 5em;
+   font-weight: bolder;
+}
+
+.account-card-contents {
+   margin: 1em;
+   .account-card-header {
+      font-weight: 600;
+      font-size: 25px;
+   }
+}
+
+.account-card {
+   border: 1px solid #4274f3;
+   margin: 1.5em;
+   box-sizing: border-box;
+   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+   border-radius: 12px;
+   overflow: auto;
+   background: #4274f3;
+   min-height: 11em;
+   height: auto;
+   position: relative;
+   color: white;
+}
+
 .center {
    margin: 0;
    position: absolute;

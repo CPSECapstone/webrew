@@ -104,3 +104,10 @@ mutation Refund($receiptId: String!, $course: String!) {
   refundPurchase(course: $course, receiptId: $receiptId)
 }
 
+query StudentInfo($courseId: String!) {
+   student(courseId: $courseId) {
+      ...StudentInfo
+   }
+}
+
+

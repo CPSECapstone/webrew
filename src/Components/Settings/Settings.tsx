@@ -1,23 +1,16 @@
-import { useUserQuery } from '../../__generated__/types';
+import { User } from '../../__generated__/types';
 
-export function Settings() {
-   const { loading, error, data } = useUserQuery();
+type Props = {
+   user: User;
+};
 
-   if (loading || error || !data) {
-      return <></>;
-   }
-
-   const { getUser } = data;
-
+export function Settings({ user }: Props) {
    return (
       <div>
          <h2>Profile Information</h2>
-         <p>User Id: {getUser?.id}</p>
-         <p>User Role: {getUser?.role}</p>
-         <p>
-            Name: {getUser?.firstName} {getUser?.lastName}
-         </p>
-         <p>Email: {getUser?.email}</p>
+         <p>User Id: {user.id}</p>
+         <p>User Role: {user.role}</p>
+         <p>Email: {user.email}</p>
       </div>
    );
 }

@@ -594,7 +594,7 @@ export type ProgresssDeletionInput = {
 };
 
 export type Query = {
-  getUser?: Maybe<User>;
+  getUser: User;
   mission: Mission;
   missions: Array<Mission>;
   subMission?: Maybe<SubMission>;
@@ -1375,10 +1375,20 @@ export type RefundMutationVariables = Exact<{
 
 export type RefundMutation = { __typename: 'Mutation', refundPurchase: boolean };
 
+export type StudentInfoQueryVariables = Exact<{
+  courseId: Scalars['String'];
+}>;
+
+
+export type StudentInfoQuery = { __typename: 'Query', student: (
+    { __typename: 'Student' }
+    & StudentInfoFragment
+  ) };
+
 export type UserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserQuery = { __typename: 'Query', getUser?: Maybe<{ __typename: 'User', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email?: Maybe<string>, role: Role }> };
+export type UserQuery = { __typename: 'Query', getUser: { __typename: 'User', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email?: Maybe<string>, role: Role } };
 
 export type TaskListQueryVariables = Exact<{
   course: Scalars['String'];
@@ -2494,6 +2504,41 @@ export function useRefundMutation(baseOptions?: Apollo.MutationHookOptions<Refun
 export type RefundMutationHookResult = ReturnType<typeof useRefundMutation>;
 export type RefundMutationResult = Apollo.MutationResult<RefundMutation>;
 export type RefundMutationOptions = Apollo.BaseMutationOptions<RefundMutation, RefundMutationVariables>;
+export const StudentInfoDocument = gql`
+    query StudentInfo($courseId: String!) {
+  student(courseId: $courseId) {
+    ...StudentInfo
+  }
+}
+    ${StudentInfoFragmentDoc}`;
+
+/**
+ * __useStudentInfoQuery__
+ *
+ * To run a query within a React component, call `useStudentInfoQuery` and pass it any options that fit your needs.
+ * When your component renders, `useStudentInfoQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useStudentInfoQuery({
+ *   variables: {
+ *      courseId: // value for 'courseId'
+ *   },
+ * });
+ */
+export function useStudentInfoQuery(baseOptions: Apollo.QueryHookOptions<StudentInfoQuery, StudentInfoQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<StudentInfoQuery, StudentInfoQueryVariables>(StudentInfoDocument, options);
+      }
+export function useStudentInfoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<StudentInfoQuery, StudentInfoQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<StudentInfoQuery, StudentInfoQueryVariables>(StudentInfoDocument, options);
+        }
+export type StudentInfoQueryHookResult = ReturnType<typeof useStudentInfoQuery>;
+export type StudentInfoLazyQueryHookResult = ReturnType<typeof useStudentInfoLazyQuery>;
+export type StudentInfoQueryResult = Apollo.QueryResult<StudentInfoQuery, StudentInfoQueryVariables>;
 export const UserDocument = gql`
     query User {
   getUser {
