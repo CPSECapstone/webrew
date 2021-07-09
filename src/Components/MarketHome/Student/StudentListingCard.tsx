@@ -1,13 +1,15 @@
 import { Button, CircularProgress } from '@material-ui/core';
 import { ListingFieldsFragment } from '../../../__generated__/types';
+import { PurchaseButton } from './PurchaseButton';
 
 type Props = {
    listingInfo: ListingFieldsFragment;
    editListings: any;
    studentBalance: number;
+   refetch: any;
 };
 
-export function StudentListingCard({ listingInfo, editListings, studentBalance }: Props) {
+export function StudentListingCard({ listingInfo, editListings, studentBalance, refetch }: Props) {
    const purchasable =
       studentBalance >= listingInfo.price &&
       ((listingInfo.stock && listingInfo.stock > 0) || !listingInfo.stock?.valueOf);
@@ -31,18 +33,11 @@ export function StudentListingCard({ listingInfo, editListings, studentBalance }
                      <span>{listingInfo.listingName}</span>
                   </h3>
                   <p className="listing-points">{listingInfo.price} P</p>
-                  <div className="listing-card-button">
-                     <Button
-                        data-testid="purchase-btn"
-                        style={{
-                           backgroundColor: purchasable ? '#2f80ed' : '#BDBDBD',
-                           color: 'white',
-                           borderRadius: '12px',
-                        }}
-                     >
-                        Purchase
-                     </Button>
-                  </div>
+                  <PurchaseButton
+                     purchasable={purchasable}
+                     listingInfo={listingInfo}
+                     refetch={refetch}
+                  />
                   {listingInfo.stock != null ? (
                      <p className="listing-stock">{listingInfo.stock} Left</p>
                   ) : (

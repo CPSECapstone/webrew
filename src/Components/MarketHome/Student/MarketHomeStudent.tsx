@@ -15,7 +15,12 @@ export function MarketHomeStudent() {
    const { classId, className } = useParams<Record<string, string>>();
    const [listings, setListings] = useState<ListingFieldsFragment[]>([]);
 
-   const { loading: studentLoading, error: errorStudent, data: studentData } = useStudentInfoQuery({
+   const {
+      loading: studentLoading,
+      error: errorStudent,
+      data: studentData,
+      refetch,
+   } = useStudentInfoQuery({
       variables: {
          courseId: classId,
       },
@@ -36,7 +41,7 @@ export function MarketHomeStudent() {
          return;
       }
       setListings([...listingData.marketListings].sort(sortListings));
-   }, [listingData]);
+   }, [listingData, studentData]);
 
    const editListings = (listingId: string, info: any) => {
       // 1. Make a shallow copy of the items
@@ -56,9 +61,9 @@ export function MarketHomeStudent() {
       <div className="student-market-home">
          {studentData ? (
             <div>
-               <h1 className="student-welcome">
+               <h2 className="student-welcome">
                   Hello {studentData.student.firstName}! Welcome to your {className} account.
-               </h1>
+               </h2>
                <div className="account-card">
                   <div className="account-card-contents">
                      <h5 className="account-card-header">Account Balance</h5>
@@ -83,6 +88,7 @@ export function MarketHomeStudent() {
                listingData.marketListings.map((listing: ListingFieldsFragment) => {
                   return (
                      <StudentListingCard
+                        refetch={refetch}
                         listingInfo={listing}
                         editListings={editListings}
                         studentBalance={student.points}
