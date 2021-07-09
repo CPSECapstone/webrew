@@ -12,7 +12,7 @@ import { StudentListingCard } from './StudentListingCard';
 
 export function MarketHomeStudent() {
    const { classId, className } = useParams<Record<string, string>>();
-   const [listings, setListings] = useState<ListingFieldsFragment[]>([]);
+   const [, setListings] = useState<ListingFieldsFragment[]>([]);
 
    const {
       loading: studentLoading,
