@@ -46,15 +46,6 @@ export function MarketHomeStudent() {
       setListings([...listingData.marketListings].sort(sortListings));
    }, [listingData, studentData]);
 
-   const editListings = (listingId: string, info: any) => {
-      // 1. Make a shallow copy of the items
-      const items = [...listings];
-      const itemIndex = items.findIndex((listing) => listing.id === listingId);
-      items[itemIndex] = info;
-
-      setListings(items);
-   };
-
    if (!studentData || studentLoading) {
       return <></>;
    }
@@ -93,7 +84,6 @@ export function MarketHomeStudent() {
                      <StudentListingCard
                         refetch={refetchAll}
                         listingInfo={listing}
-                        editListings={editListings}
                         studentBalance={student.points}
                      />
                   );
