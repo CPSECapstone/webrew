@@ -32,7 +32,7 @@ export function MarketHomeStudent() {
    });
 
    useEffect(() => {
-      if (!listingData) {
+      if (!listingData || !studentData) {
          return;
       }
       setListings([...listingData.marketListings].sort(sortListings));
@@ -46,6 +46,11 @@ export function MarketHomeStudent() {
 
       setListings(items);
    };
+
+   if (!studentData) {
+      return <></>;
+   }
+   const { student } = studentData;
 
    return (
       <div className="student-market-home">
@@ -76,7 +81,13 @@ export function MarketHomeStudent() {
                </div>
             ) : (
                listingData.marketListings.map((listing: ListingFieldsFragment) => {
-                  return <StudentListingCard listingInfo={listing} editListings={editListings} />;
+                  return (
+                     <StudentListingCard
+                        listingInfo={listing}
+                        editListings={editListings}
+                        studentBalance={student.points}
+                     />
+                  );
                })
             )}
          </div>

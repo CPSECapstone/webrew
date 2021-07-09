@@ -4,9 +4,13 @@ import { ListingFieldsFragment } from '../../../__generated__/types';
 type Props = {
    listingInfo: ListingFieldsFragment;
    editListings: any;
+   studentBalance: number;
 };
 
-export function StudentListingCard({ listingInfo, editListings }: Props) {
+export function StudentListingCard({ listingInfo, editListings, studentBalance }: Props) {
+   const purchasable =
+      studentBalance >= listingInfo.price &&
+      ((listingInfo.stock && listingInfo.stock > 0) || !listingInfo.stock?.valueOf);
    return (
       <div className="listing-card-outer">
          <div className="listing-card">
@@ -15,7 +19,11 @@ export function StudentListingCard({ listingInfo, editListings }: Props) {
                   <img
                      src={listingInfo.image}
                      alt=""
-                     style={{ borderRadius: '50%', width: '125px', height: '125px' }}
+                     style={{
+                        borderRadius: '50%',
+                        width: '125px',
+                        height: '125px',
+                     }}
                   />
                </div>
                <div className="listing-card-body">
@@ -26,7 +34,11 @@ export function StudentListingCard({ listingInfo, editListings }: Props) {
                   <div className="listing-card-button">
                      <Button
                         data-testid="purchase-btn"
-                        style={{ backgroundColor: '#2f80ed', color: 'white', borderRadius: '12px' }}
+                        style={{
+                           backgroundColor: purchasable ? '#2f80ed' : '#BDBDBD',
+                           color: 'white',
+                           borderRadius: '12px',
+                        }}
                      >
                         Purchase
                      </Button>
