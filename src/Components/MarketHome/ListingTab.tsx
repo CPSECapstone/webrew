@@ -5,7 +5,7 @@ import { ListingFieldsFragment, useMarketListingsQuery } from '../../__generated
 import CreateListingDialog from './CreateListingDialog';
 import ListingCard from './ListingCard';
 
-const sortListings = (a: ListingFieldsFragment, b: ListingFieldsFragment) => {
+export const sortListings = (a: ListingFieldsFragment, b: ListingFieldsFragment) => {
    return a.listingName.localeCompare(b.listingName);
 };
 

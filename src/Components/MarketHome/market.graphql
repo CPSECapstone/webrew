@@ -72,6 +72,7 @@ fragment ReceiptInfo on Receipt {
    quantity
    student {
       firstName
+      points
       lastName
    }
 }
@@ -103,4 +104,11 @@ mutation Fulfill($receiptId: String!, $course: String!, $fulfilled: Boolean!) {
 mutation Refund($receiptId: String!, $course: String!) {
   refundPurchase(course: $course, receiptId: $receiptId)
 }
+
+query StudentInfo($courseId: String!) {
+   student(courseId: $courseId) {
+      ...StudentInfo
+   }
+}
+
 
