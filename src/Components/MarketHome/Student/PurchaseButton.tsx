@@ -26,7 +26,7 @@ type Props = {
 export function PurchaseButton({ purchasable, listingInfo, refetch }: Props) {
    const [open, setOpen] = useState(false);
    const [error, setError] = useState(false);
-   const { classId, className } = useParams<Record<string, string>>();
+   const { classId } = useParams<Record<string, string>>();
 
    const handleCloseEditing = () => {
       setOpen(false);

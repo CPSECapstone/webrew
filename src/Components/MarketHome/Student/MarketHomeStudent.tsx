@@ -19,7 +19,7 @@ export function MarketHomeStudent() {
       loading: studentLoading,
       error: errorStudent,
       data: studentData,
-      refetch,
+      refetch: refetchStudent,
    } = useStudentInfoQuery({
       variables: {
          courseId: classId,
@@ -30,11 +30,17 @@ export function MarketHomeStudent() {
       loading: listingLoading,
       error: errorListings,
       data: listingData,
+      refetch: refetchListings,
    } = useMarketListingsQuery({
       variables: {
          courseId: classId,
       },
    });
+
+   const refetchAll = () => {
+      refetchStudent().catch((e) => console.log(e));
+      refetchListings().catch((e) => console.log(e));
+   };
 
    useEffect(() => {
       if (!listingData || !studentData) {
@@ -88,7 +94,7 @@ export function MarketHomeStudent() {
                listingData.marketListings.map((listing: ListingFieldsFragment) => {
                   return (
                      <StudentListingCard
-                        refetch={refetch}
+                        refetch={refetchAll}
                         listingInfo={listing}
                         editListings={editListings}
                         studentBalance={student.points}
