@@ -23,7 +23,7 @@
 
    .line {
       margin-top: 0px;
-      border-top: 5px solid #4274f3;
+      border-top: 4px solid #4274f3;
       color: #4274f3;
       width: 90%;
       border-radius: 12px;
@@ -68,6 +68,9 @@
 
 .listing-card-outer {
    display: inline-block;
+   justify-content: center;
+   align-content: center;
+   text-align: center;
 }
 
 .purchase-card {
@@ -98,15 +101,12 @@
    background: #fff;
    min-height: 16em;
    height: auto;
-   min-width: 22em;
+   min-width: 26em;
    width: auto;
    display: inline-block;
    vertical-align: top;
-   position: relative;
-}
 
-.listing-card-details {
-   margin-top: 1em;
+   position: relative;
 }
 
 .listing-card {
@@ -133,16 +133,26 @@
       width: 55%;
       padding-top: 10%;
       padding-right: 9%;
+      font-family: sans-serif;
       .listing-title {
          font-size: 1.4em;
          color: black;
          display: inline-flex;
          align-content: center;
+         font-weight: 700;
       }
       .listing-points {
          color: rgb(0, 0, 0);
-         font-size: 1.5em;
-         font-weight: bold;
+         font-size: 1.8em;
+         font-weight: 800;
+      }
+      .listing-stock {
+         margin-top: .5em;
+         font-size: 1.2em;
+         font-weight: 700;
+      }
+      .listing-purchase-button {
+         
       }
    }
 }
