@@ -7,7 +7,6 @@ import {
    useMarketListingsQuery,
    useStudentInfoQuery,
 } from '../../../__generated__/types';
-import ListingCard from '../ListingCard';
 import { sortListings } from '../ListingTab';
 import { StudentListingCard } from './StudentListingCard';
 
@@ -17,7 +16,6 @@ export function MarketHomeStudent() {
 
    const {
       loading: studentLoading,
-      error: errorStudent,
       data: studentData,
       refetch: refetchStudent,
    } = useStudentInfoQuery({
@@ -28,7 +26,6 @@ export function MarketHomeStudent() {
 
    const {
       loading: listingLoading,
-      error: errorListings,
       data: listingData,
       refetch: refetchListings,
    } = useMarketListingsQuery({
@@ -58,7 +55,7 @@ export function MarketHomeStudent() {
       setListings(items);
    };
 
-   if (!studentData) {
+   if (!studentData || studentLoading) {
       return <></>;
    }
    const { student } = studentData;

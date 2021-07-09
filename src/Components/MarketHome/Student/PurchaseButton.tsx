@@ -1,20 +1,9 @@
 import { ApolloError } from '@apollo/client';
-import {
-   Button,
-   CircularProgress,
-   Dialog,
-   DialogActions,
-   DialogContent,
-   DialogTitle,
-} from '@material-ui/core';
+import { Button, CircularProgress, Dialog, DialogActions, DialogContent } from '@material-ui/core';
 import { Formik, Form } from 'formik';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import {
-   ListingFieldsFragment,
-   PurchaseMutation,
-   usePurchaseMutation,
-} from '../../../__generated__/types';
+import { ListingFieldsFragment, usePurchaseMutation } from '../../../__generated__/types';
 import { LargeTextField } from '../FieldStyles';
 
 type Props = {
@@ -25,7 +14,7 @@ type Props = {
 
 export function PurchaseButton({ purchasable, listingInfo, refetch }: Props) {
    const [open, setOpen] = useState(false);
-   const [error, setError] = useState(false);
+   const [, setError] = useState(false);
    const { classId } = useParams<Record<string, string>>();
 
    const handleCloseEditing = () => {
@@ -43,16 +32,17 @@ export function PurchaseButton({ purchasable, listingInfo, refetch }: Props) {
 
    const handleError = (_error: ApolloError) => {
       setError(true);
+      console.log(_error);
    };
 
-   const onMutationCompleted = (data: PurchaseMutation) => {
+   const onMutationCompleted = () => {
       console.log('Mutation Completed');
       setError(false);
       handleClose();
       refetch();
    };
 
-   const [purchase, { loading: mutationLoading, error: mutationError }] = usePurchaseMutation({
+   const [purchase, { loading: mutationLoading }] = usePurchaseMutation({
       onError: handleError,
       onCompleted: onMutationCompleted,
    });
@@ -114,12 +104,12 @@ export function PurchaseButton({ purchasable, listingInfo, refetch }: Props) {
                </div>
                <Formik
                   initialValues={{ note: '' }}
-                  onSubmit={(values, { setSubmitting, setFieldValue }) => {
+                  onSubmit={(values, { setSubmitting }) => {
                      setSubmitting(false);
                      handleClickPurchase(values.note);
                   }}
                >
-                  {({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+                  {({ handleChange, handleBlur, handleSubmit, isSubmitting }) => (
                      <Form onSubmit={handleSubmit}>
                         <LargeTextField
                            id="note"
