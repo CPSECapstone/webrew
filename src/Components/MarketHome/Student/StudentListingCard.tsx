@@ -1,5 +1,4 @@
-import { CircularProgress } from '@material-ui/core';
-import { Button } from 'aws-amplify-react';
+import { Button, CircularProgress } from '@material-ui/core';
 import { ListingFieldsFragment } from '../../../__generated__/types';
 
 type Props = {
@@ -16,7 +15,7 @@ export function StudentListingCard({ listingInfo, editListings }: Props) {
                   <img
                      src={listingInfo.image}
                      alt=""
-                     style={{ borderRadius: '50%', width: '150px', height: '150px' }}
+                     style={{ borderRadius: '50%', width: '125px', height: '125px' }}
                   />
                </div>
                <div className="listing-card-body">
@@ -24,9 +23,14 @@ export function StudentListingCard({ listingInfo, editListings }: Props) {
                      <span>{listingInfo.listingName}</span>
                   </h3>
                   <p className="listing-points">{listingInfo.price} P</p>
-                  <Button class="listing-card-button" data-testid="create-btn">
-                     Purchase
-                  </Button>
+                  <div className="listing-card-button">
+                     <Button
+                        data-testid="purchase-btn"
+                        style={{ backgroundColor: '#2f80ed', color: 'white', borderRadius: '12px' }}
+                     >
+                        Purchase
+                     </Button>
+                  </div>
                   {listingInfo.stock != null ? (
                      <p className="listing-stock">{listingInfo.stock} Left</p>
                   ) : (
