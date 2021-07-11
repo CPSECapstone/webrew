@@ -2,14 +2,29 @@
    margin-left: 18px;
 }
 
+.student-activity {
+   margin: 15px;
+   .student-activity-note {
+      font-weight: 600;
+   }
+   .student-activity-date {
+      font-weight: 650;
+   }
+
+   .student-activity-point-change {
+      font-size: 22px;
+   }
+}
+
 .student-market-home {
    background-color: #e3f2fd !important;
    .student-welcome {
-      margin-left: 0.6em;
+      margin-top: .6em;
+      margin-left: 1em;
       color: #4274f3;
       display: flex;
       justify-content: left;
-      width: 75%;
+      width: 100%;
    }
 
    .student-listing-header {
@@ -31,7 +46,7 @@
 }
 
 .student-balance {
-   font-size: 5em;
+   font-size: 4em;
    font-weight: bolder;
 }
 
@@ -51,7 +66,7 @@
    border-radius: 12px;
    overflow: auto;
    background: #4274f3;
-   min-height: 11em;
+   min-height: 9em;
    height: auto;
    position: relative;
    color: white;
@@ -92,7 +107,7 @@
 }
 
 .purchase-popup {
-   display: inline-block
+   display: inline-block;
 }
 
 .listing-card {

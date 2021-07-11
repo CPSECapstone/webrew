@@ -53,6 +53,13 @@ fragment StudentInfo on Student {
    studentId
 }
 
+fragment ActivityInfo on Activity {
+   studentId
+   activityDate
+   note
+   pointChange
+}
+
 query Students($courseId: String!) {
    students(courseId: $courseId) {
       ...StudentInfo
@@ -110,5 +117,12 @@ query StudentInfo($courseId: String!) {
       ...StudentInfo
    }
 }
+
+query RecentActivity($courseId: String!, $fetch: Int!) {
+   recentActivity(course: $courseId, fetch: $fetch) {
+      ...ActivityInfo
+   }
+}
+
 
 
