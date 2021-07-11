@@ -18,6 +18,14 @@ export type Scalars = {
   Upload: any;
 };
 
+export type Activity = {
+  studentId: Scalars['String'];
+  course: Scalars['String'];
+  note: Scalars['String'];
+  activityDate: Scalars['Date'];
+  pointChange: Scalars['Int'];
+};
+
 export type Answer = {
   questionId?: Maybe<Scalars['String']>;
   pointsAwarded?: Maybe<Scalars['Int']>;
@@ -649,6 +657,7 @@ export type Query = {
    * Will only return the most recent N purchased passed into the fetch parameter
    */
   recentPurchases: Array<Receipt>;
+  recentActivity: Array<Activity>;
   unfulfilledPurchases: Array<Receipt>;
 };
 
@@ -831,6 +840,13 @@ export type QueryMarketListingsArgs = {
 
 
 export type QueryRecentPurchasesArgs = {
+  course: Scalars['String'];
+  student?: Maybe<Scalars['String']>;
+  fetch: Scalars['Int'];
+};
+
+
+export type QueryRecentActivityArgs = {
   course: Scalars['String'];
   student?: Maybe<Scalars['String']>;
   fetch: Scalars['Int'];
@@ -1309,6 +1325,8 @@ export type AwardStudentsPointsMutation = { __typename: 'Mutation', awardStudent
 
 export type StudentInfoFragment = { __typename: 'Student', firstName: string, lastName: string, points: number, totalPointsSpent: number, totalPointsAwarded: number, studentId: string };
 
+export type ActivityInfoFragment = { __typename: 'Activity', studentId: string, activityDate: any, note: string, pointChange: number };
+
 export type StudentsQueryVariables = Exact<{
   courseId: Scalars['String'];
 }>;
@@ -1319,7 +1337,7 @@ export type StudentsQuery = { __typename: 'Query', students: Array<(
     & StudentInfoFragment
   )> };
 
-export type ReceiptInfoFragment = { __typename: 'Receipt', studentId: string, fulfilled: boolean, listingName: string, listingId: string, course: string, note: string, purchaseDate: any, pointsSpent: number, receiptId: string, quantity: number, student: { __typename: 'Student', firstName: string, lastName: string } };
+export type ReceiptInfoFragment = { __typename: 'Receipt', studentId: string, fulfilled: boolean, listingName: string, listingId: string, course: string, note: string, purchaseDate: any, pointsSpent: number, receiptId: string, quantity: number, student: { __typename: 'Student', firstName: string, points: number, lastName: string } };
 
 export type PurchaseMutationVariables = Exact<{
   course: Scalars['String'];
@@ -1384,6 +1402,17 @@ export type StudentInfoQuery = { __typename: 'Query', student: (
     { __typename: 'Student' }
     & StudentInfoFragment
   ) };
+
+export type RecentActivityQueryVariables = Exact<{
+  courseId: Scalars['String'];
+  fetch: Scalars['Int'];
+}>;
+
+
+export type RecentActivityQuery = { __typename: 'Query', recentActivity: Array<(
+    { __typename: 'Activity' }
+    & ActivityInfoFragment
+  )> };
 
 export type UserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1734,6 +1763,14 @@ export const StudentInfoFragmentDoc = gql`
   studentId
 }
     `;
+export const ActivityInfoFragmentDoc = gql`
+    fragment ActivityInfo on Activity {
+  studentId
+  activityDate
+  note
+  pointChange
+}
+    `;
 export const ReceiptInfoFragmentDoc = gql`
     fragment ReceiptInfo on Receipt {
   studentId
@@ -1748,6 +1785,7 @@ export const ReceiptInfoFragmentDoc = gql`
   quantity
   student {
     firstName
+    points
     lastName
   }
 }
@@ -2539,6 +2577,42 @@ export function useStudentInfoLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type StudentInfoQueryHookResult = ReturnType<typeof useStudentInfoQuery>;
 export type StudentInfoLazyQueryHookResult = ReturnType<typeof useStudentInfoLazyQuery>;
 export type StudentInfoQueryResult = Apollo.QueryResult<StudentInfoQuery, StudentInfoQueryVariables>;
+export const RecentActivityDocument = gql`
+    query RecentActivity($courseId: String!, $fetch: Int!) {
+  recentActivity(course: $courseId, fetch: $fetch) {
+    ...ActivityInfo
+  }
+}
+    ${ActivityInfoFragmentDoc}`;
+
+/**
+ * __useRecentActivityQuery__
+ *
+ * To run a query within a React component, call `useRecentActivityQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRecentActivityQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRecentActivityQuery({
+ *   variables: {
+ *      courseId: // value for 'courseId'
+ *      fetch: // value for 'fetch'
+ *   },
+ * });
+ */
+export function useRecentActivityQuery(baseOptions: Apollo.QueryHookOptions<RecentActivityQuery, RecentActivityQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<RecentActivityQuery, RecentActivityQueryVariables>(RecentActivityDocument, options);
+      }
+export function useRecentActivityLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RecentActivityQuery, RecentActivityQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<RecentActivityQuery, RecentActivityQueryVariables>(RecentActivityDocument, options);
+        }
+export type RecentActivityQueryHookResult = ReturnType<typeof useRecentActivityQuery>;
+export type RecentActivityLazyQueryHookResult = ReturnType<typeof useRecentActivityLazyQuery>;
+export type RecentActivityQueryResult = Apollo.QueryResult<RecentActivityQuery, RecentActivityQueryVariables>;
 export const UserDocument = gql`
     query User {
   getUser {
