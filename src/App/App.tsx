@@ -1,19 +1,46 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { Auth, Hub } from 'aws-amplify';
 import { useState, useEffect } from 'react';
 import { withAuthenticator } from 'aws-amplify-react';
+import Amplify, { Auth, Hub } from 'aws-amplify';
+
 import Sidebar from '../Components/Sidebar';
 import Content from '../Components/Content';
 import Navigation from '../Navigation/Navigation';
 
 import './App.scss';
 import { useGetCoursesQuery } from '../__generated__/types';
+import { environment } from '../environment';
+import { ApolloError } from '@apollo/client/errors';
+
+Amplify.configure({
+   Auth: {
+      identityPoolId: 'us-east-1:07057d76-612a-4045-8522-f38a759cf216',
+      region: 'us-east-1',
+      userPoolId: 'us-east-1_POfbbYTKF',
+      userPoolWebClientId: '24sdf1brebo58s89ja0b63c51d',
+      oauth: {
+         domain: 'flipted-ios-test.auth.us-east-1.amazoncognito.com',
+         scope: ['phone', 'email', 'profile', 'openid', 'aws.cognito.signin.user.admin'],
+         redirectSignIn: environment.redirectSignIn,
+         redirectSignOut: environment.redirectSignout,
+         responseType: 'token',
+      },
+   },
+});
 
 // Entry point of the Flitped App
 function App() {
    const [, setUser] = useState(null);
    const [fname, setFirstName] = useState('');
-   const { loading, error, data: courseData, refetch } = useGetCoursesQuery();
+
+   const handleError = (_error: ApolloError) => {
+      // eslint-disable-next-line
+      void refetch();
+   };
+
+   const { loading, error, data: courseData, refetch } = useGetCoursesQuery({
+      onError: handleError,
+   });
 
    function storeToken(): void {
       Auth.currentSession()
@@ -35,6 +62,7 @@ function App() {
       Hub.listen('auth', ({ payload: { event, data } }) => {
          switch (event) {
             case 'signIn':
+            case 'oauthSignIn':
             case 'cognitoHostedUI':
                storeToken();
                break;
@@ -54,7 +82,10 @@ function App() {
    }, []);
 
    if (loading) return <div>Loading...</div>;
-   if (error) return <div>`Error! ${error.message}`</div>;
+   if (error) {
+      refetch();
+      return <div>`Error! ${error.message}`</div>;
+   }
    if (!courseData) {
       return <></>;
    }
@@ -78,4 +109,6 @@ function App() {
    );
 }
 
-export default withAuthenticator(App);
+export default withAuthenticator(App, undefined, undefined, undefined, undefined, {
+   hiddenDefaults: ['phone_number'],
+});
