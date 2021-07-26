@@ -83,8 +83,7 @@ function App() {
 
    if (loading) return <div>Loading...</div>;
    if (error) {
-      refetch();
-      return <div>`Error! ${error.message}`</div>;
+      return <></>;
    }
    if (!courseData) {
       return <></>;
