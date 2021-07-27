@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/client';
-import Amplify from 'aws-amplify';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import apolloClient from './clients/apollo-client';
@@ -11,21 +10,6 @@ import '@aws-amplify/ui/dist/style.css';
 import { environment } from './environment';
 
 console.log(environment);
-Amplify.configure({
-   Auth: {
-      identityPoolId: 'us-east-1:07057d76-612a-4045-8522-f38a759cf216',
-      region: 'us-east-1',
-      userPoolId: 'us-east-1_POfbbYTKF',
-      userPoolWebClientId: '24sdf1brebo58s89ja0b63c51d',
-      oauth: {
-         domain: 'flipted-ios-test.auth.us-east-1.amazoncognito.com',
-         scope: ['phone', 'email', 'profile', 'openid', 'aws.cognito.signin.user.admin'],
-         redirectSignIn: environment.redirectSignIn,
-         redirectSignOut: environment.redirectSignout,
-         responseType: 'token',
-      },
-   },
-});
 
 ReactDOM.render(
    <React.StrictMode>

@@ -106,6 +106,8 @@ export function StudentsTab() {
          <div className="table">
             <TableComponent columns={columns} data={rowData} rowClickFunction={rowClicked} />
          </div>
+         <p>Course ID: {classId}</p>
+
          <AddStudentDialog course={classId} refetch={refetch} />
       </div>
    );
