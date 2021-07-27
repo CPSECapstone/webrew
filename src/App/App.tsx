@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { withAuthenticator } from 'aws-amplify-react';
 import Amplify, { Auth, Hub } from 'aws-amplify';
+import { ApolloError } from '@apollo/client/errors';
 
 import Sidebar from '../Components/Sidebar';
 import Content from '../Components/Content';
@@ -10,7 +11,6 @@ import Navigation from '../Navigation/Navigation';
 import './App.scss';
 import { useGetCoursesQuery } from '../__generated__/types';
 import { environment } from '../environment';
-import { ApolloError } from '@apollo/client/errors';
 
 Amplify.configure({
    Auth: {
@@ -33,6 +33,7 @@ function App() {
    const [, setUser] = useState(null);
    const [fname, setFirstName] = useState('');
 
+   // eslint-disable-next-line @typescript-eslint/no-unused-vars
    const handleError = (_error: ApolloError) => {
       // eslint-disable-next-line
       void refetch();

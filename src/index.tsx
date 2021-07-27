@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/client';
-import Amplify from 'aws-amplify';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import apolloClient from './clients/apollo-client';
