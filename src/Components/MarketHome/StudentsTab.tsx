@@ -2,7 +2,7 @@
 import { CircularProgress } from '@material-ui/core';
 
 import { useEffect, useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { StudentInfoFragment, useStudentsQuery } from '../../__generated__/types';
 import TableComponent from '../TableComponent/TableComponent';
 import { AddStudentDialog } from './AddStudentDialog';
@@ -14,6 +14,8 @@ type StudentRow = {
       points: number;
       earned: number;
       spent: number;
+      id: string;
+      purchaseBlocked: string;
    };
 };
 
@@ -23,6 +25,7 @@ const sortStudents = (a: StudentInfoFragment, b: StudentInfoFragment) => {
 export function StudentsTab() {
    const { classId } = useParams<Record<string, string>>();
    const [students, setStudents] = useState<StudentInfoFragment[]>([]);
+   const history = useHistory();
 
    const editStudents = (updated: StudentInfoFragment[]) => {
       const items = [...students];
@@ -42,6 +45,7 @@ export function StudentsTab() {
       variables: {
          courseId: classId,
       },
+      fetchPolicy: 'network-only',
    });
 
    useEffect(() => {
@@ -52,7 +56,7 @@ export function StudentsTab() {
    }, [data]);
 
    const rowClicked = (studentRow: StudentRow) => {
-      console.log(`${studentRow.row.name} Clicked`);
+      history.push(`/student/${classId}/${studentRow.row.id}`);
    };
 
    const columns = useMemo(
@@ -72,6 +76,10 @@ export function StudentsTab() {
          {
             Header: 'Spent',
             accessor: 'row.spent',
+         },
+         {
+            Header: 'Purchases Blocked',
+            accessor: 'row.purchaseBlocked',
          },
       ],
       []
@@ -96,6 +104,8 @@ export function StudentsTab() {
             points: student.points,
             spent: student.totalPointsSpent,
             earned: student.totalPointsAwarded,
+            id: student.studentId,
+            purchaseBlocked: student.purchaseBlocked ? 'X' : '',
          },
       };
    });

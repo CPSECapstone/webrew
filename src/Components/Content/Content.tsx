@@ -5,6 +5,7 @@ import MarketHomeInstructor from '../MarketHome/MarketHome';
 import { CourseInfoFieldsFragment, Role, useUserQuery } from '../../__generated__/types';
 import { Settings } from '../Settings/Settings';
 import { MarketHomeStudent } from '../MarketHome/Student/MarketHomeStudent';
+import { StudentInfoPage } from '../MarketHome/StudentInfoPage';
 
 type Props = {
    courses: CourseInfoFieldsFragment[];
@@ -25,6 +26,9 @@ export default function Content({ courses, refetchCourses }: Props) {
          <Switch>
             <Route path="/courseHome/:classId/:className">
                {getUser.role === Role.Instructor ? <MarketHomeInstructor /> : <MarketHomeStudent />}
+            </Route>
+            <Route path="/student/:classId/:studentId">
+               {getUser.role === Role.Instructor ? <StudentInfoPage /> : <>Forbidden</>}
             </Route>
             <Route path="/settings">
                <Settings user={getUser} />

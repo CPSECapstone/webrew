@@ -323,6 +323,8 @@ export type Mutation = {
   gradeTaskSubmission: TaskSubmissionGrade;
   gradeAnswer: AnswerGrade;
   gradeObjectiveTaskMastery: ObjectiveTaskMastery;
+  removeStudent: Scalars['String'];
+  blockStudentPurchases: Student;
   refundPurchase: Scalars['Boolean'];
   fulfillPurchase: Receipt;
   purchase: Receipt;
@@ -466,6 +468,19 @@ export type MutationGradeAnswerArgs = {
 
 export type MutationGradeObjectiveTaskMasteryArgs = {
   grade: ObjectiveTaskMasteryInput;
+};
+
+
+export type MutationRemoveStudentArgs = {
+  course: Scalars['String'];
+  student: Scalars['String'];
+};
+
+
+export type MutationBlockStudentPurchasesArgs = {
+  course: Scalars['String'];
+  student: Scalars['String'];
+  blocked: Scalars['Boolean'];
 };
 
 
@@ -949,6 +964,7 @@ export type Student = {
   points: Scalars['Int'];
   totalPointsAwarded: Scalars['Int'];
   totalPointsSpent: Scalars['Int'];
+  purchaseBlocked: Scalars['Boolean'];
 };
 
 export type StudentInput = {
@@ -1323,7 +1339,7 @@ export type AwardStudentsPointsMutation = { __typename: 'Mutation', awardStudent
     & StudentInfoFragment
   )> };
 
-export type StudentInfoFragment = { __typename: 'Student', firstName: string, lastName: string, points: number, totalPointsSpent: number, totalPointsAwarded: number, studentId: string };
+export type StudentInfoFragment = { __typename: 'Student', firstName: string, lastName: string, points: number, totalPointsSpent: number, totalPointsAwarded: number, studentId: string, purchaseBlocked: boolean };
 
 export type ActivityInfoFragment = { __typename: 'Activity', studentId: string, activityDate: any, note: string, pointChange: number };
 
@@ -1336,6 +1352,17 @@ export type StudentsQuery = { __typename: 'Query', students: Array<(
     { __typename: 'Student' }
     & StudentInfoFragment
   )> };
+
+export type StudentQueryVariables = Exact<{
+  courseId: Scalars['String'];
+  studentId: Scalars['String'];
+}>;
+
+
+export type StudentQuery = { __typename: 'Query', student: (
+    { __typename: 'Student' }
+    & StudentInfoFragment
+  ) };
 
 export type ReceiptInfoFragment = { __typename: 'Receipt', studentId: string, fulfilled: boolean, listingName: string, listingId: string, course: string, note: string, purchaseDate: any, pointsSpent: number, receiptId: string, quantity: number, student: { __typename: 'Student', firstName: string, points: number, lastName: string } };
 
@@ -1392,6 +1419,18 @@ export type RefundMutationVariables = Exact<{
 
 
 export type RefundMutation = { __typename: 'Mutation', refundPurchase: boolean };
+
+export type BlockPurchasesMutationVariables = Exact<{
+  courseId: Scalars['String'];
+  studentId: Scalars['String'];
+  blocked: Scalars['Boolean'];
+}>;
+
+
+export type BlockPurchasesMutation = { __typename: 'Mutation', blockStudentPurchases: (
+    { __typename: 'Student' }
+    & StudentInfoFragment
+  ) };
 
 export type StudentInfoQueryVariables = Exact<{
   courseId: Scalars['String'];
@@ -1761,6 +1800,7 @@ export const StudentInfoFragmentDoc = gql`
   totalPointsSpent
   totalPointsAwarded
   studentId
+  purchaseBlocked
 }
     `;
 export const ActivityInfoFragmentDoc = gql`
@@ -2363,6 +2403,42 @@ export function useStudentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<S
 export type StudentsQueryHookResult = ReturnType<typeof useStudentsQuery>;
 export type StudentsLazyQueryHookResult = ReturnType<typeof useStudentsLazyQuery>;
 export type StudentsQueryResult = Apollo.QueryResult<StudentsQuery, StudentsQueryVariables>;
+export const StudentDocument = gql`
+    query Student($courseId: String!, $studentId: String!) {
+  student(courseId: $courseId, studentId: $studentId) {
+    ...StudentInfo
+  }
+}
+    ${StudentInfoFragmentDoc}`;
+
+/**
+ * __useStudentQuery__
+ *
+ * To run a query within a React component, call `useStudentQuery` and pass it any options that fit your needs.
+ * When your component renders, `useStudentQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useStudentQuery({
+ *   variables: {
+ *      courseId: // value for 'courseId'
+ *      studentId: // value for 'studentId'
+ *   },
+ * });
+ */
+export function useStudentQuery(baseOptions: Apollo.QueryHookOptions<StudentQuery, StudentQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<StudentQuery, StudentQueryVariables>(StudentDocument, options);
+      }
+export function useStudentLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<StudentQuery, StudentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<StudentQuery, StudentQueryVariables>(StudentDocument, options);
+        }
+export type StudentQueryHookResult = ReturnType<typeof useStudentQuery>;
+export type StudentLazyQueryHookResult = ReturnType<typeof useStudentLazyQuery>;
+export type StudentQueryResult = Apollo.QueryResult<StudentQuery, StudentQueryVariables>;
 export const PurchaseDocument = gql`
     mutation Purchase($course: String!, $listingId: String!, $quantity: Int!, $note: String!) {
   purchase(
@@ -2542,6 +2618,41 @@ export function useRefundMutation(baseOptions?: Apollo.MutationHookOptions<Refun
 export type RefundMutationHookResult = ReturnType<typeof useRefundMutation>;
 export type RefundMutationResult = Apollo.MutationResult<RefundMutation>;
 export type RefundMutationOptions = Apollo.BaseMutationOptions<RefundMutation, RefundMutationVariables>;
+export const BlockPurchasesDocument = gql`
+    mutation BlockPurchases($courseId: String!, $studentId: String!, $blocked: Boolean!) {
+  blockStudentPurchases(course: $courseId, student: $studentId, blocked: $blocked) {
+    ...StudentInfo
+  }
+}
+    ${StudentInfoFragmentDoc}`;
+export type BlockPurchasesMutationFn = Apollo.MutationFunction<BlockPurchasesMutation, BlockPurchasesMutationVariables>;
+
+/**
+ * __useBlockPurchasesMutation__
+ *
+ * To run a mutation, you first call `useBlockPurchasesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useBlockPurchasesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [blockPurchasesMutation, { data, loading, error }] = useBlockPurchasesMutation({
+ *   variables: {
+ *      courseId: // value for 'courseId'
+ *      studentId: // value for 'studentId'
+ *      blocked: // value for 'blocked'
+ *   },
+ * });
+ */
+export function useBlockPurchasesMutation(baseOptions?: Apollo.MutationHookOptions<BlockPurchasesMutation, BlockPurchasesMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<BlockPurchasesMutation, BlockPurchasesMutationVariables>(BlockPurchasesDocument, options);
+      }
+export type BlockPurchasesMutationHookResult = ReturnType<typeof useBlockPurchasesMutation>;
+export type BlockPurchasesMutationResult = Apollo.MutationResult<BlockPurchasesMutation>;
+export type BlockPurchasesMutationOptions = Apollo.BaseMutationOptions<BlockPurchasesMutation, BlockPurchasesMutationVariables>;
 export const StudentInfoDocument = gql`
     query StudentInfo($courseId: String!) {
   student(courseId: $courseId) {
