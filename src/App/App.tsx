@@ -21,11 +21,14 @@ Auth.configure({
    oauth: {
       domain: 'https://flipted-ios-test.auth.us-east-1.amazoncognito.com',
       scope: ['phone', 'email', 'profile', 'openid', 'aws.cognito.signin.user.admin'],
-      redirectSignIn: environment.redirectSignIn,
-      redirectSignOut: environment.redirectSignout,
+      redirectSignIn: 'https://destin-flipted.herokuapp.com/',
+      redirectSignOut: 'https://destin-flipted.herokuapp.com/',
       responseType: 'token',
    },
 });
+
+console.log(`Redirect Sign In ${environment.redirectSignIn}`);
+console.log(`Redirect Sign Out ${environment.redirectSignout}`);
 
 const federated = {
    google_client_id: '993811506351-76rvcgqvlsg96vvr0fio76p0il5t4quq.apps.googleusercontent.com',
@@ -88,7 +91,7 @@ function App() {
          }
       });
 
-      // storeToken();
+      storeToken();
    }, []);
 
    if (loading) return <div>Loading...</div>;
