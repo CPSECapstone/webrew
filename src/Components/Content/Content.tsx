@@ -13,7 +13,7 @@ type Props = {
 };
 
 export default function Content({ courses, refetchCourses }: Props) {
-   const { loading, error, data } = useUserQuery();
+   const { loading, error, data } = useUserQuery({ fetchPolicy: 'network-only' });
 
    if (loading || error || !data) {
       return <></>;

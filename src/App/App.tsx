@@ -1,33 +1,34 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useState, useEffect } from 'react';
-import Amplify, { Auth, Hub } from 'aws-amplify';
-import { ApolloError } from '@apollo/client/errors';
+import { ApolloError } from '@apollo/client';
 import { withAuthenticator } from 'aws-amplify-react';
+import { Auth, Hub } from 'aws-amplify';
 
-import Sidebar from '../Components/Sidebar';
 import Content from '../Components/Content';
 import Navigation from '../Navigation/Navigation';
 
 import './App.scss';
 import { useGetCoursesQuery } from '../__generated__/types';
 import { environment } from '../environment';
+import Sidebar from '../Components/Sidebar';
 
-Amplify.configure({
-   Auth: {
-      identityPoolId: 'us-east-1:07057d76-612a-4045-8522-f38a759cf216',
-      region: 'us-east-1',
-      userPoolId: 'us-east-1_POfbbYTKF',
-      userPoolWebClientId: '24sdf1brebo58s89ja0b63c51d',
-      oauth: {
-         domain: 'https://flipted-ios-test.auth.us-east-1.amazoncognito.com',
-         scope: ['email', 'profile', 'openid', 'aws.cognito.signin.user.admin'],
-         redirectSignIn: environment.redirectSignIn,
-         redirectSignOut: environment.redirectSignout,
-         responseType: 'token',
-      },
+Auth.configure({
+   identityPoolId: 'us-east-1:07057d76-612a-4045-8522-f38a759cf216',
+   region: 'us-east-1',
+   userPoolId: 'us-east-1_POfbbYTKF',
+   userPoolWebClientId: '24sdf1brebo58s89ja0b63c51d',
+   oauth: {
+      domain: 'https://flipted-ios-test.auth.us-east-1.amazoncognito.com',
+      scope: ['phone', 'email', 'profile', 'openid', 'aws.cognito.signin.user.admin'],
+      redirectSignIn: 'https://destin-flipted.herokuapp.com/',
+      redirectSignOut: 'https://destin-flipted.herokuapp.com/',
+      responseType: 'token',
    },
 });
+
+console.log(`Redirect Sign In ${environment.redirectSignIn}`);
+console.log(`Redirect Sign Out ${environment.redirectSignout}`);
 
 const federated = {
    google_client_id: '993811506351-76rvcgqvlsg96vvr0fio76p0il5t4quq.apps.googleusercontent.com',
@@ -90,7 +91,7 @@ function App() {
          }
       });
 
-      // storeToken();
+      storeToken();
    }, []);
 
    if (loading) return <div>Loading...</div>;
