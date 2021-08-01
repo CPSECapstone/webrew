@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useState, useEffect } from 'react';
-import { withAuthenticator } from 'aws-amplify-react';
 import Amplify, { Auth, Hub } from 'aws-amplify';
 import { ApolloError } from '@apollo/client/errors';
+import { withAuthenticator } from 'aws-amplify-react';
 
 import Sidebar from '../Components/Sidebar';
 import Content from '../Components/Content';
@@ -19,8 +20,8 @@ Amplify.configure({
       userPoolId: 'us-east-1_POfbbYTKF',
       userPoolWebClientId: '24sdf1brebo58s89ja0b63c51d',
       oauth: {
-         domain: 'flipted-ios-test.auth.us-east-1.amazoncognito.com',
-         scope: ['phone', 'email', 'profile', 'openid', 'aws.cognito.signin.user.admin'],
+         domain: 'https://flipted-ios-test.auth.us-east-1.amazoncognito.com',
+         scope: ['email', 'profile', 'openid', 'aws.cognito.signin.user.admin'],
          redirectSignIn: environment.redirectSignIn,
          redirectSignOut: environment.redirectSignout,
          responseType: 'token',
@@ -29,7 +30,7 @@ Amplify.configure({
 });
 
 const federated = {
-   google_client_id: '16334723743-2ur441vpk6282nbj8fgqjrfmm4bo79rc.apps.googleusercontent.com',
+   google_client_id: '993811506351-76rvcgqvlsg96vvr0fio76p0il5t4quq.apps.googleusercontent.com',
 };
 
 // Entry point of the Flitped App
@@ -52,16 +53,20 @@ function App() {
          .then((userSession) => {
             const accessToken = userSession.getAccessToken();
             const jwt = accessToken.getJwtToken();
+
             localStorage.setItem('accessToken', JSON.stringify(accessToken));
             localStorage.setItem('jwt', jwt);
+            console.log('Obtained user session and saved JWT');
 
             return Auth.currentAuthenticatedUser();
          })
          .then((authUser) => {
+            console.log('Set auth user');
+
             setUser(authUser);
             setFirstName(authUser.attributes.given_name);
          })
-         .catch(() => console.log('Not signed in'));
+         .catch((e) => console.log(`Error!!: ${e}`));
    }
    useEffect(() => {
       Hub.listen('auth', ({ payload: { event, data } }) => {
@@ -69,9 +74,11 @@ function App() {
             case 'signIn':
             case 'oauthSignIn':
             case 'cognitoHostedUI':
+               console.log('Signed in!');
                storeToken();
                break;
             case 'signOut':
+               console.log('Signed out!');
                setUser(null);
                break;
             case 'signIn_failure':
@@ -83,7 +90,7 @@ function App() {
          }
       });
 
-      storeToken();
+      // storeToken();
    }, []);
 
    if (loading) return <div>Loading...</div>;
