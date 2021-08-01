@@ -10,7 +10,6 @@ import Navigation from '../Navigation/Navigation';
 
 import './App.scss';
 import { useGetCoursesQuery } from '../__generated__/types';
-import { environment } from '../environment';
 
 Amplify.configure({
    Auth: {
@@ -21,8 +20,8 @@ Amplify.configure({
       oauth: {
          domain: 'flipted-ios-test.auth.us-east-1.amazoncognito.com',
          scope: ['phone', 'email', 'profile', 'openid', 'aws.cognito.signin.user.admin'],
-         redirectSignIn: environment.redirectSignIn,
-         redirectSignOut: environment.redirectSignout,
+         redirectSignIn: 'http://destin-flipted.herokuapp.com/',
+         redirectSignOut: 'http://destin-flipted.herokuapp.com/',
          responseType: 'token',
       },
    },
