@@ -28,6 +28,10 @@ Amplify.configure({
    },
 });
 
+const federated = {
+   google_client_id: '16334723743-2ur441vpk6282nbj8fgqjrfmm4bo79rc.apps.googleusercontent.com',
+};
+
 // Entry point of the Flitped App
 function App() {
    const [, setUser] = useState(null);
@@ -109,6 +113,6 @@ function App() {
    );
 }
 
-export default withAuthenticator(App, undefined, undefined, undefined, undefined, {
+export default withAuthenticator(App, undefined, undefined, federated, undefined, {
    hiddenDefaults: ['phone_number'],
 });
