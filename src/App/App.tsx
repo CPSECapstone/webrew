@@ -20,8 +20,8 @@ Amplify.configure({
       oauth: {
          domain: 'flipted-ios-test.auth.us-east-1.amazoncognito.com',
          scope: ['phone', 'email', 'profile', 'openid', 'aws.cognito.signin.user.admin'],
-         redirectSignIn: 'http://destin-flipted.herokuapp.com/',
-         redirectSignOut: 'http://destin-flipted.herokuapp.com/',
+         redirectSignIn: 'https://destin-flipted.herokuapp.com/',
+         redirectSignOut: 'https://destin-flipted.herokuapp.com/',
          responseType: 'token',
       },
    },
