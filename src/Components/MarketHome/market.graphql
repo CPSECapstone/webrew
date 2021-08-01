@@ -20,6 +20,10 @@ mutation DeleteListing($course: String!, $id: String!) {
    removeMarketListing(course: $course, id: $id)
 }
 
+mutation DeleteStudent($courseId: String!, $studentId: String!) {
+   removeStudent(course: $courseId, student: $studentId)
+}
+
 fragment ListingFields on MarketListing {
    id
    listingName
@@ -51,6 +55,7 @@ fragment StudentInfo on Student {
    totalPointsSpent
    totalPointsAwarded
    studentId
+   purchaseBlocked
 }
 
 fragment ActivityInfo on Activity {
@@ -62,6 +67,12 @@ fragment ActivityInfo on Activity {
 
 query Students($courseId: String!) {
    students(courseId: $courseId) {
+      ...StudentInfo
+   }
+}
+
+query Student($courseId: String!, $studentId: String!) {
+   student(courseId: $courseId, studentId: $studentId) {
       ...StudentInfo
    }
 }
@@ -110,6 +121,12 @@ mutation Fulfill($receiptId: String!, $course: String!, $fulfilled: Boolean!) {
 
 mutation Refund($receiptId: String!, $course: String!) {
   refundPurchase(course: $course, receiptId: $receiptId)
+}
+
+mutation BlockPurchases($courseId: String!, $studentId: String! $blocked: Boolean!) {
+   blockStudentPurchases(course: $courseId, student: $studentId, blocked: $blocked) {
+      ...StudentInfo
+   }
 }
 
 query StudentInfo($courseId: String!) {
