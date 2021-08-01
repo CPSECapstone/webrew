@@ -42,7 +42,7 @@ export function StudentInfoPage() {
             studentId,
             courseId: classId,
          },
-      }).catch((e) => console.log(e));
+      }).catch((e: any) => console.log(e));
    };
 
    const handleChange = () => {
@@ -52,7 +52,7 @@ export function StudentInfoPage() {
             courseId: classId,
             blocked: !checked,
          },
-      }).catch((e) => console.log(e));
+      }).catch((e: any) => console.log(e));
       setChecked(!checked);
    };
    const { loading, error, data } = useStudentQuery({

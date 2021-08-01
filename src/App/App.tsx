@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useState, useEffect } from 'react';
-import Amplify, { Auth, Hub } from 'aws-amplify';
-import { ApolloError } from '@apollo/client/errors';
+import { ApolloError } from '@apollo/client';
 import { withAuthenticator } from 'aws-amplify-react';
+import Amplify, { Auth, Hub } from 'aws-amplify';
 
-import Sidebar from '../Components/Sidebar';
 import Content from '../Components/Content';
 import Navigation from '../Navigation/Navigation';
 
 import './App.scss';
 import { useGetCoursesQuery } from '../__generated__/types';
 import { environment } from '../environment';
+import Sidebar from '../Components/Sidebar';
 
 Amplify.configure({
    Auth: {
@@ -21,7 +21,7 @@ Amplify.configure({
       userPoolWebClientId: '24sdf1brebo58s89ja0b63c51d',
       oauth: {
          domain: 'https://flipted-ios-test.auth.us-east-1.amazoncognito.com',
-         scope: ['email', 'profile', 'openid', 'aws.cognito.signin.user.admin'],
+         scope: ['phone', 'email', 'profile', 'openid', 'aws.cognito.signin.user.admin'],
          redirectSignIn: environment.redirectSignIn,
          redirectSignOut: environment.redirectSignout,
          responseType: 'token',
