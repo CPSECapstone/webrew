@@ -20,6 +20,10 @@ mutation DeleteListing($course: String!, $id: String!) {
    removeMarketListing(course: $course, id: $id)
 }
 
+mutation DeleteStudent($courseId: String!, $studentId: String!) {
+   removeStudent(course: $courseId, student: $studentId)
+}
+
 fragment ListingFields on MarketListing {
    id
    listingName

@@ -1,16 +1,48 @@
+/* eslint-disable react/jsx-curly-brace-presence */
 import { Button, Checkbox } from '@material-ui/core';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useBlockPurchasesMutation, useStudentQuery } from '../../__generated__/types';
+import { useHistory, useParams } from 'react-router-dom';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import {
+   useBlockPurchasesMutation,
+   useDeleteStudentMutation,
+   useStudentQuery,
+} from '../../__generated__/types';
 
 export function StudentInfoPage() {
    const { studentId, classId } = useParams<Record<string, string>>();
    const [checked, setChecked] = useState(true);
+   const [open, setOpen] = useState(false);
+   const history = useHistory();
 
    const [blockPurchases] = useBlockPurchasesMutation({});
 
-   const handleDeleteStudent = () => {
+   const handleClickOpen = () => {
+      setOpen(true);
+   };
+
+   const handleClose = () => {
+      setOpen(false);
+   };
+
+   const onDeleteCompleted = () => {
       console.log('student deleted!');
+      handleClose();
+      history.goBack();
+   };
+   const [deleteStudent] = useDeleteStudentMutation({ onCompleted: onDeleteCompleted });
+
+   const handleDeleteStudent = () => {
+      deleteStudent({
+         variables: {
+            studentId,
+            courseId: classId,
+         },
+      }).catch((e) => console.log(e));
    };
 
    const handleChange = () => {
@@ -72,11 +104,33 @@ export function StudentInfoPage() {
                backgroundColor: '#DC143C',
                color: 'white',
             }}
-            onClick={handleDeleteStudent}
+            onClick={handleClickOpen}
             data-testid="create-btn"
          >
             Delete Student
          </Button>
+         <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+         >
+            <DialogTitle id="alert-dialog-title">{'Delete student?'}</DialogTitle>
+            <DialogContent>
+               <DialogContentText id="alert-dialog-description">
+                  All purchases, receipts, point data, and activity notifications for this student
+                  will be removed. This action can not be undone.
+               </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+               <Button onClick={handleClose} color="primary">
+                  Cancel
+               </Button>
+               <Button onClick={handleDeleteStudent} color="primary" autoFocus>
+                  Delete Student
+               </Button>
+            </DialogActions>
+         </Dialog>
       </div>
    );
 }
