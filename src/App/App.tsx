@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { ApolloError } from '@apollo/client';
 import { withAuthenticator } from 'aws-amplify-react';
-import Amplify, { Auth, Hub } from 'aws-amplify';
+import { Auth, Hub } from 'aws-amplify';
 
 import Content from '../Components/Content';
 import Navigation from '../Navigation/Navigation';
