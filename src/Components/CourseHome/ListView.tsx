@@ -35,25 +35,26 @@ function ListView(classMissionMasterydata: any) {
       });
    };
 
-   const data: MissionMasteryRow[] = classMissionMasterydata.classMissionMasterydata.studentMissionMasteryList.map(
-      (studentMissionMastery: CmStudentFieldsFragment) => {
-         const firstName = studentMissionMastery.student.firstName || 'Mary';
-         const lastName = studentMissionMastery.student.lastName || 'Lee';
-         const name = `${firstName} ${lastName}`;
+   const data: MissionMasteryRow[] =
+      classMissionMasterydata.classMissionMasterydata.studentMissionMasteryList.map(
+         (studentMissionMastery: CmStudentFieldsFragment) => {
+            const firstName = studentMissionMastery.student.firstName || 'Mary';
+            const lastName = studentMissionMastery.student.lastName || 'Lee';
+            const name = `${firstName} ${lastName}`;
 
-         return {
-            row: {
-               name,
-               firstName,
-               lastName,
-               recent: studentMissionMastery.currentTaskName,
-               masteryLevel: studentMissionMastery.level,
-               lastLogOn: 'Jan. 7, 2021',
-               studentId: studentMissionMastery.student.studentId,
-            },
-         };
-      }
-   );
+            return {
+               row: {
+                  name,
+                  firstName,
+                  lastName,
+                  recent: studentMissionMastery.currentTaskName,
+                  masteryLevel: studentMissionMastery.level,
+                  lastLogOn: 'Jan. 7, 2021',
+                  studentId: studentMissionMastery.student.studentId,
+               },
+            };
+         }
+      );
 
    // TODO remove when names are populated
    data.forEach((dataEntry: MissionMasteryRow) => {

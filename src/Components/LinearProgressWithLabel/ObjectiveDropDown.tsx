@@ -118,7 +118,8 @@ function getTaskObjectivePorgress(task: TaskObjectiveProgress) {
    if (taskObjectiveProgress === undefined) {
       return <></>;
    }
-   const objectiveProgresses = (taskObjectiveProgress.getTaskObjectiveProgress as unknown) as TaskObjectiveProgress[];
+   const objectiveProgresses =
+      taskObjectiveProgress.getTaskObjectiveProgress as unknown as TaskObjectiveProgress[];
    return objectiveProgresses;
 }
 
