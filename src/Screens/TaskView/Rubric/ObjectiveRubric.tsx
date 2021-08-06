@@ -16,7 +16,8 @@ function ObjectiveRubric({ taskId, username }: { taskId: string; username: strin
    if (taskObjectiveProgress === undefined) {
       return <></>;
    }
-   let objectiveProgresses = (taskObjectiveProgress.getTaskObjectiveProgress as unknown) as TaskObjectiveProgress[];
+   let objectiveProgresses =
+      taskObjectiveProgress.getTaskObjectiveProgress as unknown as TaskObjectiveProgress[];
 
    if (objectiveProgresses === undefined) {
       objectiveProgresses = [];

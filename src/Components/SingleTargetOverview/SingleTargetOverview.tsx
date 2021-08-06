@@ -126,7 +126,7 @@ export default function SingleTargetOveriew() {
 
    const targetData1 = data.getAllTargetProgress;
    console.log(targetData1);
-   const targetData = getTargetData((targetData1 as unknown) as TargetProgress[], name as string);
+   const targetData = getTargetData(targetData1 as unknown as TargetProgress[], name as string);
 
    // A hardcoded name to account for reaching the page via the side menu
    if (!inputUser.firstName && !inputUser.lastName) {
