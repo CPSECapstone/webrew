@@ -38,7 +38,12 @@ function App() {
       void refetch();
    };
 
-   const { loading, error, data: courseData, refetch } = useGetCoursesQuery({
+   const {
+      loading,
+      error,
+      data: courseData,
+      refetch,
+   } = useGetCoursesQuery({
       onError: handleError,
    });
 
