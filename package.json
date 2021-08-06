@@ -47,10 +47,10 @@
   },
   "scripts": {
     "generate": "graphql-codegen --config codegen.yml",
-    "start": "CI=false react-scripts start",
-    "build": "CI=false react-scripts build",
-    "test": "CI=false react-scripts test",
-    "test-ci": "CI=false react-scripts test --watch==all",
+    "start": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
+    "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
+    "test": "DISABLE_ESLINT_PLUGIN=true react-scripts test",
+    "test-ci": "DISABLE_ESLINT_PLUGIN=true react-scripts test --watch==all",
     "eject": "react-scripts eject",
     "format": "prettier --write src/**/*.ts{,x}",
     "lint": "tsc --noEmit && eslint src/**/*.ts{,x}"
