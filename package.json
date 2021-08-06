@@ -47,9 +47,9 @@
   },
   "scripts": {
     "generate": "graphql-codegen --config codegen.yml",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "CI=false react-scripts start",
+    "build": "CI=false react-scripts build",
+    "test": "CI=false react-scripts test",
     "test-ci": "CI=false react-scripts test --watch==all",
     "eject": "react-scripts eject",
     "format": "prettier --write src/**/*.ts{,x}",
