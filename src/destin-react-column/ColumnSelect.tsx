@@ -99,15 +99,15 @@ const ColumnSelect: FC<ColumnSelectProps> = ({
    const [current, setCurrent] = useState<OptionType>(options[0]);
    const [selectedOptions, setSelectedOptions] = useState<OptionsType>(defaultValue);
    const [currentAction, setCurrentAction] = useState<ActionTypes>();
-   const isMax = useMemo(() => (max ? selectedOptions.length >= max : false), [
-      max,
-      selectedOptions.length,
-   ]);
+   const isMax = useMemo(
+      () => (max ? selectedOptions.length >= max : false),
+      [max, selectedOptions.length]
+   );
 
-   const disableAddAll = useMemo(() => (max ? selectOptions.length > max : false), [
-      max,
-      selectOptions.length,
-   ]);
+   const disableAddAll = useMemo(
+      () => (max ? selectOptions.length > max : false),
+      [max, selectOptions.length]
+   );
 
    useEffect(() => {
       if (currentAction) {
