@@ -18,7 +18,7 @@ Amplify.configure({
       userPoolId: 'us-west-1_n2IuxZvzt',
       userPoolWebClientId: '15vb9m813qrqdlu68e7anqr4fp',
       oauth: {
-         domain: 'https://webrew2426b7b3-2426b7b3-destin.auth.us-west-1.amazoncognito.com/',
+         domain: 'webrew2426b7b3-2426b7b3-destin.auth.us-west-1.amazoncognito.com',
          scope: ['phone', 'email', 'profile', 'openid', 'aws.cognito.signin.user.admin'],
          redirectSignIn: 'https://destin-flipted.herokuapp.com/',
          redirectSignOut: 'https://destin-flipted.herokuapp.com/',
