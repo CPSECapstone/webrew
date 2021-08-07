@@ -47,7 +47,7 @@
   },
   "scripts": {
     "generate": "graphql-codegen --config codegen.yml",
-    "start": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
+    "start": "react-scripts start",
     "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
     "test": "DISABLE_ESLINT_PLUGIN=true react-scripts test",
     "test-ci": "DISABLE_ESLINT_PLUGIN=true react-scripts test --watch==all",

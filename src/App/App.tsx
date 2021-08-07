@@ -13,12 +13,12 @@ import { useGetCoursesQuery } from '../__generated__/types';
 
 Amplify.configure({
    Auth: {
-      identityPoolId: 'us-west-1:61386a49-3fea-4d66-ba04-b134b8ed9265',
+      identityPoolId: 'us-west-1:b359cdf7-6859-42f1-a056-80faa938cd5b',
       region: 'us-west-1',
-      userPoolId: 'us-west-1_0AwmhkLS2',
-      userPoolWebClientId: '2fnf7vv8cofh8364p071gku4jn',
+      userPoolId: 'us-west-1_n2IuxZvzt',
+      userPoolWebClientId: '15vb9m813qrqdlu68e7anqr4fp',
       oauth: {
-         domain: 'flipted-destin.auth.us-west-1.amazoncognito.com',
+         domain: 'https://webrew2426b7b3-2426b7b3-destin.auth.us-west-1.amazoncognito.com/',
          scope: ['phone', 'email', 'profile', 'openid', 'aws.cognito.signin.user.admin'],
          redirectSignIn: 'https://destin-flipted.herokuapp.com/',
          redirectSignOut: 'https://destin-flipted.herokuapp.com/',
