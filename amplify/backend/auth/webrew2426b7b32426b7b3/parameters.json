@@ -29,7 +29,7 @@
         "email"
     ],
     "userpoolClientReadAttributes": [
-        "email"
+        "email", "email_verified"
     ],
     "userpoolClientLambdaRole": "webrew2426b7b3_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,

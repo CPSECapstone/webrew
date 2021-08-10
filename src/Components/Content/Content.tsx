@@ -16,7 +16,7 @@ export default function Content({ courses, refetchCourses }: Props) {
    const { loading, error, data } = useUserQuery();
 
    if (loading || error || !data) {
-      return <></>;
+      return <>Loading Content...</>;
    }
 
    const { getUser } = data;
