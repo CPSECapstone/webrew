@@ -18,6 +18,7 @@ const LargeTextField = styled(TextField)`
       font-size: 20px;
    }
 `;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const SmallTextField = styled(TextField)`
    input {
       height: 30px;
@@ -90,8 +91,6 @@ function CreateCourseDialog({ refetch }: Props) {
                               variables: {
                                  course: {
                                     courseName: values.courseTitle,
-                                    firstName: values.firstName,
-                                    lastName: values.lastName,
                                  },
                               },
                            })
@@ -111,31 +110,6 @@ function CreateCourseDialog({ refetch }: Props) {
                               variant="outlined"
                               margin="dense"
                               value={values.courseTitle}
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                           />
-
-                           <LargeTextField
-                              required
-                              id="firstName"
-                              label="First Name"
-                              type="text"
-                              fullWidth
-                              variant="outlined"
-                              margin="dense"
-                              value={values.firstName}
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                           />
-                           <SmallTextField
-                              required
-                              id="lastName"
-                              label="Last Name"
-                              type="text"
-                              fullWidth
-                              variant="outlined"
-                              margin="dense"
-                              value={values.lastName}
                               onChange={handleChange}
                               onBlur={handleBlur}
                            />

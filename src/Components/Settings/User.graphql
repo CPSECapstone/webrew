@@ -1,8 +1,7 @@
 query User {
   getUser {
     id
-    firstName
-    lastName
+    name
     email
     role
   }

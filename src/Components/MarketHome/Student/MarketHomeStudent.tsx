@@ -61,7 +61,11 @@ export function MarketHomeStudent() {
    }, [listingData, studentData]);
 
    if (!studentData || studentLoading || activityLoading || !activityData) {
-      return <></>;
+      return (
+         <div className="center">
+            <CircularProgress size={150} />
+         </div>
+      );
    }
    const { student } = studentData;
    const { recentActivity } = activityData;
@@ -78,7 +82,7 @@ export function MarketHomeStudent() {
                      <div className="account-card">
                         <div className="account-card-contents">
                            <h5 className="account-card-header">Account Balance</h5>
-                           <h3 className="student-balance">${studentData.student.points} EXP</h3>
+                           <h3 className="student-balance">{studentData.student.points} Points</h3>
                         </div>
                      </div>
                      <div className="student-listing-header">

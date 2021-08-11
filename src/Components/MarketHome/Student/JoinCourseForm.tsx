@@ -18,8 +18,6 @@ export type JoinCourseFormInput = {
 
 export function joinCourseFormToInputType(input: JoinCourseFormInput): StudentInput {
    return {
-      firstName: input.firstName,
-      lastName: input.lastName,
       studentId: '',
       instructorId: input.instructorId,
       courseId: input.courseId,
@@ -58,31 +56,6 @@ export function JoinCourseForm({ initialValues, onSubmit }: Props) {
                   variant="outlined"
                   margin="dense"
                   value={values.instructorId}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-               />
-
-               <SmallTextField
-                  required
-                  id="firstName"
-                  label="First Name"
-                  type="text"
-                  fullWidth
-                  variant="outlined"
-                  margin="dense"
-                  value={values.firstName}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-               />
-               <SmallTextField
-                  required
-                  id="lastName"
-                  label="Last Name"
-                  type="text"
-                  fullWidth
-                  variant="outlined"
-                  margin="dense"
-                  value={values.lastName}
                   onChange={handleChange}
                   onBlur={handleBlur}
                />
