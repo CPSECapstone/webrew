@@ -78,8 +78,6 @@ export type CourseInfo = {
 
 export type CourseInput = {
   courseName: Scalars['String'];
-  firstName: Scalars['String'];
-  lastName: Scalars['String'];
 };
 
 
@@ -969,8 +967,6 @@ export type Student = {
 
 export type StudentInput = {
   studentId: Scalars['String'];
-  firstName: Scalars['String'];
-  lastName: Scalars['String'];
   courseId: Scalars['String'];
   instructorId: Scalars['String'];
 };
@@ -1233,6 +1229,7 @@ export type UpdateUserOutput = {
 export type User = {
   id: Scalars['String'];
   role: Role;
+  name: Scalars['String'];
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
@@ -1464,7 +1461,7 @@ export type RecentActivityQuery = { __typename: 'Query', recentActivity: Array<(
 export type UserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserQuery = { __typename: 'Query', getUser: { __typename: 'User', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email?: Maybe<string>, role: Role } };
+export type UserQuery = { __typename: 'Query', getUser: { __typename: 'User', id: string, name: string, email?: Maybe<string>, role: Role } };
 
 export type TaskListQueryVariables = Exact<{
   course: Scalars['String'];
@@ -2768,8 +2765,7 @@ export const UserDocument = gql`
     query User {
   getUser {
     id
-    firstName
-    lastName
+    name
     email
     role
   }
