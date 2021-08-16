@@ -34,8 +34,8 @@ export function StudentActivityLog({ activity }: Props) {
       <div className="content-container col-md-3 p-0">
          {activity.map((anActivity: ActivityInfoFragment) => {
             const date = new Date(anActivity.activityDate);
-            const dateString = `${date.getDate()} ${months[date.getMonth()]}, ${
-               daysOfWeek[date.getDay()]
+            const dateString = `${date.getDate() + 1} ${months[date.getMonth()]}, ${
+               daysOfWeek[date.getDay() + 1]
             }`;
 
             return (
