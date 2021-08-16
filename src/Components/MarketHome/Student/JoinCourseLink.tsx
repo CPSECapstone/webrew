@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ApolloError } from '@apollo/client';
 import { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
