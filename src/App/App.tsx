@@ -5,6 +5,7 @@ import Amplify, { Auth, Hub } from 'aws-amplify';
 import './App.scss';
 import { RedirectLogin } from './RedirectLogin';
 import { SignedIn } from './SignedIn';
+import { environment } from '../environment';
 
 Amplify.configure({
    Auth: {
@@ -15,8 +16,8 @@ Amplify.configure({
       oauth: {
          domain: 'webrew2426b7b3-2426b7b3-destin.auth.us-west-1.amazoncognito.com',
          scope: ['phone', 'email', 'profile', 'openid', 'aws.cognito.signin.user.admin'],
-         redirectSignIn: 'https://destin-flipted.herokuapp.com/',
-         redirectSignOut: 'https://destin-flipted.herokuapp.com/',
+         redirectSignIn: environment.redirectSignIn,
+         redirectSignOut: environment.redirectSignout,
          responseType: 'token',
       },
    },

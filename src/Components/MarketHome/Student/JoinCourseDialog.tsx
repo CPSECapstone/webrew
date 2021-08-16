@@ -46,8 +46,6 @@ export function JoinCourseDialog({ refetch }: Props) {
    });
 
    const initialValues: JoinCourseFormInput = {
-      firstName: '',
-      lastName: '',
       instructorId: '',
       courseId: '',
    };

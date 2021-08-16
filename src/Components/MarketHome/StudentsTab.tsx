@@ -3,7 +3,8 @@ import { CircularProgress } from '@material-ui/core';
 
 import { useEffect, useMemo, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { StudentInfoFragment, useStudentsQuery } from '../../__generated__/types';
+import { environment } from '../../environment';
+import { StudentInfoFragment, User, useStudentsQuery } from '../../__generated__/types';
 import TableComponent from '../TableComponent/TableComponent';
 import { AddStudentDialog } from './AddStudentDialog';
 import PayStudents from './PayStudents';
@@ -22,7 +23,11 @@ type StudentRow = {
 const sortStudents = (a: StudentInfoFragment, b: StudentInfoFragment) => {
    return a.lastName.localeCompare(b.lastName);
 };
-export function StudentsTab() {
+
+type Props = {
+   user: User;
+};
+export function StudentsTab({ user }: Props) {
    const { classId } = useParams<Record<string, string>>();
    const [students, setStudents] = useState<StudentInfoFragment[]>([]);
    const history = useHistory();
@@ -117,7 +122,9 @@ export function StudentsTab() {
             <TableComponent columns={columns} data={rowData} rowClickFunction={rowClicked} />
          </div>
          <p>Course ID: {classId}</p>
-
+         <p>
+            Course Join Link: {environment.url}join/{classId}/{user.id}
+         </p>
          <AddStudentDialog course={classId} refetch={refetch} />
       </div>
    );
