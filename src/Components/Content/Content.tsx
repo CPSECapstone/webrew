@@ -6,6 +6,7 @@ import { CourseInfoFieldsFragment, Role, useUserQuery } from '../../__generated_
 import { Settings } from '../Settings/Settings';
 import { MarketHomeStudent } from '../MarketHome/Student/MarketHomeStudent';
 import { StudentInfoPage } from '../MarketHome/StudentInfoPage';
+import { JoinCourseLink } from '../MarketHome/Student/JoinCourseLink';
 
 type Props = {
    courses: CourseInfoFieldsFragment[];
@@ -25,10 +26,17 @@ export default function Content({ courses, refetchCourses }: Props) {
       <div className="content">
          <Switch>
             <Route path="/courseHome/:classId/:className">
-               {getUser.role === Role.Instructor ? <MarketHomeInstructor /> : <MarketHomeStudent />}
+               {getUser.role === Role.Instructor ? (
+                  <MarketHomeInstructor user={getUser} />
+               ) : (
+                  <MarketHomeStudent />
+               )}
             </Route>
             <Route path="/student/:classId/:studentId">
                {getUser.role === Role.Instructor ? <StudentInfoPage /> : <>Forbidden</>}
+            </Route>
+            <Route path="/join/:classId/:instructorId">
+               <JoinCourseLink refetchCourses={refetchCourses} />
             </Route>
             <Route path="/settings">
                <Settings user={getUser} />
@@ -36,40 +44,6 @@ export default function Content({ courses, refetchCourses }: Props) {
             <Route path="/">
                <Dashboard courses={courses} refetchCourses={refetchCourses} role={getUser.role} />
             </Route>
-
-            {/*  <Route path="/taskSubmissionOverview">
-               <TaskSubmissionOverview />
-            </Route>
-            <Route path="/viewTaskSubmission">
-               <ViewTaskSubmission />
-            </Route>
-            <Route path="/studentOverview">
-               <StudentOverview />
-            </Route>
-            <Route path="/singleStudentOverview/:username">
-               <SingleStudentOverview />
-            </Route>
-            <Route path="/singleStudentMasteryOverview">
-               <SingleStudentMasteryOverview />
-            </Route>
-            <Route path="/singleTargetOverview/:name">
-               <SingleTargetOverview />
-            </Route>
-            <Route path="/singleMissionOverview/:name/:username">
-               <SingleMissionOverview />
-            </Route>
-            <Route path="/taskList">
-               <TaskListView />
-            </Route>
-            <Route path="/taskSubmissionSummary/:taskId">
-               <TaskSubmissionSummaryView />
-            </Route>
-            <Route path="/viewTask/:taskId/:username">
-               <TaskView />
-            </Route>
-            <Route path="/classMastery">
-               <ClassMastery />
-            </Route> */}
          </Switch>
       </div>
    );

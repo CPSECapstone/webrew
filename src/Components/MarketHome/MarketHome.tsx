@@ -2,6 +2,7 @@
 import { createStyles, makeStyles, Tab, Theme } from '@material-ui/core';
 import { TabContext, TabList, TabPanel } from '@material-ui/lab';
 import React, { useState } from 'react';
+import { User } from '../../__generated__/types';
 import { ListingTab } from './ListingTab';
 import { PurchaseTab } from './PurchaseTab';
 import { StudentsTab } from './StudentsTab';
@@ -27,7 +28,11 @@ const useStyles = makeStyles((theme: Theme) =>
    })
 );
 
-function MarketHome() {
+type Props = {
+   user: User;
+};
+
+function MarketHome({ user }: Props) {
    const classes = useStyles();
 
    const [value, setValue] = useState('3');
@@ -64,7 +69,7 @@ function MarketHome() {
                   <PurchaseTab />
                </TabPanel>
                <TabPanel value="3">
-                  <StudentsTab />
+                  <StudentsTab user={user} />
                </TabPanel>
             </TabContext>
          </div>

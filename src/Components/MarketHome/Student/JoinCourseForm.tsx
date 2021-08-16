@@ -10,8 +10,6 @@ type Props = {
 };
 
 export type JoinCourseFormInput = {
-   firstName: string;
-   lastName: string;
    courseId: string;
    instructorId: string;
 };
