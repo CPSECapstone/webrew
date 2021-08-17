@@ -10,16 +10,19 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import {
    useBlockPurchasesMutation,
    useDeleteStudentMutation,
+   useSetStudentAdminMutation,
    useStudentQuery,
 } from '../../__generated__/types';
 
 export function StudentInfoPage() {
    const { studentId, classId } = useParams<Record<string, string>>();
-   const [checked, setChecked] = useState(true);
+   const [blockPurchaseschecked, setBlockPurchasesChecked] = useState(true);
+   const [adminChecked, setAdminChecked] = useState(true);
    const [open, setOpen] = useState(false);
    const history = useHistory();
 
    const [blockPurchases] = useBlockPurchasesMutation({});
+   const [setAdmin] = useSetStudentAdminMutation({});
 
    const handleClickOpen = () => {
       setOpen(true);
@@ -45,16 +48,28 @@ export function StudentInfoPage() {
       }).catch((e: any) => console.log(e));
    };
 
-   const handleChange = () => {
+   const handleBlockPurchasesChange = () => {
       blockPurchases({
          variables: {
             studentId,
             courseId: classId,
-            blocked: !checked,
+            blocked: !blockPurchaseschecked,
          },
       }).catch((e: any) => console.log(e));
-      setChecked(!checked);
+      setBlockPurchasesChecked(!blockPurchaseschecked);
    };
+
+   const handleAdminChange = () => {
+      setAdmin({
+         variables: {
+            studentId,
+            courseId: classId,
+            admin: !adminChecked,
+         },
+      }).catch((e: any) => console.log(e));
+      setAdminChecked(!adminChecked);
+   };
+
    const { loading, error, data } = useStudentQuery({
       variables: {
          studentId,
@@ -67,7 +82,8 @@ export function StudentInfoPage() {
       if (!data) {
          return;
       }
-      setChecked(data.student.purchaseBlocked);
+      setBlockPurchasesChecked(data.student.purchaseBlocked);
+      setAdminChecked(data.student.admin);
    }, [data]);
 
    if (loading) return <div>Loading...</div>;
@@ -92,8 +108,16 @@ export function StudentInfoPage() {
          <div>
             Purchases Blocked
             <Checkbox
-               checked={checked}
-               onChange={handleChange}
+               checked={blockPurchaseschecked}
+               onChange={handleBlockPurchasesChange}
+               inputProps={{ 'aria-label': 'primary checkbox' }}
+            />
+         </div>
+         <div>
+            Marketplace Manager
+            <Checkbox
+               checked={adminChecked}
+               onChange={handleAdminChange}
                inputProps={{ 'aria-label': 'primary checkbox' }}
             />
          </div>

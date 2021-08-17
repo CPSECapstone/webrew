@@ -323,6 +323,7 @@ export type Mutation = {
   gradeObjectiveTaskMastery: ObjectiveTaskMastery;
   removeStudent: Scalars['String'];
   blockStudentPurchases: Student;
+  setStudentAdmin: Student;
   refundPurchase: Scalars['Boolean'];
   fulfillPurchase: Receipt;
   purchase: Receipt;
@@ -479,6 +480,13 @@ export type MutationBlockStudentPurchasesArgs = {
   course: Scalars['String'];
   student: Scalars['String'];
   blocked: Scalars['Boolean'];
+};
+
+
+export type MutationSetStudentAdminArgs = {
+  course: Scalars['String'];
+  student: Scalars['String'];
+  admin: Scalars['Boolean'];
 };
 
 
@@ -963,6 +971,7 @@ export type Student = {
   totalPointsAwarded: Scalars['Int'];
   totalPointsSpent: Scalars['Int'];
   purchaseBlocked: Scalars['Boolean'];
+  admin: Scalars['Boolean'];
 };
 
 export type StudentInput = {
@@ -1344,7 +1353,7 @@ export type AwardStudentsPointsMutation = { __typename: 'Mutation', awardStudent
     & StudentInfoFragment
   )> };
 
-export type StudentInfoFragment = { __typename: 'Student', firstName: string, lastName: string, points: number, totalPointsSpent: number, totalPointsAwarded: number, studentId: string, purchaseBlocked: boolean };
+export type StudentInfoFragment = { __typename: 'Student', firstName: string, lastName: string, points: number, totalPointsSpent: number, totalPointsAwarded: number, studentId: string, purchaseBlocked: boolean, admin: boolean };
 
 export type ActivityInfoFragment = { __typename: 'Activity', studentId: string, activityDate: any, note: string, pointChange: number };
 
@@ -1433,6 +1442,18 @@ export type BlockPurchasesMutationVariables = Exact<{
 
 
 export type BlockPurchasesMutation = { __typename: 'Mutation', blockStudentPurchases: (
+    { __typename: 'Student' }
+    & StudentInfoFragment
+  ) };
+
+export type SetStudentAdminMutationVariables = Exact<{
+  courseId: Scalars['String'];
+  studentId: Scalars['String'];
+  admin: Scalars['Boolean'];
+}>;
+
+
+export type SetStudentAdminMutation = { __typename: 'Mutation', setStudentAdmin: (
     { __typename: 'Student' }
     & StudentInfoFragment
   ) };
@@ -1806,6 +1827,7 @@ export const StudentInfoFragmentDoc = gql`
   totalPointsAwarded
   studentId
   purchaseBlocked
+  admin
 }
     `;
 export const ActivityInfoFragmentDoc = gql`
@@ -2690,6 +2712,41 @@ export function useBlockPurchasesMutation(baseOptions?: Apollo.MutationHookOptio
 export type BlockPurchasesMutationHookResult = ReturnType<typeof useBlockPurchasesMutation>;
 export type BlockPurchasesMutationResult = Apollo.MutationResult<BlockPurchasesMutation>;
 export type BlockPurchasesMutationOptions = Apollo.BaseMutationOptions<BlockPurchasesMutation, BlockPurchasesMutationVariables>;
+export const SetStudentAdminDocument = gql`
+    mutation SetStudentAdmin($courseId: String!, $studentId: String!, $admin: Boolean!) {
+  setStudentAdmin(course: $courseId, student: $studentId, admin: $admin) {
+    ...StudentInfo
+  }
+}
+    ${StudentInfoFragmentDoc}`;
+export type SetStudentAdminMutationFn = Apollo.MutationFunction<SetStudentAdminMutation, SetStudentAdminMutationVariables>;
+
+/**
+ * __useSetStudentAdminMutation__
+ *
+ * To run a mutation, you first call `useSetStudentAdminMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetStudentAdminMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setStudentAdminMutation, { data, loading, error }] = useSetStudentAdminMutation({
+ *   variables: {
+ *      courseId: // value for 'courseId'
+ *      studentId: // value for 'studentId'
+ *      admin: // value for 'admin'
+ *   },
+ * });
+ */
+export function useSetStudentAdminMutation(baseOptions?: Apollo.MutationHookOptions<SetStudentAdminMutation, SetStudentAdminMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SetStudentAdminMutation, SetStudentAdminMutationVariables>(SetStudentAdminDocument, options);
+      }
+export type SetStudentAdminMutationHookResult = ReturnType<typeof useSetStudentAdminMutation>;
+export type SetStudentAdminMutationResult = Apollo.MutationResult<SetStudentAdminMutation>;
+export type SetStudentAdminMutationOptions = Apollo.BaseMutationOptions<SetStudentAdminMutation, SetStudentAdminMutationVariables>;
 export const StudentInfoDocument = gql`
     query StudentInfo($courseId: String!) {
   student(courseId: $courseId) {

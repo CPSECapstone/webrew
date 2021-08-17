@@ -56,6 +56,7 @@ fragment StudentInfo on Student {
    totalPointsAwarded
    studentId
    purchaseBlocked
+   admin
 }
 
 fragment ActivityInfo on Activity {
@@ -125,6 +126,12 @@ mutation Refund($receiptId: String!, $course: String!) {
 
 mutation BlockPurchases($courseId: String!, $studentId: String! $blocked: Boolean!) {
    blockStudentPurchases(course: $courseId, student: $studentId, blocked: $blocked) {
+      ...StudentInfo
+   }
+}
+
+mutation SetStudentAdmin($courseId: String!, $studentId: String! $admin: Boolean!) {
+   setStudentAdmin(course: $courseId, student: $studentId, admin: $admin) {
       ...StudentInfo
    }
 }
