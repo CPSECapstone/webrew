@@ -2,14 +2,25 @@ import { ApolloError } from '@apollo/client/errors';
 import Sidebar from '../Components/Sidebar';
 import Content from '../Components/Content';
 import Navigation from '../Navigation/Navigation';
-import { useGetCoursesQuery } from '../__generated__/types';
+import { useGetCoursesQuery, useUserQuery } from '../__generated__/types';
 
 export function SignedIn() {
    // eslint-disable-next-line @typescript-eslint/no-unused-vars
    const handleError = (_error: ApolloError) => {
       // eslint-disable-next-line
       void refetch();
+      // eslint-disable-next-line
+      void refetchUser();
    };
+
+   const {
+      loading: isLoadingUser,
+      error: errorFetchUser,
+      data: userData,
+      refetch: refetchUser,
+   } = useUserQuery({
+      onError: handleError,
+   });
 
    const {
       loading,
@@ -20,13 +31,14 @@ export function SignedIn() {
       onError: handleError,
    });
 
-   if (loading) return <div>Loading Course Data...</div>;
-   if (error) {
+   if (loading || isLoadingUser) return <div>Loading...</div>;
+   if (error || errorFetchUser) {
+      return <>Unknown Error. Please refresh the page.</>;
+   }
+   if (!courseData || !userData) {
       return <></>;
    }
-   if (!courseData) {
-      return <></>;
-   }
+   const { getUser } = userData;
    const { courses } = courseData;
 
    return (
@@ -38,7 +50,7 @@ export function SignedIn() {
                   <Sidebar courses={courses} />
                </div>
                <div className="content-container col-md-10 p-0">
-                  <Content courses={courses} refetchCourses={refetch} />
+                  <Content courses={courses} refetchCourses={refetch} user={getUser} />
                </div>
             </div>
          </div>
