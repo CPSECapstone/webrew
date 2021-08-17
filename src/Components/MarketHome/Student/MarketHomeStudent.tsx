@@ -98,6 +98,13 @@ export function MarketHomeStudent() {
                      ) : (
                         <></>
                      )}
+                     {studentData.student.purchaseBlocked ? (
+                        <div className="student-welcome" style={{ color: '#ff0000' }}>
+                           Purchases Disabled by Instructor
+                        </div>
+                     ) : (
+                        <></>
+                     )}
 
                      <h2 className="student-welcome">
                         Hello {studentData.student.firstName}! Welcome to your {className} account.
