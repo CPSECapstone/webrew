@@ -25,8 +25,12 @@ export default function Content({ courses, refetchCourses, user }: Props) {
                   <MarketHomeStudent />
                )}
             </Route>
+            <Route path="/courseHomeAdmin/:classId/:className">
+               <MarketHomeInstructor user={user} />
+            </Route>
+            ;
             <Route path="/student/:classId/:studentId">
-               {user.role === Role.Instructor ? <StudentInfoPage /> : <>Forbidden</>}
+               {user.role === Role.Instructor ? <StudentInfoPage /> : <>Access Forbidden</>}
             </Route>
             <Route path="/join/:classId/:instructorId">
                <JoinCourseLink refetchCourses={refetchCourses} />

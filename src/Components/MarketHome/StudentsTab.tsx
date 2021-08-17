@@ -4,7 +4,7 @@ import { CircularProgress } from '@material-ui/core';
 import { useEffect, useMemo, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { environment } from '../../environment';
-import { StudentInfoFragment, User, useStudentsQuery } from '../../__generated__/types';
+import { Role, StudentInfoFragment, User, useStudentsQuery } from '../../__generated__/types';
 import TableComponent from '../TableComponent/TableComponent';
 import { AddStudentDialog } from './AddStudentDialog';
 import PayStudents from './PayStudents';
@@ -125,7 +125,11 @@ export function StudentsTab({ user }: Props) {
          <p>
             Course Join Link: {environment.url}join/{classId}/{user.id}
          </p>
-         <AddStudentDialog course={classId} refetch={refetch} />
+         {user.role === Role.Instructor ? (
+            <AddStudentDialog course={classId} refetch={refetch} />
+         ) : (
+            <></>
+         )}
       </div>
    );
 }

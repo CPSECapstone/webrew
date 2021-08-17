@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCartOutlined';
 import { CircularProgress } from '@material-ui/core';
 import { useEffect, useState } from 'react';
@@ -20,6 +20,7 @@ export function MarketHomeStudent() {
       loading: activityLoading,
       data: activityData,
       refetch: refetchActivity,
+      error: activityError,
    } = useRecentActivityQuery({
       variables: {
          courseId: classId,
@@ -30,6 +31,7 @@ export function MarketHomeStudent() {
    const {
       loading: studentLoading,
       data: studentData,
+      error: studentInfoError,
       refetch: refetchStudent,
    } = useStudentInfoQuery({
       variables: {
@@ -40,6 +42,7 @@ export function MarketHomeStudent() {
    const {
       loading: listingLoading,
       data: listingData,
+      error: listingInfoError,
       refetch: refetchListings,
    } = useMarketListingsQuery({
       variables: {
@@ -60,6 +63,17 @@ export function MarketHomeStudent() {
       setListings([...listingData.marketListings].sort(sortListings));
    }, [listingData, studentData]);
 
+   if (activityError) {
+      return <>{activityError}</>;
+   }
+   if (studentInfoError) {
+      return <>{studentInfoError}</>;
+   }
+
+   if (listingInfoError) {
+      return <>{listingInfoError}</>;
+   }
+
    if (!studentData || studentLoading || activityLoading || !activityData) {
       return (
          <div className="center">
@@ -67,6 +81,7 @@ export function MarketHomeStudent() {
          </div>
       );
    }
+
    const { student } = studentData;
    const { recentActivity } = activityData;
 
@@ -76,6 +91,14 @@ export function MarketHomeStudent() {
             <div className="student-market-home col-md-9 p-0 side">
                {studentData ? (
                   <div>
+                     {studentData.student.admin ? (
+                        <Link to={`/courseHomeAdmin/${classId}/${className}`}>
+                           <div className="student-welcome">Manage Marketplace</div>
+                        </Link>
+                     ) : (
+                        <></>
+                     )}
+
                      <h2 className="student-welcome">
                         Hello {studentData.student.firstName}! Welcome to your {className} account.
                      </h2>
